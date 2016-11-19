@@ -1,0 +1,322 @@
+body {
+	color:#1c3320;
+	background-image:url('images/tile.png');
+	margin:0; 
+	padding:0;
+}
+p,h1,h2,h4{
+	text-align: left;
+	font-family: Georgia;
+	padding: 0 20px 15px 20px;
+	margin:0;
+}
+h3{
+	text-align: center;
+	font-family: Georgia;
+	padding: 0 20px 15px 20px;
+	margin:0;
+}
+
+#maintb {
+	border-radius: 5px;
+	margin:40px auto 40px auto;
+	width:900px;
+	background-color:#e6eee8;
+	padding: 0 0 20px 0;	
+}
+img, a{
+ border:0;
+}
+
+
+
+.list-nav {
+	height:50px;
+	padding:5px;
+
+}
+
+
+
+
+ .list-nav  li{
+ 
+	display:inline;	
+	text-align:center;
+	width:100px;
+
+	line-height: 2.25;
+	font-family:  'Montez', cursive;
+	font-size:17px;
+	text-decoration:none;
+	border-left:1px solid #e6eee8;
+	border-right:1px solid #e6eee8;
+	
+}
+
+.list-nav li:hover {
+	background-color:#4b8755;
+	color:#1c3420;
+}
+.list-nav li:active {
+	background-color:#b478aa;
+	color:#1c3420;
+}
+.list-nav li a {
+ 	border-radius: 3px;
+	display: inline-block;
+	line-height: 20px;
+	width:121px;
+	line-height: 2.25;
+	font-family:  'Montez', cursive;
+	font-size:17px;
+	text-decoration:none;
+	background:#a6c4ab;
+	color:#1d3521;
+	margin: 0 ;
+	
+}
+
+.list-nav li a:hover {
+	background-color:#4b8755;
+	color:#1c3420;
+}
+.list-nav li a:active {
+	background-color:#b478aa;
+	color:#1c3420;
+}
+.content p{
+	margin: 50px 50px 50px 50px;
+}
+
+.fltimgright{
+	float: right; 
+	clear: right; 
+	padding: 20px 20px 5px 20px;
+	margin: 0 20px 20px 20px;
+	color:#d0dfd3;
+  	text-align: center;
+	background-color:#4b8755;
+	color:#d0dfd3;
+	font-weight: normal;
+}
+.fltimgleft{
+	float: left; 
+	clear: left; 
+	padding: 20px 20px 5px 20px;
+	margin: 0 20px 0 20px;
+	color:#d0dfd3;
+  	text-align: center;
+	background-color:#4b8755;
+	color:#d0dfd3;
+	font-weight: normal; 
+	
+
+}
+
+
+.footer {
+
+	font-size:75%;
+	text-align:center;
+}
+.doglist {
+	border-radius: 5px;
+	overflow: hidden;
+	display:block;
+	margin:25px 50px 0 50px;
+}
+
+.doglistimgborder{
+	float:left;
+	display:inline-block;
+	border-radius: 5px;
+	border:10px solid;
+	border-color:#4b8755;
+	background-color:#4b8755;
+	padding:none;
+	margin:none;
+}
+.doglistimgborder:hover {
+	border-color:#25422a;
+	background-color:#25422a;
+}
+
+.doglist  img {
+ 	border-radius: 5px;
+	float: left;
+	width:180px;
+
+	font-weight: normal; 
+}
+.doglist  img:hover {
+}
+.doglist ul li{
+	display:block;
+	list-style-type: none;
+	text-align:left;
+	margin: 0 0 0 10%;
+	padding:0 0 0 25%;
+	font-size:17px;
+
+}
+
+
+.gallery {
+
+
+	display:inline-block;
+	vertical-align: top;
+	text-align: center;
+	margin-left:auto;
+	margin-right:auto;
+}
+.gallery img{
+
+	padding: 20px;
+}
+
+
+table.pedigree{
+	width:100%;
+	border-color:#1c3320;
+	border-width: 1px;
+	border-style:solid;
+
+	
+}
+table.pedigree td{
+	width:25%;
+	height: 35px;
+	border-color:#1c3320;
+	border-width: 1px;
+	border-style:solid;
+}
+table.pedigree .dam{
+background-color:#d4e1d6;
+}
+table.pedigree p{
+	margin-left:20px;
+	padding: 0;
+}
+
+
+/* lightbox scree css */
+
+.imageRow {
+  *zoom: 1;
+  margin: 20px 0;
+}
+/* line 38, ../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+.imageRow:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* line 320, ../sass/screen.sass */
+.imageRow .single {
+  float: left;
+}
+/* line 322, ../sass/screen.sass */
+.imageRow .single a {
+  float: left;
+  display: block;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 7px;
+  line-height: 1em;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+  margin-right: 40px;
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+/* line 332, ../sass/screen.sass */
+.imageRow .single a img {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+/* line 335, ../sass/screen.sass */
+.imageRow .single a:hover {
+  background-color: #8ad459;
+}
+/* line 337, ../sass/screen.sass */
+.imageRow .set {
+  float: left;
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+/* line 343, ../sass/screen.sass */
+.imageRow .set:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+/* line 346, ../sass/screen.sass */
+.imageRow .set .single a {
+  background: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  margin-right: 0;
+}
+/* line 351, ../sass/screen.sass */
+.imageRow .set .single a:hover {
+  background-color: #8ad459;
+  -webkit-box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.2), 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.2), 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.2), 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+}
+/* line 355, ../sass/screen.sass */
+.imageRow .set .single.first a {
+  -moz-border-radius-topleft: 4px;
+  -webkit-border-top-left-radius: 4px;
+  -ms-border-top-left-radius: 4px;
+  -o-border-top-left-radius: 4px;
+  border-top-left-radius: 4px;
+  -moz-border-radius-bottomleft: 4px;
+  -webkit-border-bottom-left-radius: 4px;
+  -ms-border-bottom-left-radius: 4px;
+  -o-border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+/* line 358, ../sass/screen.sass */
+.imageRow .set .single.last a {
+  -moz-border-radius-topright: 4px;
+  -webkit-border-top-right-radius: 4px;
+  -ms-border-top-right-radius: 4px;
+  -o-border-top-right-radius: 4px;
+  border-top-right-radius: 4px;
+  -moz-border-radius-bottomright: 4px;
+  -webkit-border-bottom-right-radius: 4px;
+  -ms-border-bottom-right-radius: 4px;
+  -o-border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
