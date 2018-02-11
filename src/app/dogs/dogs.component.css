@@ -1,50 +1,58 @@
 .selected {
-    background-color: #79887c !important;
-    color: white;
-  }
-  
-  
-  .doglist {
-    list-style-type: none;
-    background-color: #646464e8;
-  }
-  
-  .doglist li {
-    margin: 30px 0 30px 0;
-    border-style: none;
-    border-width: 1px;
-    display: flex;
-  }
-  
-  .doglist li.selected:hover {
-    background-color: #4c524d !important;
-    color: white;
-  }
-  
-  .doglist li:hover {
-    color: #334236;
-    background-color: #c0ebc8;
-    left: .1em;
-  }
-  
-  .eachdog {
-    font-size: 30px;
-    margin: 0 0 0 0;
-  }
-  
-  .dogthumb {
-    flex: 30;
-  }
-  
-  .dogthumb  img {
-    margin:auto;
-    color: #4b8755;
-    width: 200px;
-    border-color: #4b8755;
-    border-width: 10px;
-    border-style: solid;
-  }
-  
-  .dogdetails {
-    flex: 70;
-  }
+  background-color: #79887c !important;
+  color: white;
+}
+
+.doglist {
+  max-width: 800px;
+  margin: auto;
+  background-color: #fff;
+}
+
+.doglist li {
+  margin: auto auto;
+  border-style: none;
+  border-width: 1px;
+  display: flex;
+}
+
+.doglist li.selected:hover {
+  background-color: #4c524d !important;
+  color: white;
+}
+
+.doglist li:hover {
+  color: #334236;
+  background-color: #c0ebc8;
+  left: .1em;
+}
+
+.eachdog {
+  border-color: rgb(221, 221, 221);
+  margin-bottom: 1px;
+  border: 1px solid tran;
+  border-radius: 4px;
+  display: flex;
+}
+
+.dogthumb {
+  flex: 30;
+}
+
+.dogthumb img {
+  margin: auto;
+  width: 200px;
+}
+
+.dogdetails {
+  flex: 70;
+}
+.dogdetails h1 {
+  flex: 70;
+  font-size: 1em;
+  display: inline;
+}
+.dogdetails p {
+display: inline;
+font-size: .9em;
+}
