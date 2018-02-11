@@ -7,13 +7,13 @@ import { Dog } from './dog';
 import { DOGS } from './mock-dogs';
 
 import { MessageService } from './message.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+//import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class DogService {
   private heroesUrl = 'api/heroes';  // URL to web api
 
-  constructor(private http: HttpClient,private messageService: MessageService) { }
+  constructor(private messageService: MessageService) { }
 
   getDogs(): Observable<Dog[]> {
 

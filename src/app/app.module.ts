@@ -11,6 +11,7 @@ import { AvailableComponent } from './available/available.component';
 import { DogsComponent } from './dogs/dogs.component'
 import { MessagesComponent } from './messages/messages.component';
 import { MessageService } from './message.service';
+import { DogService } from './dog.service';
 
 @NgModule({
   declarations:[
@@ -27,6 +28,6 @@ import { MessageService } from './message.service';
     AppRoutingModule
   ],
   bootstrap: [AppComponent],
-  providers: [MessageService]
+  providers: [DogService, MessageService]
 })
 export class AppModule { }
