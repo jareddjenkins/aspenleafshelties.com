@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 import { HomeComponent }      from './home/home.component';
 import { GirlsComponent } from './girls/girls.component';
@@ -25,7 +26,8 @@ import { DogService } from './dog.service';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   bootstrap: [AppComponent],
   providers: [DogService, MessageService]
