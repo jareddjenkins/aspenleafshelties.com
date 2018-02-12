@@ -1,17 +1,22 @@
 <div class="doglist">
     <div *ngFor="let dog of dogs" class="eachdog">
-        <div class="dogthumb">
-            <img src="assets/dogphotos/large{{dog.id}}.jpg">
+        <div class="listtitle">
+            <h4>{{dog.cname}}</h4>
         </div>
-        <div class="dogdetails">
-            <h1>Call Name: </h1>
-            <p>"{{dog.cname}}"</p>
-        <br>
-            <h1>Registered Name: </h1>
-            <p>{{dog.rname}}</p>
-        <br>
-            <h1>Date of Birth</h1>
-            <p>12/31/2099</p>
+        <div class="row">
+            <div class="dogthumb">
+                <img src="assets/dogphotos/large{{dog.id}}.jpg">
+            </div>
+            <div class="dogdetails">
+                <dt>Registered Name: </dt>
+                <dl>{{dog.rname}}</dl>
+                <dt>Date of Birth</dt>
+                <dl>12/31/2099</dl>
+                <dt>Sire</dt>
+                <dl>{{dog.sireName}}</dl>
+                <dt>Dam</dt>
+                <dl>{{dog.damName}}</dl>
+            </div>
         </div>
     </div>
 </div>

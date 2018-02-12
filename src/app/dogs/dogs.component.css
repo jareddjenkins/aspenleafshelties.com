@@ -9,34 +9,17 @@
   background-color: #fff;
 }
 
-.doglist li {
-  margin: auto auto;
-  border-style: none;
-  border-width: 1px;
-  display: flex;
-}
-
-.doglist li.selected:hover {
-  background-color: #4c524d !important;
-  color: white;
-}
-
-.doglist li:hover {
-  color: #334236;
-  background-color: #c0ebc8;
-  left: .1em;
-}
-
 .eachdog {
-  border-color: rgb(221, 221, 221);
-  margin-bottom: 1px;
-  border: 1px solid tran;
+  margin: 2em;
+  border: 1px solid #ddd;
   border-radius: 4px;
   display: flex;
+  flex-direction: column;
 }
-
+.row{
+  display:flex;
+}
 .dogthumb {
-  flex: 30;
 }
 
 .dogthumb img {
@@ -45,14 +28,31 @@
 }
 
 .dogdetails {
-  flex: 70;
+  
 }
-.dogdetails h1 {
+.listtitle{
+  background-color: slategray;
+  line-height: .7em;
+}
+  .listtitle h4  {
+    font-size: 18px;
+    line-height: 18px;
+    padding: 0 0 0 40px;
+    margin: 8px 0 14px 0;
+    color: #556154;
+}
+.dogdetails {
   flex: 70;
   font-size: 1em;
+}
+.dogdetails h4,p {
   display: inline;
 }
-.dogdetails p {
-display: inline;
-font-size: .9em;
+dt {
+  font-size: 1em;
+  color:#556154;;
+}
+dt {
+  font-size: 1em;
+  color:#556154;;
 }
