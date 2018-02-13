@@ -19,17 +19,12 @@
 .row{
   display:flex;
 }
-.dogthumb {
-}
 
 .dogthumb img {
   margin: auto;
   width: 200px;
 }
 
-.dogdetails {
-  
-}
 .listtitle{
   background-color: slategray;
   line-height: .7em;

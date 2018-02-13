@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <a class="navbar-brand" routerLink="/home" routerLinkActive="home">AspenLeafShelties</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+    aria-expanded="false" aria-label="Toggle navigation" (click)="isNavbarCollapsed = !isNavbarCollapsed">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isNavbarCollapsed">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/boys" routerLinkActive="active">Boys</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/girls" routerLinkActive="girls">Girls</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/available" routerLinkActive="available">Available</a>
+      </li>
+    </ul>
+  </div>
+</nav>

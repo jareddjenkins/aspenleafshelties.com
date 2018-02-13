@@ -1,21 +1,10 @@
-.rightnav {
-  flex: 45;
-}
-.leftnav {
-  flex: 55;
-}
-.leftnav > a {
-  width:100%;
-}
 main {
   height: 100%;
 }
 nav {
-  display: flex;
   padding: 20px 0 0 0; 
 }
 nav > div {
-  flex-direction: column;
   text-align: justify;
 }
 nav a {
