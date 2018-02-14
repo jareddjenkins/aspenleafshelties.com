@@ -1,58 +1,13 @@
-.selected {
-  background-color: #79887c !important;
-  color: white;
+.eachdog{
+    border: .05em solid rgb(143, 143, 143);
+    background-color: white;
+    border-radius: .2em;
 }
-
-.doglist {
-  max-width: 800px;
-  margin: auto;
-  background-color: #fff;
+.itemtitle{
+    background-color: rgb(196, 196, 196);
 }
-
-.doglist li {
-  margin: auto auto;
-  border-style: none;
-  border-width: 1px;
-  display: flex;
-}
-
-.doglist li.selected:hover {
-  background-color: #4c524d !important;
-  color: white;
-}
-
-.doglist li:hover {
-  color: #334236;
-  background-color: #c0ebc8;
-  left: .1em;
-}
-
-.eachdog {
-  border-color: rgb(221, 221, 221);
-  margin-bottom: 1px;
-  border: 1px solid tran;
-  border-radius: 4px;
-  display: flex;
-}
-
-.dogthumb {
-  flex: 30;
-}
-
-.dogthumb img {
-  margin: auto;
-  width: 200px;
-}
-
-.dogdetails {
-  flex: 70;
-}
-.dogdetails h1 {
-  flex: 70;
-  font-size: 1em;
-  display: inline;
-}
-.dogdetails p {
-display: inline;
-font-size: .9em;
+.listdetails dd,dt {
+    margin-left:1em;
+    display: block;
+    font-size: .8em;
 }

@@ -1,11 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
 import { HomeComponent }      from './home/home.component';
+import { TopnavComponent } from './topnav/topnav.component';
 import { GirlsComponent } from './girls/girls.component';
 import { BoysComponent } from './boys/boys.component';
 import { AvailableComponent } from './available/available.component';
@@ -22,9 +24,11 @@ import { DogService } from './dog.service';
     BoysComponent,
     AvailableComponent,
     MessagesComponent,
-    DogsComponent
+    DogsComponent,
+    TopnavComponent
   ],
   imports: [
+    NgbModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule
