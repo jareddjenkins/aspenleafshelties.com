@@ -27,6 +27,6 @@ export class DogsComponent implements OnInit {
   getDogs(): void {
     this.dogService.getDogs()
       .subscribe(dogs => this.dogs = dogs);
-
   }
+  
 }

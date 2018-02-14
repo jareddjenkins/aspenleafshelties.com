@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="row eachdog my-md-2 " *ngIf="dog">
+        <div class="col itemtitle">
+            <a routerLink="/detail/{{dog.id}}">{{dog.rname}}</a>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <img src="assets/dogphotos/large{{dog.id}}.jpg " class="img-fluid">
+            </div>
+            <div class="col listdetails">
+                <div class="row">
+                    <dl class="col-6 col-md-3">
+                        <dt>Call Name</dt>
+                        <dd>{{dog.cname}}</dd>
+                    </dl>
+                    <dl class="col-6 col-md-3">
+                        <dt>Date of Birth</dt>
+                        <dd>12/31/2099</dd>
+                    </dl>
+                    <dl class="col-6 col-md-3">
+                        <dt>Sire</dt>
+                        <dd>{{dog.sireName}}</dd>
+                    </dl>
+                    <dl class="col-6 col-md-3">
+                        <dt>Dam</dt>
+                        <dd>{{dog.damName}}</dd>
+                    </dl>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <dd>Description:</dd>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a *ngIf="!showInput" (click)="toggleInput()">Edit</a>
+<input *ngIf="showInput" type="text" value="{{dog.rname}}">

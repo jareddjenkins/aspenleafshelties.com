@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DogsComponent } from '../dogs/dogs.component';
+import { Dog } from '../dog'
 
 @Component({
   selector: 'app-boys',
@@ -7,6 +8,7 @@ import { DogsComponent } from '../dogs/dogs.component';
   styleUrls: ['./boys.component.css']
 })
 export class BoysComponent implements OnInit {
+  @Input() dogs: Dog[];
 
   constructor() { }
 

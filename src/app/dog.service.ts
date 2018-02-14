@@ -33,6 +33,7 @@ export class DogService {
       tap(_ => this.log(`fetched hero id=${id}`)),
       catchError(this.handleError<Dog>(`getDog id=${id}`))
     );
+    
   }
 
   /**

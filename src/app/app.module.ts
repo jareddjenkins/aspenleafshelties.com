@@ -5,6 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { HomeComponent }      from './home/home.component';
 import { TopnavComponent } from './topnav/topnav.component';
@@ -15,6 +16,7 @@ import { DogsComponent } from './dogs/dogs.component'
 import { MessagesComponent } from './messages/messages.component';
 import { MessageService } from './message.service';
 import { DogService } from './dog.service';
+import { DogDetailComponent } from './dog-detail/dog-detail.component';
 
 @NgModule({
   declarations:[
@@ -25,13 +27,15 @@ import { DogService } from './dog.service';
     AvailableComponent,
     MessagesComponent,
     DogsComponent,
-    TopnavComponent
+    TopnavComponent,
+    DogDetailComponent
   ],
   imports: [
     NgbModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   bootstrap: [AppComponent],
   providers: [DogService, MessageService]
