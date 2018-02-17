@@ -4,4 +4,7 @@ export class Dog {
     rname: string;
     sireName: string;
     damName: string;
-  }
+    Gender: boolean; 
+    Dob: Date;
+    Comments: string;
+}

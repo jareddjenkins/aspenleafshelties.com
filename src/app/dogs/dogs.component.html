@@ -1,4 +1,4 @@
-<div class="row eachdog my-md-2 " *ngFor="let dog of dogs">
+<div class="row eachdog my-md-2 " *ngIf="dog">
     <div class="col itemtitle">
         <a routerLink="/detail/{{dog.id}}">{{dog.rname}}</a>
     </div>

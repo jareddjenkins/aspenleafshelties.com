@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DOGS } from '../mock-dogs';
 import { Dog } from '../dog';
 import { DogService } from '../dog.service';
@@ -10,23 +10,11 @@ import { DogService } from '../dog.service';
 })
 
 export class DogsComponent implements OnInit {
+ @Input() dog: Dog;
 
-  selectedDog: Dog;
-
-  dogs: Dog[];
-
-  constructor(private dogService: DogService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.getDogs();
-  }
-  onSelect(dog: Dog): void {
-    this.selectedDog = dog;
-
-  }
-  getDogs(): void {
-    this.dogService.getDogs()
-      .subscribe(dogs => this.dogs = dogs);
-  }
-  
+ 
+  }  
 }
