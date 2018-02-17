@@ -29,7 +29,7 @@ export class DogService {
   }
 
   getDog(id: number): Observable<Dog> {
-    const url = `${this.dogApiUrl}/dog/${id}`;
+    const url = `${this.dogApiUrl}/dogs/${id}`;
     return this.http.get<Dog>(url).pipe(
       tap(_ => this.log(`fetched hero id=${id}`)),
       catchError(this.handleError<Dog>(`getDog id=${id}`))

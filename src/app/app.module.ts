@@ -17,6 +17,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { MessageService } from './message.service';
 import { DogService } from './dog.service';
 import { DogDetailComponent } from './dog-detail/dog-detail.component';
+import { EnterdogsComponent } from './enterdogs/enterdogs.component';
 
 @NgModule({
   declarations:[
@@ -28,7 +29,8 @@ import { DogDetailComponent } from './dog-detail/dog-detail.component';
     MessagesComponent,
     DogsComponent,
     TopnavComponent,
-    DogDetailComponent
+    DogDetailComponent,
+    EnterdogsComponent
   ],
   imports: [
     NgbModule.forRoot(),

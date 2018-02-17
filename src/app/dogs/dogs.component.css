@@ -3,9 +3,10 @@
     background-color: white;
     border-radius: .2em;
 }
-.itemtitle{
+.itemtitle {
     background-color: rgb(196, 196, 196);
 }
+
 .listdetails dd,dt {
     margin-left:1em;
     display: block;
