@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DogsComponent } from '../dogs/dogs.component';
+import { Dog } from '../dog'
+import { DogService } from '../dog.service'
 
 @Component({
   selector: 'app-available',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AvailableComponent implements OnInit {
 
-  constructor() { }
+  dogs: Dog[];
+
+  constructor(private dogService: DogService) { }
 
   ngOnInit() {
+    this.getAvailablePage();
   }
 
+  getAvailablePage(): void {
+    this.dogService.getAvailablePage()
+      .subscribe(dogs => this.dogs = dogs);
+
+  }
 }
+

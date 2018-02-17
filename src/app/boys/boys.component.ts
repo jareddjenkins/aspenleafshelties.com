@@ -15,11 +15,11 @@ export class BoysComponent implements OnInit {
   constructor(private dogService: DogService) { }
 
   ngOnInit() {
-    this.getDogs();
+    this.getBoyspage();
   }
 
-  getDogs(): void {
-    this.dogService.getDogs()
+  getBoyspage(): void {
+    this.dogService.getBoysPage()
       .subscribe(dogs => this.dogs = dogs);
 
   }

@@ -12,7 +12,7 @@ import { MessageService } from './message.service';
 
 @Injectable()
 export class DogService {
-  private dogApiUrl = 'http://localhost:65096/api/dogs';  // URL to web api
+  private dogApiUrl = 'http://localhost:65096/api';  // URL to web api
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
   /** Log a DogService message with the MessageService */
@@ -20,20 +20,49 @@ export class DogService {
     this.messageService.add('HeroService: ' + message);
   }
   getDogs(): Observable<Dog[]> {
-    return this.http.get<Dog[]>(this.dogApiUrl)
+    const url = `${this.dogApiUrl}/dogs`;
+    return this.http.get<Dog[]>(url)
       .pipe(
         tap(dogs => this.log(`fetched dogs`)),
         catchError(this.handleError('getDogs', []))
       );
   }
-  /** GET hero by id. Will 404 if id not found */
+
   getDog(id: number): Observable<Dog> {
-    const url = `${this.dogApiUrl}/${id}`;
+    const url = `${this.dogApiUrl}/dog/${id}`;
     return this.http.get<Dog>(url).pipe(
       tap(_ => this.log(`fetched hero id=${id}`)),
       catchError(this.handleError<Dog>(`getDog id=${id}`))
     );
     
+  }
+
+  getAvailablePage(): Observable<Dog[]> {
+    const url = `${this.dogApiUrl}/pages/available`;
+    return this.http.get<Dog[]>(url)
+      .pipe(
+        tap(dogs => this.log(`fetched dogs`)),
+        catchError(this.handleError('getDogs', []))
+      );
+  }
+
+  getBoysPage(): Observable<Dog[]> {
+    const url = `${this.dogApiUrl}/pages/boyspage`;
+    return this.http.get<Dog[]>(url)
+      .pipe(
+        tap(dogs => this.log(`fetched dogs`)),
+        catchError(this.handleError('getDogs', []))
+      );
+  }
+
+  
+  getGirlsPage(): Observable<Dog[]> {
+    const url = `${this.dogApiUrl}/pages/girlspage`;
+    return this.http.get<Dog[]>(url)
+      .pipe(
+        tap(dogs => this.log(`fetched dogs`)),
+        catchError(this.handleError('getDogs', []))
+      );
   }
 
   /**
