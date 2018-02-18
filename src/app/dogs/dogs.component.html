@@ -15,7 +15,7 @@
                     </dl>
                     <dl class="col-6 col-md-3">
                         <dt>Date of Birth</dt>
-                        <dd>12/31/2099</dd>
+                        <dd>{{dog.dob | date:'longDate'}}</dd>
                     </dl>
                     <dl class="col-6 col-md-3">
                         <dt>Sire</dt>
@@ -28,7 +28,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <dd>Description:</dd>
+                        <dd>{{dog.comments}}:</dd>
                     </div>
                 </div>
             </div>

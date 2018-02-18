@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { DOGS } from '../mock-dogs';
 import { Dog } from '../dog';
 import { DogService } from '../dog.service';
 

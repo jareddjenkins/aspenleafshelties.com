@@ -6,7 +6,6 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Dog } from './dog';
-import { DOGS } from './mock-dogs';
 
 import { MessageService } from './message.service';
 

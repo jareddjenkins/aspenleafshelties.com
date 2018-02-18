@@ -1,6 +1,3 @@
 <app-dogs *ngIf="dog"
     [dog]="dog">
 </app-dogs>
-
-<a *ngIf="!showInput" (click)="toggleInput()">Edit</a>
-<input *ngIf="showInput" type="text" value="{{dog.rname}}">

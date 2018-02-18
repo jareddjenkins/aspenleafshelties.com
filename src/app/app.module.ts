@@ -17,6 +17,9 @@ import { MessagesComponent } from './messages/messages.component';
 import { MessageService } from './message.service';
 import { DogService } from './dog.service';
 import { DogDetailComponent } from './dog-detail/dog-detail.component';
+import { EditdogComponent } from './enterdogs/editdog/editdog.component';
+import { EnterdogsnavComponent } from './enterdogs/enterdogsnav/enterdogsnav.component';
+import { ListdogsComponent } from './enterdogs/listdogs/listdogs.component';
 import { EnterdogsComponent } from './enterdogs/enterdogs.component';
 
 @NgModule({
@@ -30,7 +33,10 @@ import { EnterdogsComponent } from './enterdogs/enterdogs.component';
     DogsComponent,
     TopnavComponent,
     DogDetailComponent,
-    EnterdogsComponent
+    EditdogComponent,
+    EnterdogsnavComponent,
+    ListdogsComponent,
+    EnterdogsComponent,
   ],
   imports: [
     NgbModule.forRoot(),

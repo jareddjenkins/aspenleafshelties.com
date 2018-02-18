@@ -1,0 +1,7 @@
+<div class='container'>
+  <div class='row' *ngFor="let dog of dogs">
+    <div class="col">
+      <a routerLink="editdog/{{dog.id}}" routerLinkActive="active">{{dog.rname}}</a>
+    </div>
+  </div>
+</div>
