@@ -12,7 +12,9 @@ import { DogService } from '../dog.service';
 })
 
 export class DogsComponent implements OnInit {
- @Input() dog: Dog;
+  
+  @Input() 
+  dog: Dog;
 
   constructor(private router: Router,private location: Location) { }
 

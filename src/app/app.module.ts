@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 
 import { HomeComponent }      from './home/home.component';
 import { TopnavComponent } from './topnav/topnav.component';
@@ -21,6 +22,7 @@ import { EditdogComponent } from './enterdogs/editdog/editdog.component';
 import { EnterdogsnavComponent } from './enterdogs/enterdogsnav/enterdogsnav.component';
 import { ListdogsComponent } from './enterdogs/listdogs/listdogs.component';
 import { EnterdogsComponent } from './enterdogs/enterdogs.component';
+import { UploadimageComponent } from './enterdogs/uploadimage/uploadimage.component';
 
 @NgModule({
   declarations:[
@@ -37,6 +39,9 @@ import { EnterdogsComponent } from './enterdogs/enterdogs.component';
     EnterdogsnavComponent,
     ListdogsComponent,
     EnterdogsComponent,
+    UploadimageComponent,
+    ImageCropperComponent
+    
   ],
   imports: [
     NgbModule.forRoot(),
