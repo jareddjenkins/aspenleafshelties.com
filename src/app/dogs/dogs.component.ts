@@ -16,10 +16,12 @@ export class DogsComponent implements OnInit {
   @Input() 
   dog: Dog;
 
+  lgImgUrl: string;
+
   constructor(private router: Router,private location: Location) { }
 
   ngOnInit() {
- 
+    this.lgImgUrl = `assets/dogphotos/large${this.dog.id}.jpg`
   }
 
   goDogDetails(): void {

@@ -55,4 +55,9 @@ export class EditdogComponent implements OnInit {
     this.showInput = !this.showInput;
   }
 
+  save(): void {
+    this.dogService.updateDog(this.dog)
+      //.subscribe(() => this.goBack());
+  }
+
 }

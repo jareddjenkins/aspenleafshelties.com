@@ -6,13 +6,19 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Dog } from './dog';
-
 import { MessageService } from './message.service';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable()
 export class DogService {
   private dogApiUrl = 'http://localhost:65096/api';  // URL to web api
 
+
+
+  
   constructor(private http: HttpClient, private messageService: MessageService) { }
   /** Log a DogService message with the MessageService */
   private log(message: string) {
@@ -30,10 +36,10 @@ export class DogService {
   getDog(id: number): Observable<Dog> {
     const url = `${this.dogApiUrl}/dogs/${id}`;
     return this.http.get<Dog>(url).pipe(
-      tap(_ => this.log(`fetched hero id=${id}`)),
+      tap(_ => this.log(`fetched dog id=${id}`)),
       catchError(this.handleError<Dog>(`getDog id=${id}`))
     );
-    
+
   }
 
   getAvailablePage(): Observable<Dog[]> {
@@ -54,7 +60,7 @@ export class DogService {
       );
   }
 
-  
+
   getGirlsPage(): Observable<Dog[]> {
     const url = `${this.dogApiUrl}/pages/girlspage`;
     return this.http.get<Dog[]>(url)
@@ -63,6 +69,24 @@ export class DogService {
         catchError(this.handleError('getDogs', []))
       );
   }
+
+  /** PUT: update the hero on the server */
+  updateDog(dog: Dog): Observable<Dog> {
+    const url = `${this.dogApiUrl}/dogs/${dog.id}`;
+    return this.http.put(url, dog, httpOptions).pipe(
+      tap(_ => this.log(`updated dog id=${dog.id}`)),
+      catchError(this.handleError<any>('updateDog'))
+    );
+  }
+
+  /** POST: add a new hero to the server */
+addDog (dog: Dog): Observable<Dog> {
+  const url = `${this.dogApiUrl}/dogs/${dog.id}`;
+  return this.http.post<Dog>(url, dog, httpOptions).pipe(
+    tap((dog: Dog) => this.log(`added dog w/ id=${dog.id}`)),
+    catchError(this.handleError<Dog>('addDog'))
+  );
+}
 
   /**
    * Handle Http operation that failed.
