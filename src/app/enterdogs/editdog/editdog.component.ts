@@ -28,6 +28,9 @@ export class NgbDateNativeAdapter extends NgbDateAdapter<Date> {
 
 export class EditdogComponent implements OnInit {
   dog: Dog;
+  sires: Dog[];
+  dams: Dog[];
+  selectedSire: Dog;
 
   showInput = false;
 
@@ -35,18 +38,35 @@ export class EditdogComponent implements OnInit {
     private route: ActivatedRoute,
     private dogService: DogService,
     private location: Location
-  ) { }
-
+  ) { 
+    
+  }
+  
   ngOnInit(): void {
-    this.getDog();
+    this.getDog()
   }
 
-  getDog(): void {
+  getDog() {
     const id = +this.route.snapshot.paramMap.get('id');
     this.dogService.getDog(id)
-      .subscribe(dog => this.dog = dog);
+      .subscribe(dog => this.dog = dog), 
+      this.getSires(),
+      this.getDams();
   }
+  getSires() {
+    this.dogService.getMaleDogs()
+      .subscribe(dogs => this.sires = dogs);
+  }
+  async getDams() {
+    await this.dogService.getFemaleDogs()
+      .subscribe(dams => this.dams = dams);
+  }
+  setSire(selectedDog: Dog){
+    this.dog.sireId = this.selectedSire.id;
+    this.dog.sireName = this.selectedSire.rname;
 
+  }
+  
   goBack(): void {
     this.location.back();
   }
@@ -55,9 +75,9 @@ export class EditdogComponent implements OnInit {
     this.showInput = !this.showInput;
   }
 
-  save(): void {
+  save(){
     this.dogService.updateDog(this.dog)
-      //.subscribe(() => this.goBack());
+      .subscribe();// => this.goBack());
   }
 
 }

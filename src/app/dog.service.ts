@@ -17,15 +17,29 @@ export class DogService {
   private dogApiUrl = 'http://localhost:65096/api';  // URL to web api
 
 
-
-  
   constructor(private http: HttpClient, private messageService: MessageService) { }
   /** Log a DogService message with the MessageService */
   private log(message: string) {
-    this.messageService.add('HeroService: ' + message);
+    this.messageService.add('DogService: ' + message);
   }
   getDogs(): Observable<Dog[]> {
     const url = `${this.dogApiUrl}/dogs`;
+    return this.http.get<Dog[]>(url)
+      .pipe(
+        tap(dogs => this.log(`fetched dogs`)),
+        catchError(this.handleError('getDogs', []))
+      );
+  }
+  getMaleDogs(): Observable<Dog[]> {
+    const url = `${this.dogApiUrl}/dogs?gender=1`;
+    return this.http.get<Dog[]>(url)
+      .pipe(
+        tap(dogs => this.log(`fetched dogs`)),
+        catchError(this.handleError('getDogs', []))
+      );
+  }
+  getFemaleDogs(): Observable<Dog[]> {
+    const url = `${this.dogApiUrl}/dogs?gender=0`;
     return this.http.get<Dog[]>(url)
       .pipe(
         tap(dogs => this.log(`fetched dogs`)),
@@ -39,7 +53,6 @@ export class DogService {
       tap(_ => this.log(`fetched dog id=${id}`)),
       catchError(this.handleError<Dog>(`getDog id=${id}`))
     );
-
   }
 
   getAvailablePage(): Observable<Dog[]> {
@@ -70,7 +83,7 @@ export class DogService {
       );
   }
 
-  /** PUT: update the hero on the server */
+  /** PUT: update the dog on the server */
   updateDog(dog: Dog): Observable<Dog> {
     const url = `${this.dogApiUrl}/dogs/${dog.id}`;
     return this.http.put(url, dog, httpOptions).pipe(
@@ -79,14 +92,14 @@ export class DogService {
     );
   }
 
-  /** POST: add a new hero to the server */
-addDog (dog: Dog): Observable<Dog> {
-  const url = `${this.dogApiUrl}/dogs/${dog.id}`;
-  return this.http.post<Dog>(url, dog, httpOptions).pipe(
-    tap((dog: Dog) => this.log(`added dog w/ id=${dog.id}`)),
-    catchError(this.handleError<Dog>('addDog'))
-  );
-}
+  /** POST: add a new dog to the server */
+  addDog(dog: Dog): Observable<Dog> {
+    const url = `${this.dogApiUrl}/dogs/${dog.id}`;
+    return this.http.post<Dog>(url, dog, httpOptions).pipe(
+      tap((dog: Dog) => this.log(`added dog w/ id=${dog.id}`)),
+      catchError(this.handleError<Dog>('addDog'))
+    );
+  }
 
   /**
    * Handle Http operation that failed.

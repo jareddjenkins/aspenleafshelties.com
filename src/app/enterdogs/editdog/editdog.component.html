@@ -6,7 +6,7 @@
       </app-dogs>
     </div>
   </div>
-  <div class="row">
+  <div class="row" *ngIf="dog">
     <div class="col">
       <form>
         <div class="form-group">
@@ -21,6 +21,13 @@
           <label for="dog.comments">Description</label>
           <input type="text" [(ngModel)]="dog.comments" class="form-control" name="comments" id="comments" placeholder="Description">
         </div>
+  
+        <div class="form-group" *ngIf="selectedSire">
+          <label for="sire">Sire:{{selectedSire.rname}}</label>
+          <select name="sire" [(ngModel)]="selectedSire" class="form-control">
+            <option *ngFor="let sire of sires" [ngValue]="sire">{{sire.rname}}</option>
+          </select>
+        </div>
 
         <div class="form-group">
           <div class="input-group">
@@ -29,7 +36,6 @@
           </div>
         </div>
       </form>
-      {{dog.dob | date:'dd-MM-yyyy HH:mm'}}
     </div>
   </div>
   <app-uploadimage></app-uploadimage>
