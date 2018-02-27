@@ -30,7 +30,8 @@ export class EditdogComponent implements OnInit {
   dog: Dog;
   sires: Dog[];
   dams: Dog[];
-  selectedSire: Dog;
+  selectedSire: Dog = null;
+  selectedDam: Dog  = null;
 
   showInput = false;
 
@@ -38,9 +39,7 @@ export class EditdogComponent implements OnInit {
     private route: ActivatedRoute,
     private dogService: DogService,
     private location: Location
-  ) { 
-    
-  }
+  ) {}
   
   ngOnInit(): void {
     this.getDog()
@@ -49,22 +48,36 @@ export class EditdogComponent implements OnInit {
   getDog() {
     const id = +this.route.snapshot.paramMap.get('id');
     this.dogService.getDog(id)
-      .subscribe(dog => this.dog = dog), 
-      this.getSires(),
-      this.getDams();
+      .subscribe(dog => { this.dog = dog,
+      this.getDams(),
+      this.getSires()
+      });
   }
+  
   getSires() {
     this.dogService.getMaleDogs()
-      .subscribe(dogs => this.sires = dogs);
+      .subscribe(dogs => {
+        this.sires = dogs,
+        this.selectedSire =  this.sires.find(dog => dog.id == this.dog.sireId);
+      });
   }
-  async getDams() {
-    await this.dogService.getFemaleDogs()
-      .subscribe(dams => this.dams = dams);
+
+  getDams() {
+    this.dogService.getFemaleDogs()
+      .subscribe(dogs => {
+        this.dams = dogs,
+        this.selectedDam =  this.dams.find(dog => dog.id == this.dog.damId);
+      });
   }
-  setSire(selectedDog: Dog){
+  
+  setSire(){
     this.dog.sireId = this.selectedSire.id;
     this.dog.sireName = this.selectedSire.rname;
+  }
 
+  setDam(){
+    this.dog.damId = this.selectedDam.id;
+    this.dog.damName = this.selectedDam.rname;
   }
   
   goBack(): void {

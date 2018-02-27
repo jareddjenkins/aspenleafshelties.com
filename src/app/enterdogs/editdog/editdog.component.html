@@ -21,18 +21,27 @@
           <label for="dog.comments">Description</label>
           <input type="text" [(ngModel)]="dog.comments" class="form-control" name="comments" id="comments" placeholder="Description">
         </div>
-  
-        <div class="form-group" *ngIf="selectedSire">
-          <label for="sire">Sire:{{selectedSire.rname}}</label>
-          <select name="sire" [(ngModel)]="selectedSire" class="form-control">
+
+        <div class="form-group">
+          <label for="sire">Sire</label>
+          <select name="sire" [(ngModel)]="selectedSire" (change)="setSire()" class="form-control">
             <option *ngFor="let sire of sires" [ngValue]="sire">{{sire.rname}}</option>
           </select>
         </div>
 
         <div class="form-group">
+          <label for="dam">Dam</label>
+          <select name="dam" [(ngModel)]="selectedDam" nullValue (change)="setDam()" class="form-control">
+            <option *ngFor="let dam of dams" [ngValue]="dam">{{dam.rname}}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
           <div class="input-group">
-            <label for="dob">Date of Birth: {{dog.dob|date:'longDate'}}</label><br>
-            <ngb-datepicker name="dob" [(ngModel)]="dog.dob"></ngb-datepicker>
+            <label for="dob">Date of Birth: {{dog.dob|date:'longDate'}}</label>
+            <div>
+              <ngb-datepicker name="dob" [(ngModel)]="dog.dob"></ngb-datepicker>
+            </div>
           </div>
         </div>
       </form>
