@@ -14,7 +14,7 @@ const httpOptions = {
 
 @Injectable()
 export class DogService {
-  private dogApiUrl = 'http://localhost:65096/api';  // URL to web api
+  private dogApiUrl = 'https://localhost:44342/api';  // URL to web api
 
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
@@ -56,7 +56,7 @@ export class DogService {
   }
 
   getAvailablePage(): Observable<Dog[]> {
-    const url = `${this.dogApiUrl}/pages/available`;
+    const url = `${this.dogApiUrl}/dogpages/available`;
     return this.http.get<Dog[]>(url)
       .pipe(
         tap(dogs => this.log(`fetched dogs`)),
@@ -65,7 +65,7 @@ export class DogService {
   }
 
   getBoysPage(): Observable<Dog[]> {
-    const url = `${this.dogApiUrl}/pages/boyspage`;
+    const url = `${this.dogApiUrl}/dogpages/boys`;
     return this.http.get<Dog[]>(url)
       .pipe(
         tap(dogs => this.log(`fetched dogs`)),
@@ -75,7 +75,7 @@ export class DogService {
 
 
   getGirlsPage(): Observable<Dog[]> {
-    const url = `${this.dogApiUrl}/pages/girlspage`;
+    const url = `${this.dogApiUrl}/dogpages/girls`;
     return this.http.get<Dog[]>(url)
       .pipe(
         tap(dogs => this.log(`fetched dogs`)),
