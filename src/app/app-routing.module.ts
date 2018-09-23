@@ -9,6 +9,7 @@ import { DogDetailComponent } from './dog-detail/dog-detail.component';
 import { ListdogsComponent } from './enterdogs/listdogs/listdogs.component'
 import { EditdogComponent } from './enterdogs/editdog/editdog.component';
 import { EnterdogsComponent } from './enterdogs/enterdogs.component'
+import { ResourcesComponent } from './resources/resources.component'
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'boys', component: BoysComponent },
   { path: 'girls', component: GirlsComponent },
   { path: 'available', component: AvailableComponent },
+  { path: 'resources', component: ResourcesComponent },
   { path: 'detail/:id', component: DogDetailComponent },
   {
     path: 'enterdogs', component: EnterdogsComponent,

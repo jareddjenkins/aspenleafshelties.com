@@ -23,6 +23,7 @@ import { EnterdogsnavComponent } from './enterdogs/enterdogsnav/enterdogsnav.com
 import { ListdogsComponent } from './enterdogs/listdogs/listdogs.component';
 import { EnterdogsComponent } from './enterdogs/enterdogs.component';
 import { UploadimageComponent } from './enterdogs/uploadimage/uploadimage.component';
+import { ResourcesComponent } from './resources/resources.component';
 
 @NgModule({
   declarations:[
@@ -40,7 +41,8 @@ import { UploadimageComponent } from './enterdogs/uploadimage/uploadimage.compon
     ListdogsComponent,
     EnterdogsComponent,
     UploadimageComponent,
-    ImageCropperComponent
+    ImageCropperComponent,
+    ResourcesComponent
     
   ],
   imports: [
