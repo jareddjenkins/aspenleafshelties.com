@@ -1,32 +1,30 @@
-import { Component, OnInit,Input } from '@angular/core';
-import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
-import { Dog } from '../../dog'
+import { Component, OnInit, Input } from '@angular/core'
+import { ActivatedRoute } from '@angular/router';
+import { UploaddogprofileimageService } from '../../uploaddogprofileimage.service'
 
 @Component({
   selector: 'app-uploadimage',
   templateUrl: './uploadimage.component.html',
   styleUrls: ['./uploadimage.component.css'],
 })
+
 export class UploadimageComponent implements OnInit {
+  selectedFile = null;
+  id = null;
 
-  @Input ()
-    dog = Dog;
+  constructor(
+    private uploadservice: UploaddogprofileimageService,
+    private route: ActivatedRoute){}
 
-  ngOnInit(): void {
+  onFileSelected(event) {
+    this.selectedFile = event.target.files[0];
   }
-
-  data: any;
-  cropperSettings: CropperSettings;
-
-  constructor() {
-    this.cropperSettings = new CropperSettings();
-    this.cropperSettings.width = 100;
-    this.cropperSettings.height = 100;
-    this.cropperSettings.croppedWidth = 100;
-    this.cropperSettings.croppedHeight = 100;
-    this.cropperSettings.canvasWidth = 400;
-    this.cropperSettings.canvasHeight = 300;
-
-    this.data = {};
+  onUpload() {
+    this.uploadservice.uploadDogImage(this.id,this.selectedFile)
+    
   }
+    ngOnInit(): void {
+      this.id = this.route.snapshot.paramMap.get('id');
+    }
+
 }

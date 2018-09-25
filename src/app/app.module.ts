@@ -6,8 +6,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
-
 import { HomeComponent }      from './home/home.component';
 import { TopnavComponent } from './topnav/topnav.component';
 import { GirlsComponent } from './girls/girls.component';
@@ -24,6 +22,7 @@ import { ListdogsComponent } from './enterdogs/listdogs/listdogs.component';
 import { EnterdogsComponent } from './enterdogs/enterdogs.component';
 import { UploadimageComponent } from './enterdogs/uploadimage/uploadimage.component';
 import { ResourcesComponent } from './resources/resources.component';
+import { UploaddogprofileimageService } from './uploaddogprofileimage.service';
 
 @NgModule({
   declarations:[
@@ -41,7 +40,6 @@ import { ResourcesComponent } from './resources/resources.component';
     ListdogsComponent,
     EnterdogsComponent,
     UploadimageComponent,
-    ImageCropperComponent,
     ResourcesComponent
     
   ],
@@ -53,6 +51,6 @@ import { ResourcesComponent } from './resources/resources.component';
     FormsModule
   ],
   bootstrap: [AppComponent],
-  providers: [DogService, MessageService]
+  providers: [DogService, MessageService, UploaddogprofileimageService]
 })
 export class AppModule { }

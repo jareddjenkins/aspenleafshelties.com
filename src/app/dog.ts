@@ -1,5 +1,3 @@
-import { OnInit } from '@angular/core'
-
 export class Dog {
     id: number;
     cname: string;
@@ -10,5 +8,6 @@ export class Dog {
     sireName: string;
     sireId: number;
     gender: boolean;
+    profileImageUrl: string;
     rname: string;
 }

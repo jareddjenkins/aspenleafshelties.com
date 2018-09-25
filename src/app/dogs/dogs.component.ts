@@ -21,7 +21,7 @@ export class DogsComponent implements OnInit {
   constructor(private router: Router,private location: Location) { }
 
   ngOnInit() {
-    this.lgImgUrl = `assets/dogphotos/large${this.dog.id}.jpg`
+    this.lgImgUrl = `${this.dog.profileImageUrl}`
   }
 
   goDogDetails(): void {

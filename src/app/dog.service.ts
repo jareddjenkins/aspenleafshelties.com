@@ -16,7 +16,6 @@ const httpOptions = {
 export class DogService {
   private dogApiUrl = 'https://localhost:44342/api';  // URL to web api
 
-
   constructor(private http: HttpClient, private messageService: MessageService) { }
   /** Log a DogService message with the MessageService */
   private log(message: string) {
