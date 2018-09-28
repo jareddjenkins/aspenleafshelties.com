@@ -15,6 +15,7 @@ import { DogsComponent } from './dogs/dogs.component'
 import { MessagesComponent } from './messages/messages.component';
 import { MessageService } from './message.service';
 import { DogService } from './dog.service';
+import { DogpagesService } from './dogpages.service';
 import { DogDetailComponent } from './dog-detail/dog-detail.component';
 import { EditdogComponent } from './enterdogs/editdog/editdog.component';
 import { EnterdogsnavComponent } from './enterdogs/enterdogsnav/enterdogsnav.component';
@@ -51,6 +52,6 @@ import { UploaddogprofileimageService } from './uploaddogprofileimage.service';
     FormsModule
   ],
   bootstrap: [AppComponent],
-  providers: [DogService, MessageService, UploaddogprofileimageService]
+  providers: [DogService,DogpagesService, MessageService, UploaddogprofileimageService]
 })
 export class AppModule { }
