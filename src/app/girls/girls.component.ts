@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Dog } from '../dog'
-import { Pages } from '../pages'
 import { DogService } from '../dog.service'
 import { DogpagesService } from '../dogpages.service'
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/switch';
+import 'rxjs/add/operator/concatMap'
+import 'rxjs/add/operator/mergeAll'
+import 'rxjs/add/operator/mergeMap'
+import 'rxjs/add/observable/forkJoin'
+import 'rxjs/add/observable/zip'
+import 'rxjs'
+import { map, concat, concatMap, mergeMap, switchMap, exhaustMap, delay, tap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-girls',
@@ -14,7 +19,7 @@ import 'rxjs/add/operator/switch';
   styleUrls: ['./girls.component.css']
 })
 export class GirlsComponent implements OnInit {
-  dogs: Observable<Dog[]>;
+  dogs: Dog[]=[];
 
 
   constructor(
@@ -24,17 +29,12 @@ export class GirlsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dogpagesService.getPage('girls')
-      .map(res =>
-        res.map((val) => {
-          console.log(val)
-          return val.dogsId
-        }))
-      .subscribe(obsNumbers => obsNumbers
-        .map(num => this.dogService
-          .getDog(num)
-          .subscribe(dog => console.log(dog)
-          )));
-  }
 
+    this.dogpagesService.getPageList('girls')
+      .subscribe(pageList => {
+        pageList.map(listItem => {
+          return this.dogService.getDog(listItem.dogsId)
+        }).map(x => x.subscribe(x => this.dogs.push(x)))
+      })
+  }
 }

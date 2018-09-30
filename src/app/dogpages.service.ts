@@ -23,7 +23,7 @@ export class DogpagesService {
   private log(message: string) {
     this.messageService.add('DogService: ' + message);
   }
-  getPage(page: string): Observable<Pages[]> {
+  getPageList(page: string): Observable<Pages[]> {
     const url = `${this.dogApiUrl}/dogpages/${page}`;
     return this.http.get<Pages[]>(url)
       .pipe(
