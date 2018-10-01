@@ -6,6 +6,8 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Pages } from './pages';
+import { Dog } from './dog'
+import { DogService } from './dog.service'
 import { MessageService } from './message.service';
 
 import { environment } from '../environments/environment';
@@ -18,18 +20,26 @@ const httpOptions = {
 export class DogpagesService {
   private dogApiUrl = environment.apiEndpoint;
 
-  constructor(private http: HttpClient, private messageService: MessageService) { }
+  constructor(
+    private http: HttpClient,
+    private messageService: MessageService,
+    private dogService: DogService) { }
   /** Log a DogService message with the MessageService */
   private log(message: string) {
     this.messageService.add('DogService: ' + message);
   }
-  getPageList(page: string): Observable<Pages[]> {
+  getPageList(page: string): Dog[] {
+    let dogs: Dog[] = []
     const url = `${this.dogApiUrl}/dogpages/${page}`;
-    return this.http.get<Pages[]>(url)
-      .pipe(
-        tap(page => this.log(`fetched dogs`)),
-        catchError(this.handleError('getDogs', []))
-      );
+
+    this.http.get<Pages[]>(url)
+      .subscribe(pageList => {
+        pageList.map(listItem => {
+          return this.dogService.getDog(listItem.dogsId)
+        }).map(x => x.subscribe(x => dogs.push(x)))
+      });
+
+    return dogs;
   }
 
   /**

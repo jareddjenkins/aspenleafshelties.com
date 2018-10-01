@@ -30,11 +30,6 @@ export class GirlsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.dogpagesService.getPageList('girls')
-      .subscribe(pageList => {
-        pageList.map(listItem => {
-          return this.dogService.getDog(listItem.dogsId)
-        }).map(x => x.subscribe(x => this.dogs.push(x)))
-      })
+    this.dogs = this.dogpagesService.getPageList('girls')
   }
 }

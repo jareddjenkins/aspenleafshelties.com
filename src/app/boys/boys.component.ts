@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DogsComponent } from '../dogs/dogs.component';
 import { Dog } from '../dog'
-import { DogService } from '../dog.service'
+import { DogpagesService } from '../dogpages.service'
 
 @Component({
   selector: 'app-boys',
@@ -12,15 +12,9 @@ import { DogService } from '../dog.service'
 export class BoysComponent implements OnInit {
   dogs: Dog[];
 
-  constructor(private dogService: DogService) { }
+  constructor(private dogpagesService: DogpagesService) { }
 
   ngOnInit() {
-    this.getBoyspage();
-  }
-
-  getBoyspage(): void {
-    this.dogService.getBoysPage()
-      .subscribe(dogs => this.dogs = dogs);
-
+    this.dogs = this.dogpagesService.getPageList('boys')
   }
 }
