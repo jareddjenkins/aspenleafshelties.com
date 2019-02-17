@@ -8,13 +8,15 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Dog } from './dog';
 import { MessageService } from './message.service';
 
+import { environment } from '../environments/environment';
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 @Injectable()
 export class DogService {
-  private dogApiUrl = 'https://localhost:44342/api';  // URL to web api
+  private dogApiUrl = environment.apiEndpoint;  // URL to web api
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
   /** Log a DogService message with the MessageService */
