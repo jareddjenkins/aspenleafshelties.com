@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Dog } from '../dog'
 import { DogService } from '../dog.service'
 import { DogpagesService } from '../dogpages.service'
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/concatMap'
-import 'rxjs/add/operator/mergeAll'
-import 'rxjs/add/operator/mergeMap'
-import 'rxjs/add/observable/forkJoin'
-import 'rxjs/add/observable/zip'
+
+
+
+
+
+
 import 'rxjs'
 import { map, concat, concatMap, mergeMap, switchMap, exhaustMap, delay, tap } from 'rxjs/operators';
 
