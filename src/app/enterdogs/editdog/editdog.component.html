@@ -11,15 +11,18 @@
       <form>
         <div class="form-group">
           <label for="rname">Registered Name</label>
-          <input type="text" [(ngModel)]="dog.rname" class="form-control" name="rname" id="rname" placeholder="Registered Name">
+          <input type="text" [(ngModel)]="dog.rname" class="form-control" name="rname" id="rname"
+            placeholder="Registered Name">
         </div>
         <div class="form-group">
           <label for="cname">Call Name</label>
-          <input type="text" [(ngModel)]="dog.cname" class="form-control" name="cname" id="cname" placeholder="Call Name">
+          <input type="text" [(ngModel)]="dog.cname" class="form-control" name="cname" id="cname"
+            placeholder="Call Name">
         </div>
         <div class="form-group">
           <label for="dog.comments">Description</label>
-          <input type="text" [(ngModel)]="dog.comments" class="form-control" name="comments" id="comments" placeholder="Description">
+          <input type="text" [(ngModel)]="dog.comments" class="form-control" name="comments" id="comments"
+            placeholder="Description">
         </div>
 
         <div class="form-group">
@@ -43,8 +46,28 @@
               <ngb-datepicker name="dob" [(ngModel)]="dog.dob"></ngb-datepicker>
             </div>
           </div>
+          <div>
+            <input type="file" (change)="fileChangeEvent($event)" accept="image/x-png"/>
+            <button type="button" (click)="onUpload()">Upload</button>
+            
+            <image-cropper
+                [imageChangedEvent]="imageChangedEvent"
+                [maintainAspectRatio]="true"
+                [aspectRatio]="160 / 160"
+                [resizeToWidth]="128"
+                resizeToWidth= "960"
+                onlyScaleDown = "true"
+                format="png"
+                outputType='base64'
+                (imageCropped)="imageCropped($event)"
+                (imageLoaded)="imageLoaded()"
+                (cropperReady)="cropperReady()"
+                (loadImageFailed)="loadImageFailed()"
+            ></image-cropper>
+            
+            <img [src]="croppedImage" />
+          </div>
         </div>
       </form>
     </div>
   </div>
-  <app-uploadimage></app-uploadimage>

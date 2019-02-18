@@ -21,9 +21,7 @@ import { EditdogComponent } from './enterdogs/editdog/editdog.component';
 import { EnterdogsnavComponent } from './enterdogs/enterdogsnav/enterdogsnav.component';
 import { ListdogsComponent } from './enterdogs/listdogs/listdogs.component';
 import { EnterdogsComponent } from './enterdogs/enterdogs.component';
-import { UploadimageComponent } from './enterdogs/uploadimage/uploadimage.component';
 import { ResourcesComponent } from './resources/resources.component';
-import { UploaddogprofileimageService } from './uploaddogprofileimage.service';
 import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
@@ -41,7 +39,6 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     EnterdogsnavComponent,
     ListdogsComponent,
     EnterdogsComponent,
-    UploadimageComponent,
     ResourcesComponent
     
   ],
@@ -55,6 +52,6 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     
   ],
   bootstrap: [AppComponent],
-  providers: [DogService,DogpagesService, MessageService, UploaddogprofileimageService]
+  providers: [DogService,DogpagesService, MessageService]
 })
 export class AppModule { }

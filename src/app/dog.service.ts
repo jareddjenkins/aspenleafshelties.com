@@ -82,6 +82,15 @@ export class DogService {
         catchError(this.handleError('getDogs', []))
       );
   }
+  
+    /** POST: add a new dog to the server */
+    addDog(dog: Dog): Observable<Dog> {
+      const url = `${this.dogApiUrl}/dogs/${dog.id}`;
+      return this.http.post<Dog>(url, dog, httpOptions).pipe(
+        tap((dog: Dog) => this.log(`added dog w/ id=${dog.id}`)),
+        catchError(this.handleError<Dog>('addDog'))
+      );
+    }
 
   /** PUT: update the dog on the server */
   updateDog(dog: Dog): Observable<Dog> {
@@ -92,14 +101,31 @@ export class DogService {
     );
   }
 
-  /** POST: add a new dog to the server */
-  addDog(dog: Dog): Observable<Dog> {
-    const url = `${this.dogApiUrl}/dogs/${dog.id}`;
-    return this.http.post<Dog>(url, dog, httpOptions).pipe(
-      tap((dog: Dog) => this.log(`added dog w/ id=${dog.id}`)),
-      catchError(this.handleError<Dog>('addDog'))
-    );
+  // uploadDogImage(id: number, image: Blob): Observable<string> {
+  //   const fd = new FormData();
+  //   const url = `${this.dogApiUrl}/Dogs/${id}/Image`;
+  //   fd.append('image', image)
+  //   return this.http.post(url, fd, httpOptions).pipe(
+  //     tap((imageUrl: string) => this.log(`new image url=${imageUrl}`)),
+  //     catchError(this.handleError<any>('uploadDogImage'))
+  //   );
+  // }
+
+
+  uploadDogImage(id:number,image: Blob): Observable<string> {
+    const fd = new FormData();
+    interface imageResponse {
+      imageUrl: string;
+    }
+    fd.append('image', image)
+    const url = `${this.dogApiUrl}/Dogs/${id}/Image`;
+    return this.http.post<imageResponse>(url,fd).pipe(
+      tap(res => this.log(`new profile image url is=${res.imageUrl}`)),
+      catchError(this.handleError<any>('uploadDogImage')),
+      map(res => { return res.imageUrl })
+    )
   }
+
 
   /**
    * Handle Http operation that failed.
