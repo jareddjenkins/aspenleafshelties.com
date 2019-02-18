@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environments/environment';
+
 
 @Injectable()
 export class UploaddogprofileimageService {
@@ -8,9 +9,9 @@ export class UploaddogprofileimageService {
 
   constructor(private http: HttpClient) { }
 
-  uploadDogImage(id:number,image: File){
+  uploadDogImage(id:number,image: Blob){
     const fd = new FormData();
-    fd.append('file',image, image.name)
+    fd.append('image', image)
     const url = `${this.path}/Dogs/${id}/Image`;
     this.http.post(url,fd)
     .subscribe(res => {

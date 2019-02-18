@@ -24,6 +24,7 @@ import { EnterdogsComponent } from './enterdogs/enterdogs.component';
 import { UploadimageComponent } from './enterdogs/uploadimage/uploadimage.component';
 import { ResourcesComponent } from './resources/resources.component';
 import { UploaddogprofileimageService } from './uploaddogprofileimage.service';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
   declarations:[
@@ -49,7 +50,9 @@ import { UploaddogprofileimageService } from './uploaddogprofileimage.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ImageCropperModule
+    
   ],
   bootstrap: [AppComponent],
   providers: [DogService,DogpagesService, MessageService, UploaddogprofileimageService]
