@@ -22,8 +22,8 @@ const routes: Routes = [
   {
     path: 'enterdogs', component: EnterdogsComponent,
     children: [
-      { path: 'editdog/:id', component: EditdogComponent },
-      { path: '', component: ListdogsComponent }
+      { path: '', component: ListdogsComponent },
+      { path: 'editdog/:id', component: EditdogComponent }
     ]
   }
 ];
