@@ -18,7 +18,8 @@
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
-              "src/favicon-32x32.png"
+              "src/favicon-32x32.png",
+              "src/web.config"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
