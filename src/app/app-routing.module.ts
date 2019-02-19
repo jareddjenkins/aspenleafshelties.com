@@ -20,9 +20,9 @@ const routes: Routes = [
   { path: 'resources', component: ResourcesComponent },
   { path: 'detail/:id', component: DogDetailComponent },
   {
-    path: 'enterdogs', component: EnterdogsComponent,
+    path: 'enterdogs',
     children: [
-      { path: '', component: ListdogsComponent },
+      { path: '', component: EnterdogsComponent },
       { path: 'editdog/:id', component: EditdogComponent }
     ]
   }
