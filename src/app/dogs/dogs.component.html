@@ -1,13 +1,13 @@
 <div class="container">
     <div class="row eachdog my-md-2 " *ngIf="dog" (click)="goDogDetails()" >
-        <div class="col itemtitle">
+        <div class="col-12 itemtitle">
             <h5>{{dog.rname}}</h5>
         </div>
         <div class="row">
             <div class="col-xs-12 col-md-4">
                 <img src="{{dog.profileImageUrl}}" class="img-fluid">
             </div>
-            <div class="col listdetails">
+            <div class="col-xs-12 col-md-8 listdetails">
                 <div class="row">
                     <dl class="col-6 col-md-3">
                         <dt>Call Name</dt>
@@ -28,7 +28,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <dd>{{dog.comments}}:</dd>
+                        <dd>{{dog.comments}}</dd>
                     </div>
                 </div>
             </div>
