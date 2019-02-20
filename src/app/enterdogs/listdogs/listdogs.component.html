@@ -1,7 +1,30 @@
-<div class='container'>
-  <div class='row' *ngFor="let dog of dogs">
-    <div class="col">
-      <a routerLink="editdog/{{dog.id}}" routerLinkActive="active">{{dog.rname}}</a>
+<div class="container">
+  <div class="col">
+    <div class="row">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Rname</th>
+            <th scope="col">Cname</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Sire</th>
+            <th scope="col">Dam</th>
+            <th scope="col">DoB</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let dog of dogs">
+              <th scope="row">{{dog.id}}</th>
+              <td><a routerLink="editdog/{{dog.id}}" routerLinkActive="active">{{dog.rname}}</a></td>
+              <td>{{dog.cname}}</td>
+              <td>{{dog.gender}}</td>
+              <td>{{dog.sireName}}</td>
+              <td>{{dog.damName}}</td>
+              <td>{{dog.dob}}</td>
+            </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
