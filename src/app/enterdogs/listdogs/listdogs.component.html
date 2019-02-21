@@ -1,6 +1,15 @@
 <div class="container">
   <div class="col">
     <div class="row">
+      <div class="input-group md-form form-sm form-1 pl-0">
+        <div class="input-group-prepend">
+          <span class="input-group-text purple lighten-3" id="basic-text1"><i class="fas fa-search text-white"
+              aria-hidden="true"></i></span>
+        </div>
+        <input class="form-control my-0 py-1" type="text" placeholder="Search" aria-label="Search">
+      </div>
+    </div>
+    <div class="row">
       <table class="table table-striped">
         <thead>
           <tr>
@@ -11,18 +20,22 @@
             <th scope="col">Sire</th>
             <th scope="col">Dam</th>
             <th scope="col">DoB</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let dog of dogs">
-              <th scope="row">{{dog.id}}</th>
-              <td><a routerLink="editdog/{{dog.id}}" routerLinkActive="active">{{dog.rname}}</a></td>
-              <td>{{dog.cname}}</td>
-              <td>{{dog.gender}}</td>
-              <td>{{dog.sireName}}</td>
-              <td>{{dog.damName}}</td>
-              <td>{{dog.dob}}</td>
-            </tr>
+            <th scope="row">{{dog.id}}</th>
+            <td>{{dog.rname}}</td>
+            <td>{{dog.cname}}</td>
+            <td>{{dog.gender}}</td>
+            <td>{{dog.sireName}}</td>
+            <td>{{dog.damName}}</td>
+            <td>{{dog.dob | date:'shortDate'}}</td>
+            <td><a routerLink="editdog/{{dog.id}}" routerLinkActive="active" >
+                <mat-icon class="black-icon">edit</mat-icon>
+              </a></td>
+          </tr>
         </tbody>
       </table>
     </div>
