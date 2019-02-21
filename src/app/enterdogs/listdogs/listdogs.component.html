@@ -1,43 +1,41 @@
-<div class="container">
-  <div class="col">
-    <div class="row">
-      <div class="input-group md-form form-sm form-1 pl-0">
-        <div class="input-group-prepend">
-          <span class="input-group-text purple lighten-3" id="basic-text1"><i class="fas fa-search text-white"
-              aria-hidden="true"></i></span>
-        </div>
-        <input class="form-control my-0 py-1" type="text" placeholder="Search" aria-label="Search">
+<div class="col">
+  <div class="row">
+    <div class="input-group md-form form-sm form-1 pl-0">
+      <div class="input-group-prepend">
+        <span class="input-group-text purple lighten-3" id="basic-text1"><i class="fas fa-search text-white"
+            aria-hidden="true"></i></span>
       </div>
+      <input class="form-control my-0 py-1" type="text" placeholder="Search" aria-label="Search">
     </div>
-    <div class="row">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Rname</th>
-            <th scope="col">Cname</th>
-            <th scope="col">Gender</th>
-            <th scope="col">Sire</th>
-            <th scope="col">Dam</th>
-            <th scope="col">DoB</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let dog of dogs">
-            <th scope="row">{{dog.id}}</th>
-            <td>{{dog.rname}}</td>
-            <td>{{dog.cname}}</td>
-            <td>{{dog.gender}}</td>
-            <td>{{dog.sireName}}</td>
-            <td>{{dog.damName}}</td>
-            <td>{{dog.dob | date:'shortDate'}}</td>
-            <td><a routerLink="editdog/{{dog.id}}" routerLinkActive="active" >
-                <mat-icon class="black-icon">edit</mat-icon>
-              </a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  </div>
+  <div class="row">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col" class="d-none d-sm-table-cell">Id</th>
+          <th scope="col">Rname</th>
+          <th scope="col" class="d-none d-sm-table-cell">Cname</th>
+          <th scope="col" class="d-none d-sm-table-cell">Gender</th>
+          <th scope="col" class="d-none d-sm-table-cell">Sire</th>
+          <th scope="col" class="d-none d-sm-table-cell">Dam</th>
+          <th scope="col" class="d-none d-sm-table-cell">DoB</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dog of dogs">
+          <th scope="row" class="d-none d-sm-table-cell">{{dog.id}}</th>
+          <td>{{dog.rname}}</td>
+          <td class="d-none d-sm-table-cell">{{dog.cname}}</td>
+          <td class="d-none d-sm-table-cell">{{dog.gender === 1 ? "Male" : "Female"}}</td>
+          <td class="d-none d-sm-table-cell">{{dog.sireName}}</td>
+          <td class="d-none d-sm-table-cell">{{dog.damName}}</td>
+          <td class="d-none d-sm-table-cell">{{dog.dob | date:'shortDate'}}</td>
+          <td><a routerLink="editdog/{{dog.id}}" routerLinkActive="active">
+              <mat-icon class="black-icon">edit</mat-icon>
+            </a></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
