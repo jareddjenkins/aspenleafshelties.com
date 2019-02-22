@@ -1,11 +1,7 @@
 <div class="col">
   <div class="row">
     <div class="input-group md-form form-sm form-1 pl-0">
-      <div class="input-group-prepend">
-        <span class="input-group-text purple lighten-3" id="basic-text1"><i class="fas fa-search text-white"
-            aria-hidden="true"></i></span>
-      </div>
-      <input class="form-control my-0 py-1" type="text" placeholder="Search" aria-label="Search">
+       <input  class="form-control my-0 py-1" type="text" [(ngModel)]="query" placeholder="Search" aria-label="Search">
     </div>
   </div>
   <div class="row">
@@ -23,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let dog of dogs">
+        <tr *ngFor="let dog of ( dogs | nameContains : query)">
           <th scope="row" class="d-none d-sm-table-cell">{{dog.id}}</th>
           <td>{{dog.rname}}</td>
           <td class="d-none d-sm-table-cell">{{dog.cname}}</td>
