@@ -19,7 +19,7 @@ import { map, concat, concatMap, mergeMap, switchMap, exhaustMap, delay, tap } f
   styleUrls: ['./girls.component.css']
 })
 export class GirlsComponent implements OnInit {
-  dogs: Dog[]=[];
+  dogs: Observable<Dog[]>;
 
 
   constructor(

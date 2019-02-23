@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable ,  of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, of, forkJoin } from 'rxjs';
+import { catchError, map, tap, mergeMap, flatMap, concatMap } from 'rxjs/operators';
 
 import { Pages } from './pages';
 import { Dog } from './dog'
@@ -27,18 +27,17 @@ export class DogpagesService {
   private log(message: string) {
     this.messageService.add('DogService: ' + message);
   }
-  getPageList(page: string): Dog[] {
-    let dogs: Dog[] = []
+  getPageList(page: string): Observable<Dog[]> {
+    //let dogs: Dog[] = []
     const url = `${this.dogApiUrl}/dogpages/${page}`;
-
-    this.http.get<Pages[]>(url)
-      .subscribe(pageList => {
-        pageList.map(listItem => {
-          return this.dogService.getDog(listItem.dogsId)
-        }).map(x => x.subscribe(x => dogs.push(x)))
-      });
-
-    return dogs;
+    var numbers = [36, 77]
+    const pages = this.http.get<Pages[]>(url);
+    let pagesList: Pages[]
+    //this.dogService.getDog(listItem.dogsId)
+    let x = numbers.map( num => this.dogService.getDog(num).pipe(
+      map(dog => { return dog })
+    ));
+    return forkJoin(x);
   }
 
   /**

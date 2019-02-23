@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  } from '@angular/core';
 import { DogsComponent } from '../dogs/dogs.component';
 import { Dog } from '../dog'
 import { DogpagesService } from '../dogpages.service'
+import { Observable, of, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-boys',
@@ -10,11 +11,11 @@ import { DogpagesService } from '../dogpages.service'
 })
 
 export class BoysComponent implements OnInit {
-  dogs: Dog[];
+  dogs: Observable<Dog[]>;
 
   constructor(private dogpagesService: DogpagesService) { }
 
   ngOnInit() {
-    this.dogs = this.dogpagesService.getPageList('boys')
+   this.dogs = this.dogpagesService.getPageList('boys')
   }
 }

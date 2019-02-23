@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DogsComponent } from '../dogs/dogs.component';
-import { Dog } from '../dog'
-import { DogpagesService } from '../dogpages.service'
+import { Dog } from '../dog';
+import { DogpagesService } from '../dogpages.service';
+import { Observable, of, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-available',
@@ -10,7 +11,7 @@ import { DogpagesService } from '../dogpages.service'
 })
 export class AvailableComponent implements OnInit {
 
-  dogs: Dog[];
+  dogs: Observable<Dog[]>;
 
   constructor(private dogpagesService: DogpagesService) { }
 
