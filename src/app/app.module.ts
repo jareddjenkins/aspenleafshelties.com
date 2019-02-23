@@ -23,6 +23,10 @@ import { ListdogsComponent } from './enterdogs/listdogs/listdogs.component';
 import { EnterdogsComponent } from './enterdogs/enterdogs.component';
 import { ResourcesComponent } from './resources/resources.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatButtonModule,MatCheckboxModule,MatToolbarModule,MatInputModule,MatProgressSpinnerModule,MatCardModule,MatMenuModule, MatIconModule} from '@angular/material';
+import { nameContainsPipe } from './namesearch.pipes';
+import { EditpagesComponent } from './enterdogs/editpages/editpages.component';
 
 @NgModule({
   declarations:[
@@ -39,7 +43,9 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     EnterdogsnavComponent,
     ListdogsComponent,
     EnterdogsComponent,
-    ResourcesComponent
+    ResourcesComponent,
+    nameContainsPipe,
+    EditpagesComponent
     
   ],
   imports: [
@@ -48,7 +54,11 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ImageCropperModule
+    ImageCropperModule,
+    BrowserAnimationsModule,
+    MatButtonModule, 
+    MatCheckboxModule,
+    MatIconModule
     
   ],
   bootstrap: [AppComponent],

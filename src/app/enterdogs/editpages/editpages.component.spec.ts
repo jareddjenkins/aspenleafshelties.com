@@ -1,21 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListdogsComponent } from './listdogs.component';
-import { nameContainsPipe } from '../../namesearch.pipes';
+import { EditpagesComponent } from './editpages.component';
 
-describe('ListdogsComponent', () => {
-  let component: ListdogsComponent;
-  let fixture: ComponentFixture<ListdogsComponent>;
+describe('EditpagesComponent', () => {
+  let component: EditpagesComponent;
+  let fixture: ComponentFixture<EditpagesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListdogsComponent ]
+      declarations: [ EditpagesComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListdogsComponent);
+    fixture = TestBed.createComponent(EditpagesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

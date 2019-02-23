@@ -10,6 +10,7 @@ import { ListdogsComponent } from './enterdogs/listdogs/listdogs.component'
 import { EditdogComponent } from './enterdogs/editdog/editdog.component';
 import { EnterdogsComponent } from './enterdogs/enterdogs.component'
 import { ResourcesComponent } from './resources/resources.component'
+import { EditpagesComponent } from './enterdogs/editpages/editpages.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -20,10 +21,11 @@ const routes: Routes = [
   { path: 'resources', component: ResourcesComponent },
   { path: 'detail/:id', component: DogDetailComponent },
   {
-    path: 'enterdogs', component: EnterdogsComponent,
+    path: 'enterdogs',
     children: [
-      { path: 'editdog/:id', component: EditdogComponent },
-      { path: '', component: ListdogsComponent }
+      { path: '', component: EnterdogsComponent },
+      { path: 'pages', component: EditpagesComponent },
+      { path: 'editdog/:id', component: EditdogComponent }
     ]
   }
 ];

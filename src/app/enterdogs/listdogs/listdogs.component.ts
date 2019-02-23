@@ -1,5 +1,5 @@
-import { Component, OnInit,Input } from '@angular/core';
-import { Router} from '@angular/router';
+import { Component, OnInit, Input, Pipe, PipeTransform } from '@angular/core';
+import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Dog } from '../../dog'
@@ -12,6 +12,7 @@ import { DogService } from '../../dog.service'
 })
 export class ListdogsComponent implements OnInit {
   dogs: Dog[];
+  query:string = '';
 
   constructor(
     private dogService: DogService,
@@ -28,7 +29,7 @@ export class ListdogsComponent implements OnInit {
       .subscribe(dogs => this.dogs = dogs);
   }
 
-  goBack() : void {
+  goBack(): void {
     this.location.back();
   }
 
