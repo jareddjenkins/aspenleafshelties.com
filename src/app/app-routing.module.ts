@@ -10,6 +10,7 @@ import { ListdogsComponent } from './enterdogs/listdogs/listdogs.component'
 import { EditdogComponent } from './enterdogs/editdog/editdog.component';
 import { EnterdogsComponent } from './enterdogs/enterdogs.component'
 import { ResourcesComponent } from './resources/resources.component'
+import { EditpagesComponent } from './enterdogs/editpages/editpages.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
     path: 'enterdogs',
     children: [
       { path: '', component: EnterdogsComponent },
+      { path: 'pages', component: EditpagesComponent },
       { path: 'editdog/:id', component: EditdogComponent }
     ]
   }

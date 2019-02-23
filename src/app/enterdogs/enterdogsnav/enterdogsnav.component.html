@@ -4,4 +4,12 @@
       aria-controls="navbarsDefault" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+    <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarsDefault">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown" ngbDropdown>
+          <a class="dropdown-item" routerLink="/enterdogs/pages" routerLinkActive="active">Pages</a>
+        </li>
+      </ul>
+    </div>
+
   </nav>

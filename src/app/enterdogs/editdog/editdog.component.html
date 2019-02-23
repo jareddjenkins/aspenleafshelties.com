@@ -1,4 +1,3 @@
-<button (click)="save()">save</button>
 <div class="container">
   <div class="row">
     <div class="col">
@@ -7,6 +6,11 @@
     </div>
   </div>
   <div class="row" *ngIf="dog">
+    <div class="row">
+      <div class="col">
+        <button (click)="save()">save</button>
+      </div>
+    </div>
     <div class="col">
       <form>
         <div class="form-group">
@@ -47,24 +51,14 @@
             </div>
           </div>
           <div>
-            <input type="file" (change)="fileChangeEvent($event)" accept="image/x-png"/>
+            <input type="file" (change)="fileChangeEvent($event)" accept="image/x-png" />
             <button type="button" (click)="onUpload()">Upload</button>
-            
-            <image-cropper
-                [imageChangedEvent]="imageChangedEvent"
-                [maintainAspectRatio]="true"
-                [aspectRatio]="160 / 160"
-                [resizeToWidth]="128"
-                resizeToWidth= "960"
-                onlyScaleDown = "true"
-                format="png"
-                outputType='base64'
-                (imageCropped)="imageCropped($event)"
-                (imageLoaded)="imageLoaded()"
-                (cropperReady)="cropperReady()"
-                (loadImageFailed)="loadImageFailed()"
-            ></image-cropper>
-            
+
+            <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
+              [aspectRatio]="160 / 160" [resizeToWidth]="128" resizeToWidth="960" onlyScaleDown="true" format="png"
+              outputType='base64' (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+              (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>
+
             <img [src]="croppedImage" />
           </div>
         </div>

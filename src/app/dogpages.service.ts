@@ -40,6 +40,13 @@ export class DogpagesService {
 
     return dogs;
   }
+  getPages(): Observable<string[]> {
+    let dogs: Dog[] = []
+    const url = `${this.dogApiUrl}/dogpages/`;
+
+    return this.http.get<string[]>(url)
+  }
+
 
   /**
    * Handle Http operation that failed.
