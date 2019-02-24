@@ -1,3 +1,3 @@
-<app-dogs *ngFor="let dog of dogs"
+<app-dogs *ngFor="let dog of dogs | async"
     [dog]="dog">
 </app-dogs>

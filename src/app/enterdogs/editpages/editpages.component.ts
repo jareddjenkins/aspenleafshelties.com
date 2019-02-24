@@ -13,6 +13,6 @@ export class EditpagesComponent implements OnInit {
   constructor(private dogpagesService: DogpagesService) { }
 
   ngOnInit() {
-    this.pages = this.dogpagesService.getPages();
+    //this.pages = this.dogpagesService.getPages();
   }
 }

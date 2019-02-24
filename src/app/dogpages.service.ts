@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, forkJoin } from 'rxjs';
-import { catchError, map, tap, mergeMap, flatMap, concatMap } from 'rxjs/operators';
+import {  map,switchMap } from 'rxjs/operators';
 
 import { Pages } from './pages';
 import { Dog } from './dog'
@@ -10,6 +10,7 @@ import { DogService } from './dog.service'
 import { MessageService } from './message.service';
 
 import { environment } from '../environments/environment';
+import 'rxjs/add/operator/delay';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -28,24 +29,19 @@ export class DogpagesService {
     this.messageService.add('DogService: ' + message);
   }
   getPageList(page: string): Observable<Dog[]> {
-    //let dogs: Dog[] = []
+    var innerDog: Observable<Dog[]>;
     const url = `${this.dogApiUrl}/dogpages/${page}`;
-    var numbers = [36, 77]
-    const pages = this.http.get<Pages[]>(url);
-    let pagesList: Pages[]
-    //this.dogService.getDog(listItem.dogsId)
-    let x = numbers.map( num => this.dogService.getDog(num).pipe(
-      map(dog => { return dog })
-    ));
-    return forkJoin(x);
-  }
-  getPages(): Observable<string[]> {
-    let dogs: Dog[] = []
-    const url = `${this.dogApiUrl}/dogpages/`;
 
-    return this.http.get<string[]>(url)
-  }
+    return this.http.get<Pages[]>(url).pipe(
+      map((array: Pages[]) => 
+        array.map<number>((item: Pages) => {
+          return item.dogsId
+        })
+      ),
+      switchMap(ids => forkJoin(ids.map(id => this.dogService.getDog(id))))
 
+    );
+  }
 
   /**
    * Handle Http operation that failed.
