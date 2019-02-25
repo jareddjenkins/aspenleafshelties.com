@@ -27,6 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule,MatCheckboxModule,MatToolbarModule,MatInputModule,MatProgressSpinnerModule,MatCardModule,MatMenuModule, MatIconModule} from '@angular/material';
 import { nameContainsPipe } from './namesearch.pipes';
 import { EditpagesComponent } from './enterdogs/editpages/editpages.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations:[
@@ -58,7 +59,8 @@ import { EditpagesComponent } from './enterdogs/editpages/editpages.component';
     BrowserAnimationsModule,
     MatButtonModule, 
     MatCheckboxModule,
-    MatIconModule
+    MatIconModule,
+    DragDropModule
     
   ],
   bootstrap: [AppComponent],

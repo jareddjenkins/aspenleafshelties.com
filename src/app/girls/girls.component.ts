@@ -30,6 +30,6 @@ export class GirlsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.dogs = this.dogpagesService.getPageList('girls')
+    this.dogs = this.dogpagesService.getDogsForPage('girls')
   }
 }

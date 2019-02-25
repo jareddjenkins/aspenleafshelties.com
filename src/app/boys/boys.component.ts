@@ -16,6 +16,6 @@ export class BoysComponent implements OnInit {
   constructor(private dogpagesService: DogpagesService) { }
 
   ngOnInit() {
-   this.dogs = this.dogpagesService.getPageList('boys')
+   this.dogs = this.dogpagesService.getDogsForPage('boys')
   }
 }
