@@ -46,8 +46,8 @@ export class EditpagesComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.groupedItems[event.item.data.key], event.previousIndex, event.currentIndex);
-    var y = this.groupedItems[event.item.data.key]
+    moveItemInArray(this.groupedItems[event.container.data.key], event.previousIndex, event.currentIndex);
+    var y = this.groupedItems[event.container.data.key]
     var x = y.map((x,index) => {
       delete x.dogObject
       x.sortId = index

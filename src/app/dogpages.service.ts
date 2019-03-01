@@ -35,25 +35,25 @@ export class DogpagesService {
       var url = `${this.dogApiUrl}/dogpages`;
     }
 
-    return this.http.get<Pages[]>(url).pipe(
-      map(x => {
-        return x.sort((a, b) => { return a.sortId - b.sortId });
-      }
-      )
-    )
-
+    return this.http.get<Pages[]>(url)
+      .pipe(
+        map(x => {
+          return x.sort((a, b) => { return a.sortId - b.sortId });
+        }))
   }
-  getDogsForPage(page: string): Observable<Dog[]> {
 
-    return this.getDogPages(page).pipe(
-      map((array: Pages[]) =>
-        array.map<number>((item: Pages) => {
-          return item.dogsId
-        })
-      ),
-      switchMap(ids => forkJoin(ids.map(id => this.dogService.getDog(id))))
+  getDogsForPage(page?: string): Observable<Dog[]> {
 
-    );
+
+    const dogs = this.dogService.getDogs()
+    const pages = this.getDogPages(page)
+
+    return forkJoin(pages, dogs).pipe(
+      map(results => {
+        return results[0].map(p => results[1].filter(d => { return d.id === p.dogsId })[0])
+
+      }))
+
   }
   putPagesByPage(page: string, updatedPages: Pages[]) {
     var url = `${this.dogApiUrl}/DogPages/${page}`;
