@@ -30,7 +30,7 @@ export class DogpagesService {
   }
   getDogPages(page?: string): Observable<Pages[]> {
     if (page) {
-      var url = `${this.dogApiUrl}/dogpages?${page}`;
+      var url = `${this.dogApiUrl}/dogpages?page=${page}`;
     } else {
       var url = `${this.dogApiUrl}/dogpages`;
     }
@@ -58,10 +58,10 @@ export class DogpagesService {
   putPagesByPage(page: string, updatedPages: Pages[]) {
     var url = `${this.dogApiUrl}/DogPages/${page}`;
 
-    this.http.put(url, updatedPages, httpOptions).subscribe()//.pipe(
+    return this.http.put(url, updatedPages, httpOptions).pipe(
     tap(_ => this.log(`updated pages=${page}`)),
       catchError(this.handleError)
-    //);
+    );
 
 
   }

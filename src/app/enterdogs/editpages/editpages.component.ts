@@ -47,17 +47,15 @@ export class EditpagesComponent implements OnInit {
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.groupedItems[event.container.data.key], event.previousIndex, event.currentIndex);
-    var y = this.groupedItems[event.container.data.key]
-    var x = y.map((x,index) => {
-      delete x.dogObject
-      x.sortId = index
-      return x
+    var x = event.container.data.value.map((p,index) => {
+      let newpage: Pages = {sortId: index, pageName: p.pageName, dogsId: p.dogsId }
+      return newpage
     });
-    this.updatePage(x.pageName,x)
+    this.updatePage(event.container.data.key,x)
 
   }
   updatePage(pageName, pages) {
-    this.dogpagesService.putPagesByPage(pageName, pages)
+    this.dogpagesService.putPagesByPage(pageName, pages).subscribe()
 
 
   }
