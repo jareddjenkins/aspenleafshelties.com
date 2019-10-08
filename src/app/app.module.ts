@@ -5,7 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent }      from './home/home.component';
 import { TopnavComponent } from './topnav/topnav.component';
 import { GirlsComponent } from './girls/girls.component';
@@ -24,7 +24,7 @@ import { EnterdogsComponent } from './enterdogs/enterdogs.component';
 import { ResourcesComponent } from './resources/resources.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonModule,MatCheckboxModule,MatToolbarModule,MatInputModule,MatProgressSpinnerModule,MatCardModule,MatMenuModule, MatIconModule} from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatAutocompleteModule,MatFormFieldModule, MatToolbarModule,MatInputModule,MatProgressSpinnerModule,MatCardModule,MatMenuModule, MatIconModule } from '@angular/material';
 import { nameContainsPipe } from './namesearch.pipes';
 import { EditpagesComponent } from './enterdogs/editpages/editpages.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -60,7 +60,12 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatButtonModule, 
     MatCheckboxModule,
     MatIconModule,
-    DragDropModule
+    DragDropModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule
     
   ],
   bootstrap: [AppComponent],
