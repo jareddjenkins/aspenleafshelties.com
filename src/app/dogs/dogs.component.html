@@ -1,37 +1,35 @@
-<div class="row">
-    <div class="col">
-        <div class="row eachdog my-md-2 " *ngIf="dog" (click)="goDogDetails()">
-            <div class="col">
-                <div class="row">
-                    <div class="col-12 itemtitle">
-                        <h5>{{dog.rname}}</h5>
-                    </div>
+<div class="row ">
+    <div class="col mt-md-3 eachdog">
+        <div *ngIf="dog" (click)="goDogDetails()">
+            <div class="row">
+                <div class="col-12 itemtitle">
+                    <h5>{{dog.rname}}</h5>
                 </div>
-                <div class="row">
-                    <div class="col-xs-12 col-md-4">
-                        <img src="{{dog.profileImageUrl}}" class="img-fluid">
-                    </div>
-                    <div class="col-xs-12 col-md-8 listdetails">
-                        <div class="row">
-                            <dl class="col-6 col-md-3">
-                                <dt>Call Name</dt>
-                                <dd>{{dog.cname}}</dd>
-                            </dl>
-                            <dl class="col-6 col-md-3">
-                                <dt>Date of Birth</dt>
-                                <dd>{{dog.dob | date:'longDate'}}</dd>
-                            </dl>
-                            <dl class="col-6 col-md-3">
-                                <dt>Sire</dt>
-                                <dd>{{dog.sireName}}</dd>
-                            </dl>
-                            <dl class="col-6 col-md-3">
-                                <dt>Dam</dt>
-                                <dd>{{dog.damName}}</dd>
-                            </dl>
-                            <div class="col-8">
-                                <dd>{{dog.comments}}</dd>
-                            </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-4">
+                    <img src="{{dog.profileImageUrl}}" class="img-fluid">
+                </div>
+                <div class="col-xs-12 col-md-8 listdetails">
+                    <div class="row">
+                        <dl class="col-6 col-md-3">
+                            <dt>Call Name</dt>
+                            <dd>{{dog.cname}}</dd>
+                        </dl>
+                        <dl class="col-6 col-md-3">
+                            <dt>Date of Birth</dt>
+                            <dd>{{dog.dob | date:'longDate'}}</dd>
+                        </dl>
+                        <dl class="col-6 col-md-3">
+                            <dt>Sire</dt>
+                            <dd>{{dog.sireName}}</dd>
+                        </dl>
+                        <dl class="col-6 col-md-3">
+                            <dt>Dam</dt>
+                            <dd>{{dog.damName}}</dd>
+                        </dl>
+                        <div class="col-8">
+                            <dd>{{dog.comments}}</dd>
                         </div>
                     </div>
                 </div>
@@ -39,6 +37,5 @@
         </div>
     </div>
 </div>
-
 <!-- <a *ngIf="!showInput" (click)="toggleInput()">Edit</a>
 <input *ngIf="showInput" type="text" value="{{dog.rname}}"> -->

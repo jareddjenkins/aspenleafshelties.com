@@ -1,10 +1,9 @@
 .eachdog{
-    border: .05em solid rgb(143, 143, 143);
     background-color: white;
     border-radius: .2em;
 }
 .itemtitle {
-    background-color: rgb(196, 196, 196);
+    background-color: #a6c4b0;
 }
 
 .listdetails dd,dt {
