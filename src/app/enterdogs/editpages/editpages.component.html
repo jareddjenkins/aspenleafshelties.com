@@ -1,6 +1,6 @@
 <app-enterdogsnav></app-enterdogsnav>
 <div class="col-12">
-    <div cdkDropList [cdkDropListData]="dogpagelist" class="example-list" (cdkDropListDropped)="drop(boypages,$event)">
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop(boypages,$event)">
         <div class="row-12">
             <h1>Boys
             </h1>
@@ -8,7 +8,7 @@
         <form class="example-form" (ngSubmit)="addnewdog(boypageselect.value)">
             <mat-form-field class="example-full-width">
                 <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="boypageselect"
-                    [matAutocomplete]="auto" >
+                    [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                     <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                         {{option.rname}}
@@ -24,7 +24,7 @@
     </div>
 </div>
 <div class="col-12">
-    <div cdkDropList [cdkDropListData]="dogpagelist" class="example-list" (cdkDropListDropped)="drop(girlpages,$event)">
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop(girlpages,$event)">
         <div class="row-12">
             <h1>Girls
             </h1>
@@ -36,8 +36,7 @@
     </div>
 </div>
 <div class="col-12">
-    <div cdkDropList [cdkDropListData]="dogpagelist" class="example-list"
-        (cdkDropListDropped)="drop(availablepages,$event)">
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop(availablepages,$event)">
         <div class="row-12">
             <h1>Available
             </h1>
