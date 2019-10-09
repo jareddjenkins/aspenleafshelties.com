@@ -5,11 +5,13 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './enterdogsnav.component.html',
   styleUrls: ['./enterdogsnav.component.css']
 })
-export class EnterdogsnavComponent implements OnInit {
+export class EnterdogsnavComponent {
 
-  constructor() { }
+  isNavbarCollapsed = true;
 
-  ngOnInit() {
+  constructor() {}
+
+  toggleMenu() {
+    this.isNavbarCollapsed = !this.isNavbarCollapsed;
   }
-
 }
