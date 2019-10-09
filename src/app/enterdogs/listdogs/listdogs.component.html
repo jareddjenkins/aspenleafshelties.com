@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let dog of ( dogs | nameContains : query)">
+        <tr *ngFor="let dog of dogs | async">
           <th scope="row" class="d-none d-sm-table-cell">{{dog.id}}</th>
           <td>{{dog.rname}}</td>
           <td class="d-none d-sm-table-cell">{{dog.cname}}</td>
@@ -33,5 +33,6 @@
         </tr>
       </tbody>
     </table>
+    <mat-icon class="black-icon" (click)="createnewdog()">add_circle</mat-icon>
   </div>
 </div>

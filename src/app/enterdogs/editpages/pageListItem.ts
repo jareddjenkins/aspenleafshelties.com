@@ -1,5 +1,5 @@
 import { Pages } from '../../pages';
-import { Dog } from 'src/app/dog';
+import { Dog } from '../../dog';
 
 export class PageListItem {
     dog: Dog

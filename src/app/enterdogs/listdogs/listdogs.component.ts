@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 
 import { Dog } from '../../dog'
 import { DogService } from '../../dog.service'
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-listdogs',
@@ -11,7 +12,7 @@ import { DogService } from '../../dog.service'
   styleUrls: ['./listdogs.component.css']
 })
 export class ListdogsComponent implements OnInit {
-  dogs: Dog[];
+  dogs: Observable<Dog[]>;
   query:string = '';
 
   constructor(
@@ -23,10 +24,13 @@ export class ListdogsComponent implements OnInit {
   ngOnInit() {
     this.getDogs()
   }
+  createnewdog() {
+    this.dogService.addDog().subscribe();
+    this.getDogs();
+  }
 
   getDogs() {
-    this.dogService.getDogs()
-      .subscribe(dogs => this.dogs = dogs);
+    this.dogs = this.dogService.getDogs();
   }
 
   goBack(): void {

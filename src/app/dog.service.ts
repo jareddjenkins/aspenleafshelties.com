@@ -84,9 +84,9 @@ export class DogService {
   }
   
     /** POST: add a new dog to the server */
-    addDog(dog: Dog): Observable<Dog> {
-      const url = `${this.dogApiUrl}/dogs/${dog.id}`;
-      return this.http.post<Dog>(url, dog, httpOptions).pipe(
+    addDog() {
+      const url = `${this.dogApiUrl}/dogs/`;
+      return this.http.post<Dog>(url, httpOptions).pipe(
         tap((dog: Dog) => this.log(`added dog w/ id=${dog.id}`)),
         catchError(this.handleError<Dog>('addDog'))
       );
