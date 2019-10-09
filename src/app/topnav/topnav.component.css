@@ -1,16 +1,36 @@
 
 /* change the brand and text color */
-.navbar-custom .navbar-brand,
-.navbar-custom li,
+.navbar-brand,
+.dropdown-item,
 .navbar-custom .navbar-text {
-    color: #869e8e;
+    color: #a6c4b0;
+    font-size: 2em;
+    margin-left: 1.5vw;
+    margin-right: 1.5vw;
 }
 /* change the link color */
-.navbar-custom .navbar-nav .nav-link . {
+.navbar-custom .navbar-nav .nav-link {
     color: rgba(255,255,255,.5);
 }
+
+.navbar-nav > li{
+    padding-left:30px;
+    padding-right:30px;
+  }
+
+.dropdown-item > a {
+    font-size: 2vw;
+    color: #a6c4b0;
+}
 /* change the color of active or hovered links */
-.navbar-custom .nav-item.active .nav-link,
-.navbar-custom .nav-item:hover .nav-link {
-    color: #ffffff;
+.active > a:hover,
+.active > a:active,
+.active > a:focus,
+.dropdown-item:active,
+.dropdown-item.active,
+.open a,
+.open,
+ a:focus {
+    color: white;
+    background-color: #a6c4b0
 }
