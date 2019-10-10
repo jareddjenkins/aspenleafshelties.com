@@ -41,7 +41,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <form class="example-form" (ngSubmit)="addnewdog(pageselect.value,boypages)">
+                    <form class="example-form" (ngSubmit)="addnewdog(pageselect.value,girlpages)">
                         <mat-form-field class="example-full-width">
                             <input type="text" placeholder="Pick one" aria-label="Number" matInput
                                 [formControl]="pageselect" [matAutocomplete]="girls">
@@ -74,7 +74,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <form class="example-form" (ngSubmit)="addnewdog(pageselect.value,boypages)">
+                            <form class="example-form" (ngSubmit)="addnewdog(pageselect.value,availablepages)">
                                 <mat-form-field class="example-full-width">
                                     <input type="text" placeholder="Pick one" aria-label="Number" matInput
                                         [formControl]="pageselect" [matAutocomplete]="avail">
