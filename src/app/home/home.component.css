@@ -6,6 +6,7 @@ img {
     color: #fff;
     text-align: center;
     font-size: 2.25vw;
+    height: 110px;
 }
 
 .banner a {
@@ -15,5 +16,5 @@ img {
 }
 
 .splash{
-    margin-top: 1vw
+    margin: 1vw
 }

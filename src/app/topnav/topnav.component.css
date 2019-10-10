@@ -7,7 +7,8 @@
     font-size: 1.75em;
 }
 /* change the link color */
-.navbar-custom .navbar-nav .nav-link {
+.navbar-custom .navbar-nav .nav-link,
+ {
     color: rgba(255,255,255,.5);
 }
 
@@ -26,6 +27,8 @@
 .active > a:focus,
 .dropdown-item:active,
 .dropdown-item.active,
+.navbar-brand.active,
+.navbar-brand:active,
 .open a,
 .open,
  a:focus {
