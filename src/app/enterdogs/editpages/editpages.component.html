@@ -58,7 +58,7 @@
             <div class="row">
                 <div class="col">
                     <div class="example-box" *ngFor="let item of girlpages; let i = index" cdkDrag>
-                        <mat-icon class="black-icon" (click)="removedog(item.value, i)">remove_circle</mat-icon>
+                        <mat-icon class="black-icon" (click)="removedog(girlpages, i)">remove_circle</mat-icon>
                         {{item.dog.rname}}<mat-icon class="black-icon">drag_handle</mat-icon>
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="example-box" *ngFor="let item of availablepages; let i = index" cdkDrag>
-                                <mat-icon class="black-icon" (click)="removedog(item.value, i)">remove_circle
+                                <mat-icon class="black-icon" (click)="removedog(availablepages, i)">remove_circle
                                 </mat-icon>
                                 {{item.dog.rname}}<mat-icon class="black-icon">drag_handle</mat-icon>
                             </div>
