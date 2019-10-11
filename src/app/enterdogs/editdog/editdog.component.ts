@@ -128,6 +128,4 @@ export class EditdogComponent implements OnInit {
   loadImageFailed() {
     // show message
   }
-
 }
-

@@ -55,7 +55,7 @@
             <button type="button" (click)="onUpload()">Upload</button>
 
             <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
-              [aspectRatio]="160 / 160" [resizeToWidth]="128" resizeToWidth="960" onlyScaleDown="true" format="png"
+              [aspectRatio]="160 / 160" [resizeToWidth]="512" resizeToWidth="3840" onlyScaleDown="true" format="png"
               outputType='base64' (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
               (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>
 
