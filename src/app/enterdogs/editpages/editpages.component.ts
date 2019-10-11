@@ -64,7 +64,7 @@ export class EditpagesComponent implements OnInit {
     let newpage: PageListItem = {
       dog: newdog,
       sortId: 0,
-      pageName: "Boys",
+      pageName: pagelist[0].pageName,
       dogsId: dog.id
     }
     pagelist.push(newpage)
