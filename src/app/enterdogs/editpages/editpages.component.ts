@@ -9,10 +9,6 @@ import { map, startWith, tap } from 'rxjs/operators';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag } from '@angular/cdk/drag-drop';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 
-
-
-
-
 @Component({
   selector: 'app-editpages',
   templateUrl: './editpages.component.html',
@@ -34,8 +30,6 @@ export class EditpagesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-
     const dogs = this.dogService.getDogs()
     const pages = this.dogpagesService.getDogPages()
 
