@@ -10,7 +10,7 @@ img {
 }
 
 .banner a {
-    font-family: Brush Script MT, Brush Script Std, cursive;
+    font-family: 'Noto Serif', serif;
      color:inherit;
      font-size: 3vw;
 }
@@ -18,3 +18,27 @@ img {
 .splash{
     margin: 1vw
 }
+.picturetext{
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    margin-top: 7vw;
+    margin-right: 2vw;
+}
+.title { 
+    font-family: 'Noto Serif', serif;
+    font-size: 3vw;
+    margin: 0;
+    color: #af5252
+}
+.breedertext { 
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.25vw;
+    margin: 0;
+    color: #7b7849;
+    font-weight: bold;
+}
+
+
+
+

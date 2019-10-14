@@ -3,8 +3,9 @@
 .navbar-brand,
 .dropdown-item,
 .navbar-custom .navbar-text {
-    color: #a6c4b0;
+    color: #7b7849;
     font-size: 1.75em;
+    font-family: 'Archivo', sans-serif
 }
 /* change the link color */
 .navbar-custom .navbar-nav .nav-link
@@ -19,7 +20,7 @@
 
 .dropdown-item > a {
     font-size: 2vw;
-    color: #a6c4b0;
+    color: #7b7849;
 }
 /* change the color of active or hovered links */
 .active > a:hover,
@@ -33,5 +34,5 @@
 .open,
  a:focus {
     color: white;
-    background-color: #a6c4b0
+    background-color: #7b7849
 }
