@@ -3,40 +3,35 @@ img {
 }
 .banner {
     background: #a6c4b0;
-    color: #fff;
+    color: #a6bac4;
     text-align: center;
-    font-size: 2.25vw;
+    font-size: 3vw;
     height: 110px;
 }
 
 .banner a {
     font-family: 'Noto Serif', serif;
      color:inherit;
-     font-size: 3vw;
+     font-size: 4vw;
+}
+
+.container-fluid {
+    height: 100%;
 }
 
 .splash{
-    margin: 1vw
-}
-.picturetext{
-    position: absolute;
-    top: 8px;
-    right: 16px;
-    margin-top: 7vw;
-    margin-right: 2vw;
+    margin: 1vw;
+    background: #1d3521;
 }
 .title { 
     font-family: 'Noto Serif', serif;
-    font-size: 3vw;
-    margin: 0;
-    color: #af5252
+    font-size: 2.5vw;
+    color: #b0c4a6;
+    
 }
 .breedertext { 
     font-family: 'Archivo', sans-serif;
-    font-size: 1.25vw;
-    margin: 0;
-    color: #7b7849;
-    font-weight: bold;
+    color: #a6bac4;
 }
 
 

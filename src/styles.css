@@ -9,14 +9,17 @@
 }
 
 html, body {
-    background-color: white;
+    background-color: #e5f4fc;
     height: 100%;
 }
 html, body { height: 100%; }
 body { 
     margin: 0;
-    color: #af5252;
+    color: #1d3521;
 
+}
+p{
+    font-size: 1.25vw;
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

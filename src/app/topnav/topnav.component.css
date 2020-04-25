@@ -3,14 +3,14 @@
 .navbar-brand,
 .dropdown-item,
 .navbar-custom .navbar-text {
-    color: #7b7849;
+    color: #1d3521;
     font-size: 1.75em;
     font-family: 'Archivo', sans-serif
 }
 /* change the link color */
 .navbar-custom .navbar-nav .nav-link
  {
-    color: rgba(255,255,255,.5);
+    color: #a6c4b0;
 }
 
 .navbar-nav > li{
@@ -20,7 +20,7 @@
 
 .dropdown-item > a {
     font-size: 2vw;
-    color: #7b7849;
+    color: #1d3521;
 }
 /* change the color of active or hovered links */
 .active > a:hover,
@@ -33,6 +33,6 @@
 .open a,
 .open,
  a:focus {
-    color: white;
-    background-color: #7b7849
+    color: 1d3521;
+    background-color: #a6c4b0
 }
