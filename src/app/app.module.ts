@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HomeComponent }      from './home/home.component';
+import { HomeComponent } from './home/home.component';
 import { TopnavComponent } from './topnav/topnav.component';
 import { GirlsComponent } from './girls/girls.component';
 import { BoysComponent } from './boys/boys.component';
@@ -24,13 +24,18 @@ import { EnterdogsComponent } from './enterdogs/enterdogs.component';
 import { ResourcesComponent } from './resources/resources.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatCheckboxModule, MatAutocompleteModule,MatFormFieldModule, MatToolbarModule,MatInputModule,MatProgressSpinnerModule,MatCardModule,MatMenuModule, MatIconModule } from '@angular/material';
+import { MatButtonModule, } from '@angular/material/button'
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule, } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { nameContainsPipe } from './namesearch.pipes';
 import { EditpagesComponent } from './enterdogs/editpages/editpages.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
-  declarations:[
+  declarations: [
     AppComponent,
     HomeComponent,
     GirlsComponent,
@@ -47,17 +52,17 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ResourcesComponent,
     nameContainsPipe,
     EditpagesComponent
-    
+
   ],
   imports: [
-    NgbModule.forRoot(),
+    NgbModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     ImageCropperModule,
     BrowserAnimationsModule,
-    MatButtonModule, 
+    MatButtonModule,
     MatCheckboxModule,
     MatIconModule,
     DragDropModule,
@@ -66,9 +71,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule
-    
+
   ],
   bootstrap: [AppComponent],
-  providers: [DogService,DogpagesService, MessageService]
+  providers: [DogService, DogpagesService, MessageService]
 })
 export class AppModule { }
