@@ -1,16 +1,16 @@
 
 /* change the brand and text color */
-.navbar-light{
-    background-color: #e5f4fc;
+.navbar-dark{
+    background-color: #1d3521;
     margin-bottom: 60px;
 
 }
 .navbar-brand,
 .dropdown-item,
 .navbar-custom .navbar-text {
-    color: #1d3521;
+    color: #e5f4fc;
     font-size: 1.75em;
-    font-family: 'Archivo', sans-serif
+    font-family: 'Noto Serif', serif;
 }
 
 /* change the link color */
@@ -40,7 +40,7 @@
 .open a,
 .open,
  a:focus {
-    color: 1d3521;
-    background-color: #e5f4fc;
+    color: #e5f4fc;
+    background-color: #1d3521;
     text-decoration: underline;
 }
