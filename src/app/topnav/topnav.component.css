@@ -1,5 +1,10 @@
 
 /* change the brand and text color */
+.navbar-light{
+    background-color: #e5f4fc;
+    margin-bottom: 60px;
+
+}
 .navbar-brand,
 .dropdown-item,
 .navbar-custom .navbar-text {
@@ -7,6 +12,7 @@
     font-size: 1.75em;
     font-family: 'Archivo', sans-serif
 }
+
 /* change the link color */
 .navbar-custom .navbar-nav .nav-link
  {
@@ -20,10 +26,11 @@
 
 .dropdown-item > a {
     font-size: 2vw;
-    color: #1d3521;
+    color: #e5f4fc;
 }
 /* change the color of active or hovered links */
 .active > a:hover,
+.hover,
 .active > a:active,
 .active > a:focus,
 .dropdown-item:active,
@@ -33,6 +40,7 @@
 .open a,
 .open,
  a:focus {
-    color: #1d3521;
-    background-color: #a6c4b0
+    color: 1d3521;
+    background-color: #e5f4fc;
+    text-decoration: underline;
 }
