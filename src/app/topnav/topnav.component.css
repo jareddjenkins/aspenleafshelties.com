@@ -28,11 +28,14 @@
 }
 /* change the color of active or hovered links */
 .active > a:hover,
-.hover,
 .active > a:active,
 .active > a:focus,
-.dropdown-item,
-.navbar-brand,
+.dropdown-item:active,
+.dropdown-item.active,
+.dropdown-item:hover,
+.dropdown-item.hover,
+.navbar-brand.active,
+.navbar-brand:active,
 .open a,
 .open,
  a:focus {
