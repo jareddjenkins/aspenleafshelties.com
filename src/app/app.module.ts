@@ -33,6 +33,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { nameContainsPipe } from './namesearch.pipes';
 import { EditpagesComponent } from './enterdogs/editpages/editpages.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     EnterdogsComponent,
     ResourcesComponent,
     nameContainsPipe,
-    EditpagesComponent
+    EditpagesComponent,
+    ContactComponent
 
   ],
   imports: [

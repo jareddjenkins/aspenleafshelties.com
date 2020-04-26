@@ -17,3 +17,6 @@ img {
     width: 100%;
     min-width: 100%;
 }
+.topinfo > p {
+    width: 100%;
+}
