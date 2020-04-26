@@ -1,9 +1,10 @@
 .eachdog{
-    background-color: white;
     border-radius: .2em;
+    background-color: #a6c4b0;
 }
 .itemtitle {
-    background-color: #a6c4b0;
+    background-color: #1d3521;
+    color: #e5f4fc;
 }
 
 .listdetails dd,dt {
