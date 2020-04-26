@@ -34,6 +34,7 @@ import { nameContainsPipe } from './namesearch.pipes';
 import { EditpagesComponent } from './enterdogs/editpages/editpages.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ContactComponent } from './contact/contact.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { ContactComponent } from './contact/contact.component';
     ResourcesComponent,
     nameContainsPipe,
     EditpagesComponent,
-    ContactComponent
+    ContactComponent,
+    AboutComponent
 
   ],
   imports: [

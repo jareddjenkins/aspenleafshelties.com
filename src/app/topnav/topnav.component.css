@@ -18,8 +18,8 @@
 }
 
 .navbar-nav > li{
-    padding-left:20px;
-    padding-right:20px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
 .dropdown-item > a {
@@ -31,14 +31,12 @@
 .hover,
 .active > a:active,
 .active > a:focus,
-.dropdown-item:active,
-.dropdown-item.active,
-.navbar-brand.active,
-.navbar-brand:active,
+.dropdown-item,
+.navbar-brand,
 .open a,
 .open,
  a:focus {
     color: #e5f4fc;
-    background-color: #1d3521;
+    background-color: transparent;
     text-decoration: underline;
 }
