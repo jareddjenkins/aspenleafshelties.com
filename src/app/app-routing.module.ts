@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'boys', component: BoysComponent },
   { path: 'girls', component: GirlsComponent },
-  { path: 'available', component: AvailableComponent },
+  { path: 'puppies', component: AvailableComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'about', component: AboutComponent },
   { path: 'resources', component: ResourcesComponent },
