@@ -4,20 +4,18 @@
             <img src="assets\images\puppies_on_blanket.jpg" class="w-100">
         </div>
         <div class="col-lg-9 mx-auto aligh-items-left topinfo my-4">
-            <h1>
-                Available
-            </h1>
+
             <p>
                 Our puppies are home-raised, up to date on age appropriate vaccines and vet-checked prior to leaving. 
                 All puppies have a two-year genetic health and temperament guarantee.
             </p>
+            <img src="assets\images\puppy1.jpg" class="rounded img-fluid float-right ml-1 ml-md-1 floatingimgs">
             <p>
                 We carefully screen prospective buyers, as we are looking to place our puppies in the best possible
                 homes, with the understanding that the puppy is a lifetime commitment. 
                 We reserve the right to refuse a sale. 
             </p> 
             <p>
-                <img src="assets\images\puppy1.jpg" class="rounded img-fluid float-right ml-1 ml-md-1 floatingimgs">
             </p>
             <p>
                 Email is our preferred method of first contact. <a
@@ -46,6 +44,9 @@
     </div>
     <div class="row ">
         <div class="col-lg-9 mx-auto">
+            <h1>
+                Available
+            </h1>
             <app-dogs *ngFor="let dog of dogs| async" [dog]="dog">
             </app-dogs>
         </div>
