@@ -5,12 +5,6 @@ img {
     background: #1d3521;
 }
 
-.banner a {
-    font-family: 'Noto Serif', serif;
-     color:inherit;
-     font-size: 4vw;
-}
-
 .container-fluid {
     height: 100%;
     width: 100%;
@@ -29,12 +23,16 @@ img {
     font-family: 'Noto Serif', serif;
     font-size: 30px;
     color: #b0c4a6;
+    text-align: center;
+    white-space: nowrap;
     
 }
 .breedertext { 
     font-family: 'Archivo', sans-serif;
     font-size: 16px;
     color: #a6bac4;
+    text-align: center;
+    white-space: nowrap;
 }
 .floatingimgs { 
     border: 2px solid #1d3521;
