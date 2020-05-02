@@ -15,7 +15,7 @@ import { ResourcesComponent } from './resources/resources.component'
 import { EditpagesComponent } from './enterdogs/editpages/editpages.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', redirectTo: "/home", pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'boys', component: BoysComponent },
   { path: 'girls', component: GirlsComponent },
