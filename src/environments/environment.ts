@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  apiEndpoint: 'https://localhost:44342/api'
-  //apiEndpoint: 'https://aspenleafapi20190218065609.azurewebsites.net/api'
+  apiEndpoint: 'https://aspenleafapi20190218065609.azurewebsites.net/api'
+  //  apiEndpoint: 'https://localhost:44342/api'
 };
