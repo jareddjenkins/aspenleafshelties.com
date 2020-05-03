@@ -24,7 +24,6 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'resources', component: ResourcesComponent },
   { path: 'detail/:id', component: DogDetailComponent },
-  { path: '**', component: HomeComponent },
   {
     path: 'enterdogs',
     children: [
@@ -32,7 +31,8 @@ const routes: Routes = [
       { path: 'pages', component: EditpagesComponent },
       { path: 'editdog/:id', component: EditdogComponent }
     ]
-  }
+  },
+  { path: '**', component: HomeComponent },
 ];
 
 @NgModule({
