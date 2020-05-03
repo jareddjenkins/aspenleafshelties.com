@@ -19,6 +19,12 @@ img {
     background-position: left 25%;
 }
 
+@media(max-width: 768px){
+   .splash {
+        background-image:url("/assets/images/kruzsplash-sm.jpg");
+    }
+}
+
 .title { 
     font-family: 'Noto Serif', serif;
     font-size: 30px;
