@@ -2,7 +2,7 @@ FROM node:13.3.0 AS restore-packages
 WORKDIR /opt/
 COPY . .
 RUN npm install -g yarn
-RUN yarn
+RUN yarn --network-timeout 100000
 RUN yarn global add @angular/cli
 
 FROM restore-packages AS build-image
