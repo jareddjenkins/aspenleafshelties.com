@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
@@ -35,6 +34,7 @@ import { EditpagesComponent } from './enterdogs/editpages/editpages.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -61,7 +61,27 @@ import { AboutComponent } from './about/about.component';
   imports: [
     NgbModule,
     BrowserModule,
-    AppRoutingModule,
+    RouterModule.forRoot([
+      { path: '', redirectTo: "/home", pathMatch: 'full' },
+      { path: 'home', component: HomeComponent },
+      { path: 'boys', component: BoysComponent },
+      { path: 'girls', component: GirlsComponent },
+      { path: 'puppies', component: AvailableComponent },
+      { path: 'available', component: AvailableComponent },
+      { path: 'contact', component: ContactComponent },
+      { path: 'about', component: AboutComponent },
+      { path: 'resources', component: ResourcesComponent },
+      { path: 'detail/:id', component: DogDetailComponent },
+      {
+        path: 'enterdogs',
+        children: [
+          { path: '', component: EnterdogsComponent },
+          { path: 'pages', component: EditpagesComponent },
+          { path: 'editdog/:id', component: EditdogComponent }
+        ]
+      },
+      { path: '**', component: HomeComponent },
+    ]),
     HttpClientModule,
     FormsModule,
     ImageCropperModule,

@@ -2,33 +2,33 @@
     <div class="col mt-2 eachdog rounded-top">
         <div *ngIf="dog" (click)="goDogDetails()">
             <div class="row">
-                <div class="col itemtitle">
-                    <h5>{{dog.rname}}</h5>
+                <div class="col itemtitle py-2">
+                    {{dog.rname}}
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-md-4 p-0">
+                <div class="col-xs-12 col-lg-4 p-0">
                     <img src="{{dog.profileImageUrl}}">
                 </div>
-                <div class="col-xs-12 col-md-8 listdetails">
-                    <div class="row">
-                        <dl class="col-6 col-md-3">
+                <div class="col-xs-12 col-lg-8 listdetails">
+                    <div class="row mt-3">
+                        <dl class="col-6 col-lg-3">
                             <dt>Call Name</dt>
                             <dd>{{dog.cname}}</dd>
                         </dl>
-                        <dl class="col-6 col-md-3">
+                        <dl class="col-6 col-lg-3">
                             <dt>Date of Birth</dt>
                             <dd>{{dog.dob | date:'longDate'}}</dd>
                         </dl>
-                        <dl class="col-6 col-md-3">
+                        <dl class="col-6 col-lg-3">
                             <dt>Sire</dt>
                             <dd>{{dog.sireName}}</dd>
                         </dl>
-                        <dl class="col-6 col-md-3">
+                        <dl class="col-6 col-lg-3">
                             <dt>Dam</dt>
                             <dd>{{dog.damName}}</dd>
                         </dl>
-                        <div class="col-8">
+                        <div class="col mb-3">
                             <dd>{{dog.comments}}</dd>
                         </div>
                     </div>
