@@ -35,6 +35,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { RouterModule } from '@angular/router';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { RouterModule } from '@angular/router';
     nameContainsPipe,
     EditpagesComponent,
     ContactComponent,
-    AboutComponent
+    AboutComponent,
+    FooterComponent
 
   ],
   imports: [

@@ -8,5 +8,6 @@ RUN ng build --prod
 
 FROM nginx:latest AS final
 COPY --from=build /opt/nginx-default.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /opt/nginx-compression.conf /etc/nginx/conf.d/compression.conf
 COPY --from=build /opt/dist /usr/share/nginx/html/
 EXPOSE 80:80

@@ -7,8 +7,8 @@
 .dropdown-item,
 .navbar-custom .navbar-text {
     color: #e5f4fc;
-    font-size: 1.75em;
     font-family: 'Noto Serif', serif;
+    font-size: 22px;
 }
 
 /* change the link color */
@@ -23,8 +23,8 @@
   }
 
 .dropdown-item > a {
-    font-size: 2vw;
     color: #e5f4fc;
+    font-size: 22px;
 }
 /* change the color of active or hovered links */
 .active > a:hover,

@@ -11,6 +11,7 @@
 html, body {
     background-color: #e5f4fc;
     height: 100%;
+    font-display: swap;
 }
 html, body { height: 100%; }
 body { 
