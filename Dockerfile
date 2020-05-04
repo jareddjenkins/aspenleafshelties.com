@@ -1,14 +1,12 @@
-FROM node:13.3.0 AS restore-packages
+FROM node:13.3.0 AS build
 WORKDIR /opt/
+COPY package*.json ./
+RUN npm install -g @angular/cli
+RUN npm install
 COPY . .
-RUN npm install -g yarn
-RUN yarn --network-timeout 100000
-RUN yarn global add @angular/cli
-
-FROM restore-packages AS build-image
 RUN ng build --prod
 
 FROM nginx:latest AS final
-COPY --from=build-image /opt/nginx-default.conf /etc/nginx/conf.d/default.conf
-COPY --from=build-image /opt/dist /usr/share/nginx/html/
+COPY --from=build /opt/nginx-default.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /opt/dist /usr/share/nginx/html/
 EXPOSE 80:80
