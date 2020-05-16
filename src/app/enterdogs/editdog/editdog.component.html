@@ -43,6 +43,21 @@
           </select>
         </div>
 
+        <div class="form-group ">
+          <label for="gender">Gender</label>
+          <div>
+            <label>
+              <input type="radio" name="options" type="radio" [(ngModel)]="dog.gender" [value]="1" name="male"
+                id="male">
+              Male
+            </label><br />
+            <label>
+              <input type="radio" name="options" type="radio" [(ngModel)]="dog.gender" [value]="0" name="female"
+                id="female">
+              Female
+            </label>
+          </div>
+        </div>
         <div class="form-group">
           <div class="input-group">
             <label for="dob">Date of Birth: {{dog.dob|date:'longDate'}}</label>
