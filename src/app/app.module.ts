@@ -34,8 +34,10 @@ import { EditpagesComponent } from './enterdogs/editpages/editpages.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
+import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
+import { AuthGuard } from './guards/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -72,10 +74,12 @@ import { FooterComponent } from './footer/footer.component';
       { path: 'available', component: AvailableComponent },
       { path: 'contact', component: ContactComponent },
       { path: 'about', component: AboutComponent },
+      { path: 'login', component: LoginComponent },
       { path: 'resources', component: ResourcesComponent },
       { path: 'detail/:id', component: DogDetailComponent },
       {
         path: 'enterdogs',
+        canActivate: [AuthGuard],
         children: [
           { path: '', component: EnterdogsComponent },
           { path: 'pages', component: EditpagesComponent },
@@ -96,10 +100,10 @@ import { FooterComponent } from './footer/footer.component';
     FormsModule,
     MatAutocompleteModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
 
   ],
   bootstrap: [AppComponent],
-  providers: [DogService, DogpagesService, MessageService]
+  providers: [DogService, DogpagesService, MessageService, AuthGuard]
 })
 export class AppModule { }
