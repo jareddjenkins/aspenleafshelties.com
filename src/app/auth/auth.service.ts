@@ -52,7 +52,7 @@ export class AuthService {
     this._router.navigate(['/login']);
   }
 
-  decode() {
-    return decode(localStorage.getItem('token'));
-  }
+  // decode() {
+  //   return decode(localStorage.getItem('token'));
+  // }
 }
