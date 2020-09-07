@@ -17,18 +17,13 @@
   </div>
   <div *ngIf="user" class="card text-center">
     <h6 class="card-header">
-      Social Login Demo
+      Enter Dogs Login
     </h6>
     <div class="card-block"></div>
     <img *ngIf="user.photoUrl" class="card-img-top img-responsive photo" src="{{ user.photoUrl }}">
     <div class="card-block">
       <h4 class="card-title">{{ user.name }}</h4>
       <p class="card-text">{{ user.email }}</p>
-      <br>
-      <p class="card-text">idToken: {{ this.user.idToken }}</p>
-      <br>
-      <p class="card-text">authToken: {{ this.user.authToken }}</p>
-      <p class="card-text">Logged in with {{ user.provider }}</p>
     </div>
   </div>
 </div>
