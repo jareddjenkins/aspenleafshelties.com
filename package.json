@@ -30,12 +30,10 @@
     "blueimp-canvas-to-blob": "^3.28.0",
     "bootstrap": "^4.5.2",
     "core-js": "^3.6.5",
-    "ng2-img-max": "^2.2.4",
     "ng2-img-tools": "^1.1.5",
     "rxjs": "^6.6.3",
     "rxjs-compat": "^6.6.3",
-    "tslib": "^2.0.0",
-    "zone.js": "^0.11.1"
+    "tslib": "^2.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1001.0",
