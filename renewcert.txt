@@ -1,0 +1,5 @@
+sudo certbot certonly --manual --preferred-challenges dns --server https://acme-v02.api.letsencrypt.org/directory --manual-public-ip-logging-ok -d '*.aspenleafshelties.com' -d aspenleafshelties.com -m jareddjenkins@gmail.com --agree-tos
+
+sudo openssl pkcs12 -export -out aspenleafshelties.com.pfx -inkey /etc/letsencrypt/live/aspenleafshelties.com-0002/privkey.pem -in /etc/letsencrypt/live/aspenleafshelties.com-0002/fullchain.pem -password pass:Cr3ss1da
+
+chown jareddjenkins aspenleafshelties.pfx
