@@ -1,14 +1,14 @@
 FROM nginx:latest AS base
 EXPOSE 80
 
-FROM node:18 AS build
+FROM node:16 AS build
 COPY package.json package-lock.json ./
 ## Storing node modules on a separate layer will prevent unnecessary npm installs at each build
 RUN npm ci && mkdir /ng-app && mv ./node_modules ./ng-app
 WORKDIR /ng-app
 COPY . .
 ## Build the angular app in production mode and store the artifacts in dist folder
-RUN ./node_modules/.bin/ng build --prod --output-path=dist
+RUN ./node_modules/.bin/ng build --configuration production --output-path=dist
 
 FROM base AS final
 COPY --from=build /ng-app/nginx-default.conf /etc/nginx/conf.d/default.conf
