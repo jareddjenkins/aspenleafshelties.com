@@ -18,6 +18,7 @@ export class EditpagesComponent implements OnInit {
   boypages: PageListItem[];
   girlpages: PageListItem[];
   availablepages: PageListItem[];
+  adultavailablepages: PageListItem[]
   allpages: PageListItem[];
   adddogform: FormGroup;
   doglist: Dog[]
@@ -35,10 +36,11 @@ export class EditpagesComponent implements OnInit {
 
     forkJoin(pages, dogs).subscribe(results => {
       this.doglist = results[1]
-      this.allpages = results[0].map(page => this.adddogtopage(page, results[1]))
+      this.allpages = results[0].map(page => this.addDogObjectToPage(page, results[1]))
       this.boypages = this.allpages.filter(dli => dli.pageName === "Boys")
       this.girlpages = this.allpages.filter(dli => dli.pageName === 'Girls')
       this.availablepages = this.allpages.filter(dli => dli.pageName === 'Available')
+      this.adultavailablepages = this.allpages.filter(dli => dli.pageName === 'AdultAvailable')
       this.filteredOptions = this.pageselect.valueChanges
         .pipe(
           startWith<string | Dog>(''),
@@ -53,20 +55,36 @@ export class EditpagesComponent implements OnInit {
 
     return this.doglist.filter(option => option.rname.toLowerCase().includes(filterValue));
   }
-  addnewdog(dog: Dog, pagelist: PageListItem[]) {
-    let newdog = this.doglist.find(d => d.id === dog.id)
-    let newpage: PageListItem = {
-      dog: newdog,
+  addnewdog(dog: Dog, pageName: string) {
+    let page: PageListItem[]
+    const newpageItem: PageListItem = {
+      dog: this.doglist.find(d => d.id === dog.id),
       sortId: 0,
-      pageName: pagelist[0].pageName,
+      pageName: pageName,
       dogsId: dog.id
     }
-    pagelist.push(newpage)
-    this.sortandupdatepage(pagelist)
+    
+    switch (pageName) {
+      case "Boys":
+        page = this.boypages
+        break;
+      case "Girls":
+        page = this.girlpages
+        break;
+      case "Available":
+        page = this.availablepages
+        break;
+      case "AdultAvailable":
+        page = this.adultavailablepages
+        break;
+    }
+    page.push(newpageItem)
+    this.sortpage(page)
+    this.persistpage(page)
     this.pageselect.setValue('');
 
   }
-  adddogtopage(page: Pages, doglist: Dog[]): PageListItem {
+  addDogObjectToPage(page: Pages, doglist: Dog[]): PageListItem {
     let filtereddog = doglist.find(d => { return d.id === page.dogsId });
     let newpage: PageListItem = {
       dog: filtereddog,
@@ -81,25 +99,29 @@ export class EditpagesComponent implements OnInit {
     return dog ? dog.rname : undefined;
   }
 
-  drop(pages: Pages[], event: CdkDragDrop<any>) {
-    moveItemInArray(pages, event.previousIndex, event.currentIndex);
-    this.sortandupdatepage(pages)
+  drop(page: Pages[], event: CdkDragDrop<any>) {
+    moveItemInArray(page, event.previousIndex, event.currentIndex);
+    for (var i in page){
+      page[i].sortId = Number(i)
+    }
+    this.sortpage(page)
+    this.persistpage(page)
+    
   }
 
-  removedog(pages: PageListItem[], index: number) {
-    pages.splice(index, 1);
-    this.sortandupdatepage(pages);
+  removedog(page: PageListItem[], index: number) {
+    let pageitem = page[index]
+    page.splice(index, 1);
+    this.sortpage(page);
+    this.dogpagesService.deleteFromPagesById(pageitem.pageName, pageitem.dogsId).subscribe();
+    
+    
   }
 
-  sortbysortid(items: Pages[]) {
-    items.sort((a, b) => (a.sortId > b.sortId) ? 1 : -1);
+  sortpage(page: Pages[]) {
+    page.sort((a,b) => a.sortId - b.sortId)
   }
-
-  sortandupdatepage(unsortedpage: Pages[], ) {
-    var sortedpages = unsortedpage.map((p, index) => {
-      let newpage: Pages = { sortId: index, pageName: p.pageName, dogsId: p.dogsId }
-      return newpage
-    });
-    this.dogpagesService.putPagesByPage(sortedpages[0].pageName, sortedpages).subscribe();
+  persistpage(page: Pages[]){
+    this.dogpagesService.putPagesByPage(page[0].pageName, page).subscribe();
   }
 }

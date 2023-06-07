@@ -63,6 +63,14 @@ export class DogpagesService {
       catchError(this.handleError)
     );
 
+  }
+  deleteFromPagesById(page: string, id: Number) {
+    var url = `${this.dogApiUrl}/DogPages/${page}/${id}`;
+
+    return this.http.delete(url, httpOptions).pipe(
+    tap(_ => this.log(`updated pages=${page}`)),
+      catchError(this.handleError)
+    );
 
   }
 

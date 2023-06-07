@@ -11,12 +11,14 @@ import { Observable, of, forkJoin } from 'rxjs';
 })
 export class AvailableComponent implements OnInit {
 
-  dogs: Observable<Dog[]>;
+  puppies: Observable<Dog[]>;
+  adults: Observable<Dog[]>;
 
   constructor(private dogpagesService: DogpagesService) { }
 
   ngOnInit() {
-    this.dogs = this.dogpagesService.getDogsForPage('available')
+    this.puppies = this.dogpagesService.getDogsForPage('available')
+    this.adults = this.dogpagesService.getDogsForPage('adultavailable')
   }
 }
 

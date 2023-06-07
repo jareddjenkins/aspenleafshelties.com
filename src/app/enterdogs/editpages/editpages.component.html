@@ -9,7 +9,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <form class="example-form" (ngSubmit)="addnewdog(pageselect.value,boypages)">
+                    <form class="example-form" (ngSubmit)="addnewdog(pageselect.value,'Boys')">
                         <mat-form-field class="example-full-width">
                             <input type="text" placeholder="Pick one" aria-label="Number" matInput
                                 [formControl]="pageselect" [matAutocomplete]="boys">
@@ -41,7 +41,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <form class="example-form" (ngSubmit)="addnewdog(pageselect.value,girlpages)">
+                    <form class="example-form" (ngSubmit)="addnewdog(pageselect.value,'Girls')">
                         <mat-form-field class="example-full-width">
                             <input type="text" placeholder="Pick one" aria-label="Number" matInput
                                 [formControl]="pageselect" [matAutocomplete]="girls">
@@ -69,12 +69,12 @@
                 <div cdkDropList class="example-list" (cdkDropListDropped)="drop(availablepages,$event)">
                     <div class="row">
                         <div class="col">
-                            <h1>Available</h1>
+                            <h1>Puppies Available</h1>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <form class="example-form" (ngSubmit)="addnewdog(pageselect.value,availablepages)">
+                            <form class="example-form" (ngSubmit)="addnewdog(pageselect.value,'Available')">
                                 <mat-form-field class="example-full-width">
                                     <input type="text" placeholder="Pick one" aria-label="Number" matInput
                                         [formControl]="pageselect" [matAutocomplete]="avail">
@@ -92,6 +92,42 @@
                         <div class="col">
                             <div class="example-box" *ngFor="let item of availablepages; let i = index" cdkDrag>
                                 <mat-icon class="black-icon" (click)="removedog(availablepages, i)">remove_circle
+                                </mat-icon>
+                                {{item.dog.rname}}<mat-icon class="black-icon">drag_handle</mat-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div cdkDropList class="example-list" (cdkDropListDropped)="drop(availableadultpages,$event)">
+                    <div class="row">
+                        <div class="col">
+                            <h1>Adult Available</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <form class="example-form" (ngSubmit)="addnewdog(pageselect.value,'AdultAvailable')">
+                                <mat-form-field class="example-full-width">
+                                    <input type="text" placeholder="Pick one" aria-label="Number" matInput
+                                        [formControl]="pageselect" [matAutocomplete]="availadult">
+                                    <mat-autocomplete #availadult="matAutocomplete" [displayWith]="displayFn">
+                                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                            {{option.rname}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                                <button type="submit" md-raised-button>Add</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="example-box" *ngFor="let item of adultavailablepages; let i = index" cdkDrag>
+                                <mat-icon class="black-icon" (click)="removedog(adultavailablepages, i)">remove_circle
                                 </mat-icon>
                                 {{item.dog.rname}}<mat-icon class="black-icon">drag_handle</mat-icon>
                             </div>

@@ -1,7 +1,7 @@
 version: '3.5' # We use version 3.5 syntax
 services: # Here we define our service(s)
     angular-service: # The name of the service
-        image: jareddjenkins/aspenleaf:dev
+        image: jareddjenkins/aspenleaf:latest
         ports:
             - 80:80
             - 443:443
@@ -10,9 +10,11 @@ services: # Here we define our service(s)
         ports:
             - 8080:80
             - 8443:443
-
+        environment:
+          aspenLeafDatabase: Server=localhost;Database=aspenleaf-local-testing;User Id=sa;password=Strong!Passw0rd;
     sql:
-        image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
+        image: mcr.microsoft.com/azure-sql-edge:latest
+        hostname: local-sql
         ports:
             - 1433:1433
         environment:

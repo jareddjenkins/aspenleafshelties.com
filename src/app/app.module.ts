@@ -87,7 +87,7 @@ import { SignOutComponent } from './auth/sign-out/sign-out.component';
       { path: 'signout', component: SignOutComponent },
       {
         path: 'enterdogs',
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
         children: [
           { path: '', component: EnterdogsComponent },
           { path: 'pages', component: EditpagesComponent },
