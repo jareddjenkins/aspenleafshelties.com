@@ -13,6 +13,7 @@
   },
   "private": true,
   "dependencies": {
+    "@abacritt/angularx-social-login": "^1.2.4-ngx12.0",
     "@angular/animations": "^13.4.0",
     "@angular/cdk": "^13.3.9",
     "@angular/common": "^13.4.0",
@@ -25,6 +26,8 @@
     "@angular/platform-browser-dynamic": "^13.4.0",
     "@angular/router": "^13.4.0",
     "@auth0/angular-jwt": "^5.0.1",
+    "@ng-bootstrap/ng-bootstrap": "^12.1.2",
+    "@popperjs/core": "^2.10.2",
     "blueimp-canvas-to-blob": "^3.28.0",
     "bootstrap": "^4.5.2",
     "core-js": "^3.6.5",

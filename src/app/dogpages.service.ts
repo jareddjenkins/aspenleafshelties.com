@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpErrorResponse, HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, forkJoin, throwError } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
 import { Pages } from './pages';
 import { Dog } from './dog'
@@ -10,7 +10,6 @@ import { DogService } from './dog.service'
 import { MessageService } from './message.service';
 
 import { environment } from '../environments/environment';
-import 'rxjs/add/operator/delay';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
