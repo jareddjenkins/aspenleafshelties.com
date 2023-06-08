@@ -48,9 +48,9 @@
                 double
                 coat requires regular maintenance. (Weekly to Bi-weekly brushing)
             </p>
-            <h5>Reserving a Puppy</h5>
+            <h5 id=reservedog>Reserving a Sheltie</h5>
             <p>
-                If you are interested in reserving a puppy, email is our preferred method of first contact. <a
+                If you are interested in reserving a sheltie, email is our preferred method of first contact. <a
                     href="mailto:AspenleafShelties@gmail.com">AspenleafShelties@gmail.com</a> Please complete
                 the
                 <a href="assets/AspenLeafQuestionnaire.doc">Aspenleaf Questionnaire</a> so we can select the right
@@ -66,51 +66,51 @@
             </p>
         </div>
     </div>
-    <div *ngIf="(puppies |async).length || (adults |async).length; else noneAvailable" >
-        <div class="row" *ngIf="(puppies |async).length">
-            <div class="col-lg-9 mx-auto">
-                <h1>
-                    Puppies For Sale
-                </h1>
+
+    <div class="row">
+        <div class="col-lg-9 mx-auto">
+            <h1>
+                Puppies For Sale
+            </h1>
+            <ng-container *ngIf="(puppies |async)?.length; else noAvailable">
                 <app-dogs *ngFor="let dog of puppies| async" [dog]="dog">
                 </app-dogs>
-            </div>
-        </div>
-        <div class="row" *ngIf="(adults | async).length">
-            <div class="col-lg-9 mx-auto">
-                <h1>
-                    Adults For Sale
-                </h1>
-                <app-dogs *ngFor="let dog of adults| async" [dog]="dog">
-                </app-dogs>
-            </div>
+            </ng-container>
+
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-9 mx-auto">
+            <h1>
+                Adults For Sale
+            </h1>
+            <ng-container *ngIf="(adults | async)?.length; else noAdultAvailable">
+                <app-dogs *ngFor="let dog of adults| async" [dog]="dog">
 
-
-
-    <ng-template #noneAvailable>
-        <div class="row">
-            <div class="col-9 mx-auto aligh-items-center topinfo mt-4">
-                <span *ngIf="puppies !== undefined && adults !== undefined">
-                    <h1>
-                        Shelties for Sale
-                    </h1>
-                    <p>
-                        We currently do not have any shelties for sell. Please check back here soon or contact me to
-                        discuss
-                        when Companions will become
-                        available.
-                    </p>
-                    <p>
-                        We prefer to place adults with people who have owned a Sheltie before and who have completely
-                        fenced
-                        secure yards. 
-                    </p>
-                </span>
-            </div>
-
+                </app-dogs>
+            </ng-container>
         </div>
+    </div>
+    <ng-template #noAvailable>
+        <p>
+            We currently do not have any puppies available. If you are interested in a puppy, please inquire
+            about our waitlist.
+        </p>
+        <p> See <a [routerLink]="" (click)="ScrollIntoView('#reservedog')">Reserving a Sheltie</a> above</p>
+    </ng-template>
+    <ng-template #noAdultAvailable>
+
+        <p>
+            We do not have any adults shelties to place at this time. Please check back here soon or contact me
+            to
+            discuss when companions will become available.
+
+        </p>
+        <p>
+            We prefer to place adults with people who have owned a Sheltie before and who have completely
+            fenced secure yards. 
+        </p>
+        <p> See <a [routerLink]="" (click)="ScrollIntoView('#reservedog')">Reserving a Sheltie</a> above</p>
     </ng-template>
 
 </div>
