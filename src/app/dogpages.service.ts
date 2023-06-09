@@ -55,7 +55,7 @@ export class DogpagesService {
 
   }
   putPagesByPage(page: string, updatedPages: Pages[]) {
-    var url = `${this.dogApiUrl}/DogPages/${page}`;
+    const url = `${this.dogApiUrl}/DogPages/${page}`;
 
     return this.http.put(url, updatedPages, httpOptions).pipe(
     tap(_ => this.log(`updated pages=${page}`)),
@@ -63,8 +63,8 @@ export class DogpagesService {
     );
 
   }
-  deleteFromPagesById(page: string, id: Number) {
-    var url = `${this.dogApiUrl}/DogPages/${page}/${id}`;
+  deleteFromPagesById(page: string, id: number) {
+    const url = `${this.dogApiUrl}/DogPages/${page}/${id}`;
 
     return this.http.delete(url, httpOptions).pipe(
     tap(_ => this.log(`updated pages=${page}`)),
@@ -93,5 +93,5 @@ export class DogpagesService {
     // return an observable with a user-facing error message
     return throwError(
       'Something bad happened; please try again later.');
-  };
+  }
 }

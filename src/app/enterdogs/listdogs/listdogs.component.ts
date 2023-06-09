@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ListdogsComponent implements OnInit {
   dogs: Observable<Dog[]>;
-  query:string = '';
+  query = '';
 
   constructor(
     private dogService: DogService,

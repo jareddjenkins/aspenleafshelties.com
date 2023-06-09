@@ -94,8 +94,8 @@ export class EditpagesComponent implements OnInit {
 
   }
   addDogObjectToPage(page: Pages, doglist: Dog[]): PageListItem {
-    let filtereddog = doglist.find(d => { return d.id === page.dogsId });
-    let newpage: PageListItem = {
+    const filtereddog = doglist.find(d => { return d.id === page.dogsId });
+    const newpage: PageListItem = {
       dog: filtereddog,
       sortId: page.sortId,
       pageName: page.pageName,
@@ -110,7 +110,7 @@ export class EditpagesComponent implements OnInit {
 
   drop(page: Pages[], event: CdkDragDrop<any>) {
     moveItemInArray(page, event.previousIndex, event.currentIndex);
-    for (var i in page){
+    for (const i in page){
       page[i].sortId = Number(i)
     }
     this.sortpage(page)
@@ -119,7 +119,7 @@ export class EditpagesComponent implements OnInit {
   }
 
   removedog(page: PageListItem[], index: number) {
-    let pageitem = page[index]
+    const pageitem = page[index]
     page.splice(index, 1);
     this.sortpage(page);
     this.dogpagesService.deleteFromPagesById(pageitem.pageName, pageitem.dogsId).subscribe();

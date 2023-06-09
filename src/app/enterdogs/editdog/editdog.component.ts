@@ -104,12 +104,12 @@ export class EditdogComponent implements OnInit {
   }
 
   onUpload() {
-    var blob = this.dataURLtoBlob(this.croppedImage);
+    const blob = this.dataURLtoBlob(this.croppedImage);
     this.dogService.uploadDogImage(this.dog.id, blob).subscribe(x => this.dog.profileImageUrl = x );
   }
 
   dataURLtoBlob(dataurl) {
-    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+    let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
       bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
     while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
