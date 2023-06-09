@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SocialAuthService, SocialUser, FacebookLoginProvider, GoogleLoginProvider } from "@abacritt/angularx-social-login";
-import { Router, CanActivate } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
