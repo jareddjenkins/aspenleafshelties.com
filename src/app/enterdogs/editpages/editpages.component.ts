@@ -7,7 +7,7 @@ import { PageListItem } from './pageListItem';
 import { Dog } from '../../dog';
 import { map, startWith, tap } from 'rxjs/operators';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag } from '@angular/cdk/drag-drop';
-import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, FormArray, UntypedFormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-editpages',
@@ -20,10 +20,10 @@ export class EditpagesComponent implements OnInit {
   availablepages: PageListItem[];
   adultavailablepages: PageListItem[]
   allpages: PageListItem[];
-  adddogform: FormGroup;
+  adddogform: UntypedFormGroup;
   doglist: Dog[]
   filteredOptions: Observable<Dog[]>;
-  pageselect = new FormControl();
+  pageselect = new UntypedFormControl();
 
   constructor(
     private dogpagesService: DogpagesService,
