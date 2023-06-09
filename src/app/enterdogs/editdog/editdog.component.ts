@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { NgbDateAdapter, NgbDateStruct, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { ImageCroppedEvent } from 'ngx-image-cropper/ngx-image-cropper';
 
@@ -39,8 +39,8 @@ export class EditdogComponent implements OnInit {
   selectedSire: Dog = null;
   selectedDam: Dog = null;
   //imagecropper
-  imageChangedEvent: any = '';
-  croppedImage: any = '';
+  imageChangedEvent: any = ''; // eslint-disable-line  @typescript-eslint/no-explicit-any
+  croppedImage: any = ''; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   showInput = false;
 
@@ -109,15 +109,17 @@ export class EditdogComponent implements OnInit {
   }
 
   dataURLtoBlob(dataurl) {
-    let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-      bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-    while (n--) {
+    let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1], // eslint-disable-line
+    
+      bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n); // eslint-disable-line
+    while (n--) { // eslint-disable-line
       u8arr[n] = bstr.charCodeAt(n);
     }
-    return new Blob([u8arr], { type: mime });
+    return dataurl.blob
+    /* eslint-enable */
   }
 
-  fileChangeEvent(event: any): void {
+  fileChangeEvent(event: any): void { // eslint-disable-line @typescript-eslint/no-explicit-any
     this.imageChangedEvent = event;
   }
   imageCropped(event: ImageCroppedEvent) {

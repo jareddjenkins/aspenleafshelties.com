@@ -5,9 +5,9 @@ import { Observable, forkJoin } from 'rxjs';
 import { Pages } from '../../pages';
 import { PageListItem } from './pageListItem';
 import { Dog } from '../../dog';
-import { map, startWith, tap } from 'rxjs/operators';
-import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
-import { FormBuilder, UntypedFormGroup, FormArray, UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { map, startWith } from 'rxjs/operators';
+import { CdkDragDrop, moveItemInArray, CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
+import { UntypedFormGroup, UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatLegacyOptionModule } from '@angular/material/legacy-core';
 import { NgFor, AsyncPipe } from '@angular/common';
@@ -108,7 +108,7 @@ export class EditpagesComponent implements OnInit {
     return dog ? dog.rname : undefined;
   }
 
-  drop(page: Pages[], event: CdkDragDrop<any>) {
+  drop(page: Pages[], event: CdkDragDrop<string[]>) {
     moveItemInArray(page, event.previousIndex, event.currentIndex);
     for (const i in page){
       page[i].sortId = Number(i)

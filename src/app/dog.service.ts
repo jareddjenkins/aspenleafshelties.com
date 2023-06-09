@@ -26,7 +26,7 @@ export class DogService {
     const url = `${this.dogApiUrl}/dogs`;
     return this.http.get<Dog[]>(url)
       .pipe(
-        tap(dogs => this.log(`fetched dogs`)),
+        tap(dogs => this.log(`fetched ${dogs}`)),
         catchError(this.handleError('getDogs', []))
       );
   }
@@ -34,7 +34,7 @@ export class DogService {
     const url = `${this.dogApiUrl}/dogs?gender=1`;
     return this.http.get<Dog[]>(url)
       .pipe(
-        tap(dogs => this.log(`fetched dogs`)),
+        tap(dogs => this.log(`fetched ${dogs}`)),
         catchError(this.handleError('getDogs', []))
       );
   }
@@ -42,7 +42,7 @@ export class DogService {
     const url = `${this.dogApiUrl}/dogs?gender=0`;
     return this.http.get<Dog[]>(url)
       .pipe(
-        tap(dogs => this.log(`fetched dogs`)),
+        tap(dogs => this.log(`fetched ${dogs}`)),
         catchError(this.handleError('getDogs', []))
       );
   }

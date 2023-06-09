@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { NgbCollapse, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -11,8 +11,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class TopnavComponent {
   isNavbarCollapsed = true;
-
-  constructor() {}
 
   toggleMenu() {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;

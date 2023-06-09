@@ -74,7 +74,7 @@
               outputType='base64' (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
               (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>
 
-            <img [src]="croppedImage" />
+            <img [src]="croppedImage" alt="Cropped Image" />
           </div>
         </div>
       </form>

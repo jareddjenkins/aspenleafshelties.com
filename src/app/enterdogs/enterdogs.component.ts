@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ListdogsComponent } from './listdogs/listdogs.component';
 import { EnterdogsnavComponent } from './enterdogsnav/enterdogsnav.component';
@@ -10,11 +10,7 @@ import { EnterdogsnavComponent } from './enterdogsnav/enterdogsnav.component';
     standalone: true,
     imports: [EnterdogsnavComponent, ListdogsComponent, RouterOutlet]
 })
-export class EnterdogsComponent implements OnInit {
+export class EnterdogsComponent {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
 
 }

@@ -1,9 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location, NgIf, DatePipe } from '@angular/common';
 
 import { Dog } from '../dog';
-import { DogService } from '../dog.service';
 
 @Component({
     selector: 'app-dogs',
@@ -13,7 +12,7 @@ import { DogService } from '../dog.service';
     imports: [NgIf, DatePipe]
 })
 
-export class DogsComponent implements OnInit {
+export class DogsComponent {
   
   @Input() 
   dog: Dog;
@@ -21,10 +20,6 @@ export class DogsComponent implements OnInit {
   lgImgUrl: string;
 
   constructor(private router: Router,private location: Location) { }
-
-  ngOnInit() {
-
-  }
 
   goDogDetails(): void {
     this.router.navigate([`/detail/${this.dog.id}`]);

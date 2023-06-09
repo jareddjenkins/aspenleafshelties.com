@@ -1,4 +1,3 @@
-import { Pages } from '../../pages';
 import { Dog } from '../../dog';
 
 export class PageListItem {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Pipe, PipeTransform } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterLinkActive, RouterLink } from '@angular/router';
 import { Location, NgFor, AsyncPipe, DatePipe } from '@angular/common';
 

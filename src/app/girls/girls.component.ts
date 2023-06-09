@@ -10,7 +10,6 @@ import { DogpagesService } from '../dogpages.service'
 
 
 import 'rxjs'
-import { map, concat, concatMap, mergeMap, switchMap, exhaustMap, delay, tap } from 'rxjs/operators';
 import { DogsComponent } from '../dogs/dogs.component';
 import { NgFor, AsyncPipe } from '@angular/common';
 

@@ -1,7 +1,6 @@
 /// <reference types="@angular/localize" />
 
 import { enableProdMode, importProvidersFrom } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 
 import { environment } from './environments/environment';

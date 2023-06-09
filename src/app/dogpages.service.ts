@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { HttpErrorResponse, HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of, forkJoin, throwError } from 'rxjs';
+import { Observable, forkJoin, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Pages } from './pages';
@@ -28,12 +28,10 @@ export class DogpagesService {
     this.messageService.add('DogService: ' + message);
   }
   getDogPages(page?: string): Observable<Pages[]> {
-    if (page) {
-      var url = `${this.dogApiUrl}/dogpages?page=${page}`;
-    } else {
-      var url = `${this.dogApiUrl}/dogpages`;
-    }
-
+    
+    let url = `${this.dogApiUrl}/dogpages`;if (page) {
+      url = `${this.dogApiUrl}/dogpages?page=${page}`;
+    } 
     return this.http.get<Pages[]>(url)
       .pipe(
         map(x => {
@@ -58,7 +56,7 @@ export class DogpagesService {
     const url = `${this.dogApiUrl}/DogPages/${page}`;
 
     return this.http.put(url, updatedPages, httpOptions).pipe(
-    tap(_ => this.log(`updated pages=${page}`)),
+    tap(page => this.log(`updated pages=${page}`)),
       catchError(this.handleError)
     );
 
@@ -67,7 +65,7 @@ export class DogpagesService {
     const url = `${this.dogApiUrl}/DogPages/${page}/${id}`;
 
     return this.http.delete(url, httpOptions).pipe(
-    tap(_ => this.log(`updated pages=${page}`)),
+    tap(page => this.log(`updated pages=${page}`)),
       catchError(this.handleError)
     );
 

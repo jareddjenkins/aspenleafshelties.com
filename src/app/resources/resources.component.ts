@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatLegacyButtonModule } from '@angular/material/legacy-button';
 
 @Component({
@@ -8,11 +8,7 @@ import { MatLegacyButtonModule } from '@angular/material/legacy-button';
     standalone: true,
     imports: [MatLegacyButtonModule]
 })
-export class ResourcesComponent implements OnInit {
+export class ResourcesComponent {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
 
 }
