@@ -7,7 +7,6 @@ import { Location } from '@angular/common';
 
 import { Dog } from '../../dog';
 import { DogService } from '../../dog.service';
-import { stringify } from '@angular/compiler/src/util';
 
 @Injectable()
 export class NgbDateNativeAdapter extends NgbDateAdapter<Date> {
