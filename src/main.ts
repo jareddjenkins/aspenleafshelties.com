@@ -46,50 +46,51 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
     providers: [
-        importProvidersFrom(NgbModule, BrowserModule, FormsModule, ImageCropperModule, MatButtonModule, MatCheckboxModule, MatIconModule, DragDropModule, ReactiveFormsModule, FormsModule, MatAutocompleteModule, MatFormFieldModule, MatInputModule, SocialLoginModule),
-        DogService,
-        DogpagesService,
-        MessageService,
-        AuthService,
-        AuthGuard,
+    importProvidersFrom(NgbModule, BrowserModule, FormsModule, ImageCropperModule, MatButtonModule, MatCheckboxModule, MatIconModule, DragDropModule, ReactiveFormsModule, FormsModule, MatAutocompleteModule, MatFormFieldModule, MatInputModule, SocialLoginModule),
+    DogService,
+    DogpagesService,
+    MessageService,
+    AuthService,
+    AuthGuard,
+    {
+        provide: 'SocialAuthServiceConfig',
+        useValue: {
+            autoLogin: true,
+            providers: [
+                {
+                    id: GoogleLoginProvider.PROVIDER_ID,
+                    provider: new GoogleLoginProvider('1005495952855-vvb7gdbsav5nl628kubn0jast1bn8prh.apps.googleusercontent.com'),
+                }
+            ],
+        } as SocialAuthServiceConfig,
+    },
+    provideRouter([
+        { path: '', redirectTo: "/home", pathMatch: 'full' },
+        { path: 'home', component: HomeComponent },
+        { path: 'boys', component: BoysComponent },
+        { path: 'girls', component: GirlsComponent },
+        { path: 'puppies', component: AvailableComponent },
+        { path: 'available', component: AvailableComponent },
+        { path: 'contact', component: ContactComponent },
+        { path: 'about', component: AboutComponent },
+        { path: 'resources', component: ResourcesComponent },
+        { path: 'detail/:id', component: DogDetailComponent },
+        { path: 'login', component: LoginComponent },
+        { path: 'signout', component: SignOutComponent },
         {
-            provide: 'SocialAuthServiceConfig',
-            useValue: {
-                autoLogin: true,
-                providers: [
-                    {
-                        id: GoogleLoginProvider.PROVIDER_ID,
-                        provider: new GoogleLoginProvider('1005495952855-vvb7gdbsav5nl628kubn0jast1bn8prh.apps.googleusercontent.com'),
-                    }
-                ],
-            } as SocialAuthServiceConfig,
+            path: 'enterdogs',
+            // canActivate: [AuthGuard],
+            children: [
+                { path: '', component: EnterdogsComponent },
+                { path: 'pages', component: EditpagesComponent },
+                { path: 'editdog/:id', component: EditdogComponent }
+            ]
         },
-        provideRouter([
-            { path: '', redirectTo: "/home", pathMatch: 'full' },
-            { path: 'home', component: HomeComponent },
-            { path: 'boys', component: BoysComponent },
-            { path: 'girls', component: GirlsComponent },
-            { path: 'puppies', component: AvailableComponent },
-            { path: 'available', component: AvailableComponent },
-            { path: 'contact', component: ContactComponent },
-            { path: 'about', component: AboutComponent },
-            { path: 'resources', component: ResourcesComponent },
-            { path: 'detail/:id', component: DogDetailComponent },
-            { path: 'login', component: LoginComponent },
-            { path: 'signout', component: SignOutComponent },
-            {
-                path: 'enterdogs',
-                // canActivate: [AuthGuard],
-                children: [
-                    { path: '', component: EnterdogsComponent },
-                    { path: 'pages', component: EditpagesComponent },
-                    { path: 'editdog/:id', component: EditdogComponent }
-                ]
-            },
-            { path: '**', component: HomeComponent },
-        ]),
-        provideHttpClient(withInterceptorsFromDi()),
-        provideAnimations()
-    ]
+        { path: '**', component: HomeComponent },
+    ]),
+    provideHttpClient(withInterceptorsFromDi()),
+    provideAnimations(),
+    provideAnimations()
+]
 })
   .catch(err => console.log(err));
