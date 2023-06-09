@@ -1,15 +1,18 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { Location, NgIf } from '@angular/common';
 
 import { Dog } from '../dog';
 import { DogService } from '../dog.service';
+import { DogsComponent } from '../dogs/dogs.component';
 
 @Component({
-  selector: 'app-dog-detail',
-  templateUrl: './dog-detail.component.html',
-  styleUrls: ['./dog-detail.component.css']
+    selector: 'app-dog-detail',
+    templateUrl: './dog-detail.component.html',
+    styleUrls: ['./dog-detail.component.css'],
+    standalone: true,
+    imports: [NgIf, DogsComponent]
 })
 export class DogDetailComponent implements OnInit {
   @Input() dog: Dog;

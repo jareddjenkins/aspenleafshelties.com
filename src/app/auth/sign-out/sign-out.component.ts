@@ -7,9 +7,10 @@ import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-sign-out',
-  templateUrl: './sign-out.component.html',
-  styleUrls: ['./sign-out.component.css']
+    selector: 'app-sign-out',
+    templateUrl: './sign-out.component.html',
+    styleUrls: ['./sign-out.component.css'],
+    standalone: true
 })
 export class SignOutComponent implements OnInit {
 

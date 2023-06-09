@@ -8,8 +8,8 @@ describe('EnterdogsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EnterdogsComponent ]
-    })
+    imports: [EnterdogsComponent]
+})
     .compileComponents();
   }));
 

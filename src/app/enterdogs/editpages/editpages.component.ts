@@ -6,13 +6,22 @@ import { Pages } from '../../pages';
 import { PageListItem } from './pageListItem';
 import { Dog } from '../../dog';
 import { map, startWith, tap } from 'rxjs/operators';
-import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag } from '@angular/cdk/drag-drop';
-import { FormBuilder, UntypedFormGroup, FormArray, UntypedFormControl } from '@angular/forms';
+import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
+import { FormBuilder, UntypedFormGroup, FormArray, UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatLegacyOptionModule } from '@angular/material/legacy-core';
+import { NgFor, AsyncPipe } from '@angular/common';
+import { MatLegacyAutocompleteModule } from '@angular/material/legacy-autocomplete';
+import { MatLegacyInputModule } from '@angular/material/legacy-input';
+import { MatLegacyFormFieldModule } from '@angular/material/legacy-form-field';
+import { EnterdogsnavComponent } from '../enterdogsnav/enterdogsnav.component';
 
 @Component({
-  selector: 'app-editpages',
-  templateUrl: './editpages.component.html',
-  styleUrls: ['./editpages.component.css']
+    selector: 'app-editpages',
+    templateUrl: './editpages.component.html',
+    styleUrls: ['./editpages.component.css'],
+    standalone: true,
+    imports: [EnterdogsnavComponent, CdkDropList, FormsModule, MatLegacyFormFieldModule, MatLegacyInputModule, MatLegacyAutocompleteModule, ReactiveFormsModule, NgFor, MatLegacyOptionModule, CdkDrag, MatIconModule, AsyncPipe]
 })
 export class EditpagesComponent implements OnInit {
   boypages: PageListItem[];

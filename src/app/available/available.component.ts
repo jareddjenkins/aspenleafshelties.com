@@ -3,11 +3,15 @@ import { DogsComponent } from '../dogs/dogs.component';
 import { Dog } from '../dog';
 import { DogpagesService } from '../dogpages.service';
 import { Observable, of, forkJoin } from 'rxjs';
+import { RouterLink } from '@angular/router';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-available',
-  templateUrl: './available.component.html',
-  styleUrls: ['./available.component.css']
+    selector: 'app-available',
+    templateUrl: './available.component.html',
+    styleUrls: ['./available.component.css'],
+    standalone: true,
+    imports: [NgIf, NgFor, DogsComponent, RouterLink, AsyncPipe]
 })
 export class AvailableComponent implements OnInit {
 

@@ -1,12 +1,15 @@
 import { Component, OnInit, Input, Injectable } from '@angular/core';
-import { NgbDateAdapter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateAdapter, NgbDateStruct, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { ImageCroppedEvent } from 'ngx-image-cropper/ngx-image-cropper';
 
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { Location, NgIf, NgFor, DatePipe } from '@angular/common';
 
 import { Dog } from '../../dog';
 import { DogService } from '../../dog.service';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { FormsModule } from '@angular/forms';
+import { DogsComponent } from '../../dogs/dogs.component';
 
 @Injectable()
 export class NgbDateNativeAdapter extends NgbDateAdapter<Date> {
@@ -21,10 +24,12 @@ export class NgbDateNativeAdapter extends NgbDateAdapter<Date> {
 }
 
 @Component({
-  selector: 'app-editdog',
-  templateUrl: './editdog.component.html',
-  styleUrls: ['./editdog.component.css'],
-  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
+    selector: 'app-editdog',
+    templateUrl: './editdog.component.html',
+    styleUrls: ['./editdog.component.css'],
+    providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
+    standalone: true,
+    imports: [NgIf, DogsComponent, FormsModule, NgFor, NgbDatepicker, ImageCropperModule, DatePipe]
 })
 
 export class EditdogComponent implements OnInit {
