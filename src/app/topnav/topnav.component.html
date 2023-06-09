@@ -5,23 +5,22 @@
       data-target="#navbarsDefault" aria-controls="navbarsDefault" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarsDefault">
+    <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse justify-content-end" id="navbarsDefault">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown " ngbDropdown>
+        <li class="nav-item dropdown px-4" ngbDropdown>
           <a class="dropdown-item" routerLink="/about">About</a>
         </li>
-        <li class="nav-item dropdown" ngbDropdown>
+        <li class="nav-item dropdown px-4" ngbDropdown>
           <a class="dropdown-item" routerLink="/boys" routerLinkActive="active">Boys</a>
         </li>
-        <li class="nav-item dropdown" ngbDropdown>
+        <li class="nav-item dropdown px-4" ngbDropdown>
           <a class="dropdown-item" routerLink="/girls" routerLinkActive="active">Girls</a>
         </li>
-        <li class="nav-item dropdown" ngbDropdown>
-
+        <li class="nav-item dropdown px-4" ngbDropdown>
           <a class="dropdown-item" routerLink="/puppies" routerLinkActive="active">Puppies</a>
         </li>
-        <li class="nav-item dropdown" ngbDropdown>
-          <a class="dropdown-item" routerLink="/resources">Resources</a>
+        <li class="nav-item dropdown px-4" ngbDropdown>
+          <a class="dropdown-item"  routerLink="/resources">Resources</a>
         </li>
       </ul>
     </div>
