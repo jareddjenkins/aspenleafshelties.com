@@ -5,6 +5,8 @@
                 alt="Six newly born sheltie puppies cuddled next to eachother on a blue blanket.">
         </div>
     </div>
+</div>
+<div class="container-fluid" style="max-width: 1200px">
     <div class="row mt-4">
         <div class="col-sm-10 mx-auto">
 
@@ -15,10 +17,10 @@
     </div>
     <div class="row">
         <div class="col-sm-1"></div>
-        <div class="col-sm-8">
+        <div class="col-sm-8 ">
 
             <p>
-                At Aspenleaf Shelßties, we breed to produce show quality dogs. Each litter is carefully planned to
+                At Aspenleaf Shelties, we breed to produce show quality dogs. Each litter is carefully planned to
                 ensure
                 sound structure, great temperament, and healthy champions.
 
@@ -95,31 +97,32 @@
         </div>
         <div class="col-sm-1"></div>
     </div>
-</div>
-<div class="col-sm-1"></div>
 
-<div class="row mt-4">
-    <div class="col-sm-10 mx-auto">
-        <h1>
-            Puppies For Sale
-        </h1>
-        <ng-container *ngIf="(puppies |async)?.length; else noAvailable">
-            <app-dogs *ngFor="let dog of puppies| async" [dog]="dog">
-            </app-dogs>
-        </ng-container>
+    <div class="col-sm-1"></div>
 
+    <div class="row mt-4">
+        <div class="col-sm-10 mx-auto">
+            <h1>
+                Puppies For Sale
+            </h1>
+            <ng-container *ngIf="(puppies |async)?.length; else noAvailable">
+                <app-dogs *ngFor="let dog of puppies| async" [dog]="dog">
+                </app-dogs>
+            </ng-container>
+
+        </div>
     </div>
-</div>
-<div class="row mt-4">
-    <div class="col-sm-10 mx-auto">
-        <h1>
-            Adults For Sale
-        </h1>
-        <ng-container *ngIf="(adults | async)?.length; else noAdultAvailable">
-            <app-dogs *ngFor="let dog of adults| async" [dog]="dog">
+    <div class="row mt-4">
+        <div class="col-sm-10 mx-auto">
+            <h1>
+                Adults For Sale
+            </h1>
+            <ng-container *ngIf="(adults | async)?.length; else noAdultAvailable">
+                <app-dogs *ngFor="let dog of adults| async" [dog]="dog">
 
-            </app-dogs>
-        </ng-container>
+                </app-dogs>
+            </ng-container>
+        </div>
     </div>
 </div>
 <ng-template #noAvailable>
