@@ -5,9 +5,9 @@ import { Observable, forkJoin } from 'rxjs';
 import { Pages } from '../../pages';
 import { PageListItem } from './pageListItem';
 import { Dog } from '../../dog';
-import { map, startWith } from 'rxjs/operators';
-import { CdkDragDrop, moveItemInArray, CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
-import { UntypedFormGroup, UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { map, startWith, tap } from 'rxjs/operators';
+import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
+import { FormBuilder, UntypedFormGroup, FormArray, UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatLegacyOptionModule } from '@angular/material/legacy-core';
 import { NgFor, AsyncPipe } from '@angular/common';
@@ -94,8 +94,8 @@ export class EditpagesComponent implements OnInit {
 
   }
   addDogObjectToPage(page: Pages, doglist: Dog[]): PageListItem {
-    const filtereddog = doglist.find(d => { return d.id === page.dogsId });
-    const newpage: PageListItem = {
+    let filtereddog = doglist.find(d => { return d.id === page.dogsId });
+    let newpage: PageListItem = {
       dog: filtereddog,
       sortId: page.sortId,
       pageName: page.pageName,
@@ -108,9 +108,9 @@ export class EditpagesComponent implements OnInit {
     return dog ? dog.rname : undefined;
   }
 
-  drop(page: Pages[], event: CdkDragDrop<string[]>) {
+  drop(page: Pages[], event: CdkDragDrop<any>) {
     moveItemInArray(page, event.previousIndex, event.currentIndex);
-    for (const i in page){
+    for (var i in page){
       page[i].sortId = Number(i)
     }
     this.sortpage(page)
@@ -119,7 +119,7 @@ export class EditpagesComponent implements OnInit {
   }
 
   removedog(page: PageListItem[], index: number) {
-    const pageitem = page[index]
+    let pageitem = page[index]
     page.splice(index, 1);
     this.sortpage(page);
     this.dogpagesService.deleteFromPagesById(pageitem.pageName, pageitem.dogsId).subscribe();

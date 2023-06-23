@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Input, Injectable } from '@angular/core';
 import { NgbDateAdapter, NgbDateStruct, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { ImageCroppedEvent } from 'ngx-image-cropper/ngx-image-cropper';
 
@@ -39,8 +39,8 @@ export class EditdogComponent implements OnInit {
   selectedSire: Dog = null;
   selectedDam: Dog = null;
   //imagecropper
-  imageChangedEvent: any = ''; // eslint-disable-line  @typescript-eslint/no-explicit-any
-  croppedImage: any = ''; // eslint-disable-line @typescript-eslint/no-explicit-any
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
 
   showInput = false;
 
@@ -104,22 +104,20 @@ export class EditdogComponent implements OnInit {
   }
 
   onUpload() {
-    const blob = this.dataURLtoBlob(this.croppedImage);
+    var blob = this.dataURLtoBlob(this.croppedImage);
     this.dogService.uploadDogImage(this.dog.id, blob).subscribe(x => this.dog.profileImageUrl = x );
   }
 
   dataURLtoBlob(dataurl) {
-    let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1], // eslint-disable-line
-    
-      bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n); // eslint-disable-line
-    while (n--) { // eslint-disable-line
+    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
     }
-    return dataurl.blob
-    /* eslint-enable */
+    return new Blob([u8arr], { type: mime });
   }
 
-  fileChangeEvent(event: any): void { // eslint-disable-line @typescript-eslint/no-explicit-any
+  fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
   }
   imageCropped(event: ImageCroppedEvent) {

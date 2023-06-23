@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Pipe, PipeTransform } from '@angular/core';
 import { Router, RouterLinkActive, RouterLink } from '@angular/router';
 import { Location, NgFor, AsyncPipe, DatePipe } from '@angular/common';
 
@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ListdogsComponent implements OnInit {
   dogs: Observable<Dog[]>;
-  query = '';
+  query:string = '';
 
   constructor(
     private dogService: DogService,
