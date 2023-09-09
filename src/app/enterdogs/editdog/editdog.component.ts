@@ -41,6 +41,7 @@ export class EditdogComponent implements OnInit {
   //imagecropper
   imageChangedEvent: any = '';
   croppedImage: any = '';
+  croppedImageBlob: any = '';
 
   showInput = false;
 
@@ -104,8 +105,7 @@ export class EditdogComponent implements OnInit {
   }
 
   onUpload() {
-    var blob = this.dataURLtoBlob(this.croppedImage);
-    this.dogService.uploadDogImage(this.dog.id, blob).subscribe(x => this.dog.profileImageUrl = x );
+    this.dogService.uploadDogImage(this.dog.id, this.croppedImageBlob).subscribe(x => this.dog.profileImageUrl = x );
   }
 
   dataURLtoBlob(dataurl) {
@@ -121,7 +121,8 @@ export class EditdogComponent implements OnInit {
     this.imageChangedEvent = event;
   }
   imageCropped(event: ImageCroppedEvent) {
-    this.croppedImage = event.base64;
+    this.croppedImage = event.objectUrl;
+    this.croppedImageBlob = event.blob
   }
   imageLoaded() {
     // show cropper
