@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HomeComponent } from './home.component';
+import { MobileNavComponent } from './mobile-nav.component';
 
-describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+describe('MobileNavComponent', () => {
+  let component: MobileNavComponent;
+  let fixture: ComponentFixture<MobileNavComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HomeComponent]
+      declarations: [MobileNavComponent]
     });
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(MobileNavComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

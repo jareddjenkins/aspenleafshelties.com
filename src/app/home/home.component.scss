@@ -1,0 +1,63 @@
+img {
+    width: 100%;
+}
+.banner {
+    background: #1d3521;
+}
+.splash-text {
+
+    color: #1d3521;
+    text-align: center;
+}
+.splash{
+    width: 100%;
+    padding-top: 35%;
+    background-image: url("/assets/images/conway.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-position: left 25%;
+}
+
+.container {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    margin: 0 auto;
+}
+
+
+@media(min-width: 768px){
+    .splash {
+        background-image: url("/assets/images/conway.jpg") ;
+    }
+}
+p {
+    padding: 0 20px;
+}
+
+.title { 
+    font-family: 'Noto Serif', serif;
+    font-size: 30px;
+    color: #b0c4a6;
+    text-align: center;
+    white-space: nowrap;
+    
+}
+.breedertext { 
+    font-family: 'Archivo', sans-serif;
+    font-size: 16px;
+    color: #a6bac4;
+    text-align: center;
+    white-space: nowrap;
+}
+.floatingimgs { 
+    border: 2px solid #1d3521;
+}
+.snowdogs{
+    width: 100%;
+    
+}
+
+
+

@@ -1,15 +1,21 @@
-import { Component } from '@angular/core';
-import { FooterComponent } from './footer/footer.component';
-import { RouterOutlet } from '@angular/router';
-import { TopnavComponent } from './topnav/topnav.component';
+import { Component, OnInit } from '@angular/core';
+
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
-    standalone: true,
-    imports: [TopnavComponent, RouterOutlet, FooterComponent]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'AspenLeafShelties';
+export class AppComponent implements OnInit {
+  isDesktop: boolean = true;
+  title = 'Aspenleaf Shelties';
+  
+  ngOnInit(): void {
+    this.checkScreenSize()
+    window.addEventListener('resize', this.checkScreenSize.bind(this))
+  }
+
+  checkScreenSize() {
+    this.isDesktop = window.innerWidth > 768
+  }
 }
