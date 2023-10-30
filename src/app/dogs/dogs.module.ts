@@ -12,7 +12,7 @@ import { DogsRoutingModule } from './dogs-routing.module';
 
 @NgModule({
   declarations: [
-    BoysComponent,
+
   ],
   imports: [
     CommonModule,
