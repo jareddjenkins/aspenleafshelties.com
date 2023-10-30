@@ -28,8 +28,6 @@ export class NgbDateNativeAdapter extends NgbDateAdapter<Date> {
     templateUrl: './editdog.component.html',
     styleUrls: ['./editdog.component.css'],
     providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
-    standalone: true,
-    imports: [NgIf, DogsComponent, FormsModule, NgFor, NgbDatepicker, ImageCropperModule, DatePipe]
 })
 
 export class EditdogComponent implements OnInit {

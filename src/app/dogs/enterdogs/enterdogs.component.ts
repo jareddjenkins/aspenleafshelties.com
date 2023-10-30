@@ -7,8 +7,6 @@ import { EnterdogsnavComponent } from './enterdogsnav/enterdogsnav.component';
     selector: 'app-enterdogs',
     templateUrl: './enterdogs.component.html',
     styleUrls: ['./enterdogs.component.css'],
-    standalone: true,
-    imports: [EnterdogsnavComponent, ListdogsComponent, RouterOutlet]
 })
 export class EnterdogsComponent {
 

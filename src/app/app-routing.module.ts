@@ -22,15 +22,10 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signout', component: SignOutComponent },
   {
-      path: 'enterdogs',
-      // canActivate: [AuthGuard],
-      children: [
-          { path: '', component: EnterdogsComponent },
-          { path: 'pages', component: EditpagesComponent },
-          { path: 'editdog/:id', component: EditdogComponent }
-      ]
-  },
-  { path: '**', component: HomeComponent },
+    path: 'enterdogs',
+    redirectTo: 'dogs/enterdogs',
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({

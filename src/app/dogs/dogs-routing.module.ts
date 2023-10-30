@@ -4,6 +4,7 @@ import { BoysComponent } from './boys/boys.component';
 import { GirlsComponent } from './girls/girls.component';
 import { AvailableComponent } from './available/available.component';
 
+
 const routes: Routes = [
   {
     path: '',
@@ -27,7 +28,8 @@ const routes: Routes = [
     path: 'puppies',
     redirectTo: "available",
     pathMatch: "full"
-  }
+  },
+  {path: 'enterdogs',loadChildren: () => import('./enterdogs/enterdogs.component').then(m => m.EnterdogsComponent) },
 ];
 
 @NgModule({

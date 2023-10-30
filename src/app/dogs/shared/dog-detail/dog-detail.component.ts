@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location, NgIf } from '@angular/common';
 
 import { Dog } from '../../model/dog';
-import { DogService } from '../../../dog.service';
+import { DogService } from 'src/app/dog.service';
 import { DogsComponent } from '../dog-card/dogs.component';
 
 @Component({

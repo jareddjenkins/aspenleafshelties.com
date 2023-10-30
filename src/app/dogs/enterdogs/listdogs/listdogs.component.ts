@@ -8,12 +8,11 @@ import { Observable } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 
+
 @Component({
     selector: 'app-listdogs',
     templateUrl: './listdogs.component.html',
     styleUrls: ['./listdogs.component.css'],
-    standalone: true,
-    imports: [FormsModule, NgFor, RouterLinkActive, RouterLink, MatIconModule, AsyncPipe, DatePipe]
 })
 export class ListdogsComponent implements OnInit {
   dogs: Observable<Dog[]>;

@@ -1,0 +1,20 @@
+.eachdog{
+    border-radius: .2em;
+    background-color: #a6c4b0;
+}
+.itemtitle {
+    background-color: #1d3521;
+    color: #e5f4fc;
+}
+
+.listdetails dd,dt {
+    display: block;
+}
+
+img {
+    width: 100%;
+    min-width: 100%;
+}
+.topinfo > p {
+    width: 100%;
+}
