@@ -2,18 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Dog } from '../model/dog'
 import { DogService } from '../../dog.service'
-import { DogpagesService } from '../../dogpages.service'
+import { DogpagesService } from 'src/app/dogpages.service';
+
 
 import 'rxjs'
 import { DogsComponent } from '../shared/dog-card/dogs.component';
-import { NgFor, AsyncPipe } from '@angular/common';
+
 
 @Component({
-    selector: 'app-boys',
-    templateUrl: './boys.component.html',
-    styleUrls: ['./boys.component.css'],
-    standalone: true,
-    imports: [NgFor, DogsComponent, AsyncPipe]
+  selector: 'app-boys',
+  templateUrl: './boys.component.html',
+  styleUrls: ['./boys.component.css'],
 })
 export class BoysComponent implements OnInit {
   dogs: Observable<Dog[]>;
