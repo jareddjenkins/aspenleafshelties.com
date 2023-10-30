@@ -25,10 +25,10 @@ export class DogpagesService {
     private dogService: DogService) { }
   /** Log a DogService message with the MessageService */
   getDogPages(page?: string): Observable<Pages[]> {
-    
-    let url = `${this.dogApiUrl}/dogpages`;if (page) {
+
+    let url = `${this.dogApiUrl}/dogpages`; if (page) {
       url = `${this.dogApiUrl}/dogpages?page=${page}`;
-    } 
+    }
     return this.http.get<Pages[]>(url)
       .pipe(
         map(x => {
