@@ -5,7 +5,7 @@ import { Observable, forkJoin, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Pages } from './pages';
-import { Dog } from './dog'
+import { Dog } from './dogs/model/dog'
 import { DogService } from './dog.service'
 import { MessageService } from './message.service';
 

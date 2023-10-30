@@ -7,8 +7,6 @@ import { TopnavComponent } from './topnav/topnav.component';
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    standalone: true,
-    imports: [TopnavComponent, RouterOutlet, FooterComponent]
 })
 export class AppComponent {
   title = 'AspenLeafShelties';

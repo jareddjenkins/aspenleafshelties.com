@@ -6,8 +6,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     selector: 'app-topnav',
     templateUrl: './topnav.component.html',
     styleUrls: ['./topnav.component.css'],
-    standalone: true,
-    imports: [RouterLink, RouterLinkActive, NgbCollapse, NgbDropdown]
 })
 export class TopnavComponent {
   isNavbarCollapsed = true;

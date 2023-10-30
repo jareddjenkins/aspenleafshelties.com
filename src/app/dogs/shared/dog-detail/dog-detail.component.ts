@@ -3,9 +3,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location, NgIf } from '@angular/common';
 
-import { Dog } from '../dog';
-import { DogService } from '../dog.service';
-import { DogsComponent } from '../dogs/dogs.component';
+import { Dog } from '../../model/dog';
+import { DogService } from '../../../dog.service';
+import { DogsComponent } from '../dog-card/dogs.component';
 
 @Component({
     selector: 'app-dog-detail',

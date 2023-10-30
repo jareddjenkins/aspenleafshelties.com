@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Dog } from '../dog'
-import { DogService } from '../dog.service'
-import { DogpagesService } from '../dogpages.service'
+import { Dog } from '../model/dog'
+import { DogService } from '../../dog.service'
+import { DogpagesService } from '../../dogpages.service'
 
 
 
@@ -10,9 +10,8 @@ import { DogpagesService } from '../dogpages.service'
 
 
 import 'rxjs'
-import { DogsComponent } from '../dogs/dogs.component';
+import { DogsComponent } from '../shared/dog-card/dogs.component';
 import { NgFor, AsyncPipe } from '@angular/common';
-
 
 @Component({
     selector: 'app-girls',

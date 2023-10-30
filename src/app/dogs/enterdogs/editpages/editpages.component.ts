@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { DogpagesService } from '../../dogpages.service'
-import { DogService } from '../../dog.service'
+import { DogpagesService } from '../../../dogpages.service'
+import { DogService } from '../../../dog.service'
 import { Observable, forkJoin } from 'rxjs';
-import { Pages } from '../../pages';
+import { Pages } from '../../../pages';
 import { PageListItem } from './pageListItem';
-import { Dog } from '../../dog';
+import { Dog } from '../../model/dog';
 import { map, startWith, tap } from 'rxjs/operators';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 import { FormBuilder, UntypedFormGroup, FormArray, UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';

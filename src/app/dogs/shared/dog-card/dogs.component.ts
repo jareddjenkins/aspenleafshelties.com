@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location, NgIf, DatePipe } from '@angular/common';
 
-import { Dog } from '../dog';
+import { Dog } from '../../model/dog';
 
 @Component({
     selector: 'app-dogs',

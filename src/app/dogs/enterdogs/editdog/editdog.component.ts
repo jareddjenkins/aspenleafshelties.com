@@ -5,11 +5,11 @@ import { ImageCroppedEvent } from 'ngx-image-cropper/ngx-image-cropper';
 import { ActivatedRoute } from '@angular/router';
 import { Location, NgIf, NgFor, DatePipe } from '@angular/common';
 
-import { Dog } from '../../dog';
-import { DogService } from '../../dog.service';
+import { Dog } from '../../model/dog';
+import { DogService } from '../../../dog.service';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { FormsModule } from '@angular/forms';
-import { DogsComponent } from '../../dogs/dogs.component';
+import { DogsComponent } from '../../shared/dog-card/dogs.component';
 
 @Injectable()
 export class NgbDateNativeAdapter extends NgbDateAdapter<Date> {
