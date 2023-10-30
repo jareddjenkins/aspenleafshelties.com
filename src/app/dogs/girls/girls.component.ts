@@ -4,11 +4,6 @@ import { Dog } from '../model/dog'
 import { DogService } from '../../dog.service'
 import { DogpagesService } from '../../dogpages.service'
 
-
-
-
-
-
 import 'rxjs'
 import { DogsComponent } from '../shared/dog-card/dogs.component';
 import { NgFor, AsyncPipe } from '@angular/common';
