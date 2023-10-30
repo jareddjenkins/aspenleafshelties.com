@@ -12,8 +12,6 @@ import { NgFor, AsyncPipe } from '@angular/common';
     selector: 'app-girls',
     templateUrl: './girls.component.html',
     styleUrls: ['./girls.component.css'],
-    standalone: true,
-    imports: [NgFor, DogsComponent, AsyncPipe]
 })
 export class GirlsComponent implements OnInit {
   dogs: Observable<Dog[]>;

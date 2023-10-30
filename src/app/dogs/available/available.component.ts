@@ -10,8 +10,6 @@ import { NgIf, NgFor, AsyncPipe } from '@angular/common';
     selector: 'app-available',
     templateUrl: './available.component.html',
     styleUrls: ['./available.component.css'],
-    standalone: true,
-    imports: [NgIf, NgFor, DogsComponent, RouterLink, AsyncPipe]
 })
 export class AvailableComponent implements OnInit {
 
