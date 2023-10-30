@@ -1,12 +1,10 @@
-import { Component, OnInit, Input, Pipe, PipeTransform } from '@angular/core';
-import { Router, RouterLinkActive, RouterLink } from '@angular/router';
-import { Location, NgFor, AsyncPipe, DatePipe } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { Dog } from '../../model/dog';
 import { DogService } from '../../../dog.service';
 import { Observable } from 'rxjs';
-import { MatIconModule } from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-listdogs',

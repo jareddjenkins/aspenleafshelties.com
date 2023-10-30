@@ -1,3 +1,4 @@
+
 <div class="container">
   <div class="row">
     <div class="col">
@@ -13,40 +14,40 @@
     </div>
     <div class="col">
       <form>
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="rname">Registered Name</label>
           <input type="text" [(ngModel)]="dog.rname" class="form-control" name="rname" id="rname"
             placeholder="Registered Name">
-        </div>
-        <div class="form-group">
+        </div> -->
+        <!-- <div class="form-group">
           <label for="cname">Call Name</label>
           <input type="text" [(ngModel)]="dog.cname" class="form-control" name="cname" id="cname"
             placeholder="Call Name">
-        </div>
-        <div class="form-group">
+        </div> -->
+        <!-- <div class="form-group">
           <label for="dog.comments">Description</label>
           <input type="text" [(ngModel)]="dog.comments" class="form-control" name="comments" id="comments"
             placeholder="Description">
-        </div>
+        </div> -->
 
         <div class="form-group">
           <label for="sire">Sire</label>
-          <select name="sire" [(ngModel)]="selectedSire" (change)="setSire()" class="form-control">
+          <!-- <select name="sire" [(ngModel)]="selectedSire" (change)="setSire()" class="form-control">
             <option *ngFor="let sire of sires" [ngValue]="sire">{{sire.rname}}</option>
-          </select>
+          </select> -->
         </div>
 
         <div class="form-group">
           <label for="dam">Dam</label>
-          <select name="dam" [(ngModel)]="selectedDam" nullValue (change)="setDam()" class="form-control">
+          <!-- <select name="dam" [(ngModel)]="selectedDam" nullValue (change)="setDam()" class="form-control">
             <option *ngFor="let dam of dams" [ngValue]="dam">{{dam.rname}}</option>
-          </select>
+          </select> -->
         </div>
 
         <div class="form-group ">
           <label for="gender">Gender</label>
           <div>
-            <label>
+            <!-- <label>
               <input type="radio" name="options" type="radio" [(ngModel)]="dog.gender" [value]="1" name="male"
                 id="male">
               Male
@@ -55,24 +56,19 @@
               <input type="radio" name="options" type="radio" [(ngModel)]="dog.gender" [value]="0" name="female"
                 id="female">
               Female
-            </label>
+            </label> -->
           </div>
         </div>
         <div class="form-group">
           <div class="input-group">
-            <label for="dob">Date of Birth: {{dog.dob|date:'longDate'}}</label>
+            <!-- <label for="dob">Date of Birth: {{dog.dob|date:'longDate'}}</label> -->
             <div>
-              <ngb-datepicker name="dob" [(ngModel)]="dog.dob"></ngb-datepicker>
+              <!-- <div name="dob" [(ngModel)]="dog.dob"></div> -->
             </div>
           </div>
           <div>
             <input type="file" (change)="fileChangeEvent($event)" accept="image/png, image/jpg, image/jpg" />
             <button type="button" (click)="onUpload()">Upload</button>
-
-            <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
-              [aspectRatio]="160 / 160" [resizeToWidth]="512" resizeToWidth="3840" onlyScaleDown="true" format="png"
-              outputType='base64' (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
-              (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>
 
             <img [src]="croppedImage" alt="Cropped Image" />
           </div>

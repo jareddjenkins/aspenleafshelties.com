@@ -6770,7 +6770,7 @@ neo-async@^2.6.2:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
-ngx-image-cropper@^7.0.0:
+ngx-image-cropper@^7.1.1:
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/ngx-image-cropper/-/ngx-image-cropper-7.1.1.tgz#1cdd669d2da7cc14952007e1b898645c02d33433"
   integrity sha512-7QCsxop8TtfEDr/rUXty0TuhSC6UlZcu+piGskVRucvhIZNMx7SYgBr0sdJ1M9rsAnBDUhvTSjn/UVMKb4w4YA==

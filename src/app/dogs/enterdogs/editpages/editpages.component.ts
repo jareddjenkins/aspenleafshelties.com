@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { DogpagesService } from '../../../dogpages.service';
 import { DogService } from '../../../dog.service';
 import { Observable, forkJoin } from 'rxjs';
 import { Pages } from '../../../pages';
 import { PageListItem } from './pageListItem';
 import { Dog } from '../../model/dog';
-import { map, startWith, tap } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { DogpagesService } from 'src/app/dogpages.service';
 
 @Component({
   selector: 'app-editpages',
@@ -31,10 +31,10 @@ export class EditpagesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const dogs = this.dogService.getDogs();
-    const pages = this.dogpagesService.getDogPages();
+    const dogs$ = this.dogService.getDogs();
+    const pages$ = this.dogpagesService.getDogPages();
 
-    forkJoin(pages, dogs).subscribe((results) => {
+    forkJoin(pages$, dogs$).subscribe( (results) => {
       this.doglist = results[1];
       this.allpages = results[0].map((page) =>
         this.addDogObjectToPage(page, results[1]),

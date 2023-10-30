@@ -6,7 +6,6 @@ import { GirlsComponent } from './girls/girls.component';
 import { AvailableComponent } from './available/available.component';
 
 import { DogsRoutingModule } from './dogs-routing.module';
-import { DogpagesService } from 'src/app/dogpages.service';
 import { DogsComponent } from './dogs.component';
 
 @NgModule({
@@ -17,5 +16,6 @@ import { DogsComponent } from './dogs.component';
     DogsComponent,
   ],
   imports: [CommonModule, DogsRoutingModule],
+  exports: [DogsComponent],
 })
 export class DogsModule {}

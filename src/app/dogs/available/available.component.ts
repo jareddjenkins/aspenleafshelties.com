@@ -1,10 +1,8 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { DogsComponent } from '../shared/dog-card/dogs.component';
 import { Dog } from '../model/dog';
 import { DogpagesService } from '../../dogpages.service';
-import { Observable, of, forkJoin } from 'rxjs';
-import { RouterLink } from '@angular/router';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-available',

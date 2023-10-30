@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Location, NgIf, DatePipe } from '@angular/common';
+import { Location } from '@angular/common';
 
 import { Dog } from './model/dog';
 
@@ -10,8 +10,7 @@ import { Dog } from './model/dog';
   styleUrls: ['./dogs.component.css'],
 })
 export class DogsComponent {
-  @Input()
-  dog: Dog;
+  @Input() dog: Dog;
 
   lgImgUrl: string;
 

@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 
 import {
-  HttpErrorResponse,
   HttpClient,
   HttpHeaders,
 } from '@angular/common/http';
-import { Observable, forkJoin, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, forkJoin } from 'rxjs';
+import {  map } from 'rxjs/operators';
 
 import { Pages } from './pages';
 import { Dog } from './dogs/model/dog';

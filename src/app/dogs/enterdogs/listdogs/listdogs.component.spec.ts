@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListdogsComponent } from './listdogs.component';
-import { nameContainsPipe } from '../../namesearch.pipes';
 
 describe('ListdogsComponent', () => {
   let component: ListdogsComponent;

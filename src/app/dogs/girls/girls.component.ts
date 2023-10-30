@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Dog } from '../model/dog';
-import { DogpagesService } from '../../dogpages.service';
 
 import 'rxjs';
-import { DogsComponent } from '../shared/dog-card/dogs.component';
-import { NgFor, AsyncPipe } from '@angular/common';
+import { DogpagesService } from 'src/app/dogpages.service';
 
 @Component({
   selector: 'app-girls',

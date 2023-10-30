@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { NgbCollapse, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-topnav',

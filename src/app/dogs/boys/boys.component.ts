@@ -16,7 +16,6 @@ export class BoysComponent implements OnInit {
   dogs: Observable<Dog[]>;
 
   constructor(
-    private dogService: DogService,
     private dogpagesService: DogpagesService,
   ) {}
 
