@@ -8,9 +8,8 @@ describe('EditdogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-    imports: [EditdogComponent]
-})
-    .compileComponents();
+      imports: [EditdogComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

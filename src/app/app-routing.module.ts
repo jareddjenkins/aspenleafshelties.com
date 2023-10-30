@@ -12,9 +12,12 @@ import { EditpagesComponent } from './dogs/enterdogs/editpages/editpages.compone
 import { EditdogComponent } from './dogs/enterdogs/editdog/editdog.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: "/home", pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'dogs', loadChildren: () => import('./dogs/dogs.module').then(m => m.DogsModule) },
+  {
+    path: 'dogs',
+    loadChildren: () => import('./dogs/dogs.module').then((m) => m.DogsModule),
+  },
   { path: 'contact', component: ContactComponent },
   { path: 'about', component: AboutComponent },
   { path: 'resources', component: ResourcesComponent },
@@ -24,12 +27,12 @@ const routes: Routes = [
   {
     path: 'enterdogs',
     redirectTo: 'dogs/enterdogs',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

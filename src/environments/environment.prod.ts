@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiEndpoint: 'https://aspenleafapi.azurewebsites.net/api'
+  apiEndpoint: 'https://aspenleafapi.azurewebsites.net/api',
 };

@@ -5,27 +5,27 @@ import { Location, NgIf, DatePipe } from '@angular/common';
 import { Dog } from '../../model/dog';
 
 @Component({
-    selector: 'app-dogs',
-    templateUrl: './dogs.component.html',
-    styleUrls: ['./dogs.component.css'],
-    standalone: true,
-    imports: [NgIf, DatePipe]
+  selector: 'app-dogs',
+  templateUrl: './dogs.component.html',
+  styleUrls: ['./dogs.component.css'],
+  standalone: true,
+  imports: [NgIf, DatePipe],
 })
-
 export class DogsComponent {
-  
-  @Input() 
+  @Input()
   dog: Dog;
 
   lgImgUrl: string;
 
-  constructor(private router: Router,private location: Location) { }
+  constructor(
+    private router: Router,
+    private location: Location,
+  ) {}
 
   goDogDetails(): void {
     this.router.navigate([`/detail/${this.dog.id}`]);
   }
-  goBack() : void {
+  goBack(): void {
     this.location.back();
   }
-
 }

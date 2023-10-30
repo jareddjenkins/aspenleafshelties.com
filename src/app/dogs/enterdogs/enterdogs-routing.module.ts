@@ -7,11 +7,11 @@ import { EditdogComponent } from './editdog/editdog.component';
 const routes: Routes = [
   { path: '', component: EnterdogsComponent },
   { path: 'pages', component: EditpagesComponent },
-  { path: 'editdog/:id', component: EditdogComponent }
+  { path: 'editdog/:id', component: EditdogComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class EnterdogsRoutingModule { }
+export class EnterdogsRoutingModule {}

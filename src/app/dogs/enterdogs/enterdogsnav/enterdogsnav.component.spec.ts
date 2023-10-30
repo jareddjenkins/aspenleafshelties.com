@@ -8,9 +8,8 @@ describe('EnterdogsnavComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-    imports: [EnterdogsnavComponent]
-})
-    .compileComponents();
+      imports: [EnterdogsnavComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

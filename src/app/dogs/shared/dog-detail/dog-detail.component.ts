@@ -8,11 +8,11 @@ import { DogService } from 'src/app/dog.service';
 import { DogsComponent } from '../dog-card/dogs.component';
 
 @Component({
-    selector: 'app-dog-detail',
-    templateUrl: './dog-detail.component.html',
-    styleUrls: ['./dog-detail.component.css'],
-    standalone: true,
-    imports: [NgIf, DogsComponent]
+  selector: 'app-dog-detail',
+  templateUrl: './dog-detail.component.html',
+  styleUrls: ['./dog-detail.component.css'],
+  standalone: true,
+  imports: [NgIf, DogsComponent],
 })
 export class DogDetailComponent implements OnInit {
   @Input() dog: Dog;
@@ -22,8 +22,8 @@ export class DogDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private dogService: DogService,
-    private location: Location
-  ) { }
+    private location: Location,
+  ) {}
 
   ngOnInit(): void {
     this.getDog();
@@ -31,8 +31,7 @@ export class DogDetailComponent implements OnInit {
 
   getDog(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.dogService.getDog(id)
-      .subscribe(dog => this.dog = dog);
+    this.dogService.getDog(id).subscribe((dog) => (this.dog = dog));
   }
 
   goBack(): void {

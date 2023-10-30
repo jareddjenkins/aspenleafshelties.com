@@ -1,28 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Dog } from '../model/dog'
-import { DogpagesService } from '../../dogpages.service'
+import { Dog } from '../model/dog';
+import { DogpagesService } from '../../dogpages.service';
 
-import 'rxjs'
+import 'rxjs';
 import { DogsComponent } from '../shared/dog-card/dogs.component';
 import { NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
-    selector: 'app-girls',
-    templateUrl: './girls.component.html',
-    styleUrls: ['./girls.component.css'],
+  selector: 'app-girls',
+  templateUrl: './girls.component.html',
+  styleUrls: ['./girls.component.css'],
 })
 export class GirlsComponent implements OnInit {
   dogs: Observable<Dog[]>;
 
-
-  constructor(
-    private dogpagesService: DogpagesService,
-  ) {
-  }
+  constructor(private dogpagesService: DogpagesService) {}
 
   ngOnInit() {
-
-    this.dogs = this.dogpagesService.getDogsForPage('girls')
+    this.dogs = this.dogpagesService.getDogsForPage('girls');
   }
 }

@@ -14,13 +14,8 @@ import { DogsComponent } from './dogs.component';
     AvailableComponent,
     BoysComponent,
     GirlsComponent,
-    DogsComponent
-
+    DogsComponent,
   ],
-  imports: [
-    CommonModule,
-    DogsRoutingModule,
-  ],
-
+  imports: [CommonModule, DogsRoutingModule],
 })
-export class DogsModule { }
+export class DogsModule {}

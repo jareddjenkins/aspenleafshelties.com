@@ -4,11 +4,8 @@ import { ListdogsComponent } from './listdogs/listdogs.component';
 import { EnterdogsnavComponent } from './enterdogsnav/enterdogsnav.component';
 
 @Component({
-    selector: 'app-enterdogs',
-    templateUrl: './enterdogs.component.html',
-    styleUrls: ['./enterdogs.component.css'],
+  selector: 'app-enterdogs',
+  templateUrl: './enterdogs.component.html',
+  styleUrls: ['./enterdogs.component.css'],
 })
-export class EnterdogsComponent {
-
-
-}
+export class EnterdogsComponent {}

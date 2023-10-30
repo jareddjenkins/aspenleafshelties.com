@@ -9,9 +9,8 @@ describe('ListdogsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-    imports: [ListdogsComponent]
-})
-    .compileComponents();
+      imports: [ListdogsComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

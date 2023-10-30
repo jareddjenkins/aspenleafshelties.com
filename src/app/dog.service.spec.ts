@@ -5,7 +5,7 @@ import { DogService } from './dog.service';
 describe('DogService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [DogService]
+      providers: [DogService],
     });
   });
 

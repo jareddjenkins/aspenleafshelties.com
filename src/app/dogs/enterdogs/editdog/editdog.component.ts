@@ -1,5 +1,9 @@
 import { Component, OnInit, Input, Injectable } from '@angular/core';
-import { NgbDateAdapter, NgbDateStruct, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbDateAdapter,
+  NgbDateStruct,
+  NgbDatepicker,
+} from '@ng-bootstrap/ng-bootstrap';
 import { ImageCroppedEvent } from 'ngx-image-cropper/ngx-image-cropper';
 
 import { ActivatedRoute } from '@angular/router';
@@ -13,9 +17,14 @@ import { DogsComponent } from '../../shared/dog-card/dogs.component';
 
 @Injectable()
 export class NgbDateNativeAdapter extends NgbDateAdapter<Date> {
-
   fromModel(date: Date): NgbDateStruct {
-    return (date && date.getFullYear) ? { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() } : null;
+    return date && date.getFullYear
+      ? {
+          year: date.getFullYear(),
+          month: date.getMonth() + 1,
+          day: date.getDate(),
+        }
+      : null;
   }
 
   toModel(date: NgbDateStruct): Date {
@@ -24,12 +33,11 @@ export class NgbDateNativeAdapter extends NgbDateAdapter<Date> {
 }
 
 @Component({
-    selector: 'app-editdog',
-    templateUrl: './editdog.component.html',
-    styleUrls: ['./editdog.component.css'],
-    providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
+  selector: 'app-editdog',
+  templateUrl: './editdog.component.html',
+  styleUrls: ['./editdog.component.css'],
+  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
 })
-
 export class EditdogComponent implements OnInit {
   dog: Dog;
   sires: Dog[];
@@ -47,36 +55,33 @@ export class EditdogComponent implements OnInit {
     private route: ActivatedRoute,
     private dogService: DogService,
     private location: Location,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.getDog()
+    this.getDog();
   }
 
   getDog() {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.dogService.getDog(id)
-      .subscribe(dog => {
-      this.dog = dog,
-        this.getDams(),
-        this.getSires()
-      });
+    this.dogService.getDog(id).subscribe((dog) => {
+      (this.dog = dog), this.getDams(), this.getSires();
+    });
   }
 
   getSires() {
-    this.dogService.getMaleDogs()
-      .subscribe(dogs => {
-        this.sires = dogs,
-          this.selectedSire = this.sires.find(dog => dog.id == this.dog.sireId);
-      });
+    this.dogService.getMaleDogs().subscribe((dogs) => {
+      (this.sires = dogs),
+        (this.selectedSire = this.sires.find(
+          (dog) => dog.id == this.dog.sireId,
+        ));
+    });
   }
 
   getDams() {
-    this.dogService.getFemaleDogs()
-      .subscribe(dogs => {
-        this.dams = dogs,
-          this.selectedDam = this.dams.find(dog => dog.id == this.dog.damId);
-      });
+    this.dogService.getFemaleDogs().subscribe((dogs) => {
+      (this.dams = dogs),
+        (this.selectedDam = this.dams.find((dog) => dog.id == this.dog.damId));
+    });
   }
 
   setSire() {
@@ -98,17 +103,21 @@ export class EditdogComponent implements OnInit {
   }
 
   save() {
-    this.dogService.updateDog(this.dog)
-      .subscribe();// => this.goBack());
+    this.dogService.updateDog(this.dog).subscribe(); // => this.goBack());
   }
 
   onUpload() {
-    this.dogService.uploadDogImage(this.dog.id, this.croppedImageBlob).subscribe(x => this.dog.profileImageUrl = x );
+    this.dogService
+      .uploadDogImage(this.dog.id, this.croppedImageBlob)
+      .subscribe((x) => (this.dog.profileImageUrl = x));
   }
 
   dataURLtoBlob(dataurl) {
-    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-      bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    let arr = dataurl.split(','),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
     while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
     }
@@ -120,7 +129,7 @@ export class EditdogComponent implements OnInit {
   }
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.objectUrl;
-    this.croppedImageBlob = event.blob
+    this.croppedImageBlob = event.blob;
   }
   imageLoaded() {
     // show cropper

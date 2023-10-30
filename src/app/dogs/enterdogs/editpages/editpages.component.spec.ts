@@ -8,9 +8,8 @@ describe('EditpagesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-    imports: [EditpagesComponent]
-})
-    .compileComponents();
+      imports: [EditpagesComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

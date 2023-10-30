@@ -7,23 +7,23 @@ import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
-    selector: 'app-available',
-    templateUrl: './available.component.html',
-    styleUrls: ['./available.component.css'],
+  selector: 'app-available',
+  templateUrl: './available.component.html',
+  styleUrls: ['./available.component.css'],
 })
 export class AvailableComponent implements OnInit {
-
   puppies: Observable<Dog[]>;
   adults: Observable<Dog[]>;
 
-  constructor(private dogpagesService: DogpagesService) { }
+  constructor(private dogpagesService: DogpagesService) {}
 
   ngOnInit() {
-    this.puppies = this.dogpagesService.getDogsForPage('available')
-    this.adults = this.dogpagesService.getDogsForPage('adultavailable')
+    this.puppies = this.dogpagesService.getDogsForPage('available');
+    this.adults = this.dogpagesService.getDogsForPage('adultavailable');
   }
   ScrollIntoView(elem: string) {
-    document.querySelector(elem).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document
+      .querySelector(elem)
+      .scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }
-

@@ -8,20 +8,41 @@ import { EditdogComponent } from './editdog/editdog.component';
 import { EnterdogsnavComponent } from './enterdogsnav/enterdogsnav.component';
 import { ListdogsComponent } from './listdogs/listdogs.component';
 
-import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
-import {  FormBuilder, UntypedFormGroup, FormArray, UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+  CdkDrag,
+  CdkDropList,
+} from '@angular/cdk/drag-drop';
+import {
+  FormBuilder,
+  UntypedFormGroup,
+  FormArray,
+  UntypedFormControl,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatLegacyOptionModule } from '@angular/material/legacy-core';
 import { NgFor, AsyncPipe } from '@angular/common';
 import { MatLegacyAutocompleteModule } from '@angular/material/legacy-autocomplete';
 import { MatLegacyInputModule } from '@angular/material/legacy-input';
 import { MatLegacyFormFieldModule } from '@angular/material/legacy-form-field';
-import { NgbCollapse, NgbDropdown, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbCollapse,
+  NgbDropdown,
+  NgbModule,
+} from '@ng-bootstrap/ng-bootstrap';
 import { RouterOutlet } from '@angular/router';
 import { MatLegacyAutocompleteModule as MatAutocompleteModule } from '@angular/material/legacy-autocomplete';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { Location, NgIf, DatePipe } from '@angular/common';
-import { NgbDateAdapter, NgbDateStruct, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbDateAdapter,
+  NgbDateStruct,
+  NgbDatepicker,
+} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -56,7 +77,7 @@ import { NgbDateAdapter, NgbDateStruct, NgbDatepicker } from '@ng-bootstrap/ng-b
     MatLegacyInputModule,
     MatLegacyAutocompleteModule,
     ReactiveFormsModule,
-    RouterOutlet
-  ]
+    RouterOutlet,
+  ],
 })
-export class EnterdogsModule { }
+export class EnterdogsModule {}

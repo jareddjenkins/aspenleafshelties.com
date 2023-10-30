@@ -8,9 +8,8 @@ describe('DogDetailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-    imports: [DogDetailComponent]
-})
-    .compileComponents();
+      imports: [DogDetailComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

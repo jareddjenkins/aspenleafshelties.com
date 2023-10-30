@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Dog } from '../model/dog'
-import { DogService } from '../../dog.service'
+import { Dog } from '../model/dog';
+import { DogService } from '../../dog.service';
 import { DogpagesService } from 'src/app/dogpages.service';
 
-
-import 'rxjs'
+import 'rxjs';
 import { DogsComponent } from '../shared/dog-card/dogs.component';
-
 
 @Component({
   selector: 'app-boys',
@@ -17,15 +15,12 @@ import { DogsComponent } from '../shared/dog-card/dogs.component';
 export class BoysComponent implements OnInit {
   dogs: Observable<Dog[]>;
 
-
   constructor(
     private dogService: DogService,
     private dogpagesService: DogpagesService,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-
-    this.dogs = this.dogpagesService.getDogsForPage('boys')
+    this.dogs = this.dogpagesService.getDogsForPage('boys');
   }
 }
