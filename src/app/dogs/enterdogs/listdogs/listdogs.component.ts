@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-listdogs',
   templateUrl: './listdogs.component.html',
-  styleUrls: ['./listdogs.component.css'],
+  styleUrls: ['./listdogs.component.scss'],
 })
 export class ListdogsComponent implements OnInit {
   dogs: Observable<Dog[]>;

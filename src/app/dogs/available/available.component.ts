@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-available',
   templateUrl: './available.component.html',
-  styleUrls: ['./available.component.css'],
+  styleUrls: ['./available.component.scss'],
 })
 export class AvailableComponent implements OnInit {
   puppies: Observable<Dog[]>;

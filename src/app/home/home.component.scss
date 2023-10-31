@@ -1,0 +1,47 @@
+$gap: 20px;
+
+container {
+    display: flex;
+}
+
+.splash {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("/assets/images/conway.jpg");
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    background-repeat: no-repeat;
+    height: 400px;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+
+
+}
+
+p{
+    margin: 20px
+}
+
+.awards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0 20px;
+    column-gap: $gap;
+
+    img {
+        margin-top: 8px;
+        width: calc(50% - ($gap /2)) ;
+    
+    }
+
+}
+
+@media (max-width: 768px) {
+    .awards {
+        img {
+            flex: 100%
+        }
+    }
+}

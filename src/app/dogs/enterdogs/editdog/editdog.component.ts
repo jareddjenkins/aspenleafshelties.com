@@ -35,7 +35,7 @@ export class NgbDateNativeAdapter extends NgbDateAdapter<Date> {
 @Component({
   selector: 'app-editdog',
   templateUrl: './editdog.component.html',
-  styleUrls: ['./editdog.component.css'],
+  styleUrls: ['./editdog.component.scss'],
   providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
 })
 export class EditdogComponent implements OnInit {

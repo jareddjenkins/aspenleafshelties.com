@@ -7,7 +7,7 @@ import { Dog } from './model/dog';
 @Component({
   selector: 'app-dogs',
   templateUrl: './dogs.component.html',
-  styleUrls: ['./dogs.component.css'],
+  styleUrls: ['./dogs.component.scss'],
 })
 export class DogsComponent {
   @Input() dog: Dog;

@@ -12,7 +12,7 @@ import { DogpagesService } from 'src/app/dogpages.service';
 @Component({
   selector: 'app-editpages',
   templateUrl: './editpages.component.html',
-  styleUrls: ['./editpages.component.css'],
+  styleUrls: ['./editpages.component.scss'],
 })
 export class EditpagesComponent implements OnInit {
   boypages: PageListItem[];

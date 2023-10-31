@@ -10,7 +10,7 @@ import { DogsComponent } from '../shared/dog-card/dogs.component';
 @Component({
   selector: 'app-boys',
   templateUrl: './boys.component.html',
-  styleUrls: ['./boys.component.css'],
+  styleUrls: ['./boys.component.scss'],
 })
 export class BoysComponent implements OnInit {
   dogs: Observable<Dog[]>;

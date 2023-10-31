@@ -10,7 +10,7 @@ import { DogsComponent } from '../dog-card/dogs.component';
 @Component({
   selector: 'app-dog-detail',
   templateUrl: './dog-detail.component.html',
-  styleUrls: ['./dog-detail.component.css'],
+  styleUrls: ['./dog-detail.component.scss'],
   standalone: true,
   imports: [NgIf, DogsComponent],
 })

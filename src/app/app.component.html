@@ -1,3 +1,6 @@
-<app-topnav></app-topnav>
-<router-outlet></router-outlet>
-<app-footer></app-footer>
+<div *ngIf="isDesktop">
+    <app-desktop-nav></app-desktop-nav>
+</div>
+<div *ngIf="!isDesktop">
+    <app-mobile-nav></app-mobile-nav>
+</div>
