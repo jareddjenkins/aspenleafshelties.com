@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Dog } from '../../model/dog';
@@ -17,7 +16,6 @@ export class ListdogsComponent implements OnInit {
 
   constructor(
     private dogService: DogService,
-    private router: Router,
     private location: Location,
   ) {}
 

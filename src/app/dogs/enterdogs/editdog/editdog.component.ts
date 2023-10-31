@@ -1,35 +1,42 @@
-import { Component, OnInit } from '@angular/core';
-import { ImageCroppedEvent } from 'ngx-image-cropper';
-
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, OnInit, Input, Injectable } from '@angular/core';
+import {
+  NgbDateAdapter,
+  NgbDateStruct,
+  NgbDatepicker,
+} from '@ng-bootstrap/ng-bootstrap';
+import { ImageCroppedEvent } from 'ngx-image-cropper/ngx-image-cropper';
 
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { Location, NgIf, NgFor, DatePipe } from '@angular/common';
 
 import { Dog } from '../../model/dog';
 import { DogService } from '../../../dog.service';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { FormsModule } from '@angular/forms';
+import { DogsComponent } from '../../shared/dog-card/dogs.component';
 
-// @Injectable()
-// export class NgbDateNativeAdapter extends NgbDateAdapter<Date> {
-//   fromModel(date: Date): NgbDateStruct {
-//     return date && date.getFullYear
-//       ? {
-//           year: date.getFullYear(),
-//           month: date.getMonth() + 1,
-//           day: date.getDate(),
-//         }
-//       : null;
-//   }
+@Injectable()
+export class NgbDateNativeAdapter extends NgbDateAdapter<Date> {
+  fromModel(date: Date): NgbDateStruct {
+    return date && date.getFullYear
+      ? {
+          year: date.getFullYear(),
+          month: date.getMonth() + 1,
+          day: date.getDate(),
+        }
+      : null;
+  }
 
-//   toModel(date: NgbDateStruct): Date {
-//     return date ? new Date(date.year, date.month - 1, date.day) : null;
-//   }
-// }
+  toModel(date: NgbDateStruct): Date {
+    return date ? new Date(date.year, date.month - 1, date.day) : null;
+  }
+}
 
 @Component({
   selector: 'app-editdog',
   templateUrl: './editdog.component.html',
   styleUrls: ['./editdog.component.css'],
+  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
 })
 export class EditdogComponent implements OnInit {
   dog: Dog;
@@ -38,14 +45,9 @@ export class EditdogComponent implements OnInit {
   selectedSire: Dog = null;
   selectedDam: Dog = null;
   //imagecropper
-
   imageChangedEvent: any = '';
-  croppedEvent: any = '';
   croppedImage: any = '';
   croppedImageBlob: any = '';
-  aspectRatio = 4 / 3;
-
-  resizeWidth = 512;
 
   showInput = false;
 
@@ -53,7 +55,6 @@ export class EditdogComponent implements OnInit {
     private route: ActivatedRoute,
     private dogService: DogService,
     private location: Location,
-    private sanitizer: DomSanitizer,
   ) {}
 
   ngOnInit(): void {
@@ -112,11 +113,11 @@ export class EditdogComponent implements OnInit {
   }
 
   dataURLtoBlob(dataurl) {
-    let arr = dataurl.split(','), // ts-ignore
-      mime = arr[0].match(/:(.*?);/)[1], // ts-ignore
-      bstr = atob(arr[1]), // ts-ignore
-      n = bstr.length, // ts-ignore
-      u8arr = new Uint8Array(n); // ts-ignore
+    let arr = dataurl.split(','),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
     while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
     }
@@ -127,13 +128,15 @@ export class EditdogComponent implements OnInit {
     this.imageChangedEvent = event;
   }
   imageCropped(event: ImageCroppedEvent) {
-    this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl);
+    this.croppedImage = event.objectUrl;
     this.croppedImageBlob = event.blob;
   }
   imageLoaded() {
     // show cropper
   }
-  cropperReady() {}
+  cropperReady() {
+    // cropper ready
+  }
   loadImageFailed() {
     // show message
   }

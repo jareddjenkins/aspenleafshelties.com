@@ -19,6 +19,8 @@ import { DatePipe } from '@angular/common';
 
 import { NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { DogsModule } from '../dogs.module';
+import { ListdogsComponent } from './listdogs/listdogs.component';
+import { MaterialComponentsModule } from 'src/app/shared/material-components/material-components.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,7 @@ import { DogsModule } from '../dogs.module';
     EditpagesComponent,
     EditdogComponent,
     // EnterdogsnavComponent,
-    // ListdogsComponent
+    ListdogsComponent
   ],
 
   imports: [
@@ -36,6 +38,7 @@ import { DogsModule } from '../dogs.module';
     CdkDrag,
     DatePipe,
     EnterdogsRoutingModule,
+    MaterialComponentsModule,
     DogsModule,
     ImageCropperModule,
     FormsModule,
