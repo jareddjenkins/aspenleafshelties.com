@@ -106,8 +106,8 @@
                 Puppies For Sale
             </h1>
             <ng-container *ngIf="(puppies |async)?.length; else noAvailable">
-                <app-dogs *ngFor="let dog of puppies| async" [dog]="dog">
-                </app-dogs>
+                <app-card *ngFor="let dog of puppies| async" [dog]="dog">
+                </app-card>
             </ng-container>
 
         </div>
@@ -118,9 +118,9 @@
                 Adults For Sale
             </h1>
             <ng-container *ngIf="(adults | async)?.length; else noAdultAvailable">
-                <app-dogs *ngFor="let dog of adults| async" [dog]="dog">
+                <app-card *ngFor="let dog of adults| async" [dog]="dog">
 
-                </app-dogs>
+                </app-card>
             </ng-container>
         </div>
     </div>

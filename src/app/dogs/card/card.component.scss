@@ -1,0 +1,16 @@
+.container {
+    max-width: 600px;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+
+}
+mat-card {
+    width: 100%;
+    img {
+        width: 100%;
+        height: auto;
+    }
+}
+mat-card-header {
+    margin-bottom: 10px;
+}

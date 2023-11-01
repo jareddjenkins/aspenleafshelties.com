@@ -6,16 +6,18 @@ import { GirlsComponent } from './girls/girls.component';
 import { AvailableComponent } from './available/available.component';
 
 import { DogsRoutingModule } from './dogs-routing.module';
-import { DogsComponent } from './dogs.component';
+import { SharedModule } from '../shared/shared.module';
+import { CardComponent } from './card/card.component';
 
 @NgModule({
   declarations: [
     AvailableComponent,
     BoysComponent,
     GirlsComponent,
-    DogsComponent,
+    CardComponent,
+  
   ],
-  imports: [CommonModule, DogsRoutingModule],
-  exports: [DogsComponent],
+  imports: [CommonModule, DogsRoutingModule,  SharedModule],
+  exports: [CardComponent],
 })
 export class DogsModule {}

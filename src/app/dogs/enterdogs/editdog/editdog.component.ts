@@ -13,7 +13,6 @@ import { Dog } from '../../model/dog';
 import { DogService } from '../../../dog.service';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { FormsModule } from '@angular/forms';
-import { DogsComponent } from '../../shared/dog-card/dogs.component';
 
 @Injectable()
 export class NgbDateNativeAdapter extends NgbDateAdapter<Date> {

@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Dog } from '../model/dog';
-import { DogService } from '../../dog.service';
 import { DogpagesService } from 'src/app/dogpages.service';
 
 import 'rxjs';
-import { DogsComponent } from '../shared/dog-card/dogs.component';
 
 @Component({
   selector: 'app-boys',
