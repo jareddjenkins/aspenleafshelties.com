@@ -4,10 +4,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, forkJoin, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Dog } from './model/dog';
-import { environment } from '../environments/environment';
-import { ErrorHandlingServiceService } from './error-handling-service.service';
-import { updateItemById } from './utils'
+import { Dog } from './model';
+import { environment } from 'src/environments/environment';
+import { ErrorHandlingService } from './error-handling.service';
+import { updateItemById } from '../utils'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -26,8 +26,8 @@ export class DogService {
 
   constructor(
     private http: HttpClient,
-    private errorHandler: ErrorHandlingServiceService
-  ) { 
+    private errorHandler: ErrorHandlingService
+  ) {
 
   }
 
@@ -61,13 +61,25 @@ export class DogService {
     );
   }
 
-  getDogById(id: number): Observable<Dog> {
+  getDogById(id: number): Observable<Dog | null> {
     return this.dogs$.pipe(
-      map(dogs => dogs.find(dog => dog.id === id))
-    );
+      map(dog => {
+        const foundDog = dog.find(d => d.id === id)
+        if (!foundDog) {
+          throw new Error(`Dog was not found for ID: {id}`)
+        }
+        return foundDog
+      }),
+      catchError(e => {
+        this.errorHandler.handleError(e)
+        return of(null)
+      })
+    )
   }
   getDogByIds(ids: number[]): Observable<Dog[]> {
-    return forkJoin(ids.map(id => this.getDogById(id)))
+    return this.dogs$.pipe(
+      map(dogs => dogs.filter(dog => ids.includes(dog.id)))
+    )
   }
   setDogs(dogData: Dog[]): void {
     this.dogSubject.next(dogData)
@@ -78,7 +90,6 @@ export class DogService {
       tap(newDog => {
         const dogs = this.dogSubject.getValue()
         this.dogSubject.next([...dogs, newDog])
-        catchError(this.errorHandler.handleError)
       })
     )
   }

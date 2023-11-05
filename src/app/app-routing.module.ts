@@ -10,15 +10,15 @@ const routes: Routes = [
     path: 'dogs',
     loadChildren: () => import('./dogs/dogs.module').then((m) => m.DogsModule),
   },
-  {
-    path: 'static',
-    loadChildren: () => import('./static/static.module').then((m) => m.StaticModule),
-  },
-  {
-    path: 'enterdogs',
-    redirectTo: 'dogs/enterdogs',
-    pathMatch: 'full',
-  },
+  // {
+  //   path: 'static',
+  //   loadChildren: () => import('./static/static.module').then((m) => m.StaticModule),
+  // },
+  // {
+  //   path: 'enterdogs',
+  //   redirectTo: 'dogs/enterdogs',
+  //   pathMatch: 'full',
+  // },
 ];
 
 @NgModule({

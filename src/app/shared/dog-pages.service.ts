@@ -39,10 +39,9 @@ export class DogPagesService {
 
   fetchDogPages(): void {
     this.http.get<DogPage[]>(this.apiUrl).pipe(
-
       tap({    
         next: pages => this.pagesSubject.next(pages),
-        error: catchError(this.errorHandler.handleError)
+        error: error => this.errorHandler.handleError(error)
       })
     ).subscribe()
     this.dogPages$.subscribe(

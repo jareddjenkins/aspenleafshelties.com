@@ -105,8 +105,8 @@
             <h1>
                 Puppies For Sale
             </h1>
-            <ng-container *ngIf="(puppies |async)?.length; else noAvailable">
-                <app-card *ngFor="let dog of puppies| async" [dog]="dog">
+            <ng-container *ngIf="(puppies$ |async)?.length; else noAvailable">
+                <app-card *ngFor="let dog of puppies$| async" [dog]="dog">
                 </app-card>
             </ng-container>
 
@@ -117,8 +117,8 @@
             <h1>
                 Adults For Sale
             </h1>
-            <ng-container *ngIf="(adults | async)?.length; else noAdultAvailable">
-                <app-card *ngFor="let dog of adults| async" [dog]="dog">
+            <ng-container *ngIf="(adults$ | async)?.length; else noAdultAvailable">
+                <app-card *ngFor="let dog of adults$| async" [dog]="dog">
 
                 </app-card>
             </ng-container>
@@ -130,7 +130,7 @@
         We currently do not have any puppies available. If you are interested in a puppy, please inquire
         about our waitlist.
     </p>
-    <p> See <a [routerLink]="[]" (click)="ScrollIntoView('#reservedog')">Reserving a Sheltie</a> above</p>
+    <!-- <p> See <a [routerLink]="[]" (click)="ScrollIntoView('#reservedog')">Reserving a Sheltie</a> above</p> -->
 </ng-template>
 <ng-template #noAdultAvailable>
 
@@ -144,5 +144,5 @@
         We prefer to place adults with people who have owned a Sheltie before and who have completely
         fenced secure yards. 
     </p>
-    <p> See <a [routerLink]="[]" (click)="ScrollIntoView('#reservedog')">Reserving a Sheltie</a> above</p>
+    <!-- <p> See <a [routerLink]="[]" (click)="ScrollIntoView('#reservedog')">Reserving a Sheltie</a> above</p> -->
 </ng-template>

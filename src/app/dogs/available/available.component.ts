@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { DogPagesService } from 'src/app/shared/dog-pages.service';
+import { Dog } from 'src/app/shared/model';
 
 @Component({
   selector: 'app-available',
@@ -6,5 +9,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./available.component.scss']
 })
 export class AvailableComponent {
+  adults$!: Observable<Dog[]>;
+  puppies$!: Observable<Dog[]>;
+
+  constructor(private dogPagesService: DogPagesService){}
+
+  ngOnInit() {
+
+    this.adults$ = this.dogPagesService.getDogsOnPage('AdultAvailable')
+    this.puppies$ = this.dogPagesService.getDogsOnPage('Available')
+    
+  }
 
 }

@@ -5,16 +5,20 @@ import { Observable, throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ErrorHandlingServiceService {
+export class ErrorHandlingService {
 
-  public handleError(error: HttpErrorResponse): Observable<never> {
-    if (error.error instanceof ErrorEvent) {
-      console.error('An error occured:', error.error.message)
+  public handleError(error: Error | HttpErrorResponse): void {
+    if (error instanceof HttpErrorResponse) {
+      if (error.error instanceof ErrorEvent) {
+        console.error('An error occured:', error.error.message)
+      } else {
+        console.error(
+          `Backend returned code $(error.status)` +
+          `body was: ${error.error}`);
+      }
     } else {
-      console.error(
-        `Backend returned code $(error.status)` +
-        `body was: ${error.error}`);
+      console.error("An error occured", error.message)
     }
-    return throwError(() => new Error('Something bad happened; please try again later'))
+    console.error("Something bad happened!")
   }
 }
