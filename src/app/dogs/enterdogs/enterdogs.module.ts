@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { EnterdogsRoutingModule } from './enterdogs-routing.module';
 import { EnterdogsComponent } from './enterdogs.component';
-import { EditpagesComponent } from './editpages/editpages.component';
 import { EditdogComponent } from './editdog/editdog.component';
 
 import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
@@ -19,16 +18,12 @@ import { DatePipe } from '@angular/common';
 
 import { NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { DogsModule } from '../dogs.module';
-import { ListdogsComponent } from './listdogs/listdogs.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
     EnterdogsComponent,
-    EditpagesComponent,
-    EditdogComponent,
-    // EnterdogsnavComponent,
-    ListdogsComponent
+    EditdogComponent
   ],
 
   imports: [

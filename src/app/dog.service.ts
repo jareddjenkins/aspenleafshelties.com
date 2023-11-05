@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, forkJoin, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Dog } from './dogs/model/dog';
-import { MessageService } from './message.service';
-
 import { environment } from '../environments/environment';
+import { ErrorHandlingServiceService } from './error-handling-service.service';
+import { updateItemById } from './utils'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -17,97 +17,82 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class DogService {
-  private dogApiUrl = environment.apiEndpoint; // URL to web api
+  private dogSubject: BehaviorSubject<Dog[]> = new BehaviorSubject<Dog[]>([])
+  private dogApiUrl = environment.apiEndpoint + '/dogs';
+
+  dogs$: Observable<Dog[]> = this.dogSubject.asObservable()
+
+
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService,
-  ) {}
-  /** Log a DogService message with the MessageService */
-  private log(message: string) {
-    this.messageService.add('DogService: ' + message);
+    private errorHandler: ErrorHandlingServiceService
+  ) { 
+
   }
+
+  ngOnInit() {
+    this.fetchDogs()
+  }
+
   getDogs(): Observable<Dog[]> {
-    const url = `${this.dogApiUrl}/dogs`;
-    return this.http.get<Dog[]>(url).pipe(
-      tap((dogs) => this.log(`fetched ${dogs}`)),
-      catchError(this.handleError('getDogs', [])),
-    );
+    return this.dogs$
+  }
+  getDogsSync(): Dog[] {
+    return this.dogSubject.value
+  }
+
+  fetchDogs(): void {
+    this.http.get<Dog[]>(this.dogApiUrl).pipe(
+      tap({
+        next: dogs => this.dogSubject.next(dogs),
+        error: error => this.errorHandler.handleError(error)
+      }),
+    ).subscribe()
   }
   getMaleDogs(): Observable<Dog[]> {
-    const url = `${this.dogApiUrl}/dogs?gender=1`;
-    return this.http.get<Dog[]>(url).pipe(
-      tap((dogs) => this.log(`fetched ${dogs}`)),
-      catchError(this.handleError('getDogs', [])),
+    return this.dogs$.pipe(
+      map(dogs => dogs.filter(dog => dog.gender === true))
     );
   }
   getFemaleDogs(): Observable<Dog[]> {
-    const url = `${this.dogApiUrl}/dogs?gender=0`;
-    return this.http.get<Dog[]>(url).pipe(
-      tap((dogs) => this.log(`fetched ${dogs}`)),
-      catchError(this.handleError('getDogs', [])),
+    return this.dogs$.pipe(
+      map(dogs => dogs.filter(dog => dog.gender === false))
     );
   }
 
-  getDog(id: number): Observable<Dog> {
-    const url = `${this.dogApiUrl}/dogs/${id}`;
-    return this.http.get<Dog>(url).pipe(
-      tap((_) => this.log(`fetched dog id=${id}`)),
-      catchError(this.handleError<Dog>(`getDog id=${id}`)),
+  getDogById(id: number): Observable<Dog> {
+    return this.dogs$.pipe(
+      map(dogs => dogs.find(dog => dog.id === id))
     );
   }
-
-  getAvailablePage(): Observable<Dog[]> {
-    const url = `${this.dogApiUrl}/dogpages/available`;
-    return this.http.get<Dog[]>(url).pipe(
-      tap((dogs) => this.log(`fetched dogs`)),
-      catchError(this.handleError('getDogs', [])),
-    );
+  getDogByIds(ids: number[]): Observable<Dog[]> {
+    return forkJoin(ids.map(id => this.getDogById(id)))
+  }
+  setDogs(dogData: Dog[]): void {
+    this.dogSubject.next(dogData)
   }
 
-  getBoysPage(): Observable<Dog[]> {
-    const url = `${this.dogApiUrl}/dogpages/boys`;
-    return this.http.get<Dog[]>(url).pipe(
-      tap((dogs) => this.log(`fetched dogs`)),
-      catchError(this.handleError('getDogs', [])),
-    );
-  }
-
-  getGirlsPage(): Observable<Dog[]> {
-    const url = `${this.dogApiUrl}/dogpages/girls`;
-    return this.http.get<Dog[]>(url).pipe(
-      tap((dogs) => this.log(`fetched dogs`)),
-      catchError(this.handleError('getDogs', [])),
-    );
-  }
-
-  /** POST: add a new dog to the server */
   addDog() {
-    const url = `${this.dogApiUrl}/dogs/`;
-    return this.http.post<Dog>(url, httpOptions).pipe(
-      tap((dog: Dog) => this.log(`added dog w/ id=${dog.id}`)),
-      catchError(this.handleError<Dog>('addDog')),
+    return this.http.post<Dog>(this.dogApiUrl, httpOptions).pipe(
+      tap(newDog => {
+        const dogs = this.dogSubject.getValue()
+        this.dogSubject.next([...dogs, newDog])
+        catchError(this.errorHandler.handleError)
+      })
+    )
+  }
+  updateDog(dog: Dog) {
+    this.http.put(this.dogApiUrl, dog, httpOptions).pipe(
+      tap(() => {
+        const currentDogs = this.dogSubject.getValue();
+        const updatedDogs = updateItemById(currentDogs, dog)
+        this.dogSubject.next(updatedDogs)
+
+      })
     );
   }
 
-  /** PUT: update the dog on the server */
-  updateDog(dog: Dog): Observable<Dog> {
-    const url = `${this.dogApiUrl}/dogs/${dog.id}`;
-    return this.http.put(url, dog, httpOptions).pipe(
-      tap((_) => this.log(`updated dog id=${dog.id}`)),
-      catchError(this.handleError<any>('updateDog')),
-    );
-  }
-
-  // uploadDogImage(id: number, image: Blob): Observable<string> {
-  //   const fd = new FormData();
-  //   const url = `${this.dogApiUrl}/Dogs/${id}/Image`;
-  //   fd.append('image', image)
-  //   return this.http.post(url, fd, httpOptions).pipe(
-  //     tap((imageUrl: string) => this.log(`new image url=${imageUrl}`)),
-  //     catchError(this.handleError<any>('uploadDogImage'))
-  //   );
-  // }
 
   uploadDogImage(id: number, image: Blob): Observable<string> {
     const fd = new FormData();
@@ -115,10 +100,8 @@ export class DogService {
       imageUrl: string;
     }
     fd.append('image', image);
-    const url = `${this.dogApiUrl}/Dogs/${id}/Image`;
+    const url = `${this.dogApiUrl}/${id}/Image`;
     return this.http.post<imageResponse>(url, fd).pipe(
-      tap((res) => this.log(`new profile image url is=${res.imageUrl}`)),
-      catchError(this.handleError<any>('uploadDogImage')),
       map((res) => {
         return res.imageUrl;
       }),
@@ -131,16 +114,6 @@ export class DogService {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
 
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
 }
+

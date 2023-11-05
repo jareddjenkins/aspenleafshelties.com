@@ -4,6 +4,7 @@ import { Dog } from '../model/dog';
 
 import 'rxjs';
 import { DogpagesService } from 'src/app/dogpages.service';
+import { DogService } from 'src/app/dog.service';
 
 @Component({
   selector: 'app-girls',
@@ -13,9 +14,17 @@ import { DogpagesService } from 'src/app/dogpages.service';
 export class GirlsComponent implements OnInit {
   dogs: Observable<Dog[]>;
 
-  constructor(private dogpagesService: DogpagesService) {}
+  constructor(private dogpagesService: DogpagesService,
+    private dogService: DogService) {}
 
   ngOnInit() {
-    this.dogs = this.dogpagesService.getDogsForPage('girls');
+    this.dogpagesService.fetchDogPages()
+    // this.dogs = this.dogService.getDogs()
+    this.dogs = this.dogpagesService.getDogsOnPage('girls')
+    // console.log('entered girls')
+    //  this.dogpagesService.getDogsOnPage('girls').subscribe(
+    //   data => console.log(data),
+    //   error => console.log(error)
+    // );
   }
 }

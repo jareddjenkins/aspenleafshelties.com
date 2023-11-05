@@ -62,7 +62,7 @@ export class EditdogComponent implements OnInit {
 
   getDog() {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.dogService.getDog(id).subscribe((dog) => {
+    this.dogService.getDogById(id).subscribe((dog) => {
       (this.dog = dog), this.getDams(), this.getSires();
     });
   }
@@ -102,7 +102,7 @@ export class EditdogComponent implements OnInit {
   }
 
   save() {
-    this.dogService.updateDog(this.dog).subscribe(); // => this.goBack());
+    this.dogService.updateDog(this.dog); // => this.goBack());
   }
 
   onUpload() {

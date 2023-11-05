@@ -18,6 +18,6 @@ export class BoysComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.dogs = this.dogpagesService.getDogsForPage('boys');
+    this.dogs = this.dogpagesService.getDogsOnPage('boys');
   }
 }

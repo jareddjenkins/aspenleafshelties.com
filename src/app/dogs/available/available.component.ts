@@ -16,8 +16,8 @@ export class AvailableComponent implements OnInit {
   constructor(private dogpagesService: DogpagesService) {}
 
   ngOnInit() {
-    this.puppies = this.dogpagesService.getDogsForPage('available');
-    this.adults = this.dogpagesService.getDogsForPage('adultavailable');
+    this.puppies = this.dogpagesService.getDogsOnPage('available');
+    this.adults = this.dogpagesService.getDogsOnPage('adultavailable');
   }
   ScrollIntoView(elem: string) {
     document

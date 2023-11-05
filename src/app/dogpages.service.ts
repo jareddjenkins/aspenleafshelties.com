@@ -4,14 +4,15 @@ import {
   HttpClient,
   HttpHeaders,
 } from '@angular/common/http';
-import { Observable, forkJoin } from 'rxjs';
-import {  map } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
-import { Pages } from './pages';
+import { DogPage } from './pages';
 import { Dog } from './dogs/model/dog';
 import { DogService } from './dog.service';
 
 import { environment } from '../environments/environment';
+import { ErrorHandlingServiceService } from './error-handling-service.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -21,50 +22,72 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class DogpagesService {
-  private dogApiUrl = environment.apiEndpoint;
+  private pagesSubject: BehaviorSubject<DogPage[]> = new BehaviorSubject<DogPage[]>([])
+  dogPages$ = this.pagesSubject.asObservable()
+  private apiUrl = environment.apiEndpoint + '/DogPages';
 
   constructor(
     private http: HttpClient,
     private dogService: DogService,
-  ) {}
-  /** Log a DogService message with the MessageService */
-  getDogPages(page?: string): Observable<Pages[]> {
-    let url = `${this.dogApiUrl}/dogpages`;
-    if (page) {
-      url = `${this.dogApiUrl}/dogpages?page=${page}`;
-    }
-    return this.http.get<Pages[]>(url).pipe(
-      map((x) => {
-        return x.sort((a, b) => {
-          return a.sortId - b.sortId;
-        });
-      }),
-    );
+    private errorHandler: ErrorHandlingServiceService
+  ) { 
+    this.fetchDogPages()
+  }
+  ngOnInit() {
+    this.fetchDogPages()
   }
 
-  getDogsForPage(page?: string): Observable<Dog[]> {
-    const dogs = this.dogService.getDogs();
-    const pages = this.getDogPages(page);
+  fetchDogPages(): void {
+    this.http.get<DogPage[]>(this.apiUrl).pipe(
 
-    return forkJoin(pages, dogs).pipe(
-      map((results) => {
-        return results[0].map(
-          (p) =>
-            results[1].filter((d) => {
-              return d.id === p.dogsId;
-            })[0],
-        );
-      }),
-    );
+      tap({    
+        next: pages => this.pagesSubject.next(pages),
+        error: catchError(this.errorHandler.handleError)
+      })
+    ).subscribe()
+    this.dogPages$.subscribe(
+      dogPages => 
+      console.log('dog pages:', dogPages)
+    )
   }
-  putPagesByPage(page: string, updatedPages: Pages[]) {
-    const url = `${this.dogApiUrl}/DogPages/${page}`;
+  getDogPage(pageName: string): Observable<DogPage[]> {
+     return this.dogPages$.pipe(
+      map(dogPages => dogPages
+        .filter(page => page.pageName === pageName)
+        .sort((a, b) => a.sortId - b.sortId)
+      )
+    )
+  }
 
+  getDogsOnPage(pageName: string): Observable<Dog[]>{
+    return this.getDogPage(pageName).pipe(
+      map(entries => this.sortPage(entries)),
+      switchMap(sortedEntries => {
+        const dogIds = sortedEntries.map(entry => entry.dogsId)
+        return this.dogService.getDogByIds(dogIds)
+        })
+    )
+  }
+
+  sortPage(pages: DogPage[]): DogPage[] {
+    return pages.sort((a, b) => a.sortId - b.sortId)
+  }
+
+
+  putPagesByPage(pageName: string, updatedPages: Pages[]) {
+    const url = `${this.apiUrl}/${pageName}`;
     return this.http.put(url, updatedPages, httpOptions);
   }
   deleteFromPagesById(page: string, id: number) {
-    const url = `${this.dogApiUrl}/DogPages/${page}/${id}`;
+    const url = `${this.apiUrl}/${page}/${id}`;
 
     return this.http.delete(url, httpOptions);
   }
+}
+
+enum Pages {
+  GIRLS = 'girls',
+  BOYS = 'boys',
+  AVAILABLE= 'available'
+
 }
