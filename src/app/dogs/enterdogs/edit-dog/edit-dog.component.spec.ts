@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AvailableComponent } from './available.component';
+import { EditDogComponent } from './edit-dog.component';
 
-describe('AvailableComponent', () => {
-  let component: AvailableComponent;
-  let fixture: ComponentFixture<AvailableComponent>;
+describe('EditDogComponent', () => {
+  let component: EditDogComponent;
+  let fixture: ComponentFixture<EditDogComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AvailableComponent]
+      declarations: [EditDogComponent]
     });
-    fixture = TestBed.createComponent(AvailableComponent);
+    fixture = TestBed.createComponent(EditDogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

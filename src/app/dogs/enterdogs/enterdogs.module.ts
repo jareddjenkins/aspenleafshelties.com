@@ -2,46 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { EnterdogsRoutingModule } from './enterdogs-routing.module';
-import { EnterdogsComponent } from './enterdogs.component';
-import { EditdogComponent } from './editdog/editdog.component';
+import { EditDogComponent } from './edit-dog/edit-dog.component';
 
-import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
-import { FormsModule } from '@angular/forms';
-
-import { AsyncPipe } from '@angular/common';
-
-import { NgbCollapse, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
-import { RouterOutlet } from '@angular/router';
-
-import { ImageCropperModule } from 'ngx-image-cropper';
-import { DatePipe } from '@angular/common';
-
-import { NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
-import { DogsModule } from '../dogs.module';
-import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
-    EnterdogsComponent,
-    EditdogComponent
+    EditDogComponent
   ],
-
   imports: [
-    AsyncPipe,
     CommonModule,
-    CdkDropList,
-    CdkDrag,
-    DatePipe,
-    EnterdogsRoutingModule,
-    SharedModule,
-    DogsModule,
-    ImageCropperModule,
-    FormsModule,
-    NgbCollapse,
-    NgbDropdown,
-    NgbDropdown,
-    NgbDatepicker,
-    RouterOutlet,
-  ],
+    EnterdogsRoutingModule
+  ]
 })
-export class EnterdogsModule {}
+export class EnterdogsModule { }
