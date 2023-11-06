@@ -16,7 +16,7 @@ import { CardComponent } from './card/card.component';
     GirlsComponent,
     CardComponent,
   ],
-  imports: [CommonModule, DogsRoutingModule,  SharedModule],
+  imports: [CommonModule, DogsRoutingModule, SharedModule],
   exports: [CardComponent],
 })
 export class DogsModule {}

@@ -7,7 +7,7 @@ import { Dog } from 'src/app/shared/model';
 @Component({
   selector: 'app-boys',
   templateUrl: './boys.component.html',
-  styleUrls: ['./boys.component.scss']
+  styleUrls: ['./boys.component.scss'],
 })
 export class BoysComponent {
   dogs$!: Observable<Dog[]>;
@@ -15,12 +15,10 @@ export class BoysComponent {
   constructor(
     private dogService: DogService,
     private dogPagesService: DogPagesService,
-    ){}
+  ) {}
 
   ngOnInit() {
-    
-    this.dogService.fetchDogs()
-    this.dogs$ = this.dogPagesService.getDogsOnPage('Boys')
-
+    this.dogService.fetchDogs();
+    this.dogs$ = this.dogPagesService.getDogsOnPage('Boys');
   }
 }

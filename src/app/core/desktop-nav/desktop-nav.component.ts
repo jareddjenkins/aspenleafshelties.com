@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-desktop-nav',
   templateUrl: './desktop-nav.component.html',
-  styleUrls: ['./desktop-nav.component.scss']
+  styleUrls: ['./desktop-nav.component.scss'],
 })
 export class DesktopNavComponent {
   routes = [
@@ -12,6 +12,6 @@ export class DesktopNavComponent {
     { path: '/dogs/boys', label: 'Boys' },
     { path: '/dogs/girls', label: 'Girls' },
     { path: '/dogs/puppies', label: 'Puppies' },
-    { path: '/static/resources', label: 'Resources' }
-  ]
+    { path: '/static/resources', label: 'Resources' },
+  ];
 }

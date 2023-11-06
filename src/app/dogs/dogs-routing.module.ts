@@ -30,9 +30,7 @@ const routes: Routes = [
   {
     path: 'enterdogs',
     loadChildren: () =>
-      import('./enterdogs/enterdogs.module').then(
-        (m) => m.EnterdogsModule
-      ),
+      import('./enterdogs/enterdogs.module').then((m) => m.EnterdogsModule),
   },
 ];
 

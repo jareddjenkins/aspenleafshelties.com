@@ -4,14 +4,8 @@ import { CommonModule } from '@angular/common';
 import { EnterdogsRoutingModule } from './enterdogs-routing.module';
 import { EditDogComponent } from './edit-dog/edit-dog.component';
 
-
 @NgModule({
-  declarations: [
-    EditDogComponent
-  ],
-  imports: [
-    CommonModule,
-    EnterdogsRoutingModule
-  ]
+  declarations: [EditDogComponent],
+  imports: [CommonModule, EnterdogsRoutingModule],
 })
-export class EnterdogsModule { }
+export class EnterdogsModule {}

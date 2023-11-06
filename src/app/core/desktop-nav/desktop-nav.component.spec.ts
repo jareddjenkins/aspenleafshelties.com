@@ -8,7 +8,7 @@ describe('DesktopNavComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DesktopNavComponent]
+      declarations: [DesktopNavComponent],
     });
     fixture = TestBed.createComponent(DesktopNavComponent);
     component = fixture.componentInstance;

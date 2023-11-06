@@ -8,7 +8,7 @@ describe('MobileNavComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MobileNavComponent]
+      declarations: [MobileNavComponent],
     });
     fixture = TestBed.createComponent(MobileNavComponent);
     component = fixture.componentInstance;

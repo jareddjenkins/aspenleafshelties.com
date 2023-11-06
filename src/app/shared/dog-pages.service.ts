@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import {
-  HttpClient,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 
@@ -22,49 +19,54 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class DogPagesService {
-  private pagesSubject: BehaviorSubject<DogPage[]> = new BehaviorSubject<DogPage[]>([])
-  dogPages$ = this.pagesSubject.asObservable()
+  private pagesSubject: BehaviorSubject<DogPage[]> = new BehaviorSubject<
+    DogPage[]
+  >([]);
+  dogPages$ = this.pagesSubject.asObservable();
   private apiUrl = environment.apiEndpoint + '/DogPages';
 
   constructor(
     private http: HttpClient,
     private dogService: DogService,
-    private errorHandler: ErrorHandlingService
-  ) { 
-    this.fetchDogPages()
+    private errorHandler: ErrorHandlingService,
+  ) {
+    this.fetchDogPages();
   }
 
   fetchDogPages(): void {
-    this.http.get<DogPage[]>(this.apiUrl).pipe(
-      tap({    
-        next: pages => this.pagesSubject.next(pages),
-        error: error => this.errorHandler.handleError(error)
-      })
-    ).subscribe()
+    this.http
+      .get<DogPage[]>(this.apiUrl)
+      .pipe(
+        tap({
+          next: (pages) => this.pagesSubject.next(pages),
+          error: (error) => this.errorHandler.handleError(error),
+        }),
+      )
+      .subscribe();
   }
   getDogPage(pageName: string): Observable<DogPage[]> {
-     return this.dogPages$.pipe(
-      map(dogPages => dogPages
-        .filter(page => page.pageName === pageName)
-        .sort((a, b) => a.sortId - b.sortId)
-      )
-    )
+    return this.dogPages$.pipe(
+      map((dogPages) =>
+        dogPages
+          .filter((page) => page.pageName === pageName)
+          .sort((a, b) => a.sortId - b.sortId),
+      ),
+    );
   }
 
-  getDogsOnPage(pageName: string): Observable<Dog[]>{
+  getDogsOnPage(pageName: string): Observable<Dog[]> {
     return this.getDogPage(pageName).pipe(
-      map(entries => this.sortPage(entries)),
-      switchMap(sortedEntries => {
-        const dogIds = sortedEntries.map(entry => entry.dogsId)
-        return this.dogService.getDogByIds(dogIds)
-        })
-    )
+      map((entries) => this.sortPage(entries)),
+      switchMap((sortedEntries) => {
+        const dogIds = sortedEntries.map((entry) => entry.dogsId);
+        return this.dogService.getDogByIds(dogIds);
+      }),
+    );
   }
 
   sortPage(pages: DogPage[]): DogPage[] {
-    return pages.sort((a, b) => a.sortId - b.sortId)
+    return pages.sort((a, b) => a.sortId - b.sortId);
   }
-
 
   putPagesByPage(pageName: string, updatedPages: Pages[]) {
     const url = `${this.apiUrl}/${pageName}`;
@@ -80,6 +82,5 @@ export class DogPagesService {
 enum Pages {
   GIRLS = 'girls',
   BOYS = 'boys',
-  AVAILABLE= 'available'
-
+  AVAILABLE = 'available',
 }

@@ -1,18 +1,23 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav mode="over" [fixedInViewport]="true" #sidenav>
-        <mat-nav-list *ngFor="let route of routes">
-            <button mat-button [routerLink]="route.path" routerLinkActive="active-link" (click)="sidenav.toggle()">
-                {{route.label}}
-            </button>
-        </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <mat-toolbar color="primary">
-            <button mat-icon-button (click)="sidenav.toggle()">
-                <mat-icon>menu</mat-icon>
-            </button>
-            <p class="title">Apsenleaf Shelties</p>
-        </mat-toolbar>
-        <router-outlet></router-outlet>
-    </mat-sidenav-content>
+  <mat-sidenav mode="over" [fixedInViewport]="true" #sidenav>
+    <mat-nav-list *ngFor="let route of routes">
+      <button
+        mat-button
+        [routerLink]="route.path"
+        routerLinkActive="active-link"
+        (click)="sidenav.toggle()"
+      >
+        {{ route.label }}
+      </button>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <p class="title">Apsenleaf Shelties</p>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
 </mat-sidenav-container>

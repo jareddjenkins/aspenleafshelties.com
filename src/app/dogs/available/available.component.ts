@@ -7,20 +7,20 @@ import { Dog } from 'src/app/shared/model';
 @Component({
   selector: 'app-available',
   templateUrl: './available.component.html',
-  styleUrls: ['./available.component.scss']
+  styleUrls: ['./available.component.scss'],
 })
 export class AvailableComponent {
   adults$!: Observable<Dog[]>;
   puppies$!: Observable<Dog[]>;
 
   constructor(
-    
     private dogService: DogService,
-    private dogPagesService: DogPagesService){}
+    private dogPagesService: DogPagesService,
+  ) {}
 
   ngOnInit() {
-    this.dogService.fetchDogs()
-    this.adults$ = this.dogPagesService.getDogsOnPage('AdultAvailable')
-    this.puppies$ = this.dogPagesService.getDogsOnPage('Available')
+    this.dogService.fetchDogs();
+    this.adults$ = this.dogPagesService.getDogsOnPage('AdultAvailable');
+    this.puppies$ = this.dogPagesService.getDogsOnPage('Available');
   }
 }

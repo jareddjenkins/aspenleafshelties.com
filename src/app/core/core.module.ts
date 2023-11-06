@@ -6,23 +6,9 @@ import { FooterComponent } from './footer/footer.component';
 import { RouterModule, RouterLink } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 
-
 @NgModule({
-  declarations: [
-    DesktopNavComponent,
-    MobileNavComponent,
-    FooterComponent,
-
-  ],
-  imports: [
-    CommonModule,
-    RouterLink,
-    RouterModule,
-    SharedModule
-  ],
-  exports: [
-    DesktopNavComponent,
-    MobileNavComponent
-  ]
+  declarations: [DesktopNavComponent, MobileNavComponent, FooterComponent],
+  imports: [CommonModule, RouterLink, RouterModule, SharedModule],
+  exports: [DesktopNavComponent, MobileNavComponent],
 })
-export class CoreModule { }
+export class CoreModule {}

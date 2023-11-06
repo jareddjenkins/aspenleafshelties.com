@@ -7,7 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Dog } from './model';
 import { environment } from 'src/environments/environment';
 import { ErrorHandlingService } from './error-handling.service';
-import { updateItemById } from '../utils'
+import { updateItemById } from '../utils';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -17,89 +17,88 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class DogService {
-  private dogSubject: BehaviorSubject<Dog[]> = new BehaviorSubject<Dog[]>([])
+  private dogSubject: BehaviorSubject<Dog[]> = new BehaviorSubject<Dog[]>([]);
   private dogApiUrl = environment.apiEndpoint + '/dogs';
 
-  dogs$: Observable<Dog[]> = this.dogSubject.asObservable()
-
-
+  dogs$: Observable<Dog[]> = this.dogSubject.asObservable();
 
   constructor(
     private http: HttpClient,
-    private errorHandler: ErrorHandlingService
-  ) {
-  }
+    private errorHandler: ErrorHandlingService,
+  ) {}
 
   getDogs(): Observable<Dog[]> {
-    return this.dogs$
+    return this.dogs$;
   }
   getDogsSync(): Dog[] {
-    return this.dogSubject.value
+    return this.dogSubject.value;
   }
 
   fetchDogs(): void {
-    this.http.get<Dog[]>(this.dogApiUrl).pipe(
-      tap({
-        next: dogs => this.dogSubject.next(dogs),
-        error: error => this.errorHandler.handleError(error)
-      }),
-    ).subscribe()
+    this.http
+      .get<Dog[]>(this.dogApiUrl)
+      .pipe(
+        tap({
+          next: (dogs) => this.dogSubject.next(dogs),
+          error: (error) => this.errorHandler.handleError(error),
+        }),
+      )
+      .subscribe();
   }
   getMaleDogs(): Observable<Dog[]> {
     return this.dogs$.pipe(
-      map(dogs => dogs.filter(dog => dog.gender === true))
+      map((dogs) => dogs.filter((dog) => dog.gender === true)),
     );
   }
   getFemaleDogs(): Observable<Dog[]> {
     return this.dogs$.pipe(
-      map(dogs => dogs.filter(dog => dog.gender === false))
+      map((dogs) => dogs.filter((dog) => dog.gender === false)),
     );
   }
 
   getDogById(id: number): Observable<Dog | null> {
     return this.dogs$.pipe(
-      map(dog => {
-        const foundDog = dog.find(d => d.id === id)
+      map((dog) => {
+        const foundDog = dog.find((d) => d.id === id);
         if (!foundDog) {
-          throw new Error(`Dog was not found for ID: {id}`)
+          throw new Error(`Dog was not found for ID: {id}`);
         }
-        return foundDog
+        return foundDog;
       }),
-      catchError(e => {
-        this.errorHandler.handleError(e)
-        return of(null)
-      })
-    )
+      catchError((e) => {
+        this.errorHandler.handleError(e);
+        return of(null);
+      }),
+    );
   }
   getDogByIds(ids: number[]): Observable<Dog[]> {
     return this.dogs$.pipe(
-      map(dogs =>  { 
-        return dogs.filter(dog => ids.includes(dog.id))})
-    )
+      map((dogs) => {
+        return dogs.filter((dog) => ids.includes(dog.id));
+      }),
+    );
   }
   setDogs(dogData: Dog[]): void {
-    this.dogSubject.next(dogData)
+    this.dogSubject.next(dogData);
   }
 
   addDog() {
     return this.http.post<Dog>(this.dogApiUrl, httpOptions).pipe(
-      tap(newDog => {
-        const dogs = this.dogSubject.getValue()
-        this.dogSubject.next([...dogs, newDog])
-      })
-    )
+      tap((newDog) => {
+        const dogs = this.dogSubject.getValue();
+        this.dogSubject.next([...dogs, newDog]);
+      }),
+    );
   }
   updateDog(dog: Dog) {
     this.http.put(this.dogApiUrl, dog, httpOptions).pipe(
       tap(() => {
         const currentDogs = this.dogSubject.getValue();
-        const updatedDogs = updateItemById(currentDogs, dog)
-        this.dogSubject.next(updatedDogs)
-
-      })
+        const updatedDogs = updateItemById(currentDogs, dog);
+        this.dogSubject.next(updatedDogs);
+      }),
     );
   }
-
 
   uploadDogImage(id: number, image: Blob): Observable<string> {
     const fd = new FormData();
@@ -121,6 +120,4 @@ export class DogService {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-
 }
-

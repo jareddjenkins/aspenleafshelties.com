@@ -6,16 +6,8 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { ResourcesComponent } from './resources/resources.component';
 
-
 @NgModule({
-  declarations: [
-    AboutComponent,
-    ContactComponent,
-    ResourcesComponent
-  ],
-  imports: [
-    CommonModule,
-    StaticRoutingModule
-  ]
+  declarations: [AboutComponent, ContactComponent, ResourcesComponent],
+  imports: [CommonModule, StaticRoutingModule],
 })
-export class StaticModule { }
+export class StaticModule {}

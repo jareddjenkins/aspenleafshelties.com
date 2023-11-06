@@ -1,27 +1,29 @@
 <div class="container">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>
-                {{dog.cname}}
-            </mat-card-title>
-            <mat-card-subtitle>{{dog.rname}}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-            <img mat-card-image src="{{dog.profileImageUrl}}" alt="Picture of {{dog.cname}}">
-        </mat-card-content>
-        <mat-card-content>
-            <mat-card-content>
-                {{dog.comments}}
-            </mat-card-content>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    Details
-                </mat-expansion-panel-header>
-                <p>Registered Name: {{dog.rname}}</p>
-                <p>Sire: {{dog.sireName}}</p>
-                <p>Dam: {{dog.damName}}</p>
-                <p>Date of Birth: {{dog.dob | date:'longDate'}}</p>
-            </mat-expansion-panel>
-        </mat-card-content>
-    </mat-card>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        {{ dog.cname }}
+      </mat-card-title>
+      <mat-card-subtitle>{{ dog.rname }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <img
+        mat-card-image
+        src="{{ dog.profileImageUrl }}"
+        alt="Picture of {{ dog.cname }}"
+      />
+    </mat-card-content>
+    <mat-card-content>
+      <mat-card-content>
+        {{ dog.comments }}
+      </mat-card-content>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header> Details </mat-expansion-panel-header>
+        <p>Registered Name: {{ dog.rname }}</p>
+        <p>Sire: {{ dog.sireName }}</p>
+        <p>Dam: {{ dog.damName }}</p>
+        <p>Date of Birth: {{ dog.dob | date: "longDate" }}</p>
+      </mat-expansion-panel>
+    </mat-card-content>
+  </mat-card>
 </div>

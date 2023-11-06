@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon'
-import { MatSidenavModule } from '@angular/material/sidenav'
-import { MatToolbarModule } from '@angular/material/toolbar'
-import {MatListModule} from '@angular/material/list';
-import {MatButtonModule} from '@angular/material/button'
-import {MatCardModule} from '@angular/material/card'
-import {MatExpansionModule} from '@angular/material/expansion'
-
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [],
@@ -17,9 +16,9 @@ import {MatExpansionModule} from '@angular/material/expansion'
     MatSidenavModule,
     MatToolbarModule,
     MatListModule,
-    MatButtonModule, 
+    MatButtonModule,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule,
   ],
   exports: [
     MatIconModule,
@@ -28,7 +27,7 @@ import {MatExpansionModule} from '@angular/material/expansion'
     MatListModule,
     MatButtonModule,
     MatCardModule,
-    MatExpansionModule
-  ]
+    MatExpansionModule,
+  ],
 })
-export class MaterialComponentsModule { }
+export class MaterialComponentsModule {}

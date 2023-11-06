@@ -1,6 +1,11 @@
 <mat-toolbar>
-    <button mat-button *ngFor="let route of routes" [routerLink]="route.path" routerLinkActive="active-link">
-        {{route.label}}
-    </button>
+  <button
+    mat-button
+    *ngFor="let route of routes"
+    [routerLink]="route.path"
+    routerLinkActive="active-link"
+  >
+    {{ route.label }}
+  </button>
 </mat-toolbar>
 <router-outlet></router-outlet>

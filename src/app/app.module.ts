@@ -9,13 +9,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
-import { CoreModule } from './core/core.module'
+import { CoreModule } from './core/core.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-  ],
+  declarations: [AppComponent, HomeComponent],
   imports: [
     AppRoutingModule,
     AppRoutingModule,
