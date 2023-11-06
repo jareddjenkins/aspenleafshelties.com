@@ -5,7 +5,7 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 import { DogPage } from './model/';
 import { Dog } from './model/';
@@ -33,9 +33,6 @@ export class DogPagesService {
   ) { 
     this.fetchDogPages()
   }
-  ngOnInit() {
-    this.fetchDogPages()
-  }
 
   fetchDogPages(): void {
     this.http.get<DogPage[]>(this.apiUrl).pipe(
@@ -44,10 +41,6 @@ export class DogPagesService {
         error: error => this.errorHandler.handleError(error)
       })
     ).subscribe()
-    this.dogPages$.subscribe(
-      dogPages => 
-      console.log('dog pages:', dogPages)
-    )
   }
   getDogPage(pageName: string): Observable<DogPage[]> {
      return this.dogPages$.pipe(

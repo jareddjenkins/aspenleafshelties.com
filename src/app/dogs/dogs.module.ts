@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { BoysComponent } from './boys/boys.component';
@@ -15,7 +15,6 @@ import { CardComponent } from './card/card.component';
     BoysComponent,
     GirlsComponent,
     CardComponent,
-  
   ],
   imports: [CommonModule, DogsRoutingModule,  SharedModule],
   exports: [CardComponent],

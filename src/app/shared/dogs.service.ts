@@ -6,7 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Dog } from './model';
 import { environment } from 'src/environments/environment';
-import { ErrorHandlingService } from './error-handling.service';
+import { ErrorHandlingServiceService } from './error-handling.service';
 import { updateItemById } from '../utils'
 
 const httpOptions = {
@@ -26,8 +26,13 @@ export class DogService {
 
   constructor(
     private http: HttpClient,
-    private errorHandler: ErrorHandlingService
+    private errorHandler: ErrorHandlingServiceService
   ) {
+
+  }
+
+  ngOnInit() {
+    this.fetchDogs()
   }
 
   getDogs(): Observable<Dog[]> {
@@ -73,8 +78,7 @@ export class DogService {
   }
   getDogByIds(ids: number[]): Observable<Dog[]> {
     return this.dogs$.pipe(
-      map(dogs =>  { 
-        return dogs.filter(dog => ids.includes(dog.id))})
+      map(dogs => dogs.filter(dog => ids.includes(dog.id)))
     )
   }
   setDogs(dogData: Dog[]): void {
