@@ -1,12 +1,7 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav mode="over" [fixedInViewport]="true" #sidenav>
     <mat-nav-list *ngFor="let route of routes">
-      <button
-        mat-button
-        [routerLink]="route.path"
-        routerLinkActive="active-link"
-        (click)="sidenav.toggle()"
-      >
+      <button mat-button [routerLink]="route.path" routerLinkActive="active-link" (click)="sidenav.toggle()">
         {{ route.label }}
       </button>
     </mat-nav-list>
