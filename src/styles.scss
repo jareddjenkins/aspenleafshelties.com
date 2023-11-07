@@ -2,24 +2,25 @@
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
 // Plus imports for other components in your app.
-
+@use 'tokens' as mat3token;
 // Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
+// have to load a single css fiçle for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
-$light-primary-text: mat.get-color-from-palette(mat.$amber-palette, 50);
-$aspenleaf_green: (
-  50: #002111,
-  100: #bdddcf,
-  200: #96c7b1,
-  300: #74b195,
-  400: #61a081,
-  500: #559071,
-  600: #4e8366,
-  700: #467359,
-  800: #3e634d,
-  900: #304737,
+$light-primary-text: #ffffff;
+$aspenleaf_primary: (
+  50: mat3token.$md-ref-palette-primary95,
+  100: mat3token.$md-ref-palette-primary90,
+  200: mat3token.$md-ref-palette-primary80,
+  300: mat3token.$md-ref-palette-primary70,
+  400: mat3token.$md-ref-palette-primary60,
+  500: mat3token.$md-ref-palette-primary50,
+  600: mat3token.$md-ref-palette-primary40,
+  700: mat3token.$md-ref-palette-primary30,
+  800: mat3token.$md-ref-palette-primary20,
+  900: mat3token.$md-ref-palette-primary10,
+  A100: mat3token.$md-ref-palette-primary100,
   contrast: (50: $light-primary-text,
     100: $light-primary-text,
     200: $light-primary-text,
@@ -31,19 +32,19 @@ $aspenleaf_green: (
     800: $light-primary-text,
     900: $light-primary-text)
 );
-$aspenleaf_blue: (
-  50: #e4f1f1,
-  100: #bbdddd,
-  200: #92c8c7,
-  300: #6eb1af,
-  400: #5ba19e,
-  500: #5ba19e,
-  600: #4c837f,
-  700: #46736f,
-  800: #42635f,
-  900: #394644,
-  contrast: (
-    50: $light-primary-text,
+$aspenleaf_secondary: (
+  50: mat3token.$md-ref-palette-secondary95,
+  100: mat3token.$md-ref-palette-secondary90,
+  200: mat3token.$md-ref-palette-secondary80,
+  300: mat3token.$md-ref-palette-secondary70,
+  400: mat3token.$md-ref-palette-secondary60,
+  500: mat3token.$md-ref-palette-secondary50,
+  600: mat3token.$md-ref-palette-secondary40,
+  700: mat3token.$md-ref-palette-secondary30,
+  800: mat3token.$md-ref-palette-secondary20,
+  900: mat3token.$md-ref-palette-secondary10,
+  A100: mat3token.$md-ref-palette-secondary100,
+  contrast: (50: $light-primary-text,
     100: $light-primary-text,
     200: $light-primary-text,
     300: $light-primary-text,
@@ -52,48 +53,16 @@ $aspenleaf_blue: (
     600: $light-primary-text,
     700: $light-primary-text,
     800: $light-primary-text,
-    900: $light-primary-text
-    )
+    900: $light-primary-text )
 );
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$aspenleafshelties-primary: mat.define-palette($aspenleaf_green, 700, 500, 900);
-$aspenleafshelties-accent: mat.define-palette(mat.$amber-palette, 400, 50, 700);
+$aspenleafshelties-primary: mat.define-palette($aspenleaf_primary, 700, 500, 900, A100);
+$aspenleafshelties-accent: mat.define-palette($aspenleaf_secondary, 400, 50, 700);
 
 // The warn palette is optional (defaults to red).
 $aspenleafshelties-warn: mat.define-palette(mat.$red-palette);
-
-$primary-light: #006d44;
-$on-primary-light: #ffffff;
-$primary-container-light: #91f7be;
-$on-primary-container-light: #002111;
-$secondary-light: #4e6355;
-$on-secondary-light: #ffffff;
-$secondary-container-light: #d0e8d6;
-$on-secondary-container-light: #0b1f15;
-$tertiary-light: #3c6471;
-$on-tertiary-light: #ffffff;
-$tertiary-container-light: #bfe9f9;
-$on-tertiary-container-light: #001f27;
-$error-light: #ba1a1a;
-$error-container-light: #ffdad6;
-$on-error-light: #ffffff;
-$on-error-container-light: #410002;
-$background-light: #fbfdf8;
-$on-background-light: #191c1a;
-$surface-light: #fbfdf8;
-$on-surface-light: #191c1a;
-$surface-variant-light: #dce5dc;
-$on-surface-variant-light: #404942;
-$outline-light: #707972;
-$inverse-on-surface-light: #eff1ed;
-$inverse-surface-light: #2e312e;
-$inverse-primary-light: #74daa3;
-$shadow-light: #000000;
-$surface-tint-light: #006d44;
-$outline-variant-light: #c0c9c0;
-$scrim-light: #000000;
 
 $my-light-theme-foreground-palette: (
   base: #467359,
@@ -117,9 +86,9 @@ $my-light-theme-foreground-palette: (
 $my-light-theme-background-palette: (
   status-bar: #e0e0e0,
   app-bar: #f5f5f5,
-  background: $background-light,
+  background: mat3token.$md-sys-color-background-light,
   hover: #fafafa,
-  card: $surface-variant-light,
+  card: rgba(mat3token.$md-sys-color-surface-variant-light, .5),
   dialog: white,
   disabled-button: rgba(black, 0.12),
   raised-button: white,
@@ -140,7 +109,6 @@ $custom-theme: (
     background: $my-light-theme-background-palette,
   ),
   is-dark: false,
-
 );
 
 
@@ -159,8 +127,4 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 
-}
-
-.mat-card {
-  background-color: mat.get-color-from-palette(mat.$amber-palette, 50);
 }
