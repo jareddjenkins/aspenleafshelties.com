@@ -10,7 +10,7 @@
 
 $light-primary-text: mat.get-color-from-palette(mat.$amber-palette, 50);
 $aspenleaf_green: (
-  50: #e4f1ec,
+  50: #002111,
   100: #bdddcf,
   200: #96c7b1,
   300: #74b195,
@@ -42,7 +42,8 @@ $aspenleaf_blue: (
   700: #46736f,
   800: #42635f,
   900: #394644,
-  contrast: (50: $light-primary-text,
+  contrast: (
+    50: $light-primary-text,
     100: $light-primary-text,
     200: $light-primary-text,
     300: $light-primary-text,
@@ -51,7 +52,8 @@ $aspenleaf_blue: (
     600: $light-primary-text,
     700: $light-primary-text,
     800: $light-primary-text,
-    900: $light-primary-text)
+    900: $light-primary-text
+    )
 );
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
@@ -62,9 +64,39 @@ $aspenleafshelties-accent: mat.define-palette(mat.$amber-palette, 400, 50, 700);
 // The warn palette is optional (defaults to red).
 $aspenleafshelties-warn: mat.define-palette(mat.$red-palette);
 
+$primary-light: #006d44;
+$on-primary-light: #ffffff;
+$primary-container-light: #91f7be;
+$on-primary-container-light: #002111;
+$secondary-light: #4e6355;
+$on-secondary-light: #ffffff;
+$secondary-container-light: #d0e8d6;
+$on-secondary-container-light: #0b1f15;
+$tertiary-light: #3c6471;
+$on-tertiary-light: #ffffff;
+$tertiary-container-light: #bfe9f9;
+$on-tertiary-container-light: #001f27;
+$error-light: #ba1a1a;
+$error-container-light: #ffdad6;
+$on-error-light: #ffffff;
+$on-error-container-light: #410002;
+$background-light: #fbfdf8;
+$on-background-light: #191c1a;
+$surface-light: #fbfdf8;
+$on-surface-light: #191c1a;
+$surface-variant-light: #dce5dc;
+$on-surface-variant-light: #404942;
+$outline-light: #707972;
+$inverse-on-surface-light: #eff1ed;
+$inverse-surface-light: #2e312e;
+$inverse-primary-light: #74daa3;
+$shadow-light: #000000;
+$surface-tint-light: #006d44;
+$outline-variant-light: #c0c9c0;
+$scrim-light: #000000;
 
 $my-light-theme-foreground-palette: (
-  base: black,
+  base: #467359,
   divider: rgba(black, 0.12),
   dividers: rgba(black, 0.12),
   disabled: rgba(black, 0.38),
@@ -85,10 +117,9 @@ $my-light-theme-foreground-palette: (
 $my-light-theme-background-palette: (
   status-bar: #e0e0e0,
   app-bar: #f5f5f5,
-  background: #fafafa,
+  background: $background-light,
   hover: #fafafa,
-  // TODO(kara): check style with Material Design UX
-  card: white,
+  card: $surface-variant-light,
   dialog: white,
   disabled-button: rgba(black, 0.12),
   raised-button: white,
@@ -101,19 +132,16 @@ $my-light-theme-background-palette: (
   tooltip: #616161,
 );
 
-@function create-create-theme($primary, $accent, $warn) {
-  @return (
-
-    primary: $primary,
-    accent: $accent,
-    warn: $warn,
-    is-dark: false,
+$custom-theme: (
+  color: (primary: $aspenleafshelties-primary,
+    accent: $aspenleafshelties-primary,
+    warn: $aspenleafshelties-warn,
     foreground: $my-light-theme-foreground-palette,
     background: $my-light-theme-background-palette,
-  );
-}
+  ),
+  is-dark: false,
 
-$custom-theme: create-create-theme($aspenleafshelties-primary,$aspenleafshelties-accent, $aspenleafshelties-warn);
+);
 
 
 // The rest of this is like a normal theme.scss file. The only difference being that we use create-wonky-theme instead of mat-light-theme
