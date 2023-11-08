@@ -91,9 +91,9 @@ $my-light-theme-background-palette: (
   card: rgba(mat3token.$md-sys-color-surface-variant-light, .5),
   dialog: white,
   disabled-button: rgba(black, 0.12),
-  raised-button: white,
-  focused-button: rgba(black, 0.12),
-  selected-button: #e0e0e0,
+  raised-button: mat3token.$md-ref-palette-secondary70,
+  focused-button: mat3token.$md-ref-palette-secondary50,
+  selected-button: mat3token.$md-ref-palette-secondary70,
   selected-disabled-button: #e0e0e0,
   disabled-button-toggle: #eeeeee,
   unselected-chip: #e0e0e0,
@@ -127,4 +127,9 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 
+}
+
+mat-sidenav-container {
+  flex: auto;
+  align-content: center;
 }

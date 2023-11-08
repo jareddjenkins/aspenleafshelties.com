@@ -1,11 +1,9 @@
-<mat-toolbar color="primary">
-  <button
-    mat-button
-    *ngFor="let route of routes"
-    [routerLink]="route.path"
-    routerLinkActive="active-link"
-  >
-    {{ route.label }}
-  </button>
-</mat-toolbar>
-<router-outlet></router-outlet>
+<mat-sidenav-container class="sidenav-container">
+
+  <mat-toolbar color="primary">
+    <button mat-button *ngFor="let route of routes" [routerLink]="route.path" routerLinkActive="active-link">
+      {{ route.label }}
+    </button>
+  </mat-toolbar>
+  <router-outlet></router-outlet>
+</mat-sidenav-container>
