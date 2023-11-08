@@ -1,0 +1,13 @@
+@use 'variables' as *;
+@mixin respond-to($breakpoint) {
+    @if map-has-key($breakpoints , $breakpoint ) {
+        @media (min-width: map-get($breakpoints, $breakpoint)) {
+            @content;
+        }
+
+    }
+
+    @else {
+        @warn "The breakpoint `#{breakpoint}` is not defined in the map"
+    }
+}

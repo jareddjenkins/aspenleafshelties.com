@@ -1,0 +1,114 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+@use './tokens' as mat3token;
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css fiçle for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+$light-primary-text: #ffffff;
+$aspenleaf_primary: (
+  50: mat3token.$md-ref-palette-primary95,
+  100: mat3token.$md-ref-palette-primary90,
+  200: mat3token.$md-ref-palette-primary80,
+  300: mat3token.$md-ref-palette-primary70,
+  400: mat3token.$md-ref-palette-primary60,
+  500: mat3token.$md-ref-palette-primary50,
+  600: mat3token.$md-ref-palette-primary40,
+  700: mat3token.$md-ref-palette-primary30,
+  800: mat3token.$md-ref-palette-primary20,
+  900: mat3token.$md-ref-palette-primary10,
+  A100: mat3token.$md-ref-palette-primary100,
+  contrast: (50: $light-primary-text,
+    100: $light-primary-text,
+    200: $light-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text)
+);
+$aspenleaf_secondary: (
+  50: mat3token.$md-ref-palette-secondary95,
+  100: mat3token.$md-ref-palette-secondary90,
+  200: mat3token.$md-ref-palette-secondary80,
+  300: mat3token.$md-ref-palette-secondary70,
+  400: mat3token.$md-ref-palette-secondary60,
+  500: mat3token.$md-ref-palette-secondary50,
+  600: mat3token.$md-ref-palette-secondary40,
+  700: mat3token.$md-ref-palette-secondary30,
+  800: mat3token.$md-ref-palette-secondary20,
+  900: mat3token.$md-ref-palette-secondary10,
+  A100: mat3token.$md-ref-palette-secondary100,
+  contrast: (50: $light-primary-text,
+    100: $light-primary-text,
+    200: $light-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text )
+);
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$aspenleafshelties-primary: mat.define-palette($aspenleaf_primary, 700, 500, 900, A100);
+$aspenleafshelties-accent: mat.define-palette($aspenleaf_secondary, 400, 50, 700);
+
+// The warn palette is optional (defaults to red).
+$aspenleafshelties-warn: mat.define-palette(mat.$red-palette);
+
+$my-light-theme-foreground-palette: (
+  base: #467359,
+  divider: rgba(black, 0.12),
+  dividers: rgba(black, 0.12),
+  disabled: rgba(black, 0.38),
+  disabled-button: rgba(black, 0.26),
+  disabled-text: rgba(black, 0.38),
+  elevation: black,
+  hint-text: rgba(black, 0.38),
+  secondary-text: rgba(black, 0.54),
+  icon: rgba(black, 0.54),
+  icons: rgba(black, 0.54),
+  text: rgba(black, 0.87),
+  slider-min: rgba(black, 0.87),
+  slider-off: rgba(black, 0.26),
+  slider-off-active: rgba(black, 0.38),
+);
+
+// Foreground palette for light themes.
+$my-light-theme-background-palette: (
+  status-bar: #e0e0e0,
+  app-bar: #f5f5f5,
+  background: mat3token.$md-sys-color-background-light,
+  hover: #fafafa,
+  card: rgba(mat3token.$md-sys-color-surface-variant-light, .5),
+  dialog: white,
+  disabled-button: rgba(black, 0.12),
+  raised-button: mat3token.$md-ref-palette-secondary70,
+  focused-button: mat3token.$md-ref-palette-secondary50,
+  selected-button: mat3token.$md-ref-palette-secondary70,
+  selected-disabled-button: #e0e0e0,
+  disabled-button-toggle: #eeeeee,
+  unselected-chip: #e0e0e0,
+  disabled-list-option: #eeeeee,
+  tooltip: #616161,
+);
+
+$custom-theme: (
+  color: (primary: $aspenleafshelties-primary,
+    accent: $aspenleafshelties-primary,
+    warn: $aspenleafshelties-warn,
+    foreground: $my-light-theme-foreground-palette,
+    background: $my-light-theme-background-palette,
+  ),
+  is-dark: false,
+);
+
+@include mat.all-component-themes($custom-theme);
