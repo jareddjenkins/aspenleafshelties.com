@@ -1,13 +1,23 @@
-.container {
-  max-width: 600px;
-  margin: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+@use '/src/styles/mixins.scss' as *;
+
+p {
+  padding: 20px;
 }
 mat-card {
-  width: 100%;
   img {
     width: 100%;
     height: auto;
+    margin-bottom: 16px;
+  }
+
+  .comments {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    overflow: hidden;
+    height: 7em;
+    text-overflow: ellipsis;
+
   }
 }
 mat-card-header {
