@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Observable, combineLatest, map, startWith } from 'rxjs';
 import { DogService } from 'src/app/shared/dog.service';
 import { Dog } from 'src/app/shared/model';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-list-all',
@@ -11,13 +12,20 @@ import { Dog } from 'src/app/shared/model';
 })
 export class ListAllComponent implements OnInit {
   filteredDogs$!: Observable<Dog[]>
-  displayedColumns: string[] = ['rname', 'cname', 'gender', 'sire', 'damn', 'dob', 'edit'];
+  displayedColumns: string[] = ['rname', 'cname', 'gender', 'sireName', 'damName', 'dob', 'edit'];
   filterControl = new FormControl("")
   constructor(
     private dogService: DogService,
+    private responsive: BreakpointObserver
   ) { }
 
   ngOnInit() {
+    this.responsive.observe(Breakpoints.Tablet)
+      .subscribe(result => {
+        if (result.matches) {
+          this.displayedColumns = ['rname', 'cname', 'edit'];
+        }
+      });
     this.dogService.fetchDogs();
     this.filteredDogs$ = combineLatest([
       this.dogService.dogs$,
