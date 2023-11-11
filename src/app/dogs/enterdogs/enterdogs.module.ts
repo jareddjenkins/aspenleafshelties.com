@@ -9,6 +9,7 @@ import { MatTableModule } from '@angular/material/table'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [EditDogComponent, ListAllComponent],
@@ -18,7 +19,9 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
     SharedModule,
     MatTableModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatCheckboxModule,
+    ReactiveFormsModule
   ],
 })
 export class EnterdogsModule {

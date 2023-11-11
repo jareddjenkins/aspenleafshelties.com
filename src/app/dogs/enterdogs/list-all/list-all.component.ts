@@ -30,15 +30,12 @@ export class ListAllComponent implements OnInit {
       }))
   }
 
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    // this.dogs$.filter = filterValue.trim().toLowerCase());
-  }
-
-
   createnewdog() {
 
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    //this.filterControl.;
   }
 
   filterDogs(dogs: Dog[], filterString: string, columns: string[]): Dog[] {
