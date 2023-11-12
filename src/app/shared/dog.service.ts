@@ -8,6 +8,7 @@ import { Dog } from './model';
 import { environment } from 'src/environments/environment';
 import { ErrorHandlingService } from './error-handling.service';
 import { updateItemById } from '../utils';
+import { ResolveFn } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

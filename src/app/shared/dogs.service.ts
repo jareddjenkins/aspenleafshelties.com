@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, forkJoin, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
 
 import { Dog } from './model';
 import { environment } from 'src/environments/environment';
-import { ErrorHandlingServiceService } from './error-handling.service';
+import { ErrorHandlingService } from './error-handling.service';
 import { updateItemById } from '../utils';
+import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -18,14 +19,15 @@ const httpOptions = {
 })
 export class DogService {
   private dogSubject: BehaviorSubject<Dog[]> = new BehaviorSubject<Dog[]>([]);
+  private dogsLoaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   private dogApiUrl = environment.apiEndpoint + '/dogs';
 
   dogs$: Observable<Dog[]> = this.dogSubject.asObservable();
 
   constructor(
     private http: HttpClient,
-    private errorHandler: ErrorHandlingServiceService,
-  ) {}
+    private errorHandler: ErrorHandlingService,
+  ) { }
 
   ngOnInit() {
     this.fetchDogs();
@@ -43,7 +45,11 @@ export class DogService {
       .get<Dog[]>(this.dogApiUrl)
       .pipe(
         tap({
-          next: (dogs) => this.dogSubject.next(dogs),
+          next: (dogs) => {
+            this.dogSubject.next(dogs)
+            this.dogsLoaded.next(true)
+
+          },
           error: (error) => this.errorHandler.handleError(error),
         }),
       )
@@ -60,19 +66,18 @@ export class DogService {
     );
   }
 
-  getDogById(id: number): Observable<Dog | null> {
-    return this.dogs$.pipe(
-      map((dog) => {
-        const foundDog = dog.find((d) => d.id === id);
-        if (!foundDog) {
+  getDogById(id: number): Observable<Dog> {
+    return this.dogsLoaded.pipe(
+      filter(loaded => loaded),
+      take(1),
+      switchMap(() => {
+        const dog = this.dogSubject.getValue()
+          .find((d) => d.id === id)
+        if (!dog) {
           throw new Error(`Dog was not found for ID: {id}`);
         }
-        return foundDog;
-      }),
-      catchError((e) => {
-        this.errorHandler.handleError(e);
-        return of(null);
-      }),
+        return of(dog);
+      })
     );
   }
   getDogByIds(ids: number[]): Observable<Dog[]> {
@@ -123,3 +128,9 @@ export class DogService {
    * @param result - optional value to return as the observable result
    */
 }
+
+export const dogResolver: ResolveFn<Dog> =
+  (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+    inject(DogService).fetchDogs()
+    return inject(DogService).getDogById(+route.paramMap.get('id')!);
+  };

@@ -25,31 +25,25 @@ export class EditDogComponent {
   showInput = false;
 
   constructor(
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private dogService: DogService,
     private fb: FormBuilder
   ) { }
 
   ngOnInit() {
     this.dogService.fetchDogs();
-    this.route.paramMap.subscribe(params => {
-      const paramId = params.get('id')
-      console.log("paramID:", paramId)
-      if (paramId === null) {
-        throw new Error("route is null")
-      } else {
-        this.dogService.getDogById(+paramId).subscribe( dog => {
-          this.buildForm(dog)
-        }
-        )
+    this.activatedRoute.data.subscribe(
+      ({dog}) => {
+        this.buildForm(dog)
+      });
+}
 
-      }
-    })
 
-    this.dogService.getMaleDogs().subscribe(maleDogs => this.sires = maleDogs)
-    this.dogService.getFemaleDogs().subscribe(femaleDogs => this.sires = femaleDogs)
 
-  }
+    // this.dogService.getMaleDogs().subscribe(maleDogs => this.sires = maleDogs)
+    // this.dogService.getFemaleDogs().subscribe(femaleDogs => this.sires = femaleDogs)
+
+  
   buildForm(dog: Dog){
     this.form = this.fb.group({
       cname: [dog.cname],
