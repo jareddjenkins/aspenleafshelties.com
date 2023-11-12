@@ -8,8 +8,11 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { MatTableModule } from '@angular/material/table'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { DogsModule } from '../dogs.module';
+import { RouterModule, RouterLink } from '@angular/router';
 
 @NgModule({
   declarations: [EditDogComponent, ListAllComponent],
@@ -21,7 +24,11 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ImageCropperModule,
+    DogsModule,
+    FormsModule,
+    RouterLink
   ],
 })
 export class EnterdogsModule {

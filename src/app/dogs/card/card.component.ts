@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Dog } from 'src/app/shared/model';
 
 @Component({
@@ -8,4 +8,5 @@ import { Dog } from 'src/app/shared/model';
 })
 export class CardComponent {
   @Input() dog!: Dog;
+  constructor(){}
 }

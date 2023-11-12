@@ -25,26 +25,21 @@ export class DogService {
   constructor(
     private http: HttpClient,
     private errorHandler: ErrorHandlingService,
-  ) {}
+  ) { }
 
   getDogs(): Observable<Dog[]> {
     return this.dogs$;
-  }
-  getDogsSync(): Dog[] {
-    return this.dogSubject.value;
   }
 
   fetchDogs(): void {
     this.http
       .get<Dog[]>(this.dogApiUrl)
-      .pipe(
-        tap({
-          next: (dogs) => this.dogSubject.next(dogs),
-          error: (error) => this.errorHandler.handleError(error),
-        }),
-      )
-      .subscribe();
+      .subscribe({
+        next: data => this.dogSubject.next(data),
+        error: error => this.errorHandler.handleError(error),
+      })
   }
+
   getMaleDogs(): Observable<Dog[]> {
     return this.dogs$.pipe(
       map((dogs) => dogs.filter((dog) => dog.gender === true)),
@@ -56,18 +51,19 @@ export class DogService {
     );
   }
 
-  getDogById(id: number): Observable<Dog | null> {
+  getDogById(id: number): Observable<Dog> {
     return this.dogs$.pipe(
       map((dog) => {
         const foundDog = dog.find((d) => d.id === id);
-        if (!foundDog) {
-          throw new Error(`Dog was not found for ID: {id}`);
+        if (!foundDog || foundDog === null) {
+          throw new Error(`Dog was not found for ID: ${id}`);
+        } else {
+          return foundDog;
         }
-        return foundDog;
       }),
       catchError((e) => {
         this.errorHandler.handleError(e);
-        return of(null);
+        throw e;
       }),
     );
   }

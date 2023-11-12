@@ -2,12 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListAllComponent } from './list-all/list-all.component';
 // import { EnterdogsComponent } from './enterdogs.component';
-// import { EditdogComponent } from './editdog/editdog.component';
+import { EditDogComponent } from './edit-dog/edit-dog.component';
 
 const routes: Routes = [
   { path: '', component: ListAllComponent },
-  // { path: 'editdog/:id', component: EditdogComponent },
+  { path: 'edit/:id', component: EditDogComponent },
 ];
+
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

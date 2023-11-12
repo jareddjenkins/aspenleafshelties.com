@@ -10,15 +10,16 @@ import { Observable } from 'rxjs';
   styleUrls: ['./girls.component.scss'],
 })
 export class GirlsComponent implements OnInit {
-  dogs$!: Observable<Dog[]>;
+  dogs$!: Observable<Dog[]>
 
   constructor(
     private dogService: DogService,
     private dogPagesService: DogPagesService,
-  ) {}
-
+  ) {
+  }
+  
   ngOnInit() {
-    this.dogService.fetchDogs();
     this.dogs$ = this.dogPagesService.getDogsOnPage('Girls');
+    this.dogService.fetchDogs();
   }
 }

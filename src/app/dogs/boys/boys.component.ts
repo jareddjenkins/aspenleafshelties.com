@@ -18,7 +18,7 @@ export class BoysComponent {
   ) {}
 
   ngOnInit() {
-    this.dogService.fetchDogs();
     this.dogs$ = this.dogPagesService.getDogsOnPage('Boys');
+    this.dogService.fetchDogs();
   }
 }

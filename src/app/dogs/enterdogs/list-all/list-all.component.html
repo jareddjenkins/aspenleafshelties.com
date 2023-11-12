@@ -32,24 +32,12 @@
   </ng-container>
   <ng-container matColumnDef="edit">
     <th mat-header-cell *matHeaderCellDef></th>
-    <td mat-cell *matCellDef="let dog"><mat-icon [routerLink]="['/edit', dog.id]">edit</mat-icon></td>
+    <td mat-cell *matCellDef="let dog">
+      <button mat-icon-button [routerLink]="['/dogs/enterdogs/edit', dog.id]">
+        <mat-icon>edit</mat-icon>
+      </button>
   </ng-container>
-
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<!-- 
-            <td>{{dog.rname}}</td>
-            <td class="d-none d-sm-table-cell">{{dog.cname}}</td>
-            <td class="d-none d-sm-table-cell">{{dog.gender === true ? "Male" : "Female"}}</td>
-            <td class="d-none d-sm-table-cell">{{dog.sireName}}</td>
-            <td class="d-none d-sm-table-cell">{{dog.damName}}</td>
-            <td class="d-none d-sm-table-cell">{{dog.dob | date:'shortDate'}}</td>
-            <td><a routerLink="editdog/{{dog.id}}" routerLinkActive="active">
-                <mat-icon class="black-icon">edit</mat-icon>
-              </a></td>
-          </tr>
-        </tbody>
-      </table>
-      <mat-icon class="black-icon" (click)="createnewdog()">add_circle</mat-icon> -->
