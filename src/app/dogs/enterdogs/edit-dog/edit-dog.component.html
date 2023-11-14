@@ -1,27 +1,42 @@
 <app-card class="card" *ngIf="dog" [dog]="dog">
 </app-card>
+<button style="margin-bottom: 20px;" (click)="save()">save</button>
+<form [formGroup]="form" style="margin-top: 30px;">
 
-<button (click)="save()">save</button>
+  <mat-form-field appearance="outline">
+    <mat-label>Call Name</mat-label>
+    <input matInput formControlName="cname">
+  </mat-form-field>
 
-<form [formGroup]="form">
+  <mat-form-field appearance="outline">
+    <mat-label>Registered Name</mat-label>
+    <input matInput formControlName="rname">
+  </mat-form-field>
 
-  <input formControlName="rname" class="form-control" name="rname" id="rname"
-    placeholder="Registered Name">
+  <mat-form-field appearance="outline">
+    <mat-label>Description</mat-label>
+    <input matInput formControlName="comments">
+  </mat-form-field>
+  
+  <mat-radio-group formControlName="gender" appearance="outline" >
+      <mat-radio-button [value]="true">Male</mat-radio-button>
+      <mat-radio-button [value]="false">Female</mat-radio-button>
+  </mat-radio-group>
 
-  <input formControlName="cname" id="cname" placeholder="Call Name">
+  <mat-form-field appearance="outline">
+    <mat-label>Choose a date</mat-label>
+    <input matInput [matDatepicker]="datepicker" formControlName="dob">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+    <mat-datepicker #datepicker>
+      <!-- <mat-datepicker-actions>
+        <button mat-button matDatepickerCancel>Cancel</button>
+        <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+      </mat-datepicker-actions> -->
+    </mat-datepicker>
+  </mat-form-field>
 
-  <input formControlName="comments">
 </form>
-<!-- <div>
-      <label>
-        <input type="radio" name="options" type="radio" [(ngModel)]="dog.gender" [value]="1" name="male" id="male">
-        Male
-      </label><br />
-      <label>
-        <input type="radio" name="options" type="radio" [(ngModel)]="dog.gender" [value]="0" name="female" id="female">
-        Female
-      </label>
-    </div> -->
 <!-- <div class="form-group">
   <div class="input-group">
     <label for="dob">Date of Birth: {{dog.dob|date:'longDate'}}</label>

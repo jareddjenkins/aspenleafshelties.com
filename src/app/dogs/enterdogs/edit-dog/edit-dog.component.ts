@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { Observable, tap } from 'rxjs';
@@ -33,25 +33,26 @@ export class EditDogComponent {
   ngOnInit() {
     this.dogService.fetchDogs();
     this.activatedRoute.data.subscribe(
-      ({dog}) => {
-        this.buildForm(dog)
-      });
-}
+      ({ dog }) => this.dog = dog);
+      this.buildForm()
+  }
 
 
 
-    // this.dogService.getMaleDogs().subscribe(maleDogs => this.sires = maleDogs)
-    // this.dogService.getFemaleDogs().subscribe(femaleDogs => this.sires = femaleDogs)
+  // this.dogService.getMaleDogs().subscribe(maleDogs => this.sires = maleDogs)
+  // this.dogService.getFemaleDogs().subscribe(femaleDogs => this.sires = femaleDogs)
 
-  
-  buildForm(dog: Dog){
+
+  buildForm() {
+    console.log(false)
     this.form = this.fb.group({
-      cname: [dog.cname],
-      rname: [dog.rname],
-      comments: [dog.comments],
-      dob: [dog.dob],
-      sire: [dog.sireName],
-      dam:  [dog.damName]
+      cname: [this.dog.cname],
+      rname: [this.dog.rname],
+      comments: [this.dog.comments],
+      gender: [(this.dog.gender ? true : false)],
+      dob: [this.dog.dob],
+      sire: [this.dog.sireName],
+      dam: [this.dog.damName]
     })
   }
 

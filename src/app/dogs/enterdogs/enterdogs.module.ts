@@ -12,7 +12,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { DogsModule } from '../dogs.module';
-import { RouterModule, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [EditDogComponent, ListAllComponent],
@@ -28,7 +31,10 @@ import { RouterModule, RouterLink } from '@angular/router';
     ImageCropperModule,
     DogsModule,
     FormsModule,
-    RouterLink
+    RouterLink,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
 })
 export class EnterdogsModule {
