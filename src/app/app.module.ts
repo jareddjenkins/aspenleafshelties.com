@@ -11,7 +11,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { DogsInterceptorService } from './dogs/dogs-interceptor.service';
+import { DogsInterceptorService } from './shared/dogs-interceptor.service';
 import { environment } from 'src/environments/environment';
 
 const interceptorProvider: Provider =

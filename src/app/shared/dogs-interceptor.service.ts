@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http'
 import { Observable, of } from 'rxjs';
 import mockDogs from '../mockdogs.json'
-import { Dog } from '../shared/model';
+import { Dog } from './model';
 @Injectable({
   providedIn: 'root'
 })

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, forkJoin, of } from 'rxjs';
@@ -8,7 +8,7 @@ import { Dog } from './model';
 import { environment } from 'src/environments/environment';
 import { ErrorHandlingService } from './error-handling.service';
 import { updateItemById } from '../utils';
-import { ResolveFn } from '@angular/router';
+import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -36,12 +36,8 @@ export class DogService {
     this.http
       .get<Dog[]>(this.dogApiUrl)
       .subscribe({
-        next: data => {
-          this.dogSubject.next(data),
-          console.log(data)
-        },
+        next: data => this.dogSubject.next(data),
         error: error => this.errorHandler.handleError(error),
-        
       })
   }
 
@@ -122,3 +118,9 @@ export class DogService {
    * @param result - optional value to return as the observable result
    */
 }
+
+export const dogResolver: ResolveFn<Dog> =
+  (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+    inject(DogService).fetchDogs()
+    return inject(DogService).getDogById(+route.paramMap.get('id')!);
+  };

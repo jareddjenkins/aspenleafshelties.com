@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListAllComponent } from './list-all/list-all.component';
 // import { EnterdogsComponent } from './enterdogs.component';
 import { EditDogComponent } from './edit-dog/edit-dog.component';
-import { dogResolver } from 'src/app/shared/dogs.service';
+import { dogResolver } from 'src/app/shared/dog.service';
 
 const routes: Routes = [
   { path: '', component: ListAllComponent },

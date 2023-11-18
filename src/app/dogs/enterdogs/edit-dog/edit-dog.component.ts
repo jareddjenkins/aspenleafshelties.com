@@ -44,7 +44,6 @@ export class EditDogComponent {
 
 
   buildForm() {
-    console.log(false)
     this.form = this.fb.group({
       cname: [this.dog.cname],
       rname: [this.dog.rname],
