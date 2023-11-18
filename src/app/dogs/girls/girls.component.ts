@@ -20,6 +20,7 @@ export class GirlsComponent implements OnInit {
   
   ngOnInit() {
     this.dogs$ = this.dogPagesService.getDogsOnPage('Girls');
-    this.dogService.fetchDogs();
+    this.dogService.fetchDogs()
+    
   }
 }

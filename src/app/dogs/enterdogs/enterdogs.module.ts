@@ -13,9 +13,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { DogsModule } from '../dogs.module';
 import { RouterLink } from '@angular/router';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [EditDogComponent, ListAllComponent],

@@ -36,8 +36,12 @@ export class DogService {
     this.http
       .get<Dog[]>(this.dogApiUrl)
       .subscribe({
-        next: data => this.dogSubject.next(data),
+        next: data => {
+          this.dogSubject.next(data),
+          console.log(data)
+        },
         error: error => this.errorHandler.handleError(error),
+        
       })
   }
 
