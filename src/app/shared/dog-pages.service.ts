@@ -36,13 +36,10 @@ export class DogPagesService {
   fetchDogPages(): void {
     this.http
       .get<DogPage[]>(this.apiUrl)
-      .pipe(
-        tap({
+      .subscribe({
           next: (pages) => this.pagesSubject.next(pages),
           error: (error) => this.errorHandler.handleError(error),
-        }),
-      )
-      .subscribe();
+        })
   }
   getDogPage(pageName: string): Observable<DogPage[]> {
     return this.dogPages$.pipe(

@@ -1,3 +1,1 @@
-<div class="container">
-  <app-card *ngFor="let dog of dogs$ | async" [dog]="dog"></app-card>
-</div>
+<app-card [dogs]="dogs$ |async"></app-card>

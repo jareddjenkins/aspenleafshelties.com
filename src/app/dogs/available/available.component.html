@@ -104,7 +104,7 @@
     <div class="col-sm-10 mx-auto">
       <h1>Puppies For Sale</h1>
       <ng-container *ngIf="(puppies$ | async)?.length; else noAvailable">
-        <app-card *ngFor="let dog of puppies$ | async" [dog]="dog"> </app-card>
+        <app-card [dogs]="puppies$ | async"> </app-card>
       </ng-container>
     </div>
   </div>
@@ -112,7 +112,7 @@
     <div class="col-sm-10 mx-auto">
       <h1>Adults For Sale</h1>
       <ng-container *ngIf="(adults$ | async)?.length; else noAdultAvailable">
-        <app-card *ngFor="let dog of adults$ | async" [dog]="dog"> </app-card>
+        <app-card [dogs]="adults$ | async"> </app-card>
       </ng-container>
     </div>
   </div>

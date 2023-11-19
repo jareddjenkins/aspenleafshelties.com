@@ -1,5 +1,5 @@
-
-  <mat-card>
+<div class="container">
+  <mat-card *ngFor="let dog of dogs">
     <mat-card-header>
       <mat-card-title>
         {{ dog.cname }}
@@ -22,3 +22,4 @@
       <p>Date of Birth: {{ dog.dob | date: "longDate" }}</p>
     </mat-expansion-panel>
   </mat-card>
+</div>

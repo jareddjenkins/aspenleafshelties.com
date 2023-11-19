@@ -7,6 +7,5 @@ import { Dog } from 'src/app/shared/model';
   styleUrls: ['./card.component.scss'],
 })
 export class CardComponent {
-  @Input() dog!: Dog;
-  constructor(){}
+  @Input() dogs: Dog[] | null = null;
 }
