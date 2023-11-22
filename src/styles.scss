@@ -22,20 +22,3 @@ mat-sidenav-container {
   flex: auto;
   align-content: center;
 }
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  font-size: 1em;
-
-  @include mx.respond-to(md) {
-    max-width: 90%;
-    
-
-  }
-
-  @include mx.respond-to(sm) {
-    max-width: 85%;
-    font-size: 1em;
-  }
-}

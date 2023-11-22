@@ -88,7 +88,7 @@ $my-light-theme-background-palette: (
   app-bar: #f5f5f5,
   background: mat3token.$md-sys-color-background-light,
   hover: #fafafa,
-  card: rgba(mat3token.$md-sys-color-surface-variant-light, .5),
+  card: rgba(mat3token.$md-sys-color-surface-variant-light, 1),
   dialog: white,
   disabled-button: rgba(black, 0.12),
   raised-button: mat3token.$md-ref-palette-secondary70,

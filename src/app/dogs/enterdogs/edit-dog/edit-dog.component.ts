@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ImageCroppedEvent } from 'ngx-image-cropper';
-import { Observable, tap } from 'rxjs';
+import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
+import { Observable, combineLatest, first, forkJoin, map, tap } from 'rxjs';
 import { DogService } from 'src/app/shared/dog.service';
 import { Dog } from 'src/app/shared/model';
 
@@ -13,10 +13,8 @@ import { Dog } from 'src/app/shared/model';
 })
 export class EditDogComponent {
   dog!: Dog;
-  sires!: Dog[];
-  dams!: Dog[];
-  selectedSire!: Dog;
-  selectedDam!: Dog;
+  males$!: Observable<Dog[]>;
+  females$!: Observable<Dog[]>;
   form!: FormGroup;
   imageChangedEvent: any = '';
   croppedImage: any = '';
@@ -34,14 +32,13 @@ export class EditDogComponent {
     this.dogService.fetchDogs();
     this.activatedRoute.data.subscribe(
       ({ dog }) => this.dog = dog);
-      this.buildForm()
+    this.buildForm()
+    this.males$ = this.dogService.getMaleDogs()
+    this.females$ = this.dogService.getFemaleDogs()
+    this.form.valueChanges.subscribe(values => {
+      this.dog = { ...this.dog, ...values }
+    })
   }
-
-
-
-  // this.dogService.getMaleDogs().subscribe(maleDogs => this.sires = maleDogs)
-  // this.dogService.getFemaleDogs().subscribe(femaleDogs => this.sires = femaleDogs)
-
 
   buildForm() {
     this.form = this.fb.group({
@@ -50,19 +47,10 @@ export class EditDogComponent {
       comments: [this.dog.comments],
       gender: [(this.dog.gender ? true : false)],
       dob: [this.dog.dob],
-      sire: [this.dog.sireName],
-      dam: [this.dog.damName]
+      sireId: [this.dog.sireId],
+      damId: [this.dog.damId],
+      profileImage: [this.dog.profileImageUrl]
     })
-  }
-
-  setSire() {
-    // this.dog.sireId = this.selectedSire.id;
-    // this.dog.sireName = this.selectedSire.rname;
-  }
-
-  setDam() {
-    // this.dog.damId = this.selectedDam.id;
-    // this.dog.damName = this.selectedDam.rname;
   }
 
   goBack(): void {
@@ -85,13 +73,24 @@ export class EditDogComponent {
 
 
   fileChangeEvent(event: any): void {
+    const file = event.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = (e: any) => {
+        this.dog.profileImageUrl = e.target.result
+      }
+      reader.readAsDataURL(file)
+    }
+
     this.imageChangedEvent = event;
   }
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.objectUrl;
+    this.dog.profileImageUrl = this.croppedImage
+    
     this.croppedImageBlob = event.blob;
   }
-  imageLoaded() {
+  imageLoaded(image: LoadedImage) {
     // show cropper
   }
   cropperReady() {

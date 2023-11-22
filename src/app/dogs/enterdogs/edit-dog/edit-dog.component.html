@@ -1,5 +1,3 @@
-<app-card class="card" *ngIf="dog" [dogs]="[dog]">
-</app-card>
 <button style="margin-bottom: 20px;" (click)="save()">save</button>
 <form [formGroup]="form" style="margin-top: 30px;">
 
@@ -17,11 +15,33 @@
     <mat-label>Description</mat-label>
     <input matInput formControlName="comments">
   </mat-form-field>
-  
-  <mat-radio-group formControlName="gender" appearance="outline" >
-      <mat-radio-button [value]="true">Male</mat-radio-button>
-      <mat-radio-button [value]="false">Female</mat-radio-button>
+
+  <mat-radio-group formControlName="gender" appearance="outline">
+    <mat-radio-button [value]="true">Male</mat-radio-button>
+    <mat-radio-button [value]="false">Female</mat-radio-button>
   </mat-radio-group>
+
+
+  <mat-form-field appearance="outline">
+    <mat-label>Sire</mat-label>
+    <mat-select formControlName="sireId">
+      <input matInput type="text" placeholder="Search">
+      <mat-option *ngFor="let dog of males$ | async" [value]="dog.id">
+        {{dog.cname}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Dam</mat-label>
+    <mat-select formControlName="damId">
+      <input matInput placeholder="Search">
+      <mat-divider></mat-divider>
+      <mat-option *ngFor="let dog of females$ | async" [value]="dog.id">
+        {{dog.cname}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>Choose a date</mat-label>
@@ -29,32 +49,15 @@
     <mat-hint>MM/DD/YYYY</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
     <mat-datepicker #datepicker>
-      <!-- <mat-datepicker-actions>
-        <button mat-button matDatepickerCancel>Cancel</button>
-        <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
-      </mat-datepicker-actions> -->
     </mat-datepicker>
   </mat-form-field>
+  <input type="file" #fileInput style="display: none;" (change)="fileChangeEvent($event)"
+    accept="image/png, image/jpg, image/jpg" />
+  <button mat-button (click)="fileInput.click()">Choose Image</button>
 
+  <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="160 / 160"
+    [resizeToWidth]="512" format="png" outputType='base64' (imageCropped)="imageCropped($event)"
+    (imageLoaded)="imageLoaded($event)" (cropperReady)="cropperReady()"
+    (loadImageFailed)="loadImageFailed()"></image-cropper>
 </form>
-<!-- <div class="form-group">
-  <div class="input-group">
-    <label for="dob">Date of Birth: {{dog.dob|date:'longDate'}}</label>
-    // <div>
-      // <ngb-datepicker name="dob" [(ngModel)]="dog.dob"></ngb-datepicker>
-      // </div>
-  </div>
-  <div>
-    <input type="file" (change)="fileChangeEvent($event)" accept="image/png, image/jpg, image/jpg" />
-    <button type="button" (click)="onUpload()">Upload</button>
-
-    <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="160 / 160"
-      [resizeToWidth]="512" format="png" outputType='base64' (imageCropped)="imageCropped($event)"
-      (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
-      (loadImageFailed)="loadImageFailed()"></image-cropper>
-
-    <img [src]="croppedImage" alt="Cropped Image" />
-  </div>
-</div>
-</form>
-</div> -->
+<app-card [dogs]="[dog]"></app-card>

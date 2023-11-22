@@ -16,6 +16,7 @@ import { RouterLink } from '@angular/router';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [EditDogComponent, ListAllComponent],
@@ -34,7 +35,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     RouterLink,
     MatRadioModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule
   ],
 })
 export class EnterdogsModule {

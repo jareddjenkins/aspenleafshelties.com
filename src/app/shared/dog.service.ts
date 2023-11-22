@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, forkJoin, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
 
 import { Dog } from './model';
 import { environment } from 'src/environments/environment';
@@ -43,17 +43,19 @@ export class DogService {
 
   getMaleDogs(): Observable<Dog[]> {
     return this.dogs$.pipe(
-      map((dogs) => dogs.filter((dog) => dog.gender === true)),
+      map((dogs) => dogs.filter((dog) => dog.gender == true)),
     );
   }
   getFemaleDogs(): Observable<Dog[]> {
     return this.dogs$.pipe(
-      map((dogs) => dogs.filter((dog) => dog.gender === false)),
+      map((dogs) => dogs.filter((dog) => dog.gender == false)),
     );
   }
 
   getDogById(id: number): Observable<Dog> {
-    return this.dogs$.pipe(
+    return this.dogSubject.pipe(
+      filter(dogs => dogs.length > 0),
+      take(1),
       map((dog) => {
         const foundDog = dog.find((d) => d.id === id);
         if (!foundDog || foundDog === null) {
@@ -121,6 +123,7 @@ export class DogService {
 
 export const dogResolver: ResolveFn<Dog> =
   (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
-    inject(DogService).fetchDogs()
-    return inject(DogService).getDogById(+route.paramMap.get('id')!);
+    const dogService = inject(DogService)
+    dogService.fetchDogs()
+    return dogService.getDogById(+route.paramMap.get('id')!);
   };

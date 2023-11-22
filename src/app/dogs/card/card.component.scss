@@ -1,20 +1,35 @@
 @use '/src/styles/mixins' as mx;
-.container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, .5fr));
-  grid-auto-flow: dense;
-  gap: 40px;
-  margin-top: 20px;
-  @include mx.respond-to(md) {
-    max-width: 90%;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  }
-}
 
 p {
   padding: 20px;
 }
+
+.container {
+
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(100% - 20px);
+  margin: auto;
+
+  @include mx.respond-to(md) {
+    max-width: 1000px;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  }
+}
+
+mat-card-header {
+  margin-bottom: 10px;
+}
+
 mat-card {
+  min-width: 400px;
+  max-width: 400px;
+  margin: 0 auto;
+
+  @include mx.respond-to(sm) {
+    width: 100%;
+  }
+
   img {
     width: 100%;
     height: auto;
@@ -30,7 +45,4 @@ mat-card {
     text-overflow: ellipsis;
 
   }
-}
-mat-card-header {
-  margin-bottom: 10px;
 }
