@@ -8,9 +8,10 @@ import 'rxjs';
 import { DogsComponent } from '../shared/dog-card/dogs.component';
 
 @Component({
-  selector: 'app-boys',
-  templateUrl: './boys.component.html',
-  styleUrls: ['./boys.component.css'],
+    selector: 'app-boys',
+    templateUrl: './boys.component.html',
+    styleUrls: ['./boys.component.css'],
+    standalone: false
 })
 export class BoysComponent implements OnInit {
   dogs: Observable<Dog[]>;

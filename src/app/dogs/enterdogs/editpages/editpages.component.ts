@@ -10,9 +10,10 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DogpagesService } from 'src/app/dogpages.service';
 
 @Component({
-  selector: 'app-editpages',
-  templateUrl: './editpages.component.html',
-  styleUrls: ['./editpages.component.css'],
+    selector: 'app-editpages',
+    templateUrl: './editpages.component.html',
+    styleUrls: ['./editpages.component.css'],
+    standalone: false
 })
 export class EditpagesComponent implements OnInit {
   boypages: PageListItem[];

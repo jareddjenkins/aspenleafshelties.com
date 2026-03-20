@@ -1,7 +1,13 @@
 <div class="col">
   <div class="row">
     <div class="input-group md-form form-sm form-1 pl-0">
-       <input  class="form-control my-0 py-1" type="text" [(ngModel)]="query" placeholder="Search" aria-label="Search">
+      <input
+        class="form-control my-0 py-1"
+        type="text"
+        [(ngModel)]="query"
+        placeholder="Search"
+        aria-label="Search"
+      />
     </div>
   </div>
   <div class="row">
@@ -19,18 +25,26 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let dog of dogs | async">
-          <th scope="row" class="d-none d-sm-table-cell">{{dog.id}}</th>
-          <td>{{dog.rname}}</td>
-          <td class="d-none d-sm-table-cell">{{dog.cname}}</td>
-          <td class="d-none d-sm-table-cell">{{dog.gender === true ? "Male" : "Female"}}</td>
-          <td class="d-none d-sm-table-cell">{{dog.sireName}}</td>
-          <td class="d-none d-sm-table-cell">{{dog.damName}}</td>
-          <td class="d-none d-sm-table-cell">{{dog.dob | date:'shortDate'}}</td>
-          <td><a routerLink="editdog/{{dog.id}}" routerLinkActive="active">
-              <mat-icon class="black-icon">edit</mat-icon>
-            </a></td>
-        </tr>
+        @for (dog of dogs | async; track dog) {
+          <tr>
+            <th scope="row" class="d-none d-sm-table-cell">{{ dog.id }}</th>
+            <td>{{ dog.rname }}</td>
+            <td class="d-none d-sm-table-cell">{{ dog.cname }}</td>
+            <td class="d-none d-sm-table-cell">
+              {{ dog.gender === true ? "Male" : "Female" }}
+            </td>
+            <td class="d-none d-sm-table-cell">{{ dog.sireName }}</td>
+            <td class="d-none d-sm-table-cell">{{ dog.damName }}</td>
+            <td class="d-none d-sm-table-cell">
+              {{ dog.dob | date: "shortDate" }}
+            </td>
+            <td>
+              <a routerLink="editdog/{{ dog.id }}" routerLinkActive="active">
+                <mat-icon class="black-icon">edit</mat-icon>
+              </a>
+            </td>
+          </tr>
+        }
       </tbody>
     </table>
     <mat-icon class="black-icon" (click)="createnewdog()">add_circle</mat-icon>

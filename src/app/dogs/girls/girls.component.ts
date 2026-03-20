@@ -6,9 +6,10 @@ import 'rxjs';
 import { DogpagesService } from 'src/app/dogpages.service';
 
 @Component({
-  selector: 'app-girls',
-  templateUrl: './girls.component.html',
-  styleUrls: ['./girls.component.css'],
+    selector: 'app-girls',
+    templateUrl: './girls.component.html',
+    styleUrls: ['./girls.component.css'],
+    standalone: false
 })
 export class GirlsComponent implements OnInit {
   dogs: Observable<Dog[]>;

@@ -14,7 +14,7 @@ import { AsyncPipe } from '@angular/common';
 import { NgbCollapse, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import { RouterOutlet } from '@angular/router';
 
-import { ImageCropperModule } from 'ngx-image-cropper';
+import { ImageCropperComponent } from 'ngx-image-cropper';
 import { DatePipe } from '@angular/common';
 
 import { NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
@@ -40,7 +40,7 @@ import { MaterialComponentsModule } from 'src/app/shared/material-components/mat
     EnterdogsRoutingModule,
     MaterialComponentsModule,
     DogsModule,
-    ImageCropperModule,
+    ImageCropperComponent,
     FormsModule,
     NgbCollapse,
     NgbDropdown,

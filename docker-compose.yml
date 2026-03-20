@@ -1,26 +1,44 @@
-version: '3.5' # We use version 3.5 syntax
-services: # Here we define our service(s)
-    angular-service: # The name of the service
-        image: jareddjenkins/aspenleaf:latest
-        ports:
-            - 80:80
-            - 443:443
-    api:
-        image: jareddjenkins/aspenleafapi:dev
-        ports:
-            - 8080:80
-            - 8443:443
-        environment:
-          aspenLeafDatabase: Server=localhost;Database=aspenleaf-local-testing;User Id=sa;password=Strong!Passw0rd;
-    sql:
-        image: mcr.microsoft.com/azure-sql-edge:latest
-        hostname: local-sql
-        ports:
-            - 1433:1433
-        environment:
-            - ACCEPT_EULA=Y
-            - MSSQL_SA_PASSWORD=Strong!Passw0rd
-        volumes:
-            - mssql:/var/opt/mssql
+services:
+  frontend-local:
+    build:
+      context: .
+    ports:
+      - "8081:80"
+
+  frontend-dev:
+    image: node:22
+    working_dir: /workspace
+    command: sh -lc "npm install && npm start -- --host 0.0.0.0"
+    ports:
+      - "4200:4200"
+    volumes:
+      - .:/workspace
+      - frontend_node_modules:/workspace/node_modules
+
+  angular-service:
+    image: jareddjenkins/aspenleaf:latest
+    ports:
+      - "80:80"
+      - "443:443"
+
+  api:
+    image: jareddjenkins/aspenleafapi:dev
+    ports:
+      - "8080:80"
+      - "8443:443"
+    environment:
+      aspenLeafDatabase: Server=localhost;Database=aspenleaf-local-testing;User Id=sa;password=Strong!Passw0rd;
+
+  sql:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    hostname: local-sql
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Strong!Passw0rd
+    volumes:
+      - mssql:/var/opt/mssql
 volumes:
-    mssql:
+  frontend_node_modules:
+  mssql:

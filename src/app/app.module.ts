@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
@@ -16,25 +16,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { TopnavComponent } from './topnav/topnav.component';
 import { FooterComponent } from './footer/footer.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    ContactComponent,
-    TopnavComponent,
-    FooterComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    RouterLink,
-    RouterLinkActive,
-    NgbCollapse,
-    NgbDropdown,
-    HttpClientModule,
-  ],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HomeComponent,
+        ContactComponent,
+        TopnavComponent,
+        FooterComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        RouterLink,
+        RouterLinkActive,
+        NgbCollapse,
+        NgbDropdown], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {}

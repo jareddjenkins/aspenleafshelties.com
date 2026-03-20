@@ -1,3 +1,3 @@
-<app-dogs *ngIf="dog"
-    [dog]="dog">
-</app-dogs>
+@if (dog) {
+  <app-dogs [dog]="dog"> </app-dogs>
+}

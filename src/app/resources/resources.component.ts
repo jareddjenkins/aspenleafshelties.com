@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { MatLegacyButtonModule } from '@angular/material/legacy-button';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-resources',
-  templateUrl: './resources.component.html',
-  styleUrls: ['./resources.component.css'],
-  standalone: true,
-  imports: [MatLegacyButtonModule],
+    selector: 'app-resources',
+    templateUrl: './resources.component.html',
+    styleUrls: ['./resources.component.css'],
+    imports: [MatButtonModule]
 })
 export class ResourcesComponent {}

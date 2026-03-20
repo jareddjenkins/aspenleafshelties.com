@@ -5,9 +5,10 @@ import { Location } from '@angular/common';
 import { Dog } from './model/dog';
 
 @Component({
-  selector: 'app-dogs',
-  templateUrl: './dogs.component.html',
-  styleUrls: ['./dogs.component.css'],
+    selector: 'app-dogs',
+    templateUrl: './dogs.component.html',
+    styleUrls: ['./dogs.component.css'],
+    standalone: false
 })
 export class DogsComponent {
   @Input() dog: Dog;

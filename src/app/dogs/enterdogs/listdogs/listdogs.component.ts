@@ -6,9 +6,10 @@ import { DogService } from '../../../dog.service';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-listdogs',
-  templateUrl: './listdogs.component.html',
-  styleUrls: ['./listdogs.component.css'],
+    selector: 'app-listdogs',
+    templateUrl: './listdogs.component.html',
+    styleUrls: ['./listdogs.component.css'],
+    standalone: false
 })
 export class ListdogsComponent implements OnInit {
   dogs: Observable<Dog[]>;

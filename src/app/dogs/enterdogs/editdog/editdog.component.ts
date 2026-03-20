@@ -4,14 +4,13 @@ import {
   NgbDateStruct,
   NgbDatepicker,
 } from '@ng-bootstrap/ng-bootstrap';
-import { ImageCroppedEvent } from 'ngx-image-cropper/ngx-image-cropper';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 import { ActivatedRoute } from '@angular/router';
-import { Location, NgIf, NgFor, DatePipe } from '@angular/common';
+import { Location, DatePipe } from '@angular/common';
 
 import { Dog } from '../../model/dog';
 import { DogService } from '../../../dog.service';
-import { ImageCropperModule } from 'ngx-image-cropper';
 import { FormsModule } from '@angular/forms';
 import { DogsComponent } from '../../shared/dog-card/dogs.component';
 
@@ -37,6 +36,7 @@ export class NgbDateNativeAdapter extends NgbDateAdapter<Date> {
   templateUrl: './editdog.component.html',
   styleUrls: ['./editdog.component.css'],
   providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
+  standalone: false,
 })
 export class EditdogComponent implements OnInit {
   dog: Dog;
@@ -64,23 +64,23 @@ export class EditdogComponent implements OnInit {
   getDog() {
     const id = +this.route.snapshot.paramMap.get('id');
     this.dogService.getDog(id).subscribe((dog) => {
-      (this.dog = dog), this.getDams(), this.getSires();
+      ((this.dog = dog), this.getDams(), this.getSires());
     });
   }
 
   getSires() {
     this.dogService.getMaleDogs().subscribe((dogs) => {
-      (this.sires = dogs),
+      ((this.sires = dogs),
         (this.selectedSire = this.sires.find(
           (dog) => dog.id == this.dog.sireId,
-        ));
+        )));
     });
   }
 
   getDams() {
     this.dogService.getFemaleDogs().subscribe((dogs) => {
-      (this.dams = dogs),
-        (this.selectedDam = this.dams.find((dog) => dog.id == this.dog.damId));
+      ((this.dams = dogs),
+        (this.selectedDam = this.dams.find((dog) => dog.id == this.dog.damId)));
     });
   }
 

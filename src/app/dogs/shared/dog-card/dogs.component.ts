@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Location, NgIf, DatePipe } from '@angular/common';
+import { Location, DatePipe } from '@angular/common';
 
 import { Dog } from '../../model/dog';
 
@@ -8,8 +8,7 @@ import { Dog } from '../../model/dog';
   selector: 'app-dogs',
   templateUrl: './dogs.component.html',
   styleUrls: ['./dogs.component.css'],
-  standalone: true,
-  imports: [NgIf, DatePipe],
+  imports: [DatePipe],
 })
 export class DogsComponent {
   @Input()
