@@ -1,21 +1,16 @@
 import { Injectable } from '@angular/core';
-import { FirebaseApp, getApp, getApps, initializeApp } from 'firebase/app';
 import { Firestore, connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
 import { FirebaseStorage, connectStorageEmulator, getStorage } from 'firebase/storage';
 
 import { environment } from '../../environments/environment';
+import { FirebaseAppService } from './firebase-app.service';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class FirebaseClientService {
-  private app = this.createApp();
+@Injectable()
+export class FirebaseAdminClientService {
   private firestore = this.createFirestore();
   private storage = this.createStorage();
 
-  isEnabled(): boolean {
-    return this.app !== null;
-  }
+  constructor(private firebaseAppService: FirebaseAppService) {}
 
   getFirestore(): Firestore | null {
     return this.firestore;
@@ -25,21 +20,13 @@ export class FirebaseClientService {
     return this.storage;
   }
 
-  private createApp(): FirebaseApp | null {
-    const firebaseConfig = environment.firebase;
-    if (!firebaseConfig?.apiKey || !firebaseConfig?.appId || !firebaseConfig?.projectId) {
-      return null;
-    }
-
-    return getApps().length ? getApp() : initializeApp(firebaseConfig);
-  }
-
   private createFirestore(): Firestore | null {
-    if (!this.app) {
+    const app = this.firebaseAppService.getApp();
+    if (!app) {
       return null;
     }
 
-    const firestore = getFirestore(this.app);
+    const firestore = getFirestore(app);
     const emulatorConfig = environment.firebaseEmulators?.firestore;
     if (emulatorConfig) {
       connectFirestoreEmulator(firestore, emulatorConfig.host, emulatorConfig.port);
@@ -49,11 +36,12 @@ export class FirebaseClientService {
   }
 
   private createStorage(): FirebaseStorage | null {
-    if (!this.app) {
+    const app = this.firebaseAppService.getApp();
+    if (!app) {
       return null;
     }
 
-    const storage = getStorage(this.app);
+    const storage = getStorage(app);
     const emulatorConfig = environment.firebaseEmulators?.storage;
     if (emulatorConfig) {
       connectStorageEmulator(storage, emulatorConfig.host, emulatorConfig.port);

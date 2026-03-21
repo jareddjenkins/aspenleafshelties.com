@@ -13,7 +13,7 @@ import { from, Observable, throwError } from 'rxjs';
 
 import { Dog } from '../dogs/model/dog';
 import { Pages } from '../pages';
-import { FirebaseClientService } from './firebase-client.service';
+import { FirebaseAdminClientService } from './firebase-admin-client.service';
 
 type FirestoreDogPayload = {
   legacyId: number;
@@ -31,11 +31,9 @@ type FirestoreDogPayload = {
   createdAt?: unknown;
 };
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class FirestoreAdminDataService {
-  constructor(private firebaseClientService: FirebaseClientService) {}
+  constructor(private firebaseAdminClientService: FirebaseAdminClientService) {}
 
   addDog(): Observable<Dog> {
     return from(this.createDog());
@@ -186,7 +184,7 @@ export class FirestoreAdminDataService {
   }
 
   private requireFirestore() {
-    const firestore = this.firebaseClientService.getFirestore();
+    const firestore = this.firebaseAdminClientService.getFirestore();
     if (!firestore) {
       throw new Error('Firebase Firestore is not configured.');
     }
@@ -195,7 +193,7 @@ export class FirestoreAdminDataService {
   }
 
   private requireStorage() {
-    const storage = this.firebaseClientService.getStorage();
+    const storage = this.firebaseAdminClientService.getStorage();
     if (!storage) {
       throw new Error('Firebase Storage is not configured.');
     }

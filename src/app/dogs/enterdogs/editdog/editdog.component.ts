@@ -11,6 +11,7 @@ import { Location, DatePipe } from '@angular/common';
 
 import { Dog } from '../../model/dog';
 import { DogService } from '../../../dog.service';
+import { FirestoreAdminDataService } from '../../../firebase/firestore-admin-data.service';
 import { FormsModule } from '@angular/forms';
 import { DogsComponent } from '../../shared/dog-card/dogs.component';
 
@@ -54,6 +55,7 @@ export class EditdogComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private dogService: DogService,
+    private firestoreAdminDataService: FirestoreAdminDataService,
     private location: Location,
   ) {}
 
@@ -103,11 +105,11 @@ export class EditdogComponent implements OnInit {
   }
 
   save() {
-    this.dogService.updateDog(this.dog).subscribe(); // => this.goBack());
+    this.firestoreAdminDataService.updateDog(this.dog).subscribe(); // => this.goBack());
   }
 
   onUpload() {
-    this.dogService
+    this.firestoreAdminDataService
       .uploadDogImage(this.dog.id, this.croppedImageBlob)
       .subscribe((x) => (this.dog.profileImageUrl = x));
   }

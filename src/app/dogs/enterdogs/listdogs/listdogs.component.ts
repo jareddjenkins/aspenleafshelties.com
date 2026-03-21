@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { Dog } from '../../model/dog';
 import { DogService } from '../../../dog.service';
+import { FirestoreAdminDataService } from '../../../firebase/firestore-admin-data.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -18,6 +19,7 @@ export class ListdogsComponent implements OnInit {
 
   constructor(
     private dogService: DogService,
+    private firestoreAdminDataService: FirestoreAdminDataService,
     private location: Location,
     private router: Router,
   ) {}
@@ -26,7 +28,7 @@ export class ListdogsComponent implements OnInit {
     this.getDogs();
   }
   createnewdog() {
-    this.dogService.addDog().subscribe((dog) => {
+    this.firestoreAdminDataService.addDog().subscribe((dog) => {
       this.getDogs();
       this.router.navigate([`/dogs/enterdogs/editdog/${dog.id}`]);
     });

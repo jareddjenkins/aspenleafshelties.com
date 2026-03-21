@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { collection, doc, documentId, getDoc, getDocs, query, where } from 'firebase/firestore';
+import { collection, doc, documentId, getDoc, getDocs, query, where } from 'firebase/firestore/lite';
 import { from, Observable, of } from 'rxjs';
 
 import { Dog } from '../dogs/model/dog';
 import { Pages } from '../pages';
-import { FirebaseClientService } from './firebase-client.service';
+import { FirebasePublicClientService } from './firebase-public-client.service';
 
 type FirestoreDogDocument = {
   legacyId?: number;
@@ -31,9 +31,9 @@ type FirestorePageDocument = {
   providedIn: 'root',
 })
 export class FirestorePublicDataService {
-  private firestore = this.firebaseClientService.getFirestore();
+  private firestore = this.firebasePublicClientService.getFirestore();
 
-  constructor(private firebaseClientService: FirebaseClientService) {}
+  constructor(private firebasePublicClientService: FirebasePublicClientService) {}
 
   isEnabled(): boolean {
     return this.firestore !== null;

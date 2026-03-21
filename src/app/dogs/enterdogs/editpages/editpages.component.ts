@@ -8,6 +8,7 @@ import { map, startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DogpagesService } from 'src/app/dogpages.service';
+import { FirestoreAdminDataService } from '../../../firebase/firestore-admin-data.service';
 
 @Component({
     selector: 'app-editpages',
@@ -28,6 +29,7 @@ export class EditpagesComponent implements OnInit {
   constructor(
     private dogpagesService: DogpagesService,
     private dogService: DogService,
+    private firestoreAdminDataService: FirestoreAdminDataService,
   ) {}
 
   ngOnInit() {
@@ -133,7 +135,7 @@ export class EditpagesComponent implements OnInit {
     const pageitem = page[index];
     page.splice(index, 1);
     this.sortpage(page);
-    this.dogpagesService
+    this.firestoreAdminDataService
       .deleteFromPagesById(pageitem.pageName, pageitem.dogsId)
       .subscribe();
   }
@@ -146,6 +148,6 @@ export class EditpagesComponent implements OnInit {
       return;
     }
 
-    this.dogpagesService.putPagesByPage(page[0].pageName, page).subscribe();
+    this.firestoreAdminDataService.putPagesByPage(page[0].pageName, page).subscribe();
   }
 }

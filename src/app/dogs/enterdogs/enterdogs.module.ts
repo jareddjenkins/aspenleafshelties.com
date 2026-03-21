@@ -21,6 +21,8 @@ import { NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { DogsModule } from '../dogs.module';
 import { ListdogsComponent } from './listdogs/listdogs.component';
 import { MaterialComponentsModule } from 'src/app/shared/material-components/material-components.module';
+import { FirestoreAdminDataService } from '../../firebase/firestore-admin-data.service';
+import { FirebaseAdminClientService } from '../../firebase/firebase-admin-client.service';
 
 @NgModule({
   declarations: [
@@ -49,5 +51,6 @@ import { MaterialComponentsModule } from 'src/app/shared/material-components/mat
     NgbDatepicker,
     RouterOutlet,
   ],
+  providers: [FirebaseAdminClientService, FirestoreAdminDataService],
 })
 export class EnterdogsModule {}
