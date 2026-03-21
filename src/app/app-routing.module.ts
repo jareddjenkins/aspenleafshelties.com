@@ -10,6 +10,11 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   {
+    path: 'admin',
+    loadChildren: () =>
+      import('./dogs/enterdogs/enterdogs.module').then((m) => m.EnterdogsModule),
+  },
+  {
     path: 'dogs',
     loadChildren: () => import('./dogs/dogs.module').then((m) => m.DogsModule),
   },
@@ -17,11 +22,6 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'resources', component: ResourcesComponent },
   { path: 'detail/:id', component: DogDetailComponent },
-  {
-    path: 'enterdogs',
-    redirectTo: 'dogs/enterdogs',
-    pathMatch: 'full',
-  },
 ];
 
 @NgModule({

@@ -30,7 +30,7 @@ export class ListdogsComponent implements OnInit {
   createnewdog() {
     this.firestoreAdminDataService.addDog().subscribe((dog) => {
       this.getDogs();
-      this.router.navigate([`/dogs/enterdogs/editdog/${dog.id}`]);
+      this.router.navigate([`/admin/editdog/${dog.id}`]);
     });
   }
 
@@ -39,7 +39,7 @@ export class ListdogsComponent implements OnInit {
   }
 
   goToPages(): void {
-    this.router.navigate(['/dogs/enterdogs/pages']);
+    this.router.navigate(['/admin/pages']);
   }
 
   goBack(): void {

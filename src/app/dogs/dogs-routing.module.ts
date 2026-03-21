@@ -27,13 +27,6 @@ const routes: Routes = [
     redirectTo: 'available',
     pathMatch: 'full',
   },
-  {
-    path: 'enterdogs',
-    loadChildren: () =>
-      import('./enterdogs/enterdogs.module').then(
-        (m) => m.EnterdogsModule
-      ),
-  },
 ];
 
 @NgModule({
