@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 set -eu
 
-docker compose down
+docker compose stop frontend-dev firebase-emulators
