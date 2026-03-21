@@ -1,18 +1,29 @@
-import { FirebaseWebConfig } from '../app/firebase/firebase-web-config';
+import { FirebaseEmulatorConfig, FirebaseWebConfig } from '../app/firebase/firebase-web-config';
+import { EnvironmentConfig } from './environment-config';
 
 // The file contents for the current environment will overwrite these during build.
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
-export const environment = {
+export const environment: EnvironmentConfig = {
   production: false,
   firebase: {
-  apiKey: "AIzaSyCAwoy7LYvSXy9rmlito7YvyOClhUK1UkY",
-  authDomain: "aspenleafshelties.firebaseapp.com",
-  projectId: "aspenleafshelties",
-  storageBucket: "aspenleafshelties.appspot.com",
-  messagingSenderId: "411140458156",
-  appId: "1:411140458156:web:50803751e94d6e5a96c109"
-}
+    apiKey: 'demo-api-key',
+    authDomain: 'demo-aspenleafshelties.firebaseapp.com',
+    projectId: 'demo-aspenleafshelties',
+    storageBucket: 'demo-aspenleafshelties.appspot.com',
+    messagingSenderId: 'demo-messaging-sender',
+    appId: '1:demo:web:local',
+  } satisfies FirebaseWebConfig,
+  firebaseEmulators: {
+    firestore: {
+      host: '127.0.0.1',
+      port: 8080,
+    },
+    storage: {
+      host: '127.0.0.1',
+      port: 9199,
+    },
+  } satisfies FirebaseEmulatorConfig,
 };

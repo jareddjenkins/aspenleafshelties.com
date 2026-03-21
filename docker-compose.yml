@@ -1,4 +1,18 @@
 services:
+  firebase-emulators:
+    build:
+      context: .
+      dockerfile: Dockerfile.firebase-emulators
+    working_dir: /workspace
+    command: sh -lc "mkdir -p .firebase/emulator-data && firebase emulators:start --project demo-aspenleafshelties --only firestore,storage"
+    ports:
+      - "4000:4000"
+      - "8080:8080"
+      - "9199:9199"
+    volumes:
+      - .:/workspace
+      - firebase_cache:/root/.cache/firebase
+
   frontend-local:
     build:
       context: .
@@ -9,6 +23,8 @@ services:
     image: node:22
     working_dir: /workspace
     command: sh -lc "npm install && npm start -- --host 0.0.0.0"
+    depends_on:
+      - firebase-emulators
     ports:
       - "4200:4200"
     volumes:
@@ -40,5 +56,6 @@ services:
     volumes:
       - mssql:/var/opt/mssql
 volumes:
+  firebase_cache:
   frontend_node_modules:
   mssql:

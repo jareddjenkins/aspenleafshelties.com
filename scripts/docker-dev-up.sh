@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 set -eu
 
-docker compose up frontend-dev
+docker compose up --build --force-recreate firebase-emulators frontend-dev

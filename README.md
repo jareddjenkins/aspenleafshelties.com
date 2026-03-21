@@ -16,12 +16,32 @@ Angular dev server in Docker:
 
 Then open `http://localhost:4200`.
 
+That local dev flow now uses Firebase emulators, not production. The emulator ports are:
+- Firestore: `http://localhost:8080`
+- Storage: `http://localhost:9199`
+- Emulator UI: `http://localhost:4000`
+
+If you only want the emulators without the Angular dev server:
+`./scripts/firebase-emulators-up.sh`
+
 Stop either workflow with:
 `./scripts/docker-prod-down.sh`
 or
 `./scripts/docker-dev-down.sh`
+or
+`./scripts/firebase-emulators-down.sh`
 
 If you do have npm installed, the equivalent shortcuts in `package.json` still work too.
+
+`environment.ts` is now intentionally pointed at a local-only demo Firebase project and connects to the Firestore and Storage emulators. `environment.prod.ts` remains pointed at the live `aspenleafshelties` project.
+
+To seed the local emulators from production data:
+`./scripts/seed-prod-to-emulators.sh /absolute/path/to/prod-service-account.json`
+
+Preview the seed without writing:
+`./scripts/seed-prod-to-emulators.sh /absolute/path/to/prod-service-account.json --dry-run`
+
+The seed copies `dogs` and `pages` from production Firestore into the local emulator, mirrors bucket-backed profile images into the local Storage emulator, and rewrites those local image URLs to `127.0.0.1:9199`. Local uploads remain emulator-only and do not write back to production.
 
 ## Firebase Hosting
 
