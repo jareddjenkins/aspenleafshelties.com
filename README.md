@@ -21,7 +21,7 @@ That local dev flow now uses Firebase emulators, not production. The emulator po
 - Storage: `http://localhost:9199`
 - Emulator UI: `http://localhost:4000`
 
-Local emulator data is persisted in `.firebase/emulator-data`. The emulator container imports from that directory on startup and exports back to it on shutdown.
+Local emulator data is persisted in `.firebase/emulator-data`. The emulator container imports from that directory on startup, and the down scripts run an explicit `firebase emulators:export` before stopping the emulator.
 
 If you only want the emulators without the Angular dev server:
 `./scripts/firebase-emulators-up.sh`
