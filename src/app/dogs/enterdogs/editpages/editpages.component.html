@@ -1,140 +1,87 @@
-<!-- <app-enterdogsnav></app-enterdogsnav>
-<div class="row">
+<div class="container py-3">
+  <div class="row mb-3">
     <div class="col">
-        <div cdkDropList class="example-list" (cdkDropListDropped)="drop(boypages,$event)">
-            <div class="row">
-                <div class="col">
-                    <h1>Boys</h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <form class="example-form" (ngSubmit)="addnewdog(pageselect.value,'Boys')">
-                        <mat-form-field class="example-full-width">
-                            <input type="text" placeholder="Pick one" aria-label="Number" matInput
-                                [formControl]="pageselect" [matAutocomplete]="boys">
-                            <mat-autocomplete autoActiveFirstOption #boys="matAutocomplete" [displayWith]="displayFn">
-                                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                    {{option.rname}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                        <button type="submit" md-raised-button>Add</button>
-                    </form>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="example-box" *ngFor="let item of boypages; let i = index" cdkDrag>
-                        <mat-icon class="black-icon" (click)="removedog(boypages, i)">remove_circle</mat-icon>
-                        {{item.dog.rname}}<mat-icon class="black-icon">drag_handle</mat-icon>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div cdkDropList class="example-list" (cdkDropListDropped)="drop(girlpages,$event)">
-            <div class="row">
-                <div class="col">
-                    <h1>Girls</h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <form class="example-form" (ngSubmit)="addnewdog(pageselect.value,'Girls')">
-                        <mat-form-field class="example-full-width">
-                            <input type="text" placeholder="Pick one" aria-label="Number" matInput
-                                [formControl]="pageselect" [matAutocomplete]="girls">
-                            <mat-autocomplete #girls="matAutocomplete" [displayWith]="displayFn">
-                                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                    {{option.rname}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                        <button type="submit" md-raised-button>Add</button>
-                    </form>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="example-box" *ngFor="let item of girlpages; let i = index" cdkDrag>
-                        <mat-icon class="black-icon" (click)="removedog(girlpages, i)">remove_circle</mat-icon>
-                        {{item.dog.rname}}<mat-icon class="black-icon">drag_handle</mat-icon>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div cdkDropList class="example-list" (cdkDropListDropped)="drop(availablepages,$event)">
-                    <div class="row">
-                        <div class="col">
-                            <h1>Puppies Available</h1>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <form class="example-form" (ngSubmit)="addnewdog(pageselect.value,'Available')">
-                                <mat-form-field class="example-full-width">
-                                    <input type="text" placeholder="Pick one" aria-label="Number" matInput
-                                        [formControl]="pageselect" [matAutocomplete]="avail">
-                                    <mat-autocomplete #avail="matAutocomplete" [displayWith]="displayFn">
-                                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                            {{option.rname}}
-                                        </mat-option>
-                                    </mat-autocomplete>
-                                </mat-form-field>
-                                <button type="submit" md-raised-button>Add</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="example-box" *ngFor="let item of availablepages; let i = index" cdkDrag>
-                                <mat-icon class="black-icon" (click)="removedog(availablepages, i)">remove_circle
-                                </mat-icon>
-                                {{item.dog.rname}}<mat-icon class="black-icon">drag_handle</mat-icon>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div cdkDropList class="example-list" (cdkDropListDropped)="drop(adultavailablepages,$event)">
-                    <div class="row">
-                        <div class="col">
-                            <h1>Adult Available</h1>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <form class="example-form" (ngSubmit)="addnewdog(pageselect.value,'AdultAvailable')">
-                                <mat-form-field class="example-full-width">
-                                    <input type="text" placeholder="Pick one" aria-label="Number" matInput
-                                        [formControl]="pageselect" [matAutocomplete]="availadult">
-                                    <mat-autocomplete #availadult="matAutocomplete" [displayWith]="displayFn">
-                                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                            {{option.rname}}
-                                        </mat-option>
-                                    </mat-autocomplete>
-                                </mat-form-field>
-                                <button type="submit" md-raised-button>Add</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="example-box" *ngFor="let item of adultavailablepages; let i = index" cdkDrag>
-                                <mat-icon class="black-icon" (click)="removedog(adultavailablepages, i)">remove_circle
-                                </mat-icon>
-                                {{item.dog.rname}}<mat-icon class="black-icon">drag_handle</mat-icon>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      <label class="form-label" for="pageselect">Choose dog to add</label>
+      <select id="pageselect" class="form-select" [formControl]="pageselect">
+        <option value="">Select a dog</option>
+        @for (dog of doglist; track dog.id) {
+          <option [ngValue]="dog">{{ dog.rname }}</option>
+        }
+      </select>
     </div>
-</div> -->
+  </div>
+
+  <div class="row g-4">
+    <div class="col-12 col-lg-6">
+      <div cdkDropList class="example-list" (cdkDropListDropped)="drop(boypages, $event)">
+        <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+          <h2 class="h5 mb-0">Boys</h2>
+          <button class="btn btn-sm btn-outline-primary" type="button" (click)="addnewdog(selectedDog(), 'Boys')">Add</button>
+        </div>
+        @for (item of boypages; track item.dogsId; let i = $index) {
+          <div class="example-box" cdkDrag>
+            <span>{{ item.dog.rname }}</span>
+            <span class="d-flex align-items-center gap-2">
+              <mat-icon class="black-icon" (click)="removedog(boypages, i)">remove_circle</mat-icon>
+              <mat-icon class="black-icon">drag_handle</mat-icon>
+            </span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <div cdkDropList class="example-list" (cdkDropListDropped)="drop(girlpages, $event)">
+        <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+          <h2 class="h5 mb-0">Girls</h2>
+          <button class="btn btn-sm btn-outline-primary" type="button" (click)="addnewdog(selectedDog(), 'Girls')">Add</button>
+        </div>
+        @for (item of girlpages; track item.dogsId; let i = $index) {
+          <div class="example-box" cdkDrag>
+            <span>{{ item.dog.rname }}</span>
+            <span class="d-flex align-items-center gap-2">
+              <mat-icon class="black-icon" (click)="removedog(girlpages, i)">remove_circle</mat-icon>
+              <mat-icon class="black-icon">drag_handle</mat-icon>
+            </span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <div cdkDropList class="example-list" (cdkDropListDropped)="drop(availablepages, $event)">
+        <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+          <h2 class="h5 mb-0">Available</h2>
+          <button class="btn btn-sm btn-outline-primary" type="button" (click)="addnewdog(selectedDog(), 'Available')">Add</button>
+        </div>
+        @for (item of availablepages; track item.dogsId; let i = $index) {
+          <div class="example-box" cdkDrag>
+            <span>{{ item.dog.rname }}</span>
+            <span class="d-flex align-items-center gap-2">
+              <mat-icon class="black-icon" (click)="removedog(availablepages, i)">remove_circle</mat-icon>
+              <mat-icon class="black-icon">drag_handle</mat-icon>
+            </span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <div cdkDropList class="example-list" (cdkDropListDropped)="drop(adultavailablepages, $event)">
+        <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+          <h2 class="h5 mb-0">Adult Available</h2>
+          <button class="btn btn-sm btn-outline-primary" type="button" (click)="addnewdog(selectedDog(), 'AdultAvailable')">Add</button>
+        </div>
+        @for (item of adultavailablepages; track item.dogsId; let i = $index) {
+          <div class="example-box" cdkDrag>
+            <span>{{ item.dog.rname }}</span>
+            <span class="d-flex align-items-center gap-2">
+              <mat-icon class="black-icon" (click)="removedog(adultavailablepages, i)">remove_circle</mat-icon>
+              <mat-icon class="black-icon">drag_handle</mat-icon>
+            </span>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,7 +7,7 @@ import { EditpagesComponent } from './editpages/editpages.component';
 import { EditdogComponent } from './editdog/editdog.component';
 
 import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AsyncPipe } from '@angular/common';
 
@@ -42,6 +42,7 @@ import { MaterialComponentsModule } from 'src/app/shared/material-components/mat
     DogsModule,
     ImageCropperComponent,
     FormsModule,
+    ReactiveFormsModule,
     NgbCollapse,
     NgbDropdown,
     NgbDropdown,

@@ -1,67 +1,37 @@
 import { Injectable } from '@angular/core';
-
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, forkJoin } from 'rxjs';
-import {  map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
 
 import { Pages } from './pages';
 import { Dog } from './dogs/model/dog';
-import { DogService } from './dog.service';
-
-import { environment } from '../environments/environment';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-};
+import { FirestoreAdminDataService } from './firebase/firestore-admin-data.service';
+import { FirestorePublicDataService } from './firebase/firestore-public-data.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DogpagesService {
-  private dogApiUrl = environment.apiEndpoint;
-
   constructor(
-    private http: HttpClient,
-    private dogService: DogService,
+    private firestoreAdminDataService: FirestoreAdminDataService,
+    private firestorePublicDataService: FirestorePublicDataService,
   ) {}
-  /** Log a DogService message with the MessageService */
+
   getDogPages(page?: string): Observable<Pages[]> {
-    let url = `${this.dogApiUrl}/dogpages`;
-    if (page) {
-      url = `${this.dogApiUrl}/dogpages?page=${page}`;
-    }
-    return this.http.get<Pages[]>(url).pipe(
-      map((x) => {
-        return x.sort((a, b) => {
-          return a.sortId - b.sortId;
-        });
-      }),
-    );
+    return this.firestorePublicDataService.getDogPages(page);
   }
 
   getDogsForPage(page?: string): Observable<Dog[]> {
-    const dogs = this.dogService.getDogs();
-    const pages = this.getDogPages(page);
+    if (!page) {
+      return throwError(() => new Error('getDogsForPage requires a page name.'));
+    }
 
-    return forkJoin(pages, dogs).pipe(
-      map((results) => {
-        return results[0].map(
-          (p) =>
-            results[1].filter((d) => {
-              return d.id === p.dogsId;
-            })[0],
-        );
-      }),
-    );
+    return this.firestorePublicDataService.getDogsForPage(page);
   }
-  putPagesByPage(page: string, updatedPages: Pages[]) {
-    const url = `${this.dogApiUrl}/DogPages/${page}`;
 
-    return this.http.put(url, updatedPages, httpOptions);
+  putPagesByPage(_page: string, _updatedPages: Pages[]) {
+    return this.firestoreAdminDataService.putPagesByPage(_page, _updatedPages);
   }
-  deleteFromPagesById(page: string, id: number) {
-    const url = `${this.dogApiUrl}/DogPages/${page}/${id}`;
 
-    return this.http.delete(url, httpOptions);
+  deleteFromPagesById(_page: string, _id: number) {
+    return this.firestoreAdminDataService.deleteFromPagesById(_page, _id);
   }
 }

@@ -14,4 +14,4 @@ docker run --rm -it \
   -v "$PWD/.firebase-config":/root/.config/configstore \
   -w /workspace \
   node:22 \
-  sh -lc "npx firebase-tools@latest deploy --only hosting"
+  sh -lc "npx firebase-tools@latest deploy --only hosting,storage"

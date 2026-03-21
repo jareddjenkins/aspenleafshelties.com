@@ -5,7 +5,7 @@ import { Pages } from '../../../pages';
 import { PageListItem } from './pageListItem';
 import { Dog } from '../../model/dog';
 import { map, startWith } from 'rxjs/operators';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DogpagesService } from 'src/app/dogpages.service';
 
@@ -16,15 +16,14 @@ import { DogpagesService } from 'src/app/dogpages.service';
     standalone: false
 })
 export class EditpagesComponent implements OnInit {
-  boypages: PageListItem[];
-  girlpages: PageListItem[];
-  availablepages: PageListItem[];
-  adultavailablepages: PageListItem[];
-  allpages: PageListItem[];
-  adddogform: FormGroup;
-  doglist: Dog[];
+  boypages: PageListItem[] = [];
+  girlpages: PageListItem[] = [];
+  availablepages: PageListItem[] = [];
+  adultavailablepages: PageListItem[] = [];
+  allpages: PageListItem[] = [];
+  doglist: Dog[] = [];
   filteredOptions: Observable<Dog[]>;
-  pageselect = new FormControl();
+  pageselect = new FormControl<Dog | string>('');
 
   constructor(
     private dogpagesService: DogpagesService,
@@ -64,6 +63,10 @@ export class EditpagesComponent implements OnInit {
     );
   }
   addnewdog(dog: Dog, pageName: string) {
+    if (!dog) {
+      return;
+    }
+
     let page: PageListItem[];
     const newpageItem: PageListItem = {
       dog: this.doglist.find((d) => d.id === dog.id),
@@ -86,6 +89,10 @@ export class EditpagesComponent implements OnInit {
         page = this.adultavailablepages;
         break;
     }
+    if (page.some((item) => item.dogsId === dog.id)) {
+      this.pageselect.setValue('');
+      return;
+    }
     page.push(newpageItem);
     this.sortpage(page);
     this.persistpage(page);
@@ -106,6 +113,11 @@ export class EditpagesComponent implements OnInit {
 
   displayFn(dog?: Dog): string | undefined {
     return dog ? dog.rname : undefined;
+  }
+
+  selectedDog(): Dog | null {
+    const value = this.pageselect.value;
+    return value && typeof value === 'object' ? value : null;
   }
 
   drop(page: Pages[], event: CdkDragDrop<any>) {
@@ -130,6 +142,10 @@ export class EditpagesComponent implements OnInit {
     page.sort((a, b) => a.sortId - b.sortId);
   }
   persistpage(page: Pages[]) {
+    if (page.length === 0) {
+      return;
+    }
+
     this.dogpagesService.putPagesByPage(page[0].pageName, page).subscribe();
   }
 }

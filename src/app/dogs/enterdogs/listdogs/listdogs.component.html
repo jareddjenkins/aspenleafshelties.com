@@ -11,6 +11,13 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-auto mb-2">
+      <button class="btn btn-outline-secondary" type="button" (click)="goToPages()">
+        Edit Pages
+      </button>
+    </div>
+  </div>
+  <div class="row">
     <table class="table table-striped">
       <thead>
         <tr>
@@ -31,7 +38,7 @@
             <td>{{ dog.rname }}</td>
             <td class="d-none d-sm-table-cell">{{ dog.cname }}</td>
             <td class="d-none d-sm-table-cell">
-              {{ dog.gender === true ? "Male" : "Female" }}
+              {{ dog.gender ? "Male" : "Female" }}
             </td>
             <td class="d-none d-sm-table-cell">{{ dog.sireName }}</td>
             <td class="d-none d-sm-table-cell">{{ dog.damName }}</td>
