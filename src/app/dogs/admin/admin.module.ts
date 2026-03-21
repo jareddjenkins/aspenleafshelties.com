@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { EnterdogsRoutingModule } from './enterdogs-routing.module';
-import { EnterdogsComponent } from './enterdogs.component';
+import { AdminRoutingModule } from './admin-routing.module';
+import { AdminComponent } from './admin.component';
 import { EditpagesComponent } from './editpages/editpages.component';
 import { EditdogComponent } from './editdog/editdog.component';
 
@@ -26,10 +26,9 @@ import { FirebaseAdminClientService } from '../../firebase/firebase-admin-client
 
 @NgModule({
   declarations: [
-    EnterdogsComponent,
+    AdminComponent,
     EditpagesComponent,
     EditdogComponent,
-    // EnterdogsnavComponent,
     ListdogsComponent
   ],
 
@@ -39,7 +38,7 @@ import { FirebaseAdminClientService } from '../../firebase/firebase-admin-client
     CdkDropList,
     CdkDrag,
     DatePipe,
-    EnterdogsRoutingModule,
+    AdminRoutingModule,
     MaterialComponentsModule,
     DogsModule,
     ImageCropperComponent,
@@ -53,4 +52,4 @@ import { FirebaseAdminClientService } from '../../firebase/firebase-admin-client
   ],
   providers: [FirebaseAdminClientService, FirestoreAdminDataService],
 })
-export class EnterdogsModule {}
+export class AdminModule {}

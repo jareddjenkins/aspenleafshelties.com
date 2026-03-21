@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EnterdogsComponent } from './enterdogs.component';
+import { AdminComponent } from './admin.component';
 import { EditpagesComponent } from './editpages/editpages.component';
 import { EditdogComponent } from './editdog/editdog.component';
 
 const routes: Routes = [
-  { path: '', component: EnterdogsComponent },
+  { path: '', component: AdminComponent },
   { path: 'pages', component: EditpagesComponent },
   { path: 'editdog/:id', component: EditdogComponent },
 ];
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class EnterdogsRoutingModule {}
+export class AdminRoutingModule {}

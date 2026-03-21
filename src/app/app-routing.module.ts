@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () =>
-      import('./dogs/enterdogs/enterdogs.module').then((m) => m.EnterdogsModule),
+      import('./dogs/admin/admin.module').then((m) => m.AdminModule),
   },
   {
     path: 'dogs',
