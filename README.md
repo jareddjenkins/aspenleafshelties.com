@@ -58,6 +58,10 @@ Build and deploy Hosting:
 Deploy to a preview channel:
 `./scripts/firebase-preview.sh my-preview`
 
+GitHub Actions deploys automatically on pushes to `main`. The repo includes Terraform for Google OIDC in [infra/terraform/github-oidc/README.md](/Users/jaredjenkins/repos/aspenleafshelties.com/infra/terraform/github-oidc/README.md), but the current workflow uses the temporary secret `FIREBASE_SERVICE_ACCOUNT_ASPENLEAFSHELTIES` because `firebase-tools` deploy has been more reliable with a service-account key than WIF here. Remove that secret-based auth and switch the workflow back to OIDC when the Firebase CLI path is stable.
+
+The GitHub Actions workflow also pins `firebase-tools` to a known-stable CI version for now because newer CLI builds have been unreliable with service-account-based Storage deploy checks. CI currently deploys only Hosting and Firestore. Deploy Storage rules manually when needed until that path is stable again.
+
 The Hosting config lives in [firebase.json](/Users/jaredjenkins/repos/aspenleafshelties.com/firebase.json) and is set up for an Angular SPA using `dist/aspenleafshelties` as the deploy directory.
 
 Firebase Storage rules now live in [storage.rules](/Users/jaredjenkins/repos/aspenleafshelties.com/storage.rules). The current rule set is intentionally open as a temporary migration step so image uploads work while the site moves to the new bucket. `./scripts/firebase-deploy.sh` deploys Hosting, Storage rules, and Firestore rules.

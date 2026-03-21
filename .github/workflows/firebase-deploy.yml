@@ -1,0 +1,51 @@
+name: Deploy Firebase
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    env:
+      GCP_PROJECT_ID: aspenleafshelties
+      FIREBASE_TOOLS_VERSION: 12.9.1
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          # Temporary fallback: firebase-tools deploy is still more reliable with a
+          # service account key than GitHub OIDC/WIF in this repo. Once the CLI
+          # path is stable for WIF, remove this secret-based auth and switch back
+          # to workload identity federation.
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ASPENLEAFSHELTIES }}
+
+      - name: Deploy to Firebase
+        run: |
+          # Temporary pin: newer firebase-tools builds have been unreliable in CI
+          # with service-account auth for Storage-related deploy checks. For now
+          # CI deploys only Hosting and Firestore. Keep Storage rules as a manual
+          # deploy until the CLI path is stable again, then move back to the full
+          # deploy set and a current CLI version.
+          npx --yes firebase-tools@"$FIREBASE_TOOLS_VERSION" deploy --only hosting,firestore --project "$GCP_PROJECT_ID"
