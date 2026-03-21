@@ -27,11 +27,11 @@ export class DogpagesService {
     return this.firestorePublicDataService.getDogsForPage(page);
   }
 
-  putPagesByPage(_page: string, _updatedPages: Pages[]) {
-    return this.firestoreAdminDataService.putPagesByPage(_page, _updatedPages);
+  putPagesByPage(page: string, updatedPages: Pages[]) {
+    return this.firestoreAdminDataService.putPagesByPage(page, updatedPages);
   }
 
-  deleteFromPagesById(_page: string, _id: number) {
-    return this.firestoreAdminDataService.deleteFromPagesById(_page, _id);
+  deleteFromPagesById(page: string, id: number) {
+    return this.firestoreAdminDataService.deleteFromPagesById(page, id);
   }
 }

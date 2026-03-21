@@ -84,9 +84,5 @@ Run the import:
 
 The public read paths now use Firestore only. There is no runtime fallback to the legacy API.
 
-To switch the frontend over, paste your Firebase web app config into:
-
-- [src/environments/environment.ts](/Users/jaredjenkins/repos/aspenleafshelties.com/src/environments/environment.ts)
-- [src/environments/environment.prod.ts](/Users/jaredjenkins/repos/aspenleafshelties.com/src/environments/environment.prod.ts)
-
-Specifically, replace `firebase: null` with the config object from the Firebase console for project `aspenleafshelties`.
+[src/environments/environment.ts](/Users/jaredjenkins/repos/aspenleafshelties.com/src/environments/environment.ts) is for local emulator-backed development.
+[src/environments/environment.prod.ts](/Users/jaredjenkins/repos/aspenleafshelties.com/src/environments/environment.prod.ts) is for the live `aspenleafshelties` project.

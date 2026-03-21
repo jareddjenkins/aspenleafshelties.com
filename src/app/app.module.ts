@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ContactComponent } from './contact/contact.component';
@@ -26,9 +23,8 @@ import { FooterComponent } from './footer/footer.component';
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
-        AppRoutingModule,
         RouterLink,
         RouterLinkActive,
         NgbCollapse,
-        NgbDropdown], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        NgbDropdown] })
 export class AppModule {}
