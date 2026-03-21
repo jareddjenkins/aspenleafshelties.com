@@ -16,4 +16,4 @@ docker run --rm -it \
   -v "$PWD/.firebase-config":/root/.config/configstore \
   -w /workspace \
   node:22 \
-  sh -lc "npx firebase-tools@latest hosting:channel:deploy ${CHANNEL_ID}"
+  sh -lc "npx --yes firebase-tools@latest hosting:channel:deploy ${CHANNEL_ID}"

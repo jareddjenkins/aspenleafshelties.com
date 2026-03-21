@@ -8,4 +8,4 @@ docker run --rm -it \
   -v "$PWD/.firebase-config":/root/.config/configstore \
   -w /workspace \
   node:22 \
-  sh -lc "npx firebase-tools@latest login --no-localhost"
+  sh -lc "npx --yes firebase-tools@latest login --no-localhost"

@@ -60,7 +60,7 @@ Deploy to a preview channel:
 
 The Hosting config lives in [firebase.json](/Users/jaredjenkins/repos/aspenleafshelties.com/firebase.json) and is set up for an Angular SPA using `dist/aspenleafshelties` as the deploy directory.
 
-Firebase Storage rules now live in [storage.rules](/Users/jaredjenkins/repos/aspenleafshelties.com/storage.rules). The current rule set is intentionally open as a temporary migration step so image uploads work while the site moves to the new bucket. `./scripts/firebase-deploy.sh` deploys both Hosting and Storage rules.
+Firebase Storage rules now live in [storage.rules](/Users/jaredjenkins/repos/aspenleafshelties.com/storage.rules). The current rule set is intentionally open as a temporary migration step so image uploads work while the site moves to the new bucket. `./scripts/firebase-deploy.sh` deploys Hosting, Storage rules, and Firestore rules.
 
 ## Firestore Import
 
