@@ -141,8 +141,8 @@ async function main() {
       continue;
     }
 
-    const cardPath = `dogs/${dogSnapshot.id}/card.jpg`;
-    const detailPath = `dogs/${dogSnapshot.id}/detail.jpg`;
+    const cardPath = `dogs/${dogSnapshot.id}/card.webp`;
+    const detailPath = `dogs/${dogSnapshot.id}/detail.webp`;
 
     if (dryRun) {
       console.log(
@@ -157,18 +157,18 @@ async function main() {
       sharp(sourceContents)
         .rotate()
         .resize(640, 640, { fit: 'cover', position: 'centre' })
-        .jpeg({ quality: 84, mozjpeg: true })
+        .webp({ quality: 84 })
         .toBuffer(),
       sharp(sourceContents)
         .rotate()
         .resize(1400, 1400, { fit: 'cover', position: 'centre' })
-        .jpeg({ quality: 84, mozjpeg: true })
+        .webp({ quality: 84 })
         .toBuffer(),
     ]);
 
     const [cardUpload, detailUpload] = await Promise.all([
-      uploadVariant(bucket, cardPath, cardBuffer, 'image/jpeg'),
-      uploadVariant(bucket, detailPath, detailBuffer, 'image/jpeg'),
+      uploadVariant(bucket, cardPath, cardBuffer, 'image/webp'),
+      uploadVariant(bucket, detailPath, detailBuffer, 'image/webp'),
     ]);
 
     await dogSnapshot.ref.set(

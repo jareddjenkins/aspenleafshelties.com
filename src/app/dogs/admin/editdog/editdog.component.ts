@@ -18,7 +18,7 @@ import { FirestoreAdminDataService } from '../../../firebase/firestore-admin-dat
 export class EditdogComponent implements OnInit {
   private static readonly CARD_IMAGE_SIZE = 640;
   private static readonly DETAIL_IMAGE_SIZE = 1400;
-  private static readonly JPEG_QUALITY = 0.84;
+  private static readonly WEBP_QUALITY = 0.84;
 
   dog: Dog;
   //imagecropper
@@ -163,7 +163,7 @@ export class EditdogComponent implements OnInit {
     context.drawImage(image, 0, 0, targetSize, targetSize);
 
     const resizedImage = await new Promise<Blob | null>((resolve) => {
-      canvas.toBlob((blob) => resolve(blob), 'image/jpeg', EditdogComponent.JPEG_QUALITY);
+      canvas.toBlob((blob) => resolve(blob), 'image/webp', EditdogComponent.WEBP_QUALITY);
     });
 
     if (!resizedImage) {

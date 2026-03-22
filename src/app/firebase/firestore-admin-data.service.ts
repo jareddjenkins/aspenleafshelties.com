@@ -108,18 +108,18 @@ export class FirestoreAdminDataService {
   private async uploadProfileImage(id: string, images: { card: Blob; detail: Blob }): Promise<UploadedDogImages> {
     const storage = this.requireStorage();
     const firestore = this.requireFirestore();
-    const cardPath = `dogs/${id}/card.jpg`;
-    const detailPath = `dogs/${id}/detail.jpg`;
+    const cardPath = `dogs/${id}/card.webp`;
+    const detailPath = `dogs/${id}/detail.webp`;
     const cardRef = ref(storage, cardPath);
     const detailRef = ref(storage, detailPath);
 
     await Promise.all([
       uploadBytes(cardRef, images.card, {
-        contentType: images.card.type || 'image/jpeg',
+        contentType: images.card.type || 'image/webp',
         cacheControl: 'public,max-age=31536000,immutable',
       }),
       uploadBytes(detailRef, images.detail, {
-        contentType: images.detail.type || 'image/jpeg',
+        contentType: images.detail.type || 'image/webp',
         cacheControl: 'public,max-age=31536000,immutable',
       }),
     ]);
