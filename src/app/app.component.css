@@ -1,0 +1,8 @@
+.app-shell {
+    min-height: 100%;
+    overflow-x: clip;
+}
+
+.app-shell.admin-route {
+    overflow-x: hidden;
+}

@@ -1,5 +1,6 @@
 .admin-auth-shell {
   padding: 3rem 1.5rem 4rem;
+  overflow-x: clip;
 }
 
 .admin-auth-card {
@@ -10,6 +11,26 @@
   background: #faf7f2;
   border: 1px solid rgba(65, 44, 27, 0.12);
   box-shadow: 0 20px 45px rgba(49, 32, 16, 0.08);
+}
+
+.admin-workspace {
+  max-width: 82rem;
+  margin: 0 auto;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.admin-header-card {
+  margin-bottom: 1.25rem;
+  padding: 1.35rem 1.25rem;
+  border-radius: 24px;
+  background: #faf7f2;
+  border: 1px solid rgba(65, 44, 27, 0.12);
+  box-shadow: 0 20px 45px rgba(49, 32, 16, 0.08);
+}
+
+.admin-content {
+  min-width: 0;
 }
 
 .eyebrow {
@@ -29,9 +50,9 @@
   max-width: 48rem;
 }
 
-.admin-auth-card > app-listdogs,
-.admin-auth-card > router-outlet + *,
-.admin-auth-card > router-outlet {
+.admin-content > app-listdogs,
+.admin-content > router-outlet + *,
+.admin-content > router-outlet {
   display: block;
 }
 
@@ -40,22 +61,37 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
+}
+
+.admin-auth-header > div:first-child {
+  display: grid;
+  gap: 0.35rem;
+  justify-items: center;
+  text-align: center;
 }
 
 .admin-auth-actions {
   display: flex;
   gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .primary-button,
 .secondary-button {
   border: 0;
   border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.8rem 1.25rem;
   font: inherit;
   font-weight: 600;
   cursor: pointer;
+  width: auto;
+  max-width: 100%;
+  white-space: nowrap;
 }
 
 .primary-button {
@@ -64,26 +100,42 @@
 }
 
 .secondary-button {
-  background: #ede4d7;
-  color: #3a2819;
+  background: transparent;
+  border: 1px solid rgba(58, 94, 73, 0.22);
+  color: var(--color-evergreen-deep);
 }
 
 .auth-error {
-  margin-top: 1rem;
+  margin-top: 0;
   color: #8b1e1e;
 }
 
 @media (max-width: 720px) {
   .admin-auth-shell {
-    padding: 1.5rem 1rem 2.5rem;
+    padding: 1rem 0.75rem 2rem;
   }
 
   .admin-auth-card {
     padding: 1.25rem;
   }
 
+  .admin-workspace {
+    padding: 0.5rem 0 1.5rem;
+  }
+
+  .admin-header-card {
+    margin-bottom: 1rem;
+    padding: 1rem 0.9rem;
+  }
+
   .admin-auth-header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    margin-bottom: 0;
+  }
+
+  .admin-auth-actions {
+    width: 100%;
+    flex-wrap: wrap;
   }
 }

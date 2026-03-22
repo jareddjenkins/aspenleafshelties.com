@@ -1,19 +1,24 @@
 @if (sessionState$ | async; as session) {
   <section class="admin-auth-shell">
-    <div class="admin-auth-card">
-      <p class="eyebrow">Admin</p>
-
-      @if (!session.isReady) {
+    @if (!session.isReady) {
+      <div class="admin-auth-card">
+        <p class="eyebrow">Admin</p>
         <h1>Checking access...</h1>
         <p>Loading your sign-in state.</p>
-      } @else if (!session.isSignedIn) {
+      </div>
+    } @else if (!session.isSignedIn) {
+      <div class="admin-auth-card">
+        <p class="eyebrow">Admin</p>
         <h1>Sign in to edit Aspenleaf Shelties.</h1>
         <p>
           Use the Google account that is approved for site administration. Visitors can continue browsing the public
           site without signing in.
         </p>
         <button type="button" class="primary-button" (click)="signIn()">Sign In With Google</button>
-      } @else if (!session.isEditor) {
+      </div>
+    } @else if (!session.isEditor) {
+      <div class="admin-auth-card">
+        <p class="eyebrow">Admin</p>
         <h1>This account is view only.</h1>
         <p>
           You are signed in as <strong>{{ session.user?.email }}</strong>, but that account is not on the editor
@@ -22,32 +27,44 @@
         <div class="admin-auth-actions">
           <button type="button" class="secondary-button" (click)="signOut()">Sign Out</button>
         </div>
-      } @else {
-        <div class="admin-auth-header">
-          <div>
-            <h1>Admin tools</h1>
-            <p>Signed in as {{ session.user?.email }}</p>
-          </div>
-          <div class="admin-auth-actions">
-            @if (hasActiveChildRoute) {
-              <button type="button" class="secondary-button" (click)="goToDogList()">Back To Dog List</button>
-            }
-            <button type="button" class="secondary-button" (click)="signOut()">Sign Out</button>
+      </div>
+    } @else {
+      <div class="admin-workspace">
+        <div class="admin-header-card">
+          <p class="eyebrow">Admin</p>
+
+          <div class="admin-auth-header">
+            <div>
+              <h1>Admin tools</h1>
+              <p>Signed in as {{ session.user?.email }}</p>
+            </div>
+            <div class="admin-auth-actions">
+              <a class="secondary-button" routerLink="/home">View Site</a>
+              @if (hasActiveChildRoute) {
+                <button type="button" class="secondary-button" (click)="goToDogList()">Back To Dog List</button>
+              }
+              <button type="button" class="secondary-button" (click)="signOut()">Sign Out</button>
+            </div>
           </div>
         </div>
 
-        @if (showDogList) {
-          <app-listdogs></app-listdogs>
-        }
+        <div class="admin-content">
+          @if (showDogList) {
+            <app-listdogs></app-listdogs>
+          }
 
-        @if (showChildOutlet) {
-          <router-outlet></router-outlet>
-        }
-      }
+          @if (showChildOutlet) {
+            <router-outlet></router-outlet>
+          }
+        </div>
+      </div>
+    }
 
-      @if (errorMessage) {
+    @if (errorMessage) {
+      <div class="admin-auth-card admin-error-card">
+        <p class="eyebrow">Admin</p>
         <p class="auth-error">{{ errorMessage }}</p>
-      }
-    </div>
+      </div>
+    }
   </section>
 }

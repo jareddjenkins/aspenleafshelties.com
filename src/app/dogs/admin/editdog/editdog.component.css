@@ -43,9 +43,15 @@
 .secondary-button {
     border-radius: 999px;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     font: inherit;
     min-height: 2.75rem;
     padding: 0.7rem 1rem;
+    width: auto;
+    max-width: 100%;
+    white-space: nowrap;
 }
 
 .primary-button {
@@ -140,9 +146,29 @@ fieldset.field {
 
     .panel-header {
         flex-direction: column;
+        position: sticky;
+        top: 0.5rem;
+        z-index: 2;
+        margin: 0 -0.35rem 1rem;
+        padding: 0 0.35rem 0.85rem;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(58, 94, 73, 0.1);
     }
 
     .dog-form {
         grid-template-columns: 1fr;
+    }
+
+    .panel-actions,
+    .upload-actions {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 0.1rem;
+    }
+
+    .panel-actions::-webkit-scrollbar,
+    .upload-actions::-webkit-scrollbar {
+        display: none;
     }
 }

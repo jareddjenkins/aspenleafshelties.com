@@ -38,13 +38,13 @@
       <tbody>
         @for (dog of filteredDogs | async; track dog) {
           <tr>
-            <td class="hide-mobile">{{ dog.id }}</td>
-            <td>{{ dog.rname }}</td>
-            <td class="hide-mobile">{{ dog.cname }}</td>
-            <td class="hide-mobile">{{ dog.gender ? "Male" : "Female" }}</td>
-            <td class="hide-mobile">{{ dog.sireName }}</td>
-            <td class="hide-mobile">{{ dog.damName }}</td>
-            <td class="hide-mobile">{{ dog.dob | date: "shortDate" }}</td>
+            <td class="hide-mobile" data-label="Id">{{ dog.id }}</td>
+            <td data-label="Registered Name">{{ dog.rname }}</td>
+            <td class="hide-mobile" data-label="Call Name">{{ dog.cname }}</td>
+            <td class="hide-mobile" data-label="Gender">{{ dog.gender ? "Male" : "Female" }}</td>
+            <td class="hide-mobile" data-label="Sire">{{ dog.sireName }}</td>
+            <td class="hide-mobile" data-label="Dam">{{ dog.damName }}</td>
+            <td class="hide-mobile" data-label="Date of Birth">{{ dog.dob | date: "shortDate" }}</td>
             <td class="action-col">
               <a class="icon-link" [routerLink]="['/admin/editdog', dog.id]" routerLinkActive="active">
                 <mat-icon>edit</mat-icon>

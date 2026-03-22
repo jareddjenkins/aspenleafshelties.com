@@ -13,6 +13,7 @@ import { filter } from 'rxjs/operators';
 export class AppComponent {
   private readonly siteName = 'Aspenleaf Shelties';
   private readonly siteUrl = 'https://aspenleafshelties.com';
+  isAdminRoute = false;
 
   constructor(
     private router: Router,
@@ -23,7 +24,12 @@ export class AppComponent {
   ) {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(() => this.updateSeoTags());
+      .subscribe(() => {
+        this.isAdminRoute = this.router.url.startsWith('/admin');
+        this.updateSeoTags();
+      });
+
+    this.isAdminRoute = this.router.url.startsWith('/admin');
   }
 
   private updateSeoTags() {
