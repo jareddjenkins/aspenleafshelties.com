@@ -101,6 +101,13 @@ h1 {
     padding: 1.75rem 1.5rem;
 }
 
+.intro-card h2 {
+    font-family: 'Noto Serif', serif;
+    font-size: clamp(1.5rem, 2.2vw, 2.2rem);
+    line-height: 1.15;
+    margin: 0 0 1rem;
+}
+
 .intro-card p {
     color: var(--color-ink);
     line-height: 1.8;
