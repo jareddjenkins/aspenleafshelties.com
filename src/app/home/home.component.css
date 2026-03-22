@@ -59,6 +59,37 @@ h1 {
     margin: 1.2rem 0 0;
 }
 
+.hero-peek {
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 1.5rem;
+}
+
+.peek-card {
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(58, 94, 73, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 12px 26px rgba(26, 38, 32, 0.08);
+    margin: 0;
+    overflow: hidden;
+}
+
+.peek-card img {
+    display: block;
+    height: 150px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.peek-card figcaption {
+    color: var(--color-ink);
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.4;
+    padding: 0.8rem 0.9rem 0.95rem;
+}
+
 .intro {
     padding: 2rem 1.25rem 0;
 }
@@ -150,6 +181,10 @@ h1 {
     }
 
     .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-peek {
         grid-template-columns: 1fr;
     }
 }
