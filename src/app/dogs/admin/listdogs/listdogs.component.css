@@ -1,7 +1,7 @@
 .admin-shell {
     margin: 0 auto;
     max-width: 1200px;
-    padding: 1.5rem 1.25rem 3rem;
+    padding: 1rem 0 0;
 }
 
 .admin-toolbar {
@@ -104,6 +104,10 @@ tbody tr:hover {
 }
 
 @media (max-width: 700px) {
+    .admin-shell {
+        padding-top: 0.75rem;
+    }
+
     .admin-toolbar {
         align-items: stretch;
         flex-direction: column;

@@ -9,7 +9,7 @@
         <div class="panel-header">
           <h1>Edit Dog</h1>
           <div class="panel-actions">
-            <button type="button" class="secondary-button" (click)="goBack()">Back</button>
+            <button type="button" class="secondary-button" (click)="goBack()">Back To Dog List</button>
             <button type="button" class="primary-button" (click)="save()">Save</button>
           </div>
         </div>
@@ -35,46 +35,6 @@
               id="cname"
               placeholder="Call Name"
             />
-          </label>
-
-          <label class="field field-full" for="comments">
-            <span>Description</span>
-            <textarea
-              [(ngModel)]="dog.comments"
-              name="comments"
-              id="comments"
-              rows="4"
-              placeholder="Description"
-            ></textarea>
-          </label>
-
-          <label class="field" for="sire">
-            <span>Sire</span>
-            <select
-              name="sire"
-              [(ngModel)]="selectedSire"
-              (change)="setSire()"
-              id="sire"
-            >
-              @for (sire of sires; track sire) {
-                <option [ngValue]="sire">{{ sire.rname }}</option>
-              }
-            </select>
-          </label>
-
-          <label class="field" for="dam">
-            <span>Dam</span>
-            <select
-              name="dam"
-              [(ngModel)]="selectedDam"
-              nullValue
-              (change)="setDam()"
-              id="dam"
-            >
-              @for (dam of dams; track dam) {
-                <option [ngValue]="dam">{{ dam.rname }}</option>
-              }
-            </select>
           </label>
 
           <fieldset class="field">
@@ -112,14 +72,14 @@
           </label>
 
           <div class="field field-full upload-panel">
-            <span>Profile Image</span>
+            <span>Choose Image</span>
             <input
               type="file"
               (change)="fileChangeEvent($event)"
               accept="image/png, image/jpeg"
             />
             <div class="upload-actions">
-              <button type="button" class="secondary-button" (click)="onUpload()">Upload</button>
+              <button type="button" class="secondary-button" (click)="onUpload()">Upload Cropped Image</button>
             </div>
             <image-cropper
               [imageChangedEvent]="imageChangedEvent"
@@ -137,6 +97,46 @@
               <img class="cropped-preview" [src]="croppedImage" alt="Cropped preview image" />
             }
           </div>
+
+          <label class="field" for="sire">
+            <span>Sire</span>
+            <select
+              name="sire"
+              [(ngModel)]="selectedSire"
+              (change)="setSire()"
+              id="sire"
+            >
+              @for (sire of sires; track sire) {
+                <option [ngValue]="sire">{{ sire.rname }}</option>
+              }
+            </select>
+          </label>
+
+          <label class="field" for="dam">
+            <span>Dam</span>
+            <select
+              name="dam"
+              [(ngModel)]="selectedDam"
+              nullValue
+              (change)="setDam()"
+              id="dam"
+            >
+              @for (dam of dams; track dam) {
+                <option [ngValue]="dam">{{ dam.rname }}</option>
+              }
+            </select>
+          </label>
+
+          <label class="field field-full" for="comments">
+            <span>Description</span>
+            <textarea
+              [(ngModel)]="dog.comments"
+              name="comments"
+              id="comments"
+              rows="5"
+              placeholder="Description"
+            ></textarea>
+          </label>
         </form>
       </div>
     </div>

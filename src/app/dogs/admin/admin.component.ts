@@ -51,4 +51,24 @@ export class AdminComponent {
       this.errorMessage = error instanceof Error ? error.message : 'Unable to sign out.';
     }
   }
+
+  async goToDogList(): Promise<void> {
+    await this.router.navigate(['/admin']);
+  }
+
+  get showDogList(): boolean {
+    return !this.hasChildRouteActive();
+  }
+
+  get showChildOutlet(): boolean {
+    return this.hasChildRouteActive();
+  }
+
+  get hasActiveChildRoute(): boolean {
+    return this.hasChildRouteActive();
+  }
+
+  private hasChildRouteActive(): boolean {
+    return this.router.url.split('?')[0] !== '/admin';
+  }
 }

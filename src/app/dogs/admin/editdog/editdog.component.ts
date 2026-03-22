@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Dog } from '../../model/dog';
@@ -31,6 +31,7 @@ export class EditdogComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private dogService: DogService,
     private firestoreAdminDataService: FirestoreAdminDataService,
     private location: Location,
@@ -77,7 +78,12 @@ export class EditdogComponent implements OnInit {
   }
 
   goBack(): void {
-    this.location.back();
+    if (window.history.length > 1) {
+      this.location.back();
+      return;
+    }
+
+    this.router.navigate(['/admin']);
   }
 
   public toggleInput() {

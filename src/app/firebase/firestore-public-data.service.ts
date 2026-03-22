@@ -161,7 +161,7 @@ export class FirestorePublicDataService {
       damName: data.damName ?? '',
       sireId: data.sireId ?? null,
       sireName: data.sireName ?? '',
-      gender: data.gender as unknown as boolean,
+      gender: Number(data.gender ?? 0) === 1,
       profileImageUrl: data.profileImageUrl ?? '',
     };
   }

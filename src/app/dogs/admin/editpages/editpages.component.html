@@ -1,4 +1,12 @@
 <section class="pages-shell">
+  <div class="pages-header">
+    <div>
+      <p class="pages-eyebrow">Admin</p>
+      <h1>Edit Pages</h1>
+    </div>
+    <button type="button" class="secondary-button" (click)="goToDogList()">Back To Dog List</button>
+  </div>
+
   <label class="picker-field" for="pageselect">
     <span>Choose dog to add</span>
     <select id="pageselect" [formControl]="pageselect">

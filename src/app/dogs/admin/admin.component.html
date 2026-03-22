@@ -28,11 +28,21 @@
             <h1>Admin tools</h1>
             <p>Signed in as {{ session.user?.email }}</p>
           </div>
-          <button type="button" class="secondary-button" (click)="signOut()">Sign Out</button>
+          <div class="admin-auth-actions">
+            @if (hasActiveChildRoute) {
+              <button type="button" class="secondary-button" (click)="goToDogList()">Back To Dog List</button>
+            }
+            <button type="button" class="secondary-button" (click)="signOut()">Sign Out</button>
+          </div>
         </div>
 
-        <app-listdogs></app-listdogs>
-        <router-outlet></router-outlet>
+        @if (showDogList) {
+          <app-listdogs></app-listdogs>
+        }
+
+        @if (showChildOutlet) {
+          <router-outlet></router-outlet>
+        }
       }
 
       @if (errorMessage) {
