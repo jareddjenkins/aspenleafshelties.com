@@ -14,6 +14,9 @@ export class DogsComponent {
   @Input()
   dog: Dog;
 
+  @Input()
+  showStatusBanner = false;
+
   lgImgUrl: string;
 
   constructor(
@@ -26,5 +29,17 @@ export class DogsComponent {
   }
   goBack(): void {
     this.location.back();
+  }
+
+  get statusLabel(): string | null {
+    if (this.dog?.status === 'reserved') {
+      return 'Reserved';
+    }
+
+    if (this.dog?.status === 'sold') {
+      return 'Sold';
+    }
+
+    return null;
   }
 }

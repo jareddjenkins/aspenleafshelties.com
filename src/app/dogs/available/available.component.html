@@ -69,7 +69,7 @@
     @if ((puppies | async)?.length) {
       <div class="listing-grid">
         @for (dog of puppies | async; track dog) {
-          <app-dogs [dog]="dog"> </app-dogs>
+          <app-dogs [dog]="dog" [showStatusBanner]="true"> </app-dogs>
         }
       </div>
     } @else {
@@ -89,7 +89,7 @@
     @if ((adults | async)?.length) {
       <div class="listing-grid">
         @for (dog of adults | async; track dog) {
-          <app-dogs [dog]="dog"> </app-dogs>
+          <app-dogs [dog]="dog" [showStatusBanner]="true"> </app-dogs>
         }
       </div>
     } @else {

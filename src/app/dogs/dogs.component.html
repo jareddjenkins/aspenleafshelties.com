@@ -7,6 +7,11 @@
 
     <div class="dog-card__body">
       <div class="dog-card__image-wrap">
+        @if (showStatusBanner && statusLabel) {
+          <span class="dog-card__status-banner" [class.is-sold]="dog.status === 'sold'">
+            {{ statusLabel }}
+          </span>
+        }
         <img src="{{ dog.profileImageUrl }}" alt="Picture of {{ dog.cname }}" />
       </div>
 

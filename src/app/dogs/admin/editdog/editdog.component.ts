@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Dog } from '../../model/dog';
+import { DogStatus } from '../../model/dog';
 import { DogService } from '../../../dog.service';
 import { FirestoreAdminDataService } from '../../../firebase/firestore-admin-data.service';
 
@@ -139,6 +140,10 @@ export class EditdogComponent implements OnInit {
   updateDob(value: string) {
     this.dogDob = value;
     this.syncDobFromInput();
+  }
+
+  updateStatus(value: string) {
+    this.dog.status = value === 'reserved' || value === 'sold' ? (value as DogStatus) : null;
   }
 
   private syncDobFromInput() {

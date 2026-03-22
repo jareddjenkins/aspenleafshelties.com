@@ -27,6 +27,7 @@ type FirestoreDogPayload = {
   damId: number | null;
   damName: string | null;
   profileImageUrl: string | null;
+  status: 'reserved' | 'sold' | null;
   updatedAt: unknown;
   createdAt?: unknown;
 };
@@ -70,6 +71,7 @@ export class FirestoreAdminDataService {
       sireName: '',
       gender: 0 as unknown as boolean,
       profileImageUrl: '',
+      status: null,
     };
 
     await setDoc(doc(firestore, 'dogs', String(nextId)), this.toDogPayload(dog, true));
@@ -178,6 +180,7 @@ export class FirestoreAdminDataService {
       damId: dog.damId ?? null,
       damName: dog.damName ?? null,
       profileImageUrl: dog.profileImageUrl ?? null,
+      status: dog.status ?? null,
       updatedAt: serverTimestamp(),
     };
 

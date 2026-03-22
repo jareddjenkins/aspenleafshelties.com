@@ -59,6 +59,20 @@
             </label>
           </fieldset>
 
+          <label class="field" for="status">
+            <span>Status</span>
+            <select
+              id="status"
+              name="status"
+              [ngModel]="dog.status ?? ''"
+              (ngModelChange)="updateStatus($event)"
+            >
+              <option value="">None</option>
+              <option value="reserved">Reserved</option>
+              <option value="sold">Sold</option>
+            </select>
+          </label>
+
           <label class="field" for="dob">
             <span>Date of Birth</span>
             <input

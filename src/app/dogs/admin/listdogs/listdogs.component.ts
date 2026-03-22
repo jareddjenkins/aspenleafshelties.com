@@ -69,6 +69,7 @@ export class ListdogsComponent implements OnInit {
         dog.rname,
         dog.cname,
         dog.gender ? 'male' : 'female',
+        dog.status,
         dog.sireName,
         dog.damName,
         dog.comments,

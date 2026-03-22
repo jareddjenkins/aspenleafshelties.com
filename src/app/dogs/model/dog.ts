@@ -1,3 +1,5 @@
+export type DogStatus = 'reserved' | 'sold' | null;
+
 export class Dog {
   id: number;
   cname: string;
@@ -10,4 +12,5 @@ export class Dog {
   gender: boolean;
   profileImageUrl: string;
   rname: string;
+  status: DogStatus;
 }

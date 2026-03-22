@@ -116,6 +116,29 @@ tbody tr:hover {
     display: inline-flex;
 }
 
+.status-chip {
+    background: rgba(181, 130, 51, 0.14);
+    border-radius: 999px;
+    color: #855f1b;
+    display: inline-flex;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 0.28rem 0.6rem;
+    text-transform: uppercase;
+}
+
+.status-chip.is-sold {
+    background: rgba(111, 77, 53, 0.14);
+    color: #6f4d35;
+}
+
+.status-chip--empty {
+    background: rgba(58, 94, 73, 0.08);
+    color: var(--color-muted);
+    text-transform: none;
+}
+
 @media (max-width: 700px) {
     .admin-shell {
         padding-top: 0.75rem;

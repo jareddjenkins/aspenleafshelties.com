@@ -18,6 +18,7 @@ type FirestoreDogDocument = {
   damId?: number | null;
   damName?: string | null;
   profileImageUrl?: string | null;
+  status?: string | null;
 };
 
 type FirestorePageDocument = {
@@ -163,6 +164,7 @@ export class FirestorePublicDataService {
       sireName: data.sireName ?? '',
       gender: Number(data.gender ?? 0) === 1,
       profileImageUrl: data.profileImageUrl ?? '',
+      status: data.status === 'reserved' || data.status === 'sold' ? data.status : null,
     };
   }
 
