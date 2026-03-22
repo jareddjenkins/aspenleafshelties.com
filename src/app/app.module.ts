@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
@@ -28,10 +28,9 @@ import { FooterComponent } from './footer/footer.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     RouterLink,
     RouterLinkActive,
   ],
-  providers: [provideClientHydration(withEventReplay())],
+  providers: [provideClientHydration(withEventReplay()), provideAnimationsAsync()],
 })
 export class AppModule {}

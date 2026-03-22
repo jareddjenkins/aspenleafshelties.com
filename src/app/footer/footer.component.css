@@ -13,13 +13,38 @@
     padding-top: 1.25rem;
 }
 
-a {
+.footer-links a {
     color: var(--color-evergreen);
     text-decoration: none;
 }
 
-a:hover,
-a:focus-visible {
+.footer-links a:hover,
+.footer-links a:focus-visible {
     color: var(--color-evergreen-deep);
     text-decoration: underline;
+}
+
+.social-icon-link {
+    align-items: center;
+    color: #1877f2;
+    display: inline-flex;
+    height: 2rem;
+    justify-content: center;
+    line-height: 0;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    width: 2rem;
+}
+
+.social-icon-link:hover,
+.social-icon-link:focus-visible {
+    color: #145dbf;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.social-icon-link svg {
+    display: block;
+    height: 2rem;
+    width: 2rem;
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { DOCUMENT, Location } from '@angular/common';
 import { Meta, Title } from '@angular/platform-browser';
+import { Inject } from '@angular/core';
 
 import { Dog } from '../../model/dog';
 import { DogsComponent } from '../dog-card/dogs.component';
@@ -23,6 +24,7 @@ export class DogDetailComponent implements OnInit {
     private location: Location,
     private titleService: Title,
     private meta: Meta,
+    @Inject(DOCUMENT) private document: Document,
   ) {}
 
   ngOnInit(): void {
@@ -45,10 +47,18 @@ export class DogDetailComponent implements OnInit {
 
     const title = `${dog.rname || dog.cname} | Aspenleaf Shelties`;
     const description = `${dog.rname || dog.cname} at Aspenleaf Shelties in Dewy Rose, Georgia. View call name, pedigree details, birth date, and profile information.`;
+    const imageUrl = dog.profileDetailImageUrl || dog.profileCardImageUrl || dog.profileImageUrl || '';
+    const canonicalUrl = this.document.location?.href?.split('#')[0].split('?')[0] || '';
 
     this.titleService.setTitle(title);
     this.meta.updateTag({ name: 'description', content: description });
     this.meta.updateTag({ property: 'og:title', content: title });
     this.meta.updateTag({ property: 'og:description', content: description });
+    this.meta.updateTag({ property: 'og:type', content: 'profile' });
+    this.meta.updateTag({ property: 'og:url', content: canonicalUrl });
+    if (imageUrl) {
+      this.meta.updateTag({ property: 'og:image', content: imageUrl });
+      this.meta.updateTag({ name: 'twitter:image', content: imageUrl });
+    }
   }
 }

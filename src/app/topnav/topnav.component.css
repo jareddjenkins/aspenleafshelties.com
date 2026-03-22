@@ -16,6 +16,7 @@
     justify-content: space-between;
     margin: 0 auto;
     max-width: 1200px;
+    min-height: 88px;
     padding: 1rem 1.25rem;
 }
 
@@ -94,6 +95,7 @@
     .nav-inner {
         align-items: center;
         flex-wrap: wrap;
+        min-height: 76px;
     }
 
     .brand {
@@ -138,6 +140,7 @@
 
 @media (max-width: 560px) {
     .nav-inner {
+        min-height: 72px;
         padding: 0.85rem 1rem;
     }
 

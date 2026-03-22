@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 import { filter } from 'rxjs/operators';
@@ -10,9 +10,10 @@ import { filter } from 'rxjs/operators';
     styleUrls: ['./app.component.css'],
     standalone: false
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   private readonly siteName = 'Aspenleaf Shelties';
   private readonly siteUrl = 'https://aspenleafshelties.com';
+  private readonly defaultSocialImage = `${this.siteUrl}/assets/images/aspenleafshelties.png`;
   isAdminRoute = false;
 
   constructor(
@@ -32,6 +33,10 @@ export class AppComponent {
     this.isAdminRoute = this.router.url.startsWith('/admin');
   }
 
+  ngOnInit(): void {
+    this.updateSeoTags();
+  }
+
   private updateSeoTags() {
     let route = this.activatedRoute;
     while (route.firstChild) {
@@ -47,7 +52,10 @@ export class AppComponent {
       data['description'] ||
       'Aspenleaf Shelties is a small Shetland Sheepdog breeder in Dewy Rose, Georgia.';
     const robots = data['robots'] || 'index, follow';
-    const url = new URL(this.router.url, this.siteUrl).toString();
+    const rawUrl = new URL(this.router.url, this.siteUrl);
+    rawUrl.search = '';
+    rawUrl.hash = '';
+    const url = rawUrl.toString();
 
     this.titleService.setTitle(title);
     this.meta.updateTag({ name: 'description', content: description });
@@ -57,9 +65,11 @@ export class AppComponent {
     this.meta.updateTag({ property: 'og:url', content: url });
     this.meta.updateTag({ property: 'og:type', content: 'website' });
     this.meta.updateTag({ property: 'og:site_name', content: this.siteName });
+    this.meta.updateTag({ property: 'og:image', content: this.defaultSocialImage });
     this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
     this.meta.updateTag({ name: 'twitter:title', content: title });
     this.meta.updateTag({ name: 'twitter:description', content: description });
+    this.meta.updateTag({ name: 'twitter:image', content: this.defaultSocialImage });
     this.upsertCanonical(url);
   }
 

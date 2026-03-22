@@ -39,6 +39,9 @@
 }
 
 .dog-card__image-wrap {
+    aspect-ratio: 1 / 1;
+    background: rgba(214, 226, 212, 0.35);
+    min-height: 0;
     position: relative;
     overflow: hidden;
 }
