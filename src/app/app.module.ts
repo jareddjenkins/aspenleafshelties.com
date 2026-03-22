@@ -7,7 +7,6 @@ import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgbCollapse, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { TopnavComponent } from './topnav/topnav.component';
@@ -24,7 +23,5 @@ import { FooterComponent } from './footer/footer.component';
         AppRoutingModule,
         BrowserAnimationsModule,
         RouterLink,
-        RouterLinkActive,
-        NgbCollapse,
-        NgbDropdown] })
+        RouterLinkActive] })
 export class AppModule {}

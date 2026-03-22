@@ -8,6 +8,13 @@ import { Component } from '@angular/core';
 })
 export class TopnavComponent {
   isNavbarCollapsed = true;
+  readonly routes = [
+    { label: 'About', path: '/about' },
+    { label: 'Boys', path: '/dogs/boys' },
+    { label: 'Girls', path: '/dogs/girls' },
+    { label: 'Puppies', path: '/dogs/puppies' },
+    { label: 'Resources', path: '/resources' },
+  ];
 
   toggleMenu() {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;

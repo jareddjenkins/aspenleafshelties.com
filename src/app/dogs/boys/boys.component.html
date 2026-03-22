@@ -1,9 +1,5 @@
-<div class="container">
-  <div class="row">
-    <div class="col-lg-9 mx-auto">
-      @for (dog of dogs | async; track dog) {
-        <app-dogs [dog]="dog"> </app-dogs>
-      }
-    </div>
-  </div>
-</div>
+<section class="dog-list-shell">
+  @for (dog of dogs | async; track dog) {
+    <app-dogs [dog]="dog"> </app-dogs>
+  }
+</section>

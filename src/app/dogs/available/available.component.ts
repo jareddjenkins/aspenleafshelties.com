@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Dog } from '../model/dog';
 import { DogpagesService } from '../../dogpages.service';
 import { Observable } from 'rxjs';

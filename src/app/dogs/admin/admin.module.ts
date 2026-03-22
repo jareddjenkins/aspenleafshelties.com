@@ -10,14 +10,10 @@ import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AsyncPipe } from '@angular/common';
-
-import { NgbCollapse, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import { RouterOutlet } from '@angular/router';
 
 import { ImageCropperComponent } from 'ngx-image-cropper';
 import { DatePipe } from '@angular/common';
-
-import { NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { DogsModule } from '../dogs.module';
 import { ListdogsComponent } from './listdogs/listdogs.component';
 import { MaterialComponentsModule } from 'src/app/shared/material-components/material-components.module';
@@ -44,10 +40,6 @@ import { FirebaseAdminClientService } from '../../firebase/firebase-admin-client
     ImageCropperComponent,
     FormsModule,
     ReactiveFormsModule,
-    NgbCollapse,
-    NgbDropdown,
-    NgbDropdown,
-    NgbDatepicker,
     RouterOutlet,
   ],
   providers: [FirebaseAdminClientService, FirestoreAdminDataService],

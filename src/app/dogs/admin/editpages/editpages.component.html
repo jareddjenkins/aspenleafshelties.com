@@ -1,87 +1,93 @@
-<div class="container py-3">
-  <div class="row mb-3">
-    <div class="col">
-      <label class="form-label" for="pageselect">Choose dog to add</label>
-      <select id="pageselect" class="form-select" [formControl]="pageselect">
-        <option value="">Select a dog</option>
-        @for (dog of doglist; track dog.id) {
-          <option [ngValue]="dog">{{ dog.rname }}</option>
-        }
-      </select>
-    </div>
-  </div>
+<section class="pages-shell">
+  <label class="picker-field" for="pageselect">
+    <span>Choose dog to add</span>
+    <select id="pageselect" [formControl]="pageselect">
+      <option value="">Select a dog</option>
+      @for (dog of doglist; track dog.id) {
+        <option [ngValue]="dog">{{ dog.rname }}</option>
+      }
+    </select>
+  </label>
 
-  <div class="row g-4">
-    <div class="col-12 col-lg-6">
+  <div class="pages-grid">
+    <div class="page-column">
       <div cdkDropList class="example-list" (cdkDropListDropped)="drop(boypages, $event)">
-        <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
-          <h2 class="h5 mb-0">Boys</h2>
-          <button class="btn btn-sm btn-outline-primary" type="button" (click)="addnewdog(selectedDog(), 'Boys')">Add</button>
+        <div class="column-header">
+          <h2>Boys</h2>
+          <button type="button" class="mini-button" (click)="addnewdog(selectedDog(), 'Boys')">Add</button>
         </div>
         @for (item of boypages; track item.dogsId; let i = $index) {
           <div class="example-box" cdkDrag>
             <span>{{ item.dog.rname }}</span>
-            <span class="d-flex align-items-center gap-2">
-              <mat-icon class="black-icon" (click)="removedog(boypages, i)">remove_circle</mat-icon>
-              <mat-icon class="black-icon">drag_handle</mat-icon>
+            <span class="item-actions">
+              <button type="button" class="icon-button" (click)="removedog(boypages, i)" aria-label="Remove dog from boys page">
+                <mat-icon>remove_circle</mat-icon>
+              </button>
+              <mat-icon>drag_handle</mat-icon>
             </span>
           </div>
         }
       </div>
     </div>
 
-    <div class="col-12 col-lg-6">
+    <div class="page-column">
       <div cdkDropList class="example-list" (cdkDropListDropped)="drop(girlpages, $event)">
-        <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
-          <h2 class="h5 mb-0">Girls</h2>
-          <button class="btn btn-sm btn-outline-primary" type="button" (click)="addnewdog(selectedDog(), 'Girls')">Add</button>
+        <div class="column-header">
+          <h2>Girls</h2>
+          <button type="button" class="mini-button" (click)="addnewdog(selectedDog(), 'Girls')">Add</button>
         </div>
         @for (item of girlpages; track item.dogsId; let i = $index) {
           <div class="example-box" cdkDrag>
             <span>{{ item.dog.rname }}</span>
-            <span class="d-flex align-items-center gap-2">
-              <mat-icon class="black-icon" (click)="removedog(girlpages, i)">remove_circle</mat-icon>
-              <mat-icon class="black-icon">drag_handle</mat-icon>
+            <span class="item-actions">
+              <button type="button" class="icon-button" (click)="removedog(girlpages, i)" aria-label="Remove dog from girls page">
+                <mat-icon>remove_circle</mat-icon>
+              </button>
+              <mat-icon>drag_handle</mat-icon>
             </span>
           </div>
         }
       </div>
     </div>
 
-    <div class="col-12 col-lg-6">
+    <div class="page-column">
       <div cdkDropList class="example-list" (cdkDropListDropped)="drop(availablepages, $event)">
-        <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
-          <h2 class="h5 mb-0">Available</h2>
-          <button class="btn btn-sm btn-outline-primary" type="button" (click)="addnewdog(selectedDog(), 'Available')">Add</button>
+        <div class="column-header">
+          <h2>Available</h2>
+          <button type="button" class="mini-button" (click)="addnewdog(selectedDog(), 'Available')">Add</button>
         </div>
         @for (item of availablepages; track item.dogsId; let i = $index) {
           <div class="example-box" cdkDrag>
             <span>{{ item.dog.rname }}</span>
-            <span class="d-flex align-items-center gap-2">
-              <mat-icon class="black-icon" (click)="removedog(availablepages, i)">remove_circle</mat-icon>
-              <mat-icon class="black-icon">drag_handle</mat-icon>
+            <span class="item-actions">
+              <button type="button" class="icon-button" (click)="removedog(availablepages, i)" aria-label="Remove dog from available page">
+                <mat-icon>remove_circle</mat-icon>
+              </button>
+              <mat-icon>drag_handle</mat-icon>
             </span>
           </div>
         }
       </div>
     </div>
 
-    <div class="col-12 col-lg-6">
+    <div class="page-column">
       <div cdkDropList class="example-list" (cdkDropListDropped)="drop(adultavailablepages, $event)">
-        <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
-          <h2 class="h5 mb-0">Adult Available</h2>
-          <button class="btn btn-sm btn-outline-primary" type="button" (click)="addnewdog(selectedDog(), 'AdultAvailable')">Add</button>
+        <div class="column-header">
+          <h2>Adult Available</h2>
+          <button type="button" class="mini-button" (click)="addnewdog(selectedDog(), 'AdultAvailable')">Add</button>
         </div>
         @for (item of adultavailablepages; track item.dogsId; let i = $index) {
           <div class="example-box" cdkDrag>
             <span>{{ item.dog.rname }}</span>
-            <span class="d-flex align-items-center gap-2">
-              <mat-icon class="black-icon" (click)="removedog(adultavailablepages, i)">remove_circle</mat-icon>
-              <mat-icon class="black-icon">drag_handle</mat-icon>
+            <span class="item-actions">
+              <button type="button" class="icon-button" (click)="removedog(adultavailablepages, i)" aria-label="Remove dog from adult available page">
+                <mat-icon>remove_circle</mat-icon>
+              </button>
+              <mat-icon>drag_handle</mat-icon>
             </span>
           </div>
         }
       </div>
     </div>
   </div>
-</div>
+</section>

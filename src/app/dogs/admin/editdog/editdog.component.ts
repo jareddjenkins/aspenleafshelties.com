@@ -1,42 +1,17 @@
-import { Component, OnInit, Input, Injectable } from '@angular/core';
-import {
-  NgbDateAdapter,
-  NgbDateStruct,
-  NgbDatepicker,
-} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 import { ActivatedRoute } from '@angular/router';
-import { Location, DatePipe } from '@angular/common';
+import { Location } from '@angular/common';
 
 import { Dog } from '../../model/dog';
 import { DogService } from '../../../dog.service';
 import { FirestoreAdminDataService } from '../../../firebase/firestore-admin-data.service';
-import { FormsModule } from '@angular/forms';
-import { DogsComponent } from '../../shared/dog-card/dogs.component';
-
-@Injectable()
-export class NgbDateNativeAdapter extends NgbDateAdapter<Date> {
-  fromModel(date: Date): NgbDateStruct {
-    return date && date.getFullYear
-      ? {
-          year: date.getFullYear(),
-          month: date.getMonth() + 1,
-          day: date.getDate(),
-        }
-      : null;
-  }
-
-  toModel(date: NgbDateStruct): Date {
-    return date ? new Date(date.year, date.month - 1, date.day) : null;
-  }
-}
 
 @Component({
   selector: 'app-editdog',
   templateUrl: './editdog.component.html',
   styleUrls: ['./editdog.component.css'],
-  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
   standalone: false,
 })
 export class EditdogComponent implements OnInit {
@@ -51,6 +26,7 @@ export class EditdogComponent implements OnInit {
   croppedImageBlob: any = '';
 
   showInput = false;
+  dogDob = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -66,7 +42,10 @@ export class EditdogComponent implements OnInit {
   getDog() {
     const id = +this.route.snapshot.paramMap.get('id');
     this.dogService.getDog(id).subscribe((dog) => {
-      ((this.dog = dog), this.getDams(), this.getSires());
+      this.dog = dog;
+      this.dogDob = this.toDateInputValue(dog?.dob);
+      this.getDams();
+      this.getSires();
     });
   }
 
@@ -105,6 +84,7 @@ export class EditdogComponent implements OnInit {
   }
 
   save() {
+    this.syncDobFromInput();
     this.firestoreAdminDataService.updateDog(this.dog).subscribe(); // => this.goBack());
   }
 
@@ -141,5 +121,31 @@ export class EditdogComponent implements OnInit {
   }
   loadImageFailed() {
     // show message
+  }
+
+  updateDob(value: string) {
+    this.dogDob = value;
+    this.syncDobFromInput();
+  }
+
+  private syncDobFromInput() {
+    if (!this.dog || !this.dogDob) {
+      return;
+    }
+
+    this.dog.dob = new Date(`${this.dogDob}T00:00:00`);
+  }
+
+  private toDateInputValue(value: Date | string | undefined): string {
+    if (!value) {
+      return '';
+    }
+
+    const date = value instanceof Date ? value : new Date(value);
+    if (Number.isNaN(date.getTime())) {
+      return '';
+    }
+
+    return date.toISOString().slice(0, 10);
   }
 }
