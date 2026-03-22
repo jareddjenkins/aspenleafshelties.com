@@ -16,7 +16,7 @@
 .toolbar-filters {
     display: grid;
     gap: 0.9rem;
-    grid-template-columns: minmax(220px, 1.4fr) minmax(180px, 0.85fr) minmax(160px, 0.75fr);
+    grid-template-columns: minmax(220px, 1.2fr) minmax(180px, 0.85fr) minmax(160px, 0.75fr);
     width: 100%;
 }
 
@@ -57,6 +57,41 @@
     min-height: 2.75rem;
     padding: 0.75rem 0.9rem;
     width: 100%;
+}
+
+.page-filter-field {
+    background: rgba(214, 226, 212, 0.18);
+    border: 1px solid rgba(58, 94, 73, 0.12);
+    border-radius: 16px;
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 0.8rem 0.9rem 0.9rem;
+}
+
+.page-filter-field legend {
+    color: var(--color-evergreen);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 0 0.35rem;
+    text-transform: uppercase;
+}
+
+.page-filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem 0.9rem;
+}
+
+.page-filter-option {
+    align-items: center;
+    color: var(--color-evergreen-deep);
+    display: inline-flex;
+    gap: 0.45rem;
+}
+
+.page-filter-option input {
+    accent-color: var(--color-evergreen);
 }
 
 .toolbar-actions {
@@ -138,6 +173,23 @@ tbody tr:hover {
     display: inline-flex;
 }
 
+.icon-button {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    color: var(--color-evergreen-deep);
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    padding: 0;
+}
+
+.icon-button:disabled {
+    color: var(--color-muted);
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
 .status-chip {
     background: rgba(181, 130, 51, 0.14);
     border-radius: 999px;
@@ -159,6 +211,30 @@ tbody tr:hover {
     background: rgba(58, 94, 73, 0.08);
     color: var(--color-muted);
     text-transform: none;
+}
+
+.page-chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.page-chip {
+    background: rgba(58, 94, 73, 0.1);
+    border-radius: 999px;
+    color: var(--color-evergreen-deep);
+    display: inline-flex;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 0.28rem 0.6rem;
+    white-space: nowrap;
+}
+
+.page-chip--empty {
+    background: rgba(58, 94, 73, 0.08);
+    color: var(--color-muted);
+    font-weight: 500;
 }
 
 @media (max-width: 700px) {
@@ -263,6 +339,16 @@ tbody tr:hover {
 
     .icon-link::after {
         content: "Edit dog";
+        font-size: 0.95rem;
+        font-weight: 600;
+    }
+
+    .icon-button {
+        gap: 0.45rem;
+    }
+
+    .action-col .icon-button::after {
+        content: "Delete dog";
         font-size: 0.95rem;
         font-weight: 600;
     }

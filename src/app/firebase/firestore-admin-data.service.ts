@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -54,6 +55,10 @@ export class FirestoreAdminDataService {
 
   deleteFromPagesById(pageName: string, id: number): Observable<void> {
     return from(this.removeDogFromPage(pageName, id));
+  }
+
+  deleteDog(id: number): Observable<void> {
+    return from(this.removeDog(id));
   }
 
   private async createDog(): Promise<Dog> {
@@ -154,6 +159,23 @@ export class FirestoreAdminDataService {
       },
       { merge: true },
     );
+  }
+
+  private async removeDog(id: number): Promise<void> {
+    const firestore = this.requireFirestore();
+    const pageSnapshots = await getDocs(collection(firestore, 'pages'));
+    const blockingPages = pageSnapshots.docs
+      .filter((snapshot) => {
+        const data = snapshot.data() as { dogIds?: string[] };
+        return (data.dogIds ?? []).includes(String(id));
+      })
+      .map((snapshot) => snapshot.id);
+
+    if (blockingPages.length > 0) {
+      throw new Error(`This dog cannot be deleted because it is still on these pages: ${blockingPages.join(', ')}.`);
+    }
+
+    await deleteDoc(doc(firestore, 'dogs', String(id)));
   }
 
   private async getNextDogId(): Promise<number> {

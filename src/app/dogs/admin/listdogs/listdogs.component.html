@@ -25,6 +25,7 @@
           <option value="gender">Gender</option>
           <option value="sireName">Sire</option>
           <option value="damName">Dam</option>
+          <option value="activePages">Active Pages</option>
           <option value="dob">Date of Birth</option>
         </select>
       </label>
@@ -40,6 +41,22 @@
           <option value="desc">Descending</option>
         </select>
       </label>
+
+      <fieldset class="page-filter-field">
+        <legend>Page Filter</legend>
+        <div class="page-filter-options">
+          @for (pageName of pageFilterOptions; track pageName) {
+            <label class="page-filter-option">
+              <input
+                type="checkbox"
+                [checked]="selectedPageFilters.includes(pageName)"
+                (change)="onPageFilterChange(pageName, $any($event.target).checked)"
+              />
+              <span>{{ pageName }}</span>
+            </label>
+          }
+        </div>
+      </fieldset>
     </div>
 
     <div class="toolbar-actions">
@@ -62,8 +79,10 @@
           <th class="hide-mobile">Gender</th>
           <th class="hide-mobile">Sire</th>
           <th class="hide-mobile">Dam</th>
+          <th class="hide-mobile">Active Pages</th>
           <th class="hide-mobile">Date of Birth</th>
           <th class="action-col">Edit</th>
+          <th class="action-col">Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -83,11 +102,34 @@
             <td class="hide-mobile" data-label="Gender">{{ dog.gender ? "Male" : "Female" }}</td>
             <td class="hide-mobile" data-label="Sire">{{ dog.sireName }}</td>
             <td class="hide-mobile" data-label="Dam">{{ dog.damName }}</td>
+            <td class="hide-mobile" data-label="Active Pages">
+              @if (getActivePages(dog.id).length) {
+                <div class="page-chip-list">
+                  @for (pageName of getActivePages(dog.id); track pageName) {
+                    <span class="page-chip">{{ pageName }}</span>
+                  }
+                </div>
+              } @else {
+                <span class="page-chip page-chip--empty">None</span>
+              }
+            </td>
             <td class="hide-mobile" data-label="Date of Birth">{{ dog.dob | date: "shortDate" }}</td>
             <td class="action-col">
               <a class="icon-link" [routerLink]="['/admin/editdog', dog.id]" routerLinkActive="active">
                 <mat-icon>edit</mat-icon>
               </a>
+            </td>
+            <td class="action-col" data-label="Delete">
+              <button
+                type="button"
+                class="icon-button"
+                (click)="deleteDog(dog)"
+                [disabled]="!canDeleteDog(dog.id)"
+                [attr.aria-label]="getDeleteReason(dog.id)"
+                [title]="getDeleteReason(dog.id)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
             </td>
           </tr>
         }
