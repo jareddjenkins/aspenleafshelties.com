@@ -3,6 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { BoysComponent } from './boys/boys.component';
 import { GirlsComponent } from './girls/girls.component';
 import { AvailableComponent } from './available/available.component';
+import {
+  availableAdultsResolver,
+  availablePuppiesResolver,
+  boysPageResolver,
+  girlsPageResolver,
+} from './public-dog.resolvers';
 
 const routes: Routes = [
   {
@@ -13,6 +19,9 @@ const routes: Routes = [
   {
     path: 'boys',
     component: BoysComponent,
+    resolve: {
+      dogs: boysPageResolver,
+    },
     data: {
       title: 'Boys | Aspenleaf Shelties',
       description:
@@ -22,6 +31,9 @@ const routes: Routes = [
   {
     path: 'girls',
     component: GirlsComponent,
+    resolve: {
+      dogs: girlsPageResolver,
+    },
     data: {
       title: 'Girls | Aspenleaf Shelties',
       description:
@@ -31,6 +43,10 @@ const routes: Routes = [
   {
     path: 'available',
     component: AvailableComponent,
+    resolve: {
+      puppies: availablePuppiesResolver,
+      adults: availableAdultsResolver,
+    },
     data: {
       title: 'Available Sheltie Puppies in Georgia | Aspenleaf Shelties',
       description:

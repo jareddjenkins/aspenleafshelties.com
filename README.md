@@ -62,7 +62,7 @@ GitHub Actions deploys automatically on pushes to `main`. The repo includes Terr
 
 The GitHub Actions workflow also pins `firebase-tools` to a known-stable CI version for now because newer CLI builds have been unreliable with service-account-based Storage deploy checks. CI currently deploys only Hosting and Firestore. Deploy Storage rules manually when needed until that path is stable again.
 
-The Hosting config lives in [firebase.json](/Users/jaredjenkins/repos/aspenleafshelties.com/firebase.json) and is set up for an Angular SPA using `dist/aspenleafshelties` as the deploy directory.
+Hosting now deploys the prerendered Angular output from `dist/aspenleafshelties/browser`. The deploy scripts and GitHub Actions build that bundle with `npm run build:hosting`, which currently maps to `npm run prerender`.
 
 Firebase Storage rules now live in [storage.rules](/Users/jaredjenkins/repos/aspenleafshelties.com/storage.rules). The current rule set is intentionally open as a temporary migration step so image uploads work while the site moves to the new bucket. `./scripts/firebase-deploy.sh` deploys Hosting, Storage rules, and Firestore rules.
 

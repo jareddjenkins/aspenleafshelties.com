@@ -1,28 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Dog } from '../model/dog';
-import { DogpagesService } from '../../dogpages.service';
-import { Observable } from 'rxjs';
-
 
 @Component({
-    selector: 'app-available',
-    templateUrl: './available.component.html',
-    styleUrls: ['./available.component.css'],
-    standalone: false
+  selector: 'app-available',
+  templateUrl: './available.component.html',
+  styleUrls: ['./available.component.css'],
+  standalone: false,
 })
 export class AvailableComponent implements OnInit {
-  puppies: Observable<Dog[]>;
-  adults: Observable<Dog[]>;
+  puppies: Dog[] = [];
+  adults: Dog[] = [];
 
-  constructor(private dogpagesService: DogpagesService) {}
+  constructor(
+    private route: ActivatedRoute,
+    @Inject(DOCUMENT) private document: Document,
+  ) {}
 
   ngOnInit() {
-    this.puppies = this.dogpagesService.getDogsForPage('available');
-    this.adults = this.dogpagesService.getDogsForPage('adultavailable');
+    this.puppies = this.route.snapshot.data['puppies'] ?? [];
+    this.adults = this.route.snapshot.data['adults'] ?? [];
   }
+
   ScrollIntoView(elem: string) {
-    document
-      .querySelector(elem)
-      .scrollIntoView({ behavior: 'smooth', block: 'start' });
+    this.document.querySelector(elem)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }

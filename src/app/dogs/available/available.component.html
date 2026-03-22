@@ -78,9 +78,9 @@
 
   <section class="listing-section">
     <h2>Puppies For Sale</h2>
-    @if ((puppies | async)?.length) {
+    @if (puppies.length) {
       <div class="listing-grid">
-        @for (dog of puppies | async; track dog; let isFirst = $first) {
+        @for (dog of puppies; track dog.id; let isFirst = $first) {
           <app-dogs [dog]="dog" [showStatusBanner]="true" [prioritizeImage]="isFirst"> </app-dogs>
         }
       </div>
@@ -98,9 +98,9 @@
 
   <section class="listing-section">
     <h2>Adults For Sale</h2>
-    @if ((adults | async)?.length) {
+    @if (adults.length) {
       <div class="listing-grid">
-        @for (dog of adults | async; track dog; let isFirst = $first) {
+        @for (dog of adults; track dog.id; let isFirst = $first) {
           <app-dogs [dog]="dog" [showStatusBanner]="true" [prioritizeImage]="isFirst"> </app-dogs>
         }
       </div>

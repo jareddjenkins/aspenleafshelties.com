@@ -5,7 +5,6 @@ import { Location } from '@angular/common';
 import { Meta, Title } from '@angular/platform-browser';
 
 import { Dog } from '../../model/dog';
-import { DogService } from 'src/app/dog.service';
 import { DogsComponent } from '../dog-card/dogs.component';
 
 @Component({
@@ -15,32 +14,20 @@ import { DogsComponent } from '../dog-card/dogs.component';
   imports: [DogsComponent],
 })
 export class DogDetailComponent implements OnInit {
-  @Input() dog: Dog;
+  @Input() dog: Dog | undefined;
 
   showInput = false;
 
   constructor(
     private route: ActivatedRoute,
-    private dogService: DogService,
     private location: Location,
     private titleService: Title,
     private meta: Meta,
   ) {}
 
   ngOnInit(): void {
-    this.getDog();
-  }
-
-  getDog(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (!id) {
-      return;
-    }
-
-    this.dogService.getDog(id).subscribe((dog) => {
-      this.dog = dog;
-      this.updateSeoForDog(dog);
-    });
+    this.dog = this.route.snapshot.data['dog'];
+    this.updateSeoForDog(this.dog);
   }
 
   goBack(): void {
@@ -51,7 +38,7 @@ export class DogDetailComponent implements OnInit {
     this.showInput = !this.showInput;
   }
 
-  private updateSeoForDog(dog: Dog) {
+  private updateSeoForDog(dog: Dog | undefined) {
     if (!dog) {
       return;
     }

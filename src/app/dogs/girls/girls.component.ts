@@ -1,22 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 import { Dog } from '../model/dog';
 
-import 'rxjs';
-import { DogpagesService } from 'src/app/dogpages.service';
-
 @Component({
-    selector: 'app-girls',
-    templateUrl: './girls.component.html',
-    styleUrls: ['./girls.component.css'],
-    standalone: false
+  selector: 'app-girls',
+  templateUrl: './girls.component.html',
+  styleUrls: ['./girls.component.css'],
+  standalone: false,
 })
 export class GirlsComponent implements OnInit {
-  dogs: Observable<Dog[]>;
+  dogs: Dog[] = [];
 
-  constructor(private dogpagesService: DogpagesService) {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.dogs = this.dogpagesService.getDogsForPage('girls');
+    this.dogs = this.route.snapshot.data['dogs'] ?? [];
   }
 }

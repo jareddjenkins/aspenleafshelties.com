@@ -7,7 +7,7 @@ docker run --rm \
   -v "$PWD":/workspace \
   -w /workspace \
   node:22 \
-  sh -lc "npm install && npm run build"
+  sh -lc "npm install && npm run build:hosting"
 
 docker run --rm -it \
   -v "$PWD":/workspace \

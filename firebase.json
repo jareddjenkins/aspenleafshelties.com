@@ -26,7 +26,7 @@
     "singleProjectMode": true
   },
   "hosting": {
-    "public": "dist/aspenleafshelties",
+    "public": "dist/aspenleafshelties/browser",
     "ignore": [
       "firebase.json",
       "**/.*",

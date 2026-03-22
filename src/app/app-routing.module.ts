@@ -5,6 +5,7 @@ import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { ResourcesComponent } from './resources/resources.component';
 import { DogDetailComponent } from './dogs/shared/dog-detail/dog-detail.component';
+import { dogDetailResolver } from './dogs/public-dog.resolvers';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -61,6 +62,9 @@ const routes: Routes = [
   {
     path: 'detail/:id',
     component: DogDetailComponent,
+    resolve: {
+      dog: dogDetailResolver,
+    },
     data: {
       title: 'Sheltie Details | Aspenleaf Shelties',
       description:
@@ -70,7 +74,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      initialNavigation: 'enabledBlocking',
+    }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
