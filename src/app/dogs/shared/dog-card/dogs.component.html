@@ -15,8 +15,9 @@
         <img
           [src]="imageUrl"
           alt="Picture of {{ dog.cname }}"
-          [attr.loading]="imageVariant === 'detail' ? 'eager' : 'lazy'"
-          [attr.decoding]="imageVariant === 'detail' ? 'sync' : 'async'"
+          [attr.loading]="imageLoading"
+          [attr.decoding]="imageDecoding"
+          [attr.fetchpriority]="imageFetchPriority"
           sizes="(max-width: 800px) 100vw, 40vw"
         />
       </div>

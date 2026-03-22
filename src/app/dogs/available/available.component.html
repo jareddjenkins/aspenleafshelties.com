@@ -80,8 +80,8 @@
     <h2>Puppies For Sale</h2>
     @if ((puppies | async)?.length) {
       <div class="listing-grid">
-        @for (dog of puppies | async; track dog) {
-          <app-dogs [dog]="dog" [showStatusBanner]="true"> </app-dogs>
+        @for (dog of puppies | async; track dog; let isFirst = $first) {
+          <app-dogs [dog]="dog" [showStatusBanner]="true" [prioritizeImage]="isFirst"> </app-dogs>
         }
       </div>
     } @else {
@@ -100,8 +100,8 @@
     <h2>Adults For Sale</h2>
     @if ((adults | async)?.length) {
       <div class="listing-grid">
-        @for (dog of adults | async; track dog) {
-          <app-dogs [dog]="dog" [showStatusBanner]="true"> </app-dogs>
+        @for (dog of adults | async; track dog; let isFirst = $first) {
+          <app-dogs [dog]="dog" [showStatusBanner]="true" [prioritizeImage]="isFirst"> </app-dogs>
         }
       </div>
     } @else {

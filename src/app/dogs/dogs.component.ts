@@ -17,6 +17,8 @@ export class DogsComponent {
 
   @Input() imageVariant: 'card' | 'detail' = 'card';
 
+  @Input() prioritizeImage = false;
+
   lgImgUrl: string;
 
   constructor(
@@ -49,5 +51,17 @@ export class DogsComponent {
     }
 
     return this.dog?.profileCardImageUrl || this.dog?.profileDetailImageUrl || this.dog?.profileImageUrl || '';
+  }
+
+  get imageLoading(): 'eager' | 'lazy' {
+    return this.prioritizeImage || this.imageVariant === 'detail' ? 'eager' : 'lazy';
+  }
+
+  get imageDecoding(): 'sync' | 'async' {
+    return this.prioritizeImage || this.imageVariant === 'detail' ? 'sync' : 'async';
+  }
+
+  get imageFetchPriority(): 'high' | null {
+    return this.prioritizeImage ? 'high' : null;
   }
 }

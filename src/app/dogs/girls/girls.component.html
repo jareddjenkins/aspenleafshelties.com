@@ -1,5 +1,5 @@
 <section class="dog-list-shell">
-  @for (dog of dogs | async; track dog) {
-    <app-dogs [dog]="dog"> </app-dogs>
+  @for (dog of dogs | async; track dog; let isFirst = $first) {
+    <app-dogs [dog]="dog" [prioritizeImage]="isFirst"> </app-dogs>
   }
 </section>

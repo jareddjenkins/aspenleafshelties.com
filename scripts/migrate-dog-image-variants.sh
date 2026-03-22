@@ -3,8 +3,8 @@ set -eu
 
 usage() {
   echo "Usage:"
-  echo "  $0 --adc firebase-project-id [--bucket storage-bucket] [--dry-run] [--delete-legacy]"
-  echo "  $0 /absolute/path/to/firebase-service-account.json firebase-project-id [--bucket storage-bucket] [--dry-run] [--delete-legacy]"
+  echo "  $0 --adc firebase-project-id [--bucket storage-bucket] [--dry-run] [--force] [--delete-legacy]"
+  echo "  $0 /absolute/path/to/firebase-service-account.json firebase-project-id [--bucket storage-bucket] [--dry-run] [--force] [--delete-legacy]"
   exit 1
 }
 

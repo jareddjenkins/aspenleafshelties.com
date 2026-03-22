@@ -17,7 +17,7 @@ function getFlag(name, fallback = undefined) {
 
 function usage() {
   console.error(
-    'Usage: node scripts/migrate-dog-image-variants.mjs --project-id <firebase-project-id> [--bucket <storage-bucket>] [--dry-run] [--emulator-host <host:port>] [--delete-legacy]',
+    'Usage: node scripts/migrate-dog-image-variants.mjs --project-id <firebase-project-id> [--bucket <storage-bucket>] [--dry-run] [--force] [--emulator-host <host:port>] [--delete-legacy]',
   );
 }
 
@@ -75,6 +75,7 @@ async function uploadVariant(bucket, objectName, contents, contentType) {
 
 async function main() {
   const dryRun = args.includes('--dry-run');
+  const force = args.includes('--force');
   const deleteLegacy = args.includes('--delete-legacy');
   const projectId = getFlag('--project-id', process.env.FIREBASE_PROJECT_ID || process.env.GCLOUD_PROJECT);
   const bucketName = getFlag('--bucket', process.env.FIREBASE_STORAGE_BUCKET || `${projectId}.appspot.com`);
@@ -108,6 +109,9 @@ async function main() {
 
   const dogsSnapshot = await db.collection('dogs').get();
   console.log(`Found ${dogsSnapshot.size} dogs to inspect.`);
+  if (force) {
+    console.log('Force mode enabled: existing card/detail image variants will be regenerated.');
+  }
 
   let migratedCount = 0;
   let skippedCount = 0;
@@ -117,7 +121,7 @@ async function main() {
     const existingCardUrl = dogData.profileCardImageUrl ?? null;
     const existingDetailUrl = dogData.profileDetailImageUrl ?? null;
 
-    if (existingCardUrl && existingDetailUrl) {
+    if (!force && existingCardUrl && existingDetailUrl) {
       skippedCount += 1;
       continue;
     }
