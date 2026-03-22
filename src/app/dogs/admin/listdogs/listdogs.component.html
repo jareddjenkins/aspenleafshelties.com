@@ -1,15 +1,46 @@
 <section class="admin-shell">
   <div class="admin-toolbar">
-    <label class="search-field">
-      <span>Search</span>
-      <input
-        type="text"
-        [ngModel]="query"
-        (ngModelChange)="onQueryChange($event)"
-        placeholder="Search dogs"
-        aria-label="Search dogs"
-      />
-    </label>
+    <div class="toolbar-filters">
+      <label class="search-field">
+        <span>Search</span>
+        <input
+          type="text"
+          [ngModel]="query"
+          (ngModelChange)="onQueryChange($event)"
+          placeholder="Search dogs"
+          aria-label="Search dogs"
+        />
+      </label>
+
+      <label class="sort-field" for="sortField">
+        <span>Sort By</span>
+        <select
+          id="sortField"
+          [ngModel]="sortField"
+          (ngModelChange)="onSortFieldChange($event)"
+        >
+          <option value="rname">Registered Name</option>
+          <option value="cname">Call Name</option>
+          <option value="status">Status</option>
+          <option value="gender">Gender</option>
+          <option value="sireName">Sire</option>
+          <option value="damName">Dam</option>
+          <option value="dob">Date of Birth</option>
+        </select>
+      </label>
+
+      <label class="sort-field sort-field--direction" for="sortDirection">
+        <span>Direction</span>
+        <select
+          id="sortDirection"
+          [ngModel]="sortDirection"
+          (ngModelChange)="onSortDirectionChange($event)"
+        >
+          <option value="asc">Ascending</option>
+          <option value="desc">Descending</option>
+        </select>
+      </label>
+    </div>
 
     <div class="toolbar-actions">
       <button type="button" class="secondary-button" (click)="goToPages()">
@@ -25,7 +56,6 @@
     <table>
       <thead>
         <tr>
-          <th class="hide-mobile">Id</th>
           <th>Registered Name</th>
           <th class="hide-mobile">Status</th>
           <th class="hide-mobile">Call Name</th>
@@ -39,7 +69,6 @@
       <tbody>
         @for (dog of filteredDogs | async; track dog) {
           <tr>
-            <td class="hide-mobile" data-label="Id">{{ dog.id }}</td>
             <td data-label="Registered Name">{{ dog.rname }}</td>
             <td class="hide-mobile" data-label="Status">
               @if (dog.status) {

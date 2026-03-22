@@ -17,10 +17,6 @@ import { FirestoreAdminDataService } from '../../../firebase/firestore-admin-dat
 })
 export class EditdogComponent implements OnInit {
   dog: Dog;
-  sires: Dog[];
-  dams: Dog[];
-  selectedSire: Dog = null;
-  selectedDam: Dog = null;
   //imagecropper
   imageChangedEvent: any = '';
   croppedImage: any = '';
@@ -47,35 +43,7 @@ export class EditdogComponent implements OnInit {
     this.dogService.getDog(id).subscribe((dog) => {
       this.dog = dog;
       this.dogDob = this.toDateInputValue(dog?.dob);
-      this.getDams();
-      this.getSires();
     });
-  }
-
-  getSires() {
-    this.dogService.getMaleDogs().subscribe((dogs) => {
-      ((this.sires = dogs),
-        (this.selectedSire = this.sires.find(
-          (dog) => dog.id == this.dog.sireId,
-        )));
-    });
-  }
-
-  getDams() {
-    this.dogService.getFemaleDogs().subscribe((dogs) => {
-      ((this.dams = dogs),
-        (this.selectedDam = this.dams.find((dog) => dog.id == this.dog.damId)));
-    });
-  }
-
-  setSire() {
-    this.dog.sireId = this.selectedSire.id;
-    this.dog.sireName = this.selectedSire.rname;
-  }
-
-  setDam() {
-    this.dog.damId = this.selectedDam.id;
-    this.dog.damName = this.selectedDam.rname;
   }
 
   goBack(): void {
@@ -93,6 +61,8 @@ export class EditdogComponent implements OnInit {
 
   save() {
     this.syncDobFromInput();
+    this.dog.sireId = null;
+    this.dog.damId = null;
     this.firestoreAdminDataService.updateDog(this.dog).subscribe(); // => this.goBack());
   }
 

@@ -114,31 +114,24 @@
 
           <label class="field" for="sire">
             <span>Sire</span>
-            <select
+            <input
+              type="text"
+              [(ngModel)]="dog.sireName"
               name="sire"
-              [(ngModel)]="selectedSire"
-              (change)="setSire()"
               id="sire"
-            >
-              @for (sire of sires; track sire) {
-                <option [ngValue]="sire">{{ sire.rname }}</option>
-              }
-            </select>
+              placeholder="Sire name"
+            />
           </label>
 
           <label class="field" for="dam">
             <span>Dam</span>
-            <select
+            <input
+              type="text"
+              [(ngModel)]="dog.damName"
               name="dam"
-              [(ngModel)]="selectedDam"
-              nullValue
-              (change)="setDam()"
               id="dam"
-            >
-              @for (dam of dams; track dam) {
-                <option [ngValue]="dam">{{ dam.rname }}</option>
-              }
-            </select>
+              placeholder="Dam name"
+            />
           </label>
 
           <label class="field field-full" for="comments">
