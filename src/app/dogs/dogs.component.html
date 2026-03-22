@@ -12,7 +12,13 @@
             {{ statusLabel }}
           </span>
         }
-        <img src="{{ dog.profileImageUrl }}" alt="Picture of {{ dog.cname }}" />
+        <img
+          src="{{ dog.profileImageUrl }}"
+          alt="Picture of {{ dog.cname }}"
+          loading="lazy"
+          decoding="async"
+          sizes="(max-width: 800px) 100vw, 40vw"
+        />
       </div>
 
       <div class="dog-card__details">
