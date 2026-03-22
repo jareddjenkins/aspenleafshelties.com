@@ -87,10 +87,11 @@ export class FirestoreAdminDataService {
   private async uploadProfileImage(id: number, image: Blob): Promise<string> {
     const storage = this.requireStorage();
     const firestore = this.requireFirestore();
-    const imageRef = ref(storage, `profile/testimages/profile_${id}.png`);
+    const extension = this.getImageExtension(image.type);
+    const imageRef = ref(storage, `profile/testimages/profile_${id}.${extension}`);
 
     await uploadBytes(imageRef, image, {
-      contentType: image.type || 'image/png',
+      contentType: image.type || 'image/jpeg',
     });
 
     const downloadUrl = await getDownloadURL(imageRef);
@@ -100,6 +101,10 @@ export class FirestoreAdminDataService {
     });
 
     return downloadUrl;
+  }
+
+  private getImageExtension(contentType: string | undefined): 'jpg' | 'png' {
+    return contentType === 'image/png' ? 'png' : 'jpg';
   }
 
   private async savePage(pageName: string, updatedPages: Pages[]): Promise<void> {

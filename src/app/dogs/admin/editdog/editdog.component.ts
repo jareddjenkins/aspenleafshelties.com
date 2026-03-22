@@ -27,6 +27,7 @@ export class EditdogComponent implements OnInit {
 
   showInput = false;
   dogDob = '';
+  cropFormat: 'png' | 'jpeg' = 'jpeg';
 
   constructor(
     private route: ActivatedRoute,
@@ -89,6 +90,10 @@ export class EditdogComponent implements OnInit {
   }
 
   onUpload() {
+    if (!this.croppedImageBlob) {
+      return;
+    }
+
     this.firestoreAdminDataService
       .uploadDogImage(this.dog.id, this.croppedImageBlob)
       .subscribe((x) => (this.dog.profileImageUrl = x));
@@ -107,6 +112,8 @@ export class EditdogComponent implements OnInit {
   }
 
   fileChangeEvent(event: any): void {
+    const selectedFile = event?.target?.files?.[0] as File | undefined;
+    this.cropFormat = selectedFile?.type === 'image/png' ? 'png' : 'jpeg';
     this.imageChangedEvent = event;
   }
   imageCropped(event: ImageCroppedEvent) {
