@@ -23,9 +23,9 @@ const routes: Routes = [
       dogs: boysPageResolver,
     },
     data: {
-      title: 'Boys | Aspenleaf Shelties',
+      title: 'Boys | Aspenleaf Shelties Georgia Sheltie Breeder',
       description:
-        'Meet the boys of Aspenleaf Shelties, a Georgia Shetland Sheepdog breeder focused on AKC quality, temperament, and sound structure.',
+        'Meet the boys of Aspenleaf Shelties, a Dewy Rose, Georgia Shetland Sheepdog breeder focused on AKC quality, temperament, sound structure, and families across Georgia.',
     },
   },
   {
@@ -35,9 +35,9 @@ const routes: Routes = [
       dogs: girlsPageResolver,
     },
     data: {
-      title: 'Girls | Aspenleaf Shelties',
+      title: 'Girls | Aspenleaf Shelties Georgia Sheltie Breeder',
       description:
-        'Meet the girls of Aspenleaf Shelties, thoughtfully bred Shetland Sheepdogs in Georgia with attention to pedigree, health, and family temperament.',
+        'Meet the girls of Aspenleaf Shelties, thoughtfully bred Shetland Sheepdogs in Dewy Rose, Georgia with attention to pedigree, health, and family temperament.',
     },
   },
   {
@@ -48,9 +48,9 @@ const routes: Routes = [
       adults: availableAdultsResolver,
     },
     data: {
-      title: 'Available Sheltie Puppies in Georgia | Aspenleaf Shelties',
+      title: 'Available Sheltie Puppies in Georgia Near Atlanta | Aspenleaf Shelties',
       description:
-        'See available Sheltie puppies and companion opportunities at Aspenleaf Shelties in Dewy Rose, Georgia, and learn about planned litters and placement.',
+        'See available Sheltie puppies and companion opportunities at Aspenleaf Shelties in Dewy Rose, Georgia for families in Atlanta, Athens, Augusta, and beyond.',
     },
   },
   {

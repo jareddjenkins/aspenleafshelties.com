@@ -13,9 +13,9 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     data: {
-      title: 'Aspenleaf Shelties | Shetland Sheepdog Breeder in Georgia',
+      title: 'Aspenleaf Shelties | Shetland Sheepdog Breeder in Georgia Near Atlanta',
       description:
-        'Aspenleaf Shelties is a small Shetland Sheepdog breeder in Dewy Rose, Georgia. AKC show and family Shelties raised with attention to health, temperament, and quality.',
+        'Aspenleaf Shelties is a small Shetland Sheepdog breeder in Dewy Rose, Georgia serving families across Atlanta, Athens, Augusta, and beyond with AKC show and family Shelties.',
     },
   },
   {
@@ -36,18 +36,18 @@ const routes: Routes = [
     path: 'contact',
     component: ContactComponent,
     data: {
-      title: 'Contact Aspenleaf Shelties | Dewy Rose, Georgia',
+      title: 'Contact Aspenleaf Shelties | Sheltie Breeder in Georgia',
       description:
-        'Contact Aspenleaf Shelties in Dewy Rose, Georgia to ask about puppies, planned litters, and Shetland Sheepdogs raised for show and family life.',
+        'Contact Aspenleaf Shelties in Dewy Rose, Georgia to ask about Sheltie puppies, planned litters, and availability for families in Atlanta, Athens, Augusta, and nearby areas.',
     },
   },
   {
     path: 'about',
     component: AboutComponent,
     data: {
-      title: 'About Aspenleaf Shelties | AKC Show and Family Shelties',
+      title: 'About Aspenleaf Shelties | Georgia Sheltie Breeder',
       description:
-        'Learn about Aspenleaf Shelties, a small Georgia Shetland Sheepdog breeder focused on pedigree, health, temperament, AKC shows, and carefully matched homes.',
+        'Learn about Aspenleaf Shelties, a Dewy Rose, Georgia Shetland Sheepdog breeder focused on pedigree, health, temperament, AKC shows, and carefully matched homes.',
     },
   },
   {
