@@ -1,8 +1,8 @@
 import { Dog } from '../../model/dog';
 
-export class PageListItem {
+export interface PageListItem {
   dog: Dog;
   sortId: number;
   pageName: string;
-  dogsId: string;
+  dogId: string;
 }

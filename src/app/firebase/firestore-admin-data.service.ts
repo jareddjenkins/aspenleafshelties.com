@@ -13,7 +13,7 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { from, Observable, throwError } from 'rxjs';
 
 import { Dog } from '../dogs/model/dog';
-import { Pages } from '../pages';
+import { DogPageDocument, PageAssignment } from '../pages';
 import { FirebaseAdminClientService } from './firebase-admin-client.service';
 
 type FirestoreDogPayload = {
@@ -48,7 +48,7 @@ export class FirestoreAdminDataService {
     return from(this.uploadProfileImage(id, image));
   }
 
-  putPagesByPage(pageName: string, updatedPages: Pages[]): Observable<void> {
+  putPagesByPage(pageName: string, updatedPages: PageAssignment[]): Observable<void> {
     return from(this.savePage(pageName, updatedPages));
   }
 
@@ -113,21 +113,24 @@ export class FirestoreAdminDataService {
     return contentType === 'image/png' ? 'png' : 'jpg';
   }
 
-  private async savePage(pageName: string, updatedPages: Pages[]): Promise<void> {
+  private async savePage(pageName: string, updatedPages: PageAssignment[]): Promise<void> {
     const firestore = this.requireFirestore();
     const slug = this.slugifyPageName(pageName);
     const pageRef = doc(firestore, 'pages', slug);
+    const pageDocument: DogPageDocument = {
+      slug,
+      displayName: pageName,
+      legacyPageName: pageName,
+      dogIds: updatedPages
+        .slice()
+        .sort((a, b) => a.sortId - b.sortId)
+        .map((page) => page.dogId),
+    };
 
     await setDoc(
       pageRef,
       {
-        slug,
-        displayName: pageName,
-        legacyPageName: pageName,
-        dogIds: updatedPages
-          .slice()
-          .sort((a, b) => a.sortId - b.sortId)
-          .map((page) => page.dogsId),
+        ...pageDocument,
         updatedAt: serverTimestamp(),
       },
       { merge: true },

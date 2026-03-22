@@ -8,7 +8,7 @@ import { FirestoreAdminDataService } from '../../../firebase/firestore-admin-dat
 import { DogpagesService } from '../../../dogpages.service';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Pages } from '../../../pages';
+import { PageAssignment } from '../../../pages';
 
 type DogSortField = 'rname' | 'cname' | 'status' | 'gender' | 'sireName' | 'damName' | 'dob' | 'activePages';
 type SortDirection = 'asc' | 'desc';
@@ -244,16 +244,16 @@ export class ListdogsComponent implements OnInit {
     return this.compareStrings(aPages.join(', '), bPages.join(', '));
   }
 
-  private buildDogPagesMap(pages: Pages[]): Map<string, string[]> {
+  private buildDogPagesMap(pages: PageAssignment[]): Map<string, string[]> {
     const pageMap = new Map<string, string[]>();
 
     for (const page of pages) {
-      const existingPages = pageMap.get(page.dogsId) ?? [];
+      const existingPages = pageMap.get(page.dogId) ?? [];
       const displayName = this.toDisplayPageName(page.pageName);
       if (!existingPages.includes(displayName)) {
         existingPages.push(displayName);
         existingPages.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
-        pageMap.set(page.dogsId, existingPages);
+        pageMap.set(page.dogId, existingPages);
       }
     }
 

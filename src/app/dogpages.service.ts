@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 
-import { Pages } from './pages';
+import { PageAssignment } from './pages';
 import { Dog } from './dogs/model/dog';
 import { FirestorePublicDataService } from './firebase/firestore-public-data.service';
 
@@ -11,7 +11,7 @@ import { FirestorePublicDataService } from './firebase/firestore-public-data.ser
 export class DogpagesService {
   constructor(private firestorePublicDataService: FirestorePublicDataService) {}
 
-  getDogPages(page?: string): Observable<Pages[]> {
+  getDogPages(page?: string): Observable<PageAssignment[]> {
     return this.firestorePublicDataService.getDogPages(page);
   }
 

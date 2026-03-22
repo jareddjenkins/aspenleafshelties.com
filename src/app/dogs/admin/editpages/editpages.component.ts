@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DogService } from '../../../dog.service';
 import { forkJoin } from 'rxjs';
-import { Pages } from '../../../pages';
+import { PageAssignment } from '../../../pages';
 import { PageListItem } from './pageListItem';
 import { Dog } from '../../model/dog';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -82,10 +82,10 @@ export class EditpagesComponent implements OnInit {
       dog,
       sortId: 0,
       pageName,
-      dogsId: dog.id,
+      dogId: dog.id,
     };
 
-    if (page.some((item) => item.dogsId === dog.id)) {
+    if (page.some((item) => item.dogId === dog.id)) {
       this.dogSearch[pageName] = '';
       return;
     }
@@ -94,21 +94,21 @@ export class EditpagesComponent implements OnInit {
     this.persistpage(pageName, page);
     this.dogSearch[pageName] = '';
   }
-  addDogObjectToPage(page: Pages, doglist: Dog[]): PageListItem {
+  addDogObjectToPage(page: PageAssignment, doglist: Dog[]): PageListItem {
     const filtereddog = doglist.find((d) => {
-      return d.id === page.dogsId;
+      return d.id === page.dogId;
     });
     const pageName = this.normalizePageName(page.pageName);
     const newpage: PageListItem = {
       dog: filtereddog,
       sortId: page.sortId,
       pageName,
-      dogsId: page.dogsId,
+      dogId: page.dogId,
     };
     return newpage;
   }
 
-  drop(page: Pages[], event: CdkDragDrop<any>) {
+  drop(page: PageAssignment[], event: CdkDragDrop<any>) {
     moveItemInArray(page, event.previousIndex, event.currentIndex);
     for (const i in page) {
       page[i].sortId = Number(i);
@@ -123,7 +123,7 @@ export class EditpagesComponent implements OnInit {
     this.persistpage(pageName, page);
   }
 
-  sortpage(page: Pages[]) {
+  sortpage(page: PageAssignment[]) {
     for (const [index, pageItem] of page.entries()) {
       pageItem.sortId = index;
     }
@@ -131,7 +131,7 @@ export class EditpagesComponent implements OnInit {
     page.sort((a, b) => a.sortId - b.sortId);
   }
 
-  persistpage(pageName: string, page: Pages[]) {
+  persistpage(pageName: string, page: PageAssignment[]) {
     this.firestoreAdminDataService.putPagesByPage(pageName, page).subscribe();
   }
 
@@ -163,7 +163,7 @@ export class EditpagesComponent implements OnInit {
     }
   }
 
-  private getPageName(page: Pages[]): string {
+  private getPageName(page: PageAssignment[]): string {
     if (page === this.boypages) {
       return this.boysPageName;
     }

@@ -34,7 +34,7 @@
           </label>
           <button type="button" class="mini-button" (click)="addnewdog(boysPageName)" [disabled]="!dogSearch[boysPageName]?.trim()">Add</button>
         </div>
-        @for (item of boypages; track item.dogsId; let i = $index) {
+        @for (item of boypages; track item.dogId; let i = $index) {
           <div class="example-box" cdkDrag>
             <span>{{ item.dog.rname }}</span>
             <span class="item-actions">
@@ -75,7 +75,7 @@
           </label>
           <button type="button" class="mini-button" (click)="addnewdog(girlsPageName)" [disabled]="!dogSearch[girlsPageName]?.trim()">Add</button>
         </div>
-        @for (item of girlpages; track item.dogsId; let i = $index) {
+        @for (item of girlpages; track item.dogId; let i = $index) {
           <div class="example-box" cdkDrag>
             <span>{{ item.dog.rname }}</span>
             <span class="item-actions">
@@ -116,7 +116,7 @@
           </label>
           <button type="button" class="mini-button" (click)="addnewdog(availablePageName)" [disabled]="!dogSearch[availablePageName]?.trim()">Add</button>
         </div>
-        @for (item of availablepages; track item.dogsId; let i = $index) {
+        @for (item of availablepages; track item.dogId; let i = $index) {
           <div class="example-box" cdkDrag>
             <span>{{ item.dog.rname }}</span>
             <span class="item-actions">
@@ -157,7 +157,7 @@
           </label>
           <button type="button" class="mini-button" (click)="addnewdog(adultAvailablePageName)" [disabled]="!dogSearch[adultAvailablePageName]?.trim()">Add</button>
         </div>
-        @for (item of adultavailablepages; track item.dogsId; let i = $index) {
+        @for (item of adultavailablepages; track item.dogId; let i = $index) {
           <div class="example-box" cdkDrag>
             <span>{{ item.dog.rname }}</span>
             <span class="item-actions">

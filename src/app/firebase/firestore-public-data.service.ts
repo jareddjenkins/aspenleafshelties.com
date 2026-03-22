@@ -3,7 +3,7 @@ import { collection, doc, documentId, getDoc, getDocs, query, where } from 'fire
 import { from, Observable, of } from 'rxjs';
 
 import { Dog } from '../dogs/model/dog';
-import { Pages } from '../pages';
+import { DogPageDocument, PageAssignment } from '../pages';
 import { FirebasePublicClientService } from './firebase-public-client.service';
 
 type FirestoreDogDocument = {
@@ -18,13 +18,6 @@ type FirestoreDogDocument = {
   damName?: string | null;
   profileImageUrl?: string | null;
   status?: string | null;
-};
-
-type FirestorePageDocument = {
-  slug?: string;
-  displayName?: string;
-  dogIds?: string[];
-  legacyPageName?: string;
 };
 
 @Injectable({
@@ -63,7 +56,7 @@ export class FirestorePublicDataService {
     return from(this.fetchDogsByGender(gender));
   }
 
-  getDogPages(page?: string): Observable<Pages[]> {
+  getDogPages(page?: string): Observable<PageAssignment[]> {
     if (!this.firestore) {
       return of([]);
     }
@@ -104,14 +97,14 @@ export class FirestorePublicDataService {
       .sort((a, b) => this.compareDogIds(a.id, b.id));
   }
 
-  private async fetchDogPages(page?: string): Promise<Pages[]> {
+  private async fetchDogPages(page?: string): Promise<PageAssignment[]> {
     const pageSnapshots = page
       ? [await getDoc(doc(this.firestore!, 'pages', this.slugifyPageName(page)))]
       : (await getDocs(collection(this.firestore!, 'pages'))).docs;
 
     return pageSnapshots
       .filter((snapshot) => snapshot.exists())
-      .flatMap((snapshot) => this.toPageRows(snapshot.id, snapshot.data() as FirestorePageDocument));
+      .flatMap((snapshot) => this.toPageAssignments(snapshot.id, snapshot.data() as Partial<DogPageDocument>));
   }
 
   private async fetchDogsForPage(page: string): Promise<Dog[]> {
@@ -120,7 +113,7 @@ export class FirestorePublicDataService {
       return [];
     }
 
-    const pageData = pageSnapshot.data() as FirestorePageDocument;
+    const pageData = pageSnapshot.data() as Partial<DogPageDocument>;
     const dogIds = pageData.dogIds ?? [];
 
     if (dogIds.length === 0) {
@@ -167,10 +160,10 @@ export class FirestorePublicDataService {
     };
   }
 
-  private toPageRows(id: string, data: FirestorePageDocument): Pages[] {
+  private toPageAssignments(id: string, data: Partial<DogPageDocument>): PageAssignment[] {
     const pageName = data.displayName ?? data.legacyPageName ?? this.toDisplayName(id);
     return (data.dogIds ?? []).map((dogId, index) => ({
-      dogsId: dogId,
+      dogId,
       pageName,
       sortId: index,
     }));
