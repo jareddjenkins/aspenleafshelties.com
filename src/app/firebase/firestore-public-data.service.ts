@@ -7,15 +7,14 @@ import { Pages } from '../pages';
 import { FirebasePublicClientService } from './firebase-public-client.service';
 
 type FirestoreDogDocument = {
-  legacyId?: number;
   rname?: string | null;
   cname?: string | null;
   comments?: string | null;
   dob?: { toDate?: () => Date } | string | null;
   gender?: number | null;
-  sireId?: number | null;
+  sireId?: string | null;
   sireName?: string | null;
-  damId?: number | null;
+  damId?: string | null;
   damName?: string | null;
   profileImageUrl?: string | null;
   status?: string | null;
@@ -48,7 +47,7 @@ export class FirestorePublicDataService {
     return from(this.fetchDogs());
   }
 
-  getDog(id: number): Observable<Dog | undefined> {
+  getDog(id: string): Observable<Dog | undefined> {
     if (!this.firestore) {
       return of(undefined);
     }
@@ -84,11 +83,11 @@ export class FirestorePublicDataService {
     const snapshot = await getDocs(collection(this.firestore!, 'dogs'));
     return snapshot.docs
       .map((docSnapshot) => this.toDog(docSnapshot.id, docSnapshot.data() as FirestoreDogDocument))
-      .sort((a, b) => a.id - b.id);
+      .sort((a, b) => this.compareDogIds(a.id, b.id));
   }
 
-  private async fetchDog(id: number): Promise<Dog | undefined> {
-    const snapshot = await getDoc(doc(this.firestore!, 'dogs', String(id)));
+  private async fetchDog(id: string): Promise<Dog | undefined> {
+    const snapshot = await getDoc(doc(this.firestore!, 'dogs', id));
     if (!snapshot.exists()) {
       return undefined;
     }
@@ -102,7 +101,7 @@ export class FirestorePublicDataService {
 
     return snapshot.docs
       .map((docSnapshot) => this.toDog(docSnapshot.id, docSnapshot.data() as FirestoreDogDocument))
-      .sort((a, b) => a.id - b.id);
+      .sort((a, b) => this.compareDogIds(a.id, b.id));
   }
 
   private async fetchDogPages(page?: string): Promise<Pages[]> {
@@ -153,7 +152,7 @@ export class FirestorePublicDataService {
           : null;
 
     return {
-      id: Number(id),
+      id,
       rname: data.rname ?? '',
       cname: data.cname ?? '',
       comments: data.comments ?? '',
@@ -171,10 +170,21 @@ export class FirestorePublicDataService {
   private toPageRows(id: string, data: FirestorePageDocument): Pages[] {
     const pageName = data.displayName ?? data.legacyPageName ?? this.toDisplayName(id);
     return (data.dogIds ?? []).map((dogId, index) => ({
-      dogsId: Number(dogId),
+      dogsId: dogId,
       pageName,
       sortId: index,
     }));
+  }
+
+  private compareDogIds(a: string, b: string): number {
+    const aNumber = Number(a);
+    const bNumber = Number(b);
+
+    if (Number.isFinite(aNumber) && Number.isFinite(bNumber)) {
+      return aNumber - bNumber;
+    }
+
+    return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
   }
 
   private chunk<T>(values: T[], size: number): T[][] {

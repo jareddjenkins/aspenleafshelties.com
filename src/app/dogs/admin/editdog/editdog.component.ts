@@ -39,7 +39,11 @@ export class EditdogComponent implements OnInit {
   }
 
   getDog() {
-    const id = +this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
+    if (!id) {
+      return;
+    }
+
     this.dogService.getDog(id).subscribe((dog) => {
       this.dog = dog;
       this.dogDob = this.toDateInputValue(dog?.dob);

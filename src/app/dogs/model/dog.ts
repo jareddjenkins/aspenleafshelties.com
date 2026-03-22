@@ -1,14 +1,14 @@
 export type DogStatus = 'reserved' | 'sold' | null;
 
-export class Dog {
-  id: number;
+export interface Dog {
+  id: string;
   cname: string;
   comments: string;
-  dob: Date;
-  damId: number;
+  dob: Date | null;
+  damId: string | null;
   damName: string;
   sireName: string;
-  sireId: number;
+  sireId: string | null;
   gender: boolean;
   profileImageUrl: string;
   rname: string;

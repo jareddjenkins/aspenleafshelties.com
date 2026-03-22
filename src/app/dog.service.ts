@@ -40,7 +40,7 @@ export class DogService {
     );
   }
 
-  getDog(id: number): Observable<Dog> {
+  getDog(id: string): Observable<Dog> {
     return this.firestorePublicDataService.getDog(id).pipe(
       tap(() => this.log(`fetched dog id=${id} from Firestore`)),
       catchError(this.handleReadError<Dog>(`getDog id=${id}`)),

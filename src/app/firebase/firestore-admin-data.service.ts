@@ -17,15 +17,14 @@ import { Pages } from '../pages';
 import { FirebaseAdminClientService } from './firebase-admin-client.service';
 
 type FirestoreDogPayload = {
-  legacyId: number;
   rname: string;
   cname: string;
   comments: string;
   dob: Date | null;
   gender: number;
-  sireId: number | null;
+  sireId: string | null;
   sireName: string | null;
-  damId: number | null;
+  damId: string | null;
   damName: string | null;
   profileImageUrl: string | null;
   status: 'reserved' | 'sold' | null;
@@ -45,7 +44,7 @@ export class FirestoreAdminDataService {
     return from(this.saveDog(dog));
   }
 
-  uploadDogImage(id: number, image: Blob): Observable<string> {
+  uploadDogImage(id: string, image: Blob): Observable<string> {
     return from(this.uploadProfileImage(id, image));
   }
 
@@ -53,19 +52,19 @@ export class FirestoreAdminDataService {
     return from(this.savePage(pageName, updatedPages));
   }
 
-  deleteFromPagesById(pageName: string, id: number): Observable<void> {
+  deleteFromPagesById(pageName: string, id: string): Observable<void> {
     return from(this.removeDogFromPage(pageName, id));
   }
 
-  deleteDog(id: number): Observable<void> {
+  deleteDog(id: string): Observable<void> {
     return from(this.removeDog(id));
   }
 
   private async createDog(): Promise<Dog> {
     const firestore = this.requireFirestore();
-    const nextId = await this.getNextDogId();
+    const dogRef = doc(collection(firestore, 'dogs'));
     const dog: Dog = {
-      id: nextId,
+      id: dogRef.id,
       rname: '',
       cname: '',
       comments: '',
@@ -79,19 +78,19 @@ export class FirestoreAdminDataService {
       status: null,
     };
 
-    await setDoc(doc(firestore, 'dogs', String(nextId)), this.toDogPayload(dog, true));
+    await setDoc(dogRef, this.toDogPayload(dog, true));
     return dog;
   }
 
   private async saveDog(dog: Dog): Promise<Dog> {
     const firestore = this.requireFirestore();
-    await setDoc(doc(firestore, 'dogs', String(dog.id)), this.toDogPayload(dog), {
+    await setDoc(doc(firestore, 'dogs', dog.id), this.toDogPayload(dog), {
       merge: true,
     });
     return dog;
   }
 
-  private async uploadProfileImage(id: number, image: Blob): Promise<string> {
+  private async uploadProfileImage(id: string, image: Blob): Promise<string> {
     const storage = this.requireStorage();
     const firestore = this.requireFirestore();
     const extension = this.getImageExtension(image.type);
@@ -102,7 +101,7 @@ export class FirestoreAdminDataService {
     });
 
     const downloadUrl = await getDownloadURL(imageRef);
-    await updateDoc(doc(firestore, 'dogs', String(id)), {
+    await updateDoc(doc(firestore, 'dogs', id), {
       profileImageUrl: downloadUrl,
       updatedAt: serverTimestamp(),
     });
@@ -128,14 +127,14 @@ export class FirestoreAdminDataService {
         dogIds: updatedPages
           .slice()
           .sort((a, b) => a.sortId - b.sortId)
-          .map((page) => String(page.dogsId)),
+          .map((page) => page.dogsId),
         updatedAt: serverTimestamp(),
       },
       { merge: true },
     );
   }
 
-  private async removeDogFromPage(pageName: string, id: number): Promise<void> {
+  private async removeDogFromPage(pageName: string, id: string): Promise<void> {
     const firestore = this.requireFirestore();
     const slug = this.slugifyPageName(pageName);
     const pageRef = doc(firestore, 'pages', slug);
@@ -146,7 +145,7 @@ export class FirestoreAdminDataService {
     }
 
     const data = pageSnapshot.data() as { dogIds?: string[]; displayName?: string; legacyPageName?: string };
-    const dogIds = (data.dogIds ?? []).filter((dogId) => dogId !== String(id));
+    const dogIds = (data.dogIds ?? []).filter((dogId) => dogId !== id);
 
     await setDoc(
       pageRef,
@@ -161,13 +160,13 @@ export class FirestoreAdminDataService {
     );
   }
 
-  private async removeDog(id: number): Promise<void> {
+  private async removeDog(id: string): Promise<void> {
     const firestore = this.requireFirestore();
     const pageSnapshots = await getDocs(collection(firestore, 'pages'));
     const blockingPages = pageSnapshots.docs
       .filter((snapshot) => {
         const data = snapshot.data() as { dogIds?: string[] };
-        return (data.dogIds ?? []).includes(String(id));
+        return (data.dogIds ?? []).includes(id);
       })
       .map((snapshot) => snapshot.id);
 
@@ -175,23 +174,11 @@ export class FirestoreAdminDataService {
       throw new Error(`This dog cannot be deleted because it is still on these pages: ${blockingPages.join(', ')}.`);
     }
 
-    await deleteDoc(doc(firestore, 'dogs', String(id)));
-  }
-
-  private async getNextDogId(): Promise<number> {
-    const firestore = this.requireFirestore();
-    const snapshot = await getDocs(collection(firestore, 'dogs'));
-    return (
-      snapshot.docs.reduce((maxId, dogSnapshot) => {
-        const dogId = Number(dogSnapshot.id);
-        return Number.isFinite(dogId) ? Math.max(maxId, dogId) : maxId;
-      }, 0) + 1
-    );
+    await deleteDoc(doc(firestore, 'dogs', id));
   }
 
   private toDogPayload(dog: Dog, includeCreatedAt = false): FirestoreDogPayload {
     const payload: FirestoreDogPayload = {
-      legacyId: dog.id,
       rname: dog.rname ?? '',
       cname: dog.cname ?? '',
       comments: dog.comments ?? '',

@@ -32,7 +32,11 @@ export class DogDetailComponent implements OnInit {
   }
 
   getDog(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
+    if (!id) {
+      return;
+    }
+
     this.dogService.getDog(id).subscribe((dog) => {
       this.dog = dog;
       this.updateSeoForDog(dog);

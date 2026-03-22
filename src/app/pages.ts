@@ -1,5 +1,5 @@
 export class Pages {
-  dogsId: number;
+  dogsId: string;
   pageName: string;
   sortId: number;
 }

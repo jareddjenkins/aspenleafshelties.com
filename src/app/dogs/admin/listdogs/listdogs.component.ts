@@ -26,7 +26,7 @@ export class ListdogsComponent implements OnInit {
   query = '';
   sortField: DogSortField = 'rname';
   sortDirection: SortDirection = 'asc';
-  dogPages = new Map<number, string[]>();
+  dogPages = new Map<string, string[]>();
   selectedPageFilters: string[] = [];
   private query$ = new BehaviorSubject<string>('');
   private sortField$ = new BehaviorSubject<DogSortField>('rname');
@@ -135,18 +135,18 @@ export class ListdogsComponent implements OnInit {
     });
   }
 
-  canDeleteDog(dogId: number): boolean {
+  canDeleteDog(dogId: string): boolean {
     return this.getDogPagesLabel(dogId).length === 0;
   }
 
-  getDeleteReason(dogId: number): string {
+  getDeleteReason(dogId: string): string {
     const pageNames = this.getDogPagesLabel(dogId);
     return pageNames.length > 0
       ? `Cannot delete because this dog is on: ${pageNames.join(', ')}.`
       : 'Delete dog';
   }
 
-  getActivePages(dogId: number): string[] {
+  getActivePages(dogId: string): string[] {
     return this.getDogPagesLabel(dogId);
   }
 
@@ -232,7 +232,7 @@ export class ListdogsComponent implements OnInit {
     return rank[a ?? 'null'] - rank[b ?? 'null'];
   }
 
-  private compareActivePages(aDogId: number, bDogId: number): number {
+  private compareActivePages(aDogId: string, bDogId: string): number {
     const aPages = this.getDogPagesLabel(aDogId);
     const bPages = this.getDogPagesLabel(bDogId);
     const countComparison = aPages.length - bPages.length;
@@ -244,8 +244,8 @@ export class ListdogsComponent implements OnInit {
     return this.compareStrings(aPages.join(', '), bPages.join(', '));
   }
 
-  private buildDogPagesMap(pages: Pages[]): Map<number, string[]> {
-    const pageMap = new Map<number, string[]>();
+  private buildDogPagesMap(pages: Pages[]): Map<string, string[]> {
+    const pageMap = new Map<string, string[]>();
 
     for (const page of pages) {
       const existingPages = pageMap.get(page.dogsId) ?? [];
@@ -260,11 +260,11 @@ export class ListdogsComponent implements OnInit {
     return pageMap;
   }
 
-  private getDogPagesLabel(dogId: number): string[] {
+  private getDogPagesLabel(dogId: string): string[] {
     return this.dogPages.get(dogId) ?? [];
   }
 
-  private matchesPageFilters(dogId: number, selectedPageFilters: string[]): boolean {
+  private matchesPageFilters(dogId: string, selectedPageFilters: string[]): boolean {
     const activePages = this.getDogPagesLabel(dogId);
 
     return selectedPageFilters.some((filterName) =>
