@@ -4,7 +4,8 @@
       <span>Search</span>
       <input
         type="text"
-        [(ngModel)]="query"
+        [ngModel]="query"
+        (ngModelChange)="onQueryChange($event)"
         placeholder="Search dogs"
         aria-label="Search dogs"
       />
@@ -35,7 +36,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (dog of dogs | async; track dog) {
+        @for (dog of filteredDogs | async; track dog) {
           <tr>
             <td class="hide-mobile">{{ dog.id }}</td>
             <td>{{ dog.rname }}</td>

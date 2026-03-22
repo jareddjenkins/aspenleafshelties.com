@@ -5,7 +5,8 @@ import { Router } from '@angular/router';
 import { Dog } from '../../model/dog';
 import { DogService } from '../../../dog.service';
 import { FirestoreAdminDataService } from '../../../firebase/firestore-admin-data.service';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-listdogs',
@@ -15,7 +16,9 @@ import { Observable } from 'rxjs';
 })
 export class ListdogsComponent implements OnInit {
   dogs: Observable<Dog[]>;
+  filteredDogs: Observable<Dog[]>;
   query = '';
+  private query$ = new BehaviorSubject<string>('');
 
   constructor(
     private dogService: DogService,
@@ -36,6 +39,14 @@ export class ListdogsComponent implements OnInit {
 
   getDogs() {
     this.dogs = this.dogService.getDogs();
+    this.filteredDogs = combineLatest([this.dogs, this.query$]).pipe(
+      map(([dogs, query]) => this.filterDogs(dogs, query)),
+    );
+  }
+
+  onQueryChange(value: string) {
+    this.query = value;
+    this.query$.next(value);
   }
 
   goToPages(): void {
@@ -44,5 +55,26 @@ export class ListdogsComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  private filterDogs(dogs: Dog[], query: string): Dog[] {
+    const trimmedQuery = query.trim().toLowerCase();
+    if (!trimmedQuery) {
+      return dogs;
+    }
+
+    return dogs.filter((dog) =>
+      [
+        dog.id?.toString(),
+        dog.rname,
+        dog.cname,
+        dog.gender ? 'male' : 'female',
+        dog.sireName,
+        dog.damName,
+        dog.comments,
+      ]
+        .filter(Boolean)
+        .some((value) => value.toLowerCase().includes(trimmedQuery)),
+    );
   }
 }
