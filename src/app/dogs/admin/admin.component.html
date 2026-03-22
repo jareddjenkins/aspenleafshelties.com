@@ -1,3 +1,43 @@
+@if (sessionState$ | async; as session) {
+  <section class="admin-auth-shell">
+    <div class="admin-auth-card">
+      <p class="eyebrow">Admin</p>
 
-<app-listdogs></app-listdogs>
-<router-outlet></router-outlet>
+      @if (!session.isReady) {
+        <h1>Checking access...</h1>
+        <p>Loading your sign-in state.</p>
+      } @else if (!session.isSignedIn) {
+        <h1>Sign in to edit Aspenleaf Shelties.</h1>
+        <p>
+          Use the Google account that is approved for site administration. Visitors can continue browsing the public
+          site without signing in.
+        </p>
+        <button type="button" class="primary-button" (click)="signIn()">Sign In With Google</button>
+      } @else if (!session.isEditor) {
+        <h1>This account is view only.</h1>
+        <p>
+          You are signed in as <strong>{{ session.user?.email }}</strong>, but that account is not on the editor
+          allowlist for this site.
+        </p>
+        <div class="admin-auth-actions">
+          <button type="button" class="secondary-button" (click)="signOut()">Sign Out</button>
+        </div>
+      } @else {
+        <div class="admin-auth-header">
+          <div>
+            <h1>Admin tools</h1>
+            <p>Signed in as {{ session.user?.email }}</p>
+          </div>
+          <button type="button" class="secondary-button" (click)="signOut()">Sign Out</button>
+        </div>
+
+        <app-listdogs></app-listdogs>
+        <router-outlet></router-outlet>
+      }
+
+      @if (errorMessage) {
+        <p class="auth-error">{{ errorMessage }}</p>
+      }
+    </div>
+  </section>
+}

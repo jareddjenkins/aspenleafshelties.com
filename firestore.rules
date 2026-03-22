@@ -1,10 +1,18 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Local emulator rule set: allow unrestricted reads and writes so refactor
-    // work can focus on application behavior without production risk.
+    function isEditor() {
+      return request.auth != null
+        && request.auth.token.email != null
+        && request.auth.token.email in [
+          "jareddjenkins@gmail.com",
+          "aspenleafshelties@gmail.com"
+        ];
+    }
+
     match /{document=**} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if isEditor();
     }
   }
 }

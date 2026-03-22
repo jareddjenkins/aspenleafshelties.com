@@ -5,6 +5,8 @@ import { EnvironmentConfig } from './environment-config';
 
 export const environment: EnvironmentConfig = {
   production: false,
+  // Add the Google account emails that are allowed to edit the site.
+  editorEmails: ['jareddjenkins@gmail.com', 'aspenleafshelties@gmail.com'],
   firebase: {
     apiKey: 'demo-api-key',
     authDomain: 'demo-aspenleafshelties.firebaseapp.com',
@@ -14,6 +16,10 @@ export const environment: EnvironmentConfig = {
     appId: '1:demo:web:local',
   } satisfies FirebaseWebConfig,
   firebaseEmulators: {
+    auth: {
+      host: '127.0.0.1',
+      port: 9099,
+    },
     firestore: {
       host: '127.0.0.1',
       port: 8080,

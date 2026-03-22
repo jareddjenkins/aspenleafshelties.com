@@ -46,7 +46,7 @@
             <td class="hide-mobile">{{ dog.damName }}</td>
             <td class="hide-mobile">{{ dog.dob | date: "shortDate" }}</td>
             <td class="action-col">
-              <a class="icon-link" routerLink="editdog/{{ dog.id }}" routerLinkActive="active">
+              <a class="icon-link" [routerLink]="['/admin/editdog', dog.id]" routerLinkActive="active">
                 <mat-icon>edit</mat-icon>
               </a>
             </td>

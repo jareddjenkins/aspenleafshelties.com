@@ -4,4 +4,5 @@ export interface EnvironmentConfig {
   production: boolean;
   firebase: FirebaseWebConfig;
   firebaseEmulators?: FirebaseEmulatorConfig;
+  editorEmails: string[];
 }

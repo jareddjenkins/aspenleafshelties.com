@@ -13,6 +13,7 @@ export interface FirebaseEmulatorServiceConfig {
 }
 
 export interface FirebaseEmulatorConfig {
+  auth?: FirebaseEmulatorServiceConfig;
   firestore?: FirebaseEmulatorServiceConfig;
   storage?: FirebaseEmulatorServiceConfig;
 }

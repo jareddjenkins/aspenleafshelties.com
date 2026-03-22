@@ -4,9 +4,10 @@ services:
       context: .
       dockerfile: Dockerfile.firebase-emulators
     working_dir: /workspace
-    command: sh -lc "mkdir -p .firebase/emulator-data && firebase emulators:start --project demo-aspenleafshelties --only firestore,storage --import=.firebase/emulator-data --export-on-exit=.firebase/emulator-data"
+    command: sh -lc "mkdir -p .firebase/emulator-data && firebase emulators:start --project demo-aspenleafshelties --only auth,firestore,storage --import=.firebase/emulator-data --export-on-exit=.firebase/emulator-data"
     ports:
       - "4000:4000"
+      - "9099:9099"
       - "8080:8080"
       - "9199:9199"
     volumes:

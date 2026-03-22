@@ -1,0 +1,75 @@
+.admin-auth-shell {
+  padding: 3rem 1.5rem 4rem;
+}
+
+.admin-auth-card {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  background: #faf7f2;
+  border: 1px solid rgba(65, 44, 27, 0.12);
+  box-shadow: 0 20px 45px rgba(49, 32, 16, 0.08);
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8a5a2b;
+}
+
+.admin-auth-card h1 {
+  margin: 0;
+}
+
+.admin-auth-card p {
+  max-width: 48rem;
+}
+
+.admin-auth-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-auth-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.primary-button,
+.secondary-button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.8rem 1.25rem;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primary-button {
+  background: #5f2c1d;
+  color: #fff;
+}
+
+.secondary-button {
+  background: #ede4d7;
+  color: #3a2819;
+}
+
+.auth-error {
+  margin-top: 1rem;
+  color: #8b1e1e;
+}
+
+@media (max-width: 720px) {
+  .admin-auth-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
