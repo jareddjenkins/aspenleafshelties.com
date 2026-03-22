@@ -9,7 +9,7 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { from, Observable, throwError } from 'rxjs';
 
 import { Dog } from '../dogs/model/dog';
@@ -27,9 +27,20 @@ type FirestoreDogPayload = {
   damId: string | null;
   damName: string | null;
   profileImageUrl: string | null;
+  profileCardImageUrl: string | null;
+  profileDetailImageUrl: string | null;
+  profileCardImagePath: string | null;
+  profileDetailImagePath: string | null;
   status: 'reserved' | 'sold' | null;
   updatedAt: unknown;
   createdAt?: unknown;
+};
+
+type UploadedDogImages = {
+  cardUrl: string;
+  detailUrl: string;
+  cardPath: string;
+  detailPath: string;
 };
 
 @Injectable()
@@ -44,8 +55,8 @@ export class FirestoreAdminDataService {
     return from(this.saveDog(dog));
   }
 
-  uploadDogImage(id: string, image: Blob): Observable<string> {
-    return from(this.uploadProfileImage(id, image));
+  uploadDogImage(id: string, images: { card: Blob; detail: Blob }): Observable<UploadedDogImages> {
+    return from(this.uploadProfileImage(id, images));
   }
 
   putPagesByPage(pageName: string, updatedPages: PageAssignment[]): Observable<void> {
@@ -75,6 +86,10 @@ export class FirestoreAdminDataService {
       sireName: '',
       gender: 0 as unknown as boolean,
       profileImageUrl: '',
+      profileCardImageUrl: '',
+      profileDetailImageUrl: '',
+      profileCardImagePath: null,
+      profileDetailImagePath: null,
       status: null,
     };
 
@@ -90,27 +105,41 @@ export class FirestoreAdminDataService {
     return dog;
   }
 
-  private async uploadProfileImage(id: string, image: Blob): Promise<string> {
+  private async uploadProfileImage(id: string, images: { card: Blob; detail: Blob }): Promise<UploadedDogImages> {
     const storage = this.requireStorage();
     const firestore = this.requireFirestore();
-    const extension = this.getImageExtension(image.type);
-    const imageRef = ref(storage, `profile/testimages/profile_${id}.${extension}`);
+    const cardPath = `dogs/${id}/card.jpg`;
+    const detailPath = `dogs/${id}/detail.jpg`;
+    const cardRef = ref(storage, cardPath);
+    const detailRef = ref(storage, detailPath);
 
-    await uploadBytes(imageRef, image, {
-      contentType: image.type || 'image/jpeg',
-    });
+    await Promise.all([
+      uploadBytes(cardRef, images.card, {
+        contentType: images.card.type || 'image/jpeg',
+        cacheControl: 'public,max-age=31536000,immutable',
+      }),
+      uploadBytes(detailRef, images.detail, {
+        contentType: images.detail.type || 'image/jpeg',
+        cacheControl: 'public,max-age=31536000,immutable',
+      }),
+    ]);
 
-    const downloadUrl = await getDownloadURL(imageRef);
+    const [cardUrl, detailUrl] = await Promise.all([getDownloadURL(cardRef), getDownloadURL(detailRef)]);
     await updateDoc(doc(firestore, 'dogs', id), {
-      profileImageUrl: downloadUrl,
+      profileImageUrl: detailUrl,
+      profileCardImageUrl: cardUrl,
+      profileDetailImageUrl: detailUrl,
+      profileCardImagePath: cardPath,
+      profileDetailImagePath: detailPath,
       updatedAt: serverTimestamp(),
     });
 
-    return downloadUrl;
-  }
-
-  private getImageExtension(contentType: string | undefined): 'jpg' | 'png' {
-    return contentType === 'image/png' ? 'png' : 'jpg';
+    return {
+      cardUrl,
+      detailUrl,
+      cardPath,
+      detailPath,
+    };
   }
 
   private async savePage(pageName: string, updatedPages: PageAssignment[]): Promise<void> {
@@ -165,6 +194,7 @@ export class FirestoreAdminDataService {
 
   private async removeDog(id: string): Promise<void> {
     const firestore = this.requireFirestore();
+    const storage = this.requireStorage();
     const pageSnapshots = await getDocs(collection(firestore, 'pages'));
     const blockingPages = pageSnapshots.docs
       .filter((snapshot) => {
@@ -175,6 +205,31 @@ export class FirestoreAdminDataService {
 
     if (blockingPages.length > 0) {
       throw new Error(`This dog cannot be deleted because it is still on these pages: ${blockingPages.join(', ')}.`);
+    }
+
+    const dogSnapshot = await getDoc(doc(firestore, 'dogs', id));
+    if (dogSnapshot.exists()) {
+      const dogData = dogSnapshot.data() as Partial<Dog>;
+      const imagePaths = [
+        dogData.profileCardImagePath,
+        dogData.profileDetailImagePath,
+        this.extractStoragePathFromUrl(dogData.profileCardImageUrl),
+        this.extractStoragePathFromUrl(dogData.profileDetailImageUrl),
+        this.extractStoragePathFromUrl(dogData.profileImageUrl),
+      ].filter((path): path is string => Boolean(path));
+
+      const uniqueImagePaths = [...new Set(imagePaths)];
+      await Promise.all(
+        uniqueImagePaths.map(async (path) => {
+          try {
+            await deleteObject(ref(storage, path));
+          } catch (error) {
+            if (!this.isStorageObjectMissingError(error)) {
+              throw error;
+            }
+          }
+        }),
+      );
     }
 
     await deleteDoc(doc(firestore, 'dogs', id));
@@ -192,6 +247,10 @@ export class FirestoreAdminDataService {
       damId: dog.damId ?? null,
       damName: dog.damName ?? null,
       profileImageUrl: dog.profileImageUrl ?? null,
+      profileCardImageUrl: dog.profileCardImageUrl ?? null,
+      profileDetailImageUrl: dog.profileDetailImageUrl ?? null,
+      profileCardImagePath: dog.profileCardImagePath ?? null,
+      profileDetailImagePath: dog.profileDetailImagePath ?? null,
       status: dog.status ?? null,
       updatedAt: serverTimestamp(),
     };
@@ -223,5 +282,31 @@ export class FirestoreAdminDataService {
 
   private slugifyPageName(value: string): string {
     return value.trim().toLowerCase();
+  }
+
+  private extractStoragePathFromUrl(urlValue: string | null | undefined): string | null {
+    if (!urlValue) {
+      return null;
+    }
+
+    try {
+      const url = new URL(urlValue);
+      if (url.hostname !== 'firebasestorage.googleapis.com') {
+        return null;
+      }
+
+      const pathMatch = url.pathname.match(/^\/v0\/b\/[^/]+\/o\/(.+)$/);
+      if (!pathMatch) {
+        return null;
+      }
+
+      return decodeURIComponent(pathMatch[1]);
+    } catch {
+      return null;
+    }
+  }
+
+  private isStorageObjectMissingError(error: unknown): boolean {
+    return typeof error === 'object' && error !== null && 'code' in error && error.code === 'storage/object-not-found';
   }
 }

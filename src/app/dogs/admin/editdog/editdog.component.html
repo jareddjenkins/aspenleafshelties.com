@@ -87,21 +87,22 @@
 
           <div class="field field-full upload-panel">
             <span>Choose Image</span>
+            <small>We will save a card image for listings and a larger detail image for the dog page.</small>
             <input
               type="file"
               (change)="fileChangeEvent($event)"
               accept="image/png, image/jpeg"
             />
             <div class="upload-actions">
-              <button type="button" class="secondary-button" (click)="onUpload()">Upload Cropped Image</button>
+              <button type="button" class="secondary-button" (click)="onUpload()">Upload Card + Detail Images</button>
             </div>
             <image-cropper
               [imageChangedEvent]="imageChangedEvent"
               [maintainAspectRatio]="true"
               [aspectRatio]="160 / 160"
-              [resizeToWidth]="512"
+              [resizeToWidth]="1400"
               [format]="cropFormat"
-              outputType="base64"
+              outputType="blob"
               (imageCropped)="imageCropped($event)"
               (imageLoaded)="imageLoaded()"
               (cropperReady)="cropperReady()"

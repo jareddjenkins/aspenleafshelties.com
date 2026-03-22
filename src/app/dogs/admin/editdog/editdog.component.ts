@@ -16,15 +16,19 @@ import { FirestoreAdminDataService } from '../../../firebase/firestore-admin-dat
   standalone: false,
 })
 export class EditdogComponent implements OnInit {
+  private static readonly CARD_IMAGE_SIZE = 640;
+  private static readonly DETAIL_IMAGE_SIZE = 1400;
+  private static readonly JPEG_QUALITY = 0.84;
+
   dog: Dog;
   //imagecropper
   imageChangedEvent: any = '';
   croppedImage: any = '';
-  croppedImageBlob: any = '';
+  croppedImageBlob: Blob | null = null;
 
   showInput = false;
   dogDob = '';
-  cropFormat: 'png' | 'jpeg' = 'jpeg';
+  cropFormat: 'jpeg' = 'jpeg';
 
   constructor(
     private route: ActivatedRoute,
@@ -75,31 +79,33 @@ export class EditdogComponent implements OnInit {
       return;
     }
 
-    this.firestoreAdminDataService
-      .uploadDogImage(this.dog.id, this.croppedImageBlob)
-      .subscribe((x) => (this.dog.profileImageUrl = x));
-  }
-
-  dataURLtoBlob(dataurl) {
-    let arr = dataurl.split(','),
-      mime = arr[0].match(/:(.*?);/)[1],
-      bstr = atob(arr[1]),
-      n = bstr.length,
-      u8arr = new Uint8Array(n);
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new Blob([u8arr], { type: mime });
+    Promise.all([
+      this.resizeImageBlob(this.croppedImageBlob, EditdogComponent.CARD_IMAGE_SIZE),
+      this.resizeImageBlob(this.croppedImageBlob, EditdogComponent.DETAIL_IMAGE_SIZE),
+    ])
+      .then(([cardImage, detailImage]) =>
+        this.firestoreAdminDataService.uploadDogImage(this.dog.id, { card: cardImage, detail: detailImage }).subscribe(
+          (uploadedImages) => {
+            this.dog.profileCardImageUrl = uploadedImages.cardUrl;
+            this.dog.profileDetailImageUrl = uploadedImages.detailUrl;
+            this.dog.profileCardImagePath = uploadedImages.cardPath;
+            this.dog.profileDetailImagePath = uploadedImages.detailPath;
+            this.dog.profileImageUrl = uploadedImages.detailUrl;
+          },
+        ),
+      )
+      .catch((error) => {
+        console.error(error);
+        window.alert('Unable to prepare the image for upload.');
+      });
   }
 
   fileChangeEvent(event: any): void {
-    const selectedFile = event?.target?.files?.[0] as File | undefined;
-    this.cropFormat = selectedFile?.type === 'image/png' ? 'png' : 'jpeg';
     this.imageChangedEvent = event;
   }
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.objectUrl;
-    this.croppedImageBlob = event.blob;
+    this.croppedImageBlob = event.blob ?? null;
   }
   imageLoaded() {
     // show cropper
@@ -139,5 +145,50 @@ export class EditdogComponent implements OnInit {
     }
 
     return date.toISOString().slice(0, 10);
+  }
+
+  private async resizeImageBlob(sourceImage: Blob, targetSize: number): Promise<Blob> {
+    const image = await this.loadImage(sourceImage);
+    const canvas = document.createElement('canvas');
+    canvas.width = targetSize;
+    canvas.height = targetSize;
+
+    const context = canvas.getContext('2d');
+    if (!context) {
+      throw new Error('Unable to create image canvas.');
+    }
+
+    context.imageSmoothingEnabled = true;
+    context.imageSmoothingQuality = 'high';
+    context.drawImage(image, 0, 0, targetSize, targetSize);
+
+    const resizedImage = await new Promise<Blob | null>((resolve) => {
+      canvas.toBlob((blob) => resolve(blob), 'image/jpeg', EditdogComponent.JPEG_QUALITY);
+    });
+
+    if (!resizedImage) {
+      throw new Error('Unable to create resized image.');
+    }
+
+    return resizedImage;
+  }
+
+  private loadImage(sourceImage: Blob): Promise<HTMLImageElement> {
+    return new Promise((resolve, reject) => {
+      const objectUrl = URL.createObjectURL(sourceImage);
+      const image = new Image();
+
+      image.onload = () => {
+        URL.revokeObjectURL(objectUrl);
+        resolve(image);
+      };
+
+      image.onerror = () => {
+        URL.revokeObjectURL(objectUrl);
+        reject(new Error('Unable to load image.'));
+      };
+
+      image.src = objectUrl;
+    });
   }
 }

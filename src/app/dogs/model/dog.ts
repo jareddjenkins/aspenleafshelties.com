@@ -11,6 +11,10 @@ export interface Dog {
   sireId: string | null;
   gender: boolean;
   profileImageUrl: string;
+  profileCardImageUrl: string;
+  profileDetailImageUrl: string;
+  profileCardImagePath: string | null;
+  profileDetailImagePath: string | null;
   rname: string;
   status: DogStatus;
 }

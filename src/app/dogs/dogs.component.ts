@@ -15,6 +15,8 @@ export class DogsComponent {
 
   @Input() showStatusBanner = false;
 
+  @Input() imageVariant: 'card' | 'detail' = 'card';
+
   lgImgUrl: string;
 
   constructor(
@@ -39,5 +41,13 @@ export class DogsComponent {
     }
 
     return null;
+  }
+
+  get imageUrl(): string {
+    if (this.imageVariant === 'detail') {
+      return this.dog?.profileDetailImageUrl || this.dog?.profileCardImageUrl || this.dog?.profileImageUrl || '';
+    }
+
+    return this.dog?.profileCardImageUrl || this.dog?.profileDetailImageUrl || this.dog?.profileImageUrl || '';
   }
 }

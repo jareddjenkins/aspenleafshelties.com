@@ -17,6 +17,10 @@ type FirestoreDogDocument = {
   damId?: string | null;
   damName?: string | null;
   profileImageUrl?: string | null;
+  profileCardImageUrl?: string | null;
+  profileDetailImageUrl?: string | null;
+  profileCardImagePath?: string | null;
+  profileDetailImagePath?: string | null;
   status?: string | null;
 };
 
@@ -156,6 +160,10 @@ export class FirestorePublicDataService {
       sireName: data.sireName ?? '',
       gender: Number(data.gender ?? 0) === 1,
       profileImageUrl: data.profileImageUrl ?? '',
+      profileCardImageUrl: data.profileCardImageUrl ?? data.profileImageUrl ?? '',
+      profileDetailImageUrl: data.profileDetailImageUrl ?? data.profileImageUrl ?? '',
+      profileCardImagePath: data.profileCardImagePath ?? null,
+      profileDetailImagePath: data.profileDetailImagePath ?? null,
       status: data.status === 'reserved' || data.status === 'sold' ? data.status : null,
     };
   }

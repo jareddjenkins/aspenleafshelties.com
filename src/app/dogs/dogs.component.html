@@ -13,10 +13,10 @@
           </span>
         }
         <img
-          src="{{ dog.profileImageUrl }}"
+          [src]="imageUrl"
           alt="Picture of {{ dog.cname }}"
-          loading="lazy"
-          decoding="async"
+          [attr.loading]="imageVariant === 'detail' ? 'eager' : 'lazy'"
+          [attr.decoding]="imageVariant === 'detail' ? 'sync' : 'async'"
           sizes="(max-width: 800px) 100vw, 40vw"
         />
       </div>
