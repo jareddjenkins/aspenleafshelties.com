@@ -7,28 +7,38 @@
     <button type="button" class="secondary-button" (click)="goToDogList()">Back To Dog List</button>
   </div>
 
-  <label class="picker-field" for="pageselect">
-    <span>Choose dog to add</span>
-    <select id="pageselect" [formControl]="pageselect">
-      <option value="">Select a dog</option>
-      @for (dog of doglist; track dog.id) {
-        <option [ngValue]="dog">{{ dog.rname }}</option>
-      }
-    </select>
-  </label>
-
   <div class="pages-grid">
     <div class="page-column">
       <div cdkDropList class="example-list" (cdkDropListDropped)="drop(boypages, $event)">
         <div class="column-header">
           <h2>Boys</h2>
-          <button type="button" class="mini-button" (click)="addnewdog(selectedDog(), 'Boys')">Add</button>
+        </div>
+        <div class="column-add">
+          <div class="column-add-copy">
+            <p class="column-add-kicker">Add To Page</p>
+          </div>
+          <label class="picker-field" for="boys-select">
+            <input
+              id="boys-select"
+              type="text"
+              [(ngModel)]="dogSearch[boysPageName]"
+              name="boys-select"
+              list="boys-dogs"
+              placeholder="Filter dogs by registered name"
+            />
+            <datalist id="boys-dogs">
+              @for (dog of filteredDogs(boysPageName); track dog.id) {
+                <option [value]="dog.rname"></option>
+              }
+            </datalist>
+          </label>
+          <button type="button" class="mini-button" (click)="addnewdog(boysPageName)" [disabled]="!dogSearch[boysPageName]?.trim()">Add</button>
         </div>
         @for (item of boypages; track item.dogsId; let i = $index) {
           <div class="example-box" cdkDrag>
             <span>{{ item.dog.rname }}</span>
             <span class="item-actions">
-              <button type="button" class="icon-button" (click)="removedog(boypages, i)" aria-label="Remove dog from boys page">
+              <button type="button" class="icon-button" (click)="removedog(boysPageName, boypages, i)" aria-label="Remove dog from boys page">
                 <mat-icon>remove_circle</mat-icon>
               </button>
               <mat-icon>drag_handle</mat-icon>
@@ -42,13 +52,34 @@
       <div cdkDropList class="example-list" (cdkDropListDropped)="drop(girlpages, $event)">
         <div class="column-header">
           <h2>Girls</h2>
-          <button type="button" class="mini-button" (click)="addnewdog(selectedDog(), 'Girls')">Add</button>
+        </div>
+        <div class="column-add">
+          <div class="column-add-copy">
+            <p class="column-add-kicker">Add To Page</p>
+            <p class="column-add-text">Choose a dog to place on this page before reordering the list below.</p>
+          </div>
+          <label class="picker-field" for="girls-select">
+            <input
+              id="girls-select"
+              type="text"
+              [(ngModel)]="dogSearch[girlsPageName]"
+              name="girls-select"
+              list="girls-dogs"
+              placeholder="Filter dogs by registered name"
+            />
+            <datalist id="girls-dogs">
+              @for (dog of filteredDogs(girlsPageName); track dog.id) {
+                <option [value]="dog.rname"></option>
+              }
+            </datalist>
+          </label>
+          <button type="button" class="mini-button" (click)="addnewdog(girlsPageName)" [disabled]="!dogSearch[girlsPageName]?.trim()">Add</button>
         </div>
         @for (item of girlpages; track item.dogsId; let i = $index) {
           <div class="example-box" cdkDrag>
             <span>{{ item.dog.rname }}</span>
             <span class="item-actions">
-              <button type="button" class="icon-button" (click)="removedog(girlpages, i)" aria-label="Remove dog from girls page">
+              <button type="button" class="icon-button" (click)="removedog(girlsPageName, girlpages, i)" aria-label="Remove dog from girls page">
                 <mat-icon>remove_circle</mat-icon>
               </button>
               <mat-icon>drag_handle</mat-icon>
@@ -62,13 +93,34 @@
       <div cdkDropList class="example-list" (cdkDropListDropped)="drop(availablepages, $event)">
         <div class="column-header">
           <h2>Available</h2>
-          <button type="button" class="mini-button" (click)="addnewdog(selectedDog(), 'Available')">Add</button>
+        </div>
+        <div class="column-add">
+          <div class="column-add-copy">
+            <p class="column-add-kicker">Add To Page</p>
+            <p class="column-add-text">Choose a dog to place on this page before reordering the list below.</p>
+          </div>
+          <label class="picker-field" for="available-select">
+            <input
+              id="available-select"
+              type="text"
+              [(ngModel)]="dogSearch[availablePageName]"
+              name="available-select"
+              list="available-dogs"
+              placeholder="Filter dogs by registered name"
+            />
+            <datalist id="available-dogs">
+              @for (dog of filteredDogs(availablePageName); track dog.id) {
+                <option [value]="dog.rname"></option>
+              }
+            </datalist>
+          </label>
+          <button type="button" class="mini-button" (click)="addnewdog(availablePageName)" [disabled]="!dogSearch[availablePageName]?.trim()">Add</button>
         </div>
         @for (item of availablepages; track item.dogsId; let i = $index) {
           <div class="example-box" cdkDrag>
             <span>{{ item.dog.rname }}</span>
             <span class="item-actions">
-              <button type="button" class="icon-button" (click)="removedog(availablepages, i)" aria-label="Remove dog from available page">
+              <button type="button" class="icon-button" (click)="removedog(availablePageName, availablepages, i)" aria-label="Remove dog from available page">
                 <mat-icon>remove_circle</mat-icon>
               </button>
               <mat-icon>drag_handle</mat-icon>
@@ -82,13 +134,34 @@
       <div cdkDropList class="example-list" (cdkDropListDropped)="drop(adultavailablepages, $event)">
         <div class="column-header">
           <h2>Adult Available</h2>
-          <button type="button" class="mini-button" (click)="addnewdog(selectedDog(), 'AdultAvailable')">Add</button>
+        </div>
+        <div class="column-add">
+          <div class="column-add-copy">
+            <p class="column-add-kicker">Add To Page</p>
+            <p class="column-add-text">Choose a dog to place on this page before reordering the list below.</p>
+          </div>
+          <label class="picker-field" for="adultavailable-select">
+            <input
+              id="adultavailable-select"
+              type="text"
+              [(ngModel)]="dogSearch[adultAvailablePageName]"
+              name="adultavailable-select"
+              list="adultavailable-dogs"
+              placeholder="Filter dogs by registered name"
+            />
+            <datalist id="adultavailable-dogs">
+              @for (dog of filteredDogs(adultAvailablePageName); track dog.id) {
+                <option [value]="dog.rname"></option>
+              }
+            </datalist>
+          </label>
+          <button type="button" class="mini-button" (click)="addnewdog(adultAvailablePageName)" [disabled]="!dogSearch[adultAvailablePageName]?.trim()">Add</button>
         </div>
         @for (item of adultavailablepages; track item.dogsId; let i = $index) {
           <div class="example-box" cdkDrag>
             <span>{{ item.dog.rname }}</span>
             <span class="item-actions">
-              <button type="button" class="icon-button" (click)="removedog(adultavailablepages, i)" aria-label="Remove dog from adult available page">
+              <button type="button" class="icon-button" (click)="removedog(adultAvailablePageName, adultavailablepages, i)" aria-label="Remove dog from adult available page">
                 <mat-icon>remove_circle</mat-icon>
               </button>
               <mat-icon>drag_handle</mat-icon>

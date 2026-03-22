@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DogService } from '../../../dog.service';
-import { Observable, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { Pages } from '../../../pages';
 import { PageListItem } from './pageListItem';
 import { Dog } from '../../model/dog';
-import { map, startWith } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DogpagesService } from 'src/app/dogpages.service';
 import { FirestoreAdminDataService } from '../../../firebase/firestore-admin-data.service';
@@ -18,14 +16,22 @@ import { Router } from '@angular/router';
     standalone: false
 })
 export class EditpagesComponent implements OnInit {
+  readonly boysPageName = 'boys';
+  readonly girlsPageName = 'girls';
+  readonly availablePageName = 'available';
+  readonly adultAvailablePageName = 'adultavailable';
   boypages: PageListItem[] = [];
   girlpages: PageListItem[] = [];
   availablepages: PageListItem[] = [];
   adultavailablepages: PageListItem[] = [];
   allpages: PageListItem[] = [];
   doglist: Dog[] = [];
-  filteredOptions: Observable<Dog[]>;
-  pageselect = new FormControl<Dog | string>('');
+  dogSearch: Record<string, string> = {
+    boys: '',
+    girls: '',
+    available: '',
+    adultavailable: '',
+  };
 
   constructor(
     private dogpagesService: DogpagesService,
@@ -39,89 +45,67 @@ export class EditpagesComponent implements OnInit {
     const pages$ = this.dogpagesService.getDogPages();
 
     forkJoin(pages$, dogs$).subscribe( (results) => {
-      this.doglist = results[1];
+      this.doglist = results[1]
+        .slice()
+        .sort((a, b) => (a.rname ?? '').localeCompare(b.rname ?? '', undefined, { sensitivity: 'base' }));
       this.allpages = results[0].map((page) =>
-        this.addDogObjectToPage(page, results[1]),
+        this.addDogObjectToPage(page, this.doglist),
       );
-      this.boypages = this.allpages.filter((dli) => dli.pageName === 'Boys');
-      this.girlpages = this.allpages.filter((dli) => dli.pageName === 'Girls');
+      this.boypages = this.allpages.filter((dli) => this.normalizePageName(dli.pageName) === this.boysPageName);
+      this.girlpages = this.allpages.filter((dli) => this.normalizePageName(dli.pageName) === this.girlsPageName);
       this.availablepages = this.allpages.filter(
-        (dli) => dli.pageName === 'Available',
+        (dli) => this.normalizePageName(dli.pageName) === this.availablePageName,
       );
       this.adultavailablepages = this.allpages.filter(
-        (dli) => dli.pageName === 'AdultAvailable',
-      );
-      this.filteredOptions = this.pageselect.valueChanges.pipe(
-        startWith<string | Dog>(''),
-        map((value) => (typeof value === 'string' ? value : value.rname)),
-        map((name) => (name ? this._filter(name) : this.doglist.slice())),
+        (dli) => this.normalizePageName(dli.pageName) === this.adultAvailablePageName,
       );
     });
   }
 
-  private _filter(name: string): Dog[] {
-    const filterValue = name.toLowerCase();
+  addnewdog(pageName: string) {
+    const page = this.getPage(pageName);
+    if (!page) {
+      return;
+    }
 
-    return this.doglist.filter((option) =>
-      option.rname.toLowerCase().includes(filterValue),
-    );
-  }
-  addnewdog(dog: Dog, pageName: string) {
+    const searchValue = this.dogSearch[pageName]?.trim();
+    if (!searchValue) {
+      return;
+    }
+
+    const dog = this.doglist.find((item) => (item.rname ?? '') === searchValue);
     if (!dog) {
       return;
     }
 
-    let page: PageListItem[];
     const newpageItem: PageListItem = {
-      dog: this.doglist.find((d) => d.id === dog.id),
+      dog,
       sortId: 0,
-      pageName: pageName,
+      pageName,
       dogsId: dog.id,
     };
 
-    switch (pageName) {
-      case 'Boys':
-        page = this.boypages;
-        break;
-      case 'Girls':
-        page = this.girlpages;
-        break;
-      case 'Available':
-        page = this.availablepages;
-        break;
-      case 'AdultAvailable':
-        page = this.adultavailablepages;
-        break;
-    }
     if (page.some((item) => item.dogsId === dog.id)) {
-      this.pageselect.setValue('');
+      this.dogSearch[pageName] = '';
       return;
     }
     page.push(newpageItem);
     this.sortpage(page);
-    this.persistpage(page);
-    this.pageselect.setValue('');
+    this.persistpage(pageName, page);
+    this.dogSearch[pageName] = '';
   }
   addDogObjectToPage(page: Pages, doglist: Dog[]): PageListItem {
     const filtereddog = doglist.find((d) => {
       return d.id === page.dogsId;
     });
+    const pageName = this.normalizePageName(page.pageName);
     const newpage: PageListItem = {
       dog: filtereddog,
       sortId: page.sortId,
-      pageName: page.pageName,
+      pageName,
       dogsId: page.dogsId,
     };
     return newpage;
-  }
-
-  displayFn(dog?: Dog): string | undefined {
-    return dog ? dog.rname : undefined;
-  }
-
-  selectedDog(): Dog | null {
-    const value = this.pageselect.value;
-    return value && typeof value === 'object' ? value : null;
   }
 
   drop(page: Pages[], event: CdkDragDrop<any>) {
@@ -130,30 +114,72 @@ export class EditpagesComponent implements OnInit {
       page[i].sortId = Number(i);
     }
     this.sortpage(page);
-    this.persistpage(page);
+    this.persistpage(this.getPageName(page), page);
   }
 
-  removedog(page: PageListItem[], index: number) {
-    const pageitem = page[index];
+  removedog(pageName: string, page: PageListItem[], index: number) {
     page.splice(index, 1);
     this.sortpage(page);
-    this.firestoreAdminDataService
-      .deleteFromPagesById(pageitem.pageName, pageitem.dogsId)
-      .subscribe();
+    this.persistpage(pageName, page);
   }
 
   sortpage(page: Pages[]) {
-    page.sort((a, b) => a.sortId - b.sortId);
-  }
-  persistpage(page: Pages[]) {
-    if (page.length === 0) {
-      return;
+    for (const [index, pageItem] of page.entries()) {
+      pageItem.sortId = index;
     }
 
-    this.firestoreAdminDataService.putPagesByPage(page[0].pageName, page).subscribe();
+    page.sort((a, b) => a.sortId - b.sortId);
+  }
+
+  persistpage(pageName: string, page: Pages[]) {
+    this.firestoreAdminDataService.putPagesByPage(pageName, page).subscribe();
   }
 
   goToDogList(): void {
     this.router.navigate(['/admin']);
+  }
+
+  filteredDogs(pageName: string): Dog[] {
+    const query = this.dogSearch[pageName]?.trim().toLowerCase() ?? '';
+    if (!query) {
+      return this.doglist;
+    }
+
+    return this.doglist.filter((dog) => (dog.rname ?? '').toLowerCase().includes(query));
+  }
+
+  private getPage(pageName: string): PageListItem[] | null {
+    switch (pageName) {
+      case this.boysPageName:
+        return this.boypages;
+      case this.girlsPageName:
+        return this.girlpages;
+      case this.availablePageName:
+        return this.availablepages;
+      case this.adultAvailablePageName:
+        return this.adultavailablepages;
+      default:
+        return null;
+    }
+  }
+
+  private getPageName(page: Pages[]): string {
+    if (page === this.boypages) {
+      return this.boysPageName;
+    }
+
+    if (page === this.girlpages) {
+      return this.girlsPageName;
+    }
+
+    if (page === this.availablepages) {
+      return this.availablePageName;
+    }
+
+    return this.adultAvailablePageName;
+  }
+
+  private normalizePageName(value: string): string {
+    return (value ?? '').replace(/\s+/g, '').toLowerCase();
   }
 }
