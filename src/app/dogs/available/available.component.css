@@ -1,5 +1,6 @@
 .available-hero img {
     display: block;
+    height: auto;
     max-height: 420px;
     object-fit: cover;
     width: 100%;
@@ -70,6 +71,7 @@ p + p {
     border-radius: 24px;
     box-shadow: 0 18px 36px rgba(26, 38, 32, 0.12);
     display: block;
+    height: auto;
     width: 100%;
 }
 
