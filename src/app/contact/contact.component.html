@@ -18,6 +18,11 @@
       We are based in Dewy Rose, Georgia and regularly hear from families in Atlanta, Athens, Augusta, and the broader
       Northeast Georgia region who are searching for a thoughtfully bred Shetland Sheepdog.
     </p>
+    @if (questionnaireEnabled) {
+      <div class="contact-actions">
+        <a class="questionnaire-link" routerLink="/dogs/questionnaire">Complete The Questionnaire</a>
+      </div>
+    }
   </div>
 
   <aside class="contact-panel">

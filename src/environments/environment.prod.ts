@@ -5,6 +5,7 @@ export const environment: EnvironmentConfig = {
   production: true,
   // Add the Google account emails that are allowed to edit the site.
   editorEmails: ['jareddjenkins@gmail.com', 'aspenleafshelties@gmail.com'],
+  questionnaireEnabled: true,
   firebase: {
     apiKey: 'AIzaSyCAwoy7LYvSXy9rmlito7YvyOClhUK1UkY',
     authDomain: 'aspenleafshelties.firebaseapp.com',

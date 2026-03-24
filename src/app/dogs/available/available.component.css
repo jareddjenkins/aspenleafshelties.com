@@ -120,6 +120,37 @@ p + p {
     font-weight: 600;
 }
 
+.reserve-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.reserve-primary-link,
+.reserve-secondary-link {
+    align-items: center;
+    border-radius: 999px;
+    display: inline-flex;
+    font-weight: 600;
+    min-height: 2.85rem;
+    padding: 0.75rem 1.2rem;
+    text-decoration: none;
+}
+
+.reserve-primary-link {
+    background: #fff;
+    border: 2px solid var(--color-evergreen);
+    color: var(--color-evergreen-deep);
+    box-shadow: 0 14px 28px rgba(26, 38, 32, 0.12);
+}
+
+.reserve-secondary-link {
+    background: rgba(244, 239, 229, 0.88);
+    border: 1px solid rgba(58, 94, 73, 0.2);
+    color: var(--color-evergreen-deep);
+}
+
 @media (max-width: 900px) {
     .page-intro,
     .info-panel {

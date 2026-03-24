@@ -10,9 +10,94 @@ service cloud.firestore {
         ];
     }
 
-    match /{document=**} {
+    function validInquiryString(field, min, max) {
+      return field is string && field.size() >= min && field.size() <= max;
+    }
+
+    function validOptionalInquiryString(field, max) {
+      return field is string && field.size() <= max;
+    }
+
+    function validQuestionnaire() {
+      return request.resource.data.questionnaire == null
+        || (
+          request.resource.data.questionnaire is map
+          && request.resource.data.questionnaire.keys().hasOnly([
+            "primaryName",
+            "sexPreference",
+            "colorPreference",
+            "previousSheltieOwnership",
+            "homeSummary",
+            "returnToBreederAgreement",
+            "breedingContractAcknowledgement",
+          ])
+          && validInquiryString(request.resource.data.questionnaire.primaryName, 2, 80)
+          && request.resource.data.questionnaire.sexPreference is string
+          && request.resource.data.questionnaire.sexPreference in ["no-preference", "male", "female"]
+          && request.resource.data.questionnaire.colorPreference is string
+          && request.resource.data.questionnaire.colorPreference in ["no-preference", "sable", "blue-merle", "tri-color-black"]
+          && request.resource.data.questionnaire.previousSheltieOwnership is string
+          && request.resource.data.questionnaire.previousSheltieOwnership in ["yes", "no"]
+          && validOptionalInquiryString(request.resource.data.questionnaire.homeSummary, 600)
+          && request.resource.data.questionnaire.returnToBreederAgreement == true
+          && request.resource.data.questionnaire.breedingContractAcknowledgement == true
+        );
+    }
+
+    function isValidInquiry() {
+      return request.resource.data.keys().hasOnly([
+          "fullName",
+          "email",
+          "phone",
+          "location",
+          "interest",
+          "message",
+          "source",
+          "status",
+          "questionnaire",
+          "website",
+          "submittedAt"
+        ])
+        && validInquiryString(request.resource.data.fullName, 2, 80)
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 120
+        && request.resource.data.email.matches('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$')
+        && validOptionalInquiryString(request.resource.data.phone, 30)
+        && validInquiryString(request.resource.data.location, 2, 80)
+        && request.resource.data.interest is string
+        && (
+          request.resource.data.interest == "puppy"
+          || request.resource.data.interest == "adult"
+          || request.resource.data.interest == "either"
+        )
+        && validInquiryString(request.resource.data.message, 30, 2000)
+        && (
+          request.resource.data.source == "available-page"
+          || request.resource.data.source == "questionnaire-page"
+        )
+        && request.resource.data.status == "new"
+        && validQuestionnaire()
+        && request.resource.data.website == ""
+        && request.resource.data.submittedAt == request.time;
+    }
+
+    match /dogs/{document} {
       allow read: if true;
       allow write: if isEditor();
+    }
+
+    match /pages/{document} {
+      allow read: if true;
+      allow write: if isEditor();
+    }
+
+    match /inquiries/{document} {
+      allow create: if isValidInquiry();
+      allow read, update, delete: if isEditor();
+    }
+
+    match /{document=**} {
+      allow read, write: if isEditor();
     }
   }
 }

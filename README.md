@@ -66,6 +66,35 @@ Hosting now deploys the prerendered Angular output from `dist/aspenleafshelties/
 
 Firebase Storage rules now live in [storage.rules](/Users/jaredjenkins/repos/aspenleafshelties.com/storage.rules). The current rule set is intentionally open as a temporary migration step so image uploads work while the site moves to the new bucket. `./scripts/firebase-deploy.sh` deploys Hosting, Storage rules, and Firestore rules.
 
+## Inquiry Notifications
+
+The public questionnaire saves to the `inquiries` collection in Firestore. Email notification logic lives in [functions/index.js](/Users/jaredjenkins/repos/aspenleafshelties.com/functions/index.js).
+
+Setup:
+
+1. Install the function dependencies:
+`cd functions && npm install`
+2. Set the SMTP secret used by the notification function:
+`firebase functions:secrets:set INQUIRY_EMAIL_CONFIG`
+3. Paste JSON in this shape:
+```json
+{
+  "host": "smtp.gmail.com",
+  "port": 465,
+  "secure": true,
+  "user": "aspenleafshelties@gmail.com",
+  "pass": "your-app-password",
+  "from": "Aspenleaf Shelties <aspenleafshelties@gmail.com>",
+  "to": "aspenleafshelties@gmail.com"
+}
+```
+4. Deploy the function after the secret exists:
+`firebase deploy --only functions`
+
+Each new `inquiries` document triggers an email and then writes a `notification` status back to the same Firestore document so you can tell whether the email was sent.
+
+The current deploy script and GitHub Actions workflow do not deploy functions yet. That is intentional so Hosting deploys keep working until the SMTP secret is configured in the live Firebase project.
+
 ## Firestore Import
 
 The live API Swagger has been saved to [docs/api/aspenleafapi.swagger.v1.json](/Users/jaredjenkins/repos/aspenleafshelties.com/docs/api/aspenleafapi.swagger.v1.json).

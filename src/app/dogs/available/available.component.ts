@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Dog } from '../model/dog';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-available',
@@ -12,6 +13,7 @@ import { Dog } from '../model/dog';
 export class AvailableComponent implements OnInit {
   puppies: Dog[] = [];
   adults: Dog[] = [];
+  readonly questionnaireEnabled = environment.questionnaireEnabled;
 
   constructor(
     private route: ActivatedRoute,

@@ -13,6 +13,7 @@ export class TopnavComponent {
     { label: 'Boys', path: '/dogs/boys' },
     { label: 'Girls', path: '/dogs/girls' },
     { label: 'Puppies', path: '/dogs/puppies' },
+    { label: 'Contact', path: '/contact' },
     { label: 'Resources', path: '/resources' },
   ];
 

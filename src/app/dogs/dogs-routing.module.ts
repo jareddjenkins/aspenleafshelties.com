@@ -1,14 +1,23 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { inject } from '@angular/core';
+import { Router, RouterModule, Routes, CanActivateFn, CanMatchFn } from '@angular/router';
 import { BoysComponent } from './boys/boys.component';
 import { GirlsComponent } from './girls/girls.component';
 import { AvailableComponent } from './available/available.component';
+import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 import {
   availableAdultsResolver,
   availablePuppiesResolver,
   boysPageResolver,
   girlsPageResolver,
 } from './public-dog.resolvers';
+import { environment } from '../../environments/environment';
+
+const questionnaireEnabledRedirect = () =>
+  environment.questionnaireEnabled || inject(Router).parseUrl('/contact');
+
+const questionnaireEnabledCanMatch: CanMatchFn = () => questionnaireEnabledRedirect();
+const questionnaireEnabledCanActivate: CanActivateFn = () => questionnaireEnabledRedirect();
 
 const routes: Routes = [
   {
@@ -51,6 +60,17 @@ const routes: Routes = [
       title: 'Available Sheltie Puppies in Georgia Near Atlanta | Aspenleaf Shelties',
       description:
         'See available Sheltie puppies and companion opportunities at Aspenleaf Shelties in Dewy Rose, Georgia for families in Atlanta, Athens, Augusta, and beyond.',
+    },
+  },
+  {
+    path: 'questionnaire',
+    component: QuestionnaireComponent,
+    canMatch: [questionnaireEnabledCanMatch],
+    canActivate: [questionnaireEnabledCanActivate],
+    data: {
+      title: 'Sheltie Questionnaire | Aspenleaf Shelties',
+      description:
+        'Complete the Aspenleaf Shelties questionnaire to share your home, goals, and expectations before reserving a Sheltie puppy or companion in Georgia.',
     },
   },
   {

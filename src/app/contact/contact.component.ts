@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Component({
     selector: 'app-contact',
@@ -6,4 +7,6 @@ import { Component } from '@angular/core';
     styleUrls: ['./contact.component.css'],
     standalone: false
 })
-export class ContactComponent {}
+export class ContactComponent {
+  readonly questionnaireEnabled = environment.questionnaireEnabled;
+}

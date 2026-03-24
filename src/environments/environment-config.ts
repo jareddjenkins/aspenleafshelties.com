@@ -5,4 +5,5 @@ export interface EnvironmentConfig {
   firebase: FirebaseWebConfig;
   firebaseEmulators?: FirebaseEmulatorConfig;
   editorEmails: string[];
+  questionnaireEnabled: boolean;
 }
