@@ -20,6 +20,8 @@ export class DogsComponent implements OnChanges {
 
   @Input() prioritizeImage = false;
 
+  @Input() showPrice = false;
+
   private imageLoadFailed = false;
 
   lgImgUrl: string;
@@ -72,6 +74,10 @@ export class DogsComponent implements OnChanges {
 
   get imageFetchPriority(): 'high' | null {
     return this.prioritizeImage ? 'high' : null;
+  }
+
+  get hasPrice(): boolean {
+    return this.showPrice && typeof this.dog?.price === 'number' && Number.isFinite(this.dog.price);
   }
 
   handleImageError(): void {

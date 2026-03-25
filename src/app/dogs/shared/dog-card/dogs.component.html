@@ -26,6 +26,9 @@
       </div>
 
       <div class="dog-card__details">
+        @if (hasPrice) {
+          <p class="dog-card__price">{{ dog.price | currency: 'USD' : 'symbol' : '1.0-0' }}</p>
+        }
         <div class="dog-card__facts">
           <dl>
             <dt>Call Name</dt>

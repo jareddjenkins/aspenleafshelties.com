@@ -16,6 +16,7 @@ type FirestoreDogDocument = {
   sireName?: string | null;
   damId?: string | null;
   damName?: string | null;
+  price?: number | null;
   profileImageUrl?: string | null;
   profileCardImageUrl?: string | null;
   profileDetailImageUrl?: string | null;
@@ -159,6 +160,7 @@ export class FirestorePublicDataService {
       sireId: data.sireId ?? null,
       sireName: data.sireName ?? '',
       gender: Number(data.gender ?? 0) === 1,
+      price: typeof data.price === 'number' && Number.isFinite(data.price) ? data.price : null,
       profileImageUrl: data.profileImageUrl ?? '',
       profileCardImageUrl: data.profileCardImageUrl ?? data.profileImageUrl ?? '',
       profileDetailImageUrl: data.profileDetailImageUrl ?? data.profileImageUrl ?? '',

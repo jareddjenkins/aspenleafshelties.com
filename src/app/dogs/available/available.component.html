@@ -90,7 +90,7 @@
     @if (puppies.length) {
       <div class="listing-grid">
         @for (dog of puppies; track dog.id; let isFirst = $first) {
-          <app-dogs [dog]="dog" [showStatusBanner]="true" [prioritizeImage]="isFirst"> </app-dogs>
+          <app-dogs [dog]="dog" [showStatusBanner]="true" [showPrice]="true" [prioritizeImage]="isFirst"> </app-dogs>
         }
       </div>
     } @else {
@@ -110,7 +110,7 @@
     @if (adults.length) {
       <div class="listing-grid">
         @for (dog of adults; track dog.id; let isFirst = $first) {
-          <app-dogs [dog]="dog" [showStatusBanner]="true" [prioritizeImage]="isFirst"> </app-dogs>
+          <app-dogs [dog]="dog" [showStatusBanner]="true" [showPrice]="true" [prioritizeImage]="isFirst"> </app-dogs>
         }
       </div>
     } @else {

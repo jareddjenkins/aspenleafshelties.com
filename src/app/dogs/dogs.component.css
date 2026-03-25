@@ -68,6 +68,15 @@
     padding: 1.25rem;
 }
 
+.dog-card__price {
+    color: var(--color-evergreen-deep);
+    font-family: 'Noto Serif', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 1rem;
+}
+
 .dog-card__facts {
     display: grid;
     gap: 1rem;

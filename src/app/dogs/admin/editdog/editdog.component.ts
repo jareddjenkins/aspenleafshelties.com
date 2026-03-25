@@ -30,6 +30,7 @@ export class EditdogComponent implements OnInit {
 
   showInput = false;
   dogDob = '';
+  dogPrice = '';
   cropFormat: 'jpeg' = 'jpeg';
   hasUnsavedChanges = false;
   isSaving = false;
@@ -58,6 +59,7 @@ export class EditdogComponent implements OnInit {
     this.dogService.getDog(id).subscribe((dog) => {
       this.dog = dog;
       this.dogDob = this.toDateInputValue(dog?.dob);
+      this.dogPrice = this.toPriceInputValue(dog?.price);
       this.captureSavedSnapshot();
     });
   }
@@ -77,6 +79,7 @@ export class EditdogComponent implements OnInit {
 
   save() {
     this.syncDobFromInput();
+    this.syncPriceFromInput();
     this.dog.sireId = null;
     this.dog.damId = null;
     this.isSaving = true;
@@ -159,6 +162,12 @@ export class EditdogComponent implements OnInit {
 
   updateStatus(value: string) {
     this.dog.status = value === 'reserved' || value === 'sold' ? (value as DogStatus) : null;
+    this.markUnsavedChanges();
+  }
+
+  updatePrice(value: string) {
+    this.dogPrice = value;
+    this.syncPriceFromInput();
     this.markUnsavedChanges();
   }
 
@@ -286,6 +295,25 @@ export class EditdogComponent implements OnInit {
     this.hasUnsavedChanges = false;
   }
 
+  private syncPriceFromInput() {
+    if (!this.dog) {
+      return;
+    }
+
+    const normalizedValue = this.dogPrice.trim();
+    if (!normalizedValue) {
+      this.dog.price = null;
+      return;
+    }
+
+    const parsedPrice = Number(normalizedValue);
+    this.dog.price = Number.isFinite(parsedPrice) ? parsedPrice : null;
+  }
+
+  private toPriceInputValue(value: number | null | undefined): string {
+    return typeof value === 'number' && Number.isFinite(value) ? String(value) : '';
+  }
+
   private buildDogSnapshot(): string {
     return JSON.stringify({
       rname: this.dog?.rname ?? '',
@@ -293,6 +321,7 @@ export class EditdogComponent implements OnInit {
       gender: this.dog?.gender ?? false,
       status: this.dog?.status ?? null,
       dob: this.dogDob ?? '',
+      price: this.dogPrice ?? '',
       sireName: this.dog?.sireName ?? '',
       damName: this.dog?.damName ?? '',
       comments: this.dog?.comments ?? '',

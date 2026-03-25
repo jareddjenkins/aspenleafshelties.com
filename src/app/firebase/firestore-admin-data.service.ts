@@ -26,6 +26,7 @@ type FirestoreDogPayload = {
   sireName: string | null;
   damId: string | null;
   damName: string | null;
+  price: number | null;
   profileImageUrl: string | null;
   profileCardImageUrl: string | null;
   profileDetailImageUrl: string | null;
@@ -85,6 +86,7 @@ export class FirestoreAdminDataService {
       sireId: null,
       sireName: '',
       gender: 0 as unknown as boolean,
+      price: null,
       profileImageUrl: '',
       profileCardImageUrl: '',
       profileDetailImageUrl: '',
@@ -246,6 +248,7 @@ export class FirestoreAdminDataService {
       sireName: dog.sireName ?? null,
       damId: dog.damId ?? null,
       damName: dog.damName ?? null,
+      price: dog.price ?? null,
       profileImageUrl: dog.profileImageUrl ?? null,
       profileCardImageUrl: dog.profileCardImageUrl ?? null,
       profileDetailImageUrl: dog.profileDetailImageUrl ?? null,

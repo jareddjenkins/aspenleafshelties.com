@@ -85,6 +85,21 @@
               </select>
             </label>
 
+            <label class="field" for="price">
+              <span>Price</span>
+              <input
+                type="number"
+                id="price"
+                name="price"
+                min="0"
+                step="1"
+                [ngModel]="dogPrice"
+                (ngModelChange)="updatePrice($event)"
+                placeholder="Price in dollars"
+              />
+              <small>Shown only on the Available puppies page.</small>
+            </label>
+
             <label class="field" for="dob">
               <span>Date of Birth</span>
               <input

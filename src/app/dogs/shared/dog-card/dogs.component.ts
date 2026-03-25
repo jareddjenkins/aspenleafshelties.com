@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { Location, DatePipe } from '@angular/common';
+import { Location, CurrencyPipe, DatePipe } from '@angular/common';
 
 import { Dog } from '../../model/dog';
 import { DEFAULT_DOG_IMAGE_URL, getPreferredDogImage, isUsableDogImageUrl } from '../dog-image';
@@ -9,7 +9,7 @@ import { DEFAULT_DOG_IMAGE_URL, getPreferredDogImage, isUsableDogImageUrl } from
   selector: 'app-dogs',
   templateUrl: './dogs.component.html',
   styleUrls: ['./dogs.component.css'],
-  imports: [DatePipe],
+  imports: [DatePipe, CurrencyPipe],
 })
 export class DogsComponent implements OnChanges {
   @Input()
@@ -23,6 +23,9 @@ export class DogsComponent implements OnChanges {
 
   @Input()
   prioritizeImage = false;
+
+  @Input()
+  showPrice = false;
 
   private imageLoadFailed = false;
 
@@ -76,6 +79,10 @@ export class DogsComponent implements OnChanges {
 
   get imageFetchPriority(): 'high' | null {
     return this.prioritizeImage ? 'high' : null;
+  }
+
+  get hasPrice(): boolean {
+    return this.showPrice && typeof this.dog?.price === 'number' && Number.isFinite(this.dog.price);
   }
 
   handleImageError(): void {

@@ -74,6 +74,7 @@
       <thead>
         <tr>
           <th>Registered Name</th>
+          <th class="hide-mobile">Price</th>
           <th class="hide-mobile">Status</th>
           <th class="hide-mobile">Call Name</th>
           <th class="hide-mobile">Gender</th>
@@ -89,6 +90,13 @@
         @for (dog of filteredDogs | async; track dog) {
           <tr>
             <td data-label="Registered Name">{{ dog.rname }}</td>
+            <td class="hide-mobile" data-label="Price">
+              @if (hasPrice(dog)) {
+                <span class="price-chip">{{ formatPrice(dog) }}</span>
+              } @else {
+                <span class="price-chip price-chip--empty">None</span>
+              }
+            </td>
             <td class="hide-mobile" data-label="Status">
               @if (dog.status) {
                 <span class="status-chip" [class.is-sold]="dog.status === 'sold'">

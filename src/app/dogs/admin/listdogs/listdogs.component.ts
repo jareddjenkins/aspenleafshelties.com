@@ -150,6 +150,18 @@ export class ListdogsComponent implements OnInit {
     return this.getDogPagesLabel(dogId);
   }
 
+  hasPrice(dog: Dog): boolean {
+    return typeof dog.price === 'number' && Number.isFinite(dog.price);
+  }
+
+  formatPrice(dog: Dog): string {
+    if (!this.hasPrice(dog)) {
+      return '';
+    }
+
+    return `$${Math.round(dog.price!).toLocaleString('en-US')}`;
+  }
+
   private filterAndSortDogs(
     dogs: Dog[],
     query: string,
