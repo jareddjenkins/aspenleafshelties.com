@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -12,6 +12,12 @@ import { PageAssignment } from '../../../pages';
 
 type DogSortField = 'rname' | 'cname' | 'status' | 'gender' | 'sireName' | 'damName' | 'dob' | 'activePages';
 type SortDirection = 'asc' | 'desc';
+type DogColumnKey = 'price' | 'status' | 'cname' | 'gender' | 'sireName' | 'damName' | 'activePages' | 'dob';
+
+type DogColumnOption = {
+  key: DogColumnKey;
+  label: string;
+};
 
 @Component({
     selector: 'app-listdogs',
@@ -20,7 +26,19 @@ type SortDirection = 'asc' | 'desc';
     standalone: false
 })
 export class ListdogsComponent implements OnInit {
+  private static readonly DESKTOP_COLUMNS_COOKIE = 'aspenleaf_admin_columns_desktop';
+  private static readonly MOBILE_COLUMNS_COOKIE = 'aspenleaf_admin_columns_mobile';
   readonly pageFilterOptions = ['None', 'Boys', 'Girls', 'Available', 'Adult Available'] as const;
+  readonly columnOptions: DogColumnOption[] = [
+    { key: 'price', label: 'Price' },
+    { key: 'status', label: 'Status' },
+    { key: 'cname', label: 'Call Name' },
+    { key: 'gender', label: 'Gender' },
+    { key: 'sireName', label: 'Sire' },
+    { key: 'damName', label: 'Dam' },
+    { key: 'activePages', label: 'Active Pages' },
+    { key: 'dob', label: 'Date of Birth' },
+  ];
   dogs: Observable<Dog[]>;
   filteredDogs: Observable<Dog[]>;
   query = '';
@@ -28,6 +46,10 @@ export class ListdogsComponent implements OnInit {
   sortDirection: SortDirection = 'asc';
   dogPages = new Map<string, string[]>();
   selectedPageFilters: string[] = [];
+  selectedColumns: DogColumnKey[] = [];
+  isMobileView = false;
+  showPageFilterPicker = false;
+  showColumnPicker = false;
   private query$ = new BehaviorSubject<string>('');
   private sortField$ = new BehaviorSubject<DogSortField>('rname');
   private sortDirection$ = new BehaviorSubject<SortDirection>('asc');
@@ -43,8 +65,25 @@ export class ListdogsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.syncViewportDefaults();
     this.getDogs();
     this.getDogPages();
+  }
+
+  @HostListener('window:resize')
+  onWindowResize() {
+    this.syncViewportDefaults();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement | null;
+    if (target?.closest('.toolbar-picker')) {
+      return;
+    }
+
+    this.showPageFilterPicker = false;
+    this.showColumnPicker = false;
   }
   createnewdog() {
     this.firestoreAdminDataService.addDog().subscribe((dog) => {
@@ -98,6 +137,33 @@ export class ListdogsComponent implements OnInit {
 
     this.selectedPageFilters = nextFilters;
     this.pageFilters$.next(nextFilters);
+  }
+
+  togglePageFilterPicker(event?: Event) {
+    event?.stopPropagation();
+    this.showPageFilterPicker = !this.showPageFilterPicker;
+    if (this.showPageFilterPicker) {
+      this.showColumnPicker = false;
+    }
+  }
+
+  onColumnFilterChange(columnKey: DogColumnKey, checked: boolean) {
+    const nextColumns = checked
+      ? [...this.selectedColumns, columnKey]
+      : this.selectedColumns.filter((selectedColumn) => selectedColumn !== columnKey);
+
+    this.selectedColumns = this.columnOptions
+      .map((column) => column.key)
+      .filter((column) => nextColumns.includes(column));
+    this.storeSelectedColumns();
+  }
+
+  toggleColumnPicker(event?: Event) {
+    event?.stopPropagation();
+    this.showColumnPicker = !this.showColumnPicker;
+    if (this.showColumnPicker) {
+      this.showPageFilterPicker = false;
+    }
   }
 
   goToPages(): void {
@@ -160,6 +226,10 @@ export class ListdogsComponent implements OnInit {
     }
 
     return `$${Math.round(dog.price!).toLocaleString('en-US')}`;
+  }
+
+  isColumnVisible(columnKey: DogColumnKey): boolean {
+    return this.selectedColumns.includes(columnKey);
   }
 
   private filterAndSortDogs(
@@ -299,5 +369,67 @@ export class ListdogsComponent implements OnInit {
       default:
         return value;
     }
+  }
+
+  private syncViewportDefaults() {
+    const nextIsMobileView = typeof window !== 'undefined' && window.innerWidth <= 700;
+
+    if (this.selectedColumns.length === 0) {
+      this.isMobileView = nextIsMobileView;
+      this.selectedColumns = this.getStoredColumns(nextIsMobileView) ?? this.getDefaultColumns(nextIsMobileView);
+      return;
+    }
+
+    if (this.isMobileView !== nextIsMobileView) {
+      this.isMobileView = nextIsMobileView;
+      this.selectedColumns = this.getStoredColumns(nextIsMobileView) ?? this.getDefaultColumns(nextIsMobileView);
+    }
+  }
+
+  private getDefaultColumns(isMobileView: boolean): DogColumnKey[] {
+    if (isMobileView) {
+      return ['price', 'status', 'cname'];
+    }
+
+    return this.columnOptions.map((column) => column.key);
+  }
+
+  private storeSelectedColumns() {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    const cookieName = this.isMobileView
+      ? ListdogsComponent.MOBILE_COLUMNS_COOKIE
+      : ListdogsComponent.DESKTOP_COLUMNS_COOKIE;
+    const encodedValue = encodeURIComponent(this.selectedColumns.join(','));
+    document.cookie = `${cookieName}=${encodedValue}; path=/; max-age=${60 * 60 * 24 * 365}`;
+  }
+
+  private getStoredColumns(isMobileView: boolean): DogColumnKey[] | null {
+    if (typeof document === 'undefined') {
+      return null;
+    }
+
+    const cookieName = isMobileView
+      ? ListdogsComponent.MOBILE_COLUMNS_COOKIE
+      : ListdogsComponent.DESKTOP_COLUMNS_COOKIE;
+    const cookieValue = document.cookie
+      .split('; ')
+      .find((entry) => entry.startsWith(`${cookieName}=`))
+      ?.split('=')
+      .slice(1)
+      .join('=');
+
+    if (!cookieValue) {
+      return null;
+    }
+
+    const validColumnKeys = new Set(this.columnOptions.map((column) => column.key));
+    const storedColumns = decodeURIComponent(cookieValue)
+      .split(',')
+      .filter((column): column is DogColumnKey => validColumnKeys.has(column as DogColumnKey));
+
+    return storedColumns.length ? storedColumns : null;
   }
 }

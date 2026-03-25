@@ -42,24 +42,66 @@
         </select>
       </label>
 
-      <fieldset class="page-filter-field">
-        <legend>Page Filter</legend>
-        <div class="page-filter-options">
-          @for (pageName of pageFilterOptions; track pageName) {
-            <label class="page-filter-option">
-              <input
-                type="checkbox"
-                [checked]="selectedPageFilters.includes(pageName)"
-                (change)="onPageFilterChange(pageName, $any($event.target).checked)"
-              />
-              <span>{{ pageName }}</span>
-            </label>
-          }
-        </div>
-      </fieldset>
     </div>
 
     <div class="toolbar-actions">
+      <div class="toolbar-picker">
+        <button type="button" class="secondary-button toolbar-picker__trigger" (click)="togglePageFilterPicker($event)">
+          <mat-icon>filter_list</mat-icon>
+          Page Filters
+        </button>
+
+        @if (showPageFilterPicker) {
+          <div class="toolbar-picker__menu">
+            <p class="toolbar-picker__title">Filter Pages</p>
+            <div class="toolbar-picker__options">
+              @for (pageName of pageFilterOptions; track pageName) {
+                <label class="page-filter-option">
+                  <input
+                    type="checkbox"
+                    [checked]="selectedPageFilters.includes(pageName)"
+                    (change)="onPageFilterChange(pageName, $any($event.target).checked)"
+                  />
+                  <span>{{ pageName }}</span>
+                </label>
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="toolbar-picker">
+        <button type="button" class="secondary-button toolbar-picker__trigger" (click)="toggleColumnPicker($event)">
+          <mat-icon>view_column</mat-icon>
+          Columns
+        </button>
+
+        @if (showColumnPicker) {
+          <div class="toolbar-picker__menu">
+            <p class="toolbar-picker__title">Show Columns</p>
+            <div class="toolbar-picker__options">
+              @for (column of columnOptions; track column.key) {
+                <label class="page-filter-option">
+                  <input
+                    type="checkbox"
+                    [checked]="isColumnVisible(column.key)"
+                    (change)="onColumnFilterChange(column.key, $any($event.target).checked)"
+                  />
+                  <span>{{ column.label }}</span>
+                </label>
+              }
+            </div>
+            <p class="filter-help">
+              @if (isMobileView) {
+                Mobile resets to a lighter default set when the screen size changes.
+              } @else {
+                Desktop resets to the full default set when the screen size changes.
+              }
+            </p>
+          </div>
+        }
+      </div>
+
       <button type="button" class="secondary-button" (click)="goToPages()">
         Edit Pages
       </button>
@@ -74,14 +116,30 @@
       <thead>
         <tr>
           <th>Registered Name</th>
-          <th class="hide-mobile">Price</th>
-          <th class="hide-mobile">Status</th>
-          <th class="hide-mobile">Call Name</th>
-          <th class="hide-mobile">Gender</th>
-          <th class="hide-mobile">Sire</th>
-          <th class="hide-mobile">Dam</th>
-          <th class="hide-mobile">Active Pages</th>
-          <th class="hide-mobile">Date of Birth</th>
+          @if (isColumnVisible('price')) {
+            <th class="hide-mobile">Price</th>
+          }
+          @if (isColumnVisible('status')) {
+            <th class="hide-mobile">Status</th>
+          }
+          @if (isColumnVisible('cname')) {
+            <th class="hide-mobile">Call Name</th>
+          }
+          @if (isColumnVisible('gender')) {
+            <th class="hide-mobile">Gender</th>
+          }
+          @if (isColumnVisible('sireName')) {
+            <th class="hide-mobile">Sire</th>
+          }
+          @if (isColumnVisible('damName')) {
+            <th class="hide-mobile">Dam</th>
+          }
+          @if (isColumnVisible('activePages')) {
+            <th class="hide-mobile">Active Pages</th>
+          }
+          @if (isColumnVisible('dob')) {
+            <th class="hide-mobile">Date of Birth</th>
+          }
           <th class="action-col">Edit</th>
           <th class="action-col">Delete</th>
         </tr>
@@ -90,38 +148,54 @@
         @for (dog of filteredDogs | async; track dog) {
           <tr>
             <td data-label="Registered Name">{{ dog.rname }}</td>
-            <td class="hide-mobile" data-label="Price">
-              @if (hasPrice(dog)) {
-                <span class="price-chip">{{ formatPrice(dog) }}</span>
-              } @else {
-                <span class="price-chip price-chip--empty">None</span>
-              }
-            </td>
-            <td class="hide-mobile" data-label="Status">
-              @if (dog.status) {
-                <span class="status-chip" [class.is-sold]="dog.status === 'sold'">
-                  {{ dog.status === "reserved" ? "Reserved" : "Sold" }}
-                </span>
-              } @else {
-                <span class="status-chip status-chip--empty">None</span>
-              }
-            </td>
-            <td class="hide-mobile" data-label="Call Name">{{ dog.cname }}</td>
-            <td class="hide-mobile" data-label="Gender">{{ dog.gender ? "Male" : "Female" }}</td>
-            <td class="hide-mobile" data-label="Sire">{{ dog.sireName }}</td>
-            <td class="hide-mobile" data-label="Dam">{{ dog.damName }}</td>
-            <td class="hide-mobile" data-label="Active Pages">
-              @if (getActivePages(dog.id).length) {
-                <div class="page-chip-list">
-                  @for (pageName of getActivePages(dog.id); track pageName) {
-                    <span class="page-chip">{{ pageName }}</span>
-                  }
-                </div>
-              } @else {
-                <span class="page-chip page-chip--empty">None</span>
-              }
-            </td>
-            <td class="hide-mobile" data-label="Date of Birth">{{ dog.dob | date: "shortDate" }}</td>
+            @if (isColumnVisible('price')) {
+              <td class="hide-mobile" data-label="Price">
+                @if (hasPrice(dog)) {
+                  <span class="price-chip">{{ formatPrice(dog) }}</span>
+                } @else {
+                  <span class="price-chip price-chip--empty">None</span>
+                }
+              </td>
+            }
+            @if (isColumnVisible('status')) {
+              <td class="hide-mobile" data-label="Status">
+                @if (dog.status) {
+                  <span class="status-chip" [class.is-sold]="dog.status === 'sold'">
+                    {{ dog.status === "reserved" ? "Reserved" : "Sold" }}
+                  </span>
+                } @else {
+                  <span class="status-chip status-chip--empty">None</span>
+                }
+              </td>
+            }
+            @if (isColumnVisible('cname')) {
+              <td class="hide-mobile" data-label="Call Name">{{ dog.cname }}</td>
+            }
+            @if (isColumnVisible('gender')) {
+              <td class="hide-mobile" data-label="Gender">{{ dog.gender ? "Male" : "Female" }}</td>
+            }
+            @if (isColumnVisible('sireName')) {
+              <td class="hide-mobile" data-label="Sire">{{ dog.sireName }}</td>
+            }
+            @if (isColumnVisible('damName')) {
+              <td class="hide-mobile" data-label="Dam">{{ dog.damName }}</td>
+            }
+            @if (isColumnVisible('activePages')) {
+              <td class="hide-mobile" data-label="Active Pages">
+                @if (getActivePages(dog.id).length) {
+                  <div class="page-chip-list">
+                    @for (pageName of getActivePages(dog.id); track pageName) {
+                      <span class="page-chip">{{ pageName }}</span>
+                    }
+                  </div>
+                } @else {
+                  <span class="page-chip page-chip--empty">None</span>
+                }
+              </td>
+            }
+            @if (isColumnVisible('dob')) {
+              <td class="hide-mobile" data-label="Date of Birth">{{ dog.dob | date: "shortDate" }}</td>
+            }
             <td class="action-col">
               <a class="icon-link" [routerLink]="['/admin/editdog', dog.id]" routerLinkActive="active">
                 <mat-icon>edit</mat-icon>
