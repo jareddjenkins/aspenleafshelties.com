@@ -7,6 +7,7 @@ import { Inject } from '@angular/core';
 
 import { Dog } from '../../model/dog';
 import { DogsComponent } from '../dog-card/dogs.component';
+import { DEFAULT_DOG_IMAGE_URL, getPreferredDogImage, isUsableDogImageUrl } from '../dog-image';
 
 @Component({
   selector: 'app-dog-detail',
@@ -47,7 +48,8 @@ export class DogDetailComponent implements OnInit {
 
     const title = `${dog.rname || dog.cname} | Aspenleaf Shelties`;
     const description = `${dog.rname || dog.cname} at Aspenleaf Shelties in Dewy Rose, Georgia. View call name, pedigree details, birth date, and profile information.`;
-    const imageUrl = dog.profileDetailImageUrl || dog.profileCardImageUrl || dog.profileImageUrl || '';
+    const preferredImage = getPreferredDogImage(dog, 'detail');
+    const imageUrl = isUsableDogImageUrl(preferredImage) ? preferredImage : DEFAULT_DOG_IMAGE_URL;
     const canonicalUrl = this.document.location?.href?.split('#')[0].split('?')[0] || '';
 
     this.titleService.setTitle(title);

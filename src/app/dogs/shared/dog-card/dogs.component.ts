@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location, DatePipe } from '@angular/common';
 
 import { Dog } from '../../model/dog';
+import { DEFAULT_DOG_IMAGE_URL, getPreferredDogImage, isUsableDogImageUrl } from '../dog-image';
 
 @Component({
   selector: 'app-dogs',
@@ -10,7 +11,7 @@ import { Dog } from '../../model/dog';
   styleUrls: ['./dogs.component.css'],
   imports: [DatePipe],
 })
-export class DogsComponent {
+export class DogsComponent implements OnChanges {
   @Input()
   dog: Dog;
 
@@ -22,6 +23,8 @@ export class DogsComponent {
 
   @Input()
   prioritizeImage = false;
+
+  private imageLoadFailed = false;
 
   lgImgUrl: string;
 
@@ -37,6 +40,10 @@ export class DogsComponent {
     this.location.back();
   }
 
+  ngOnChanges(): void {
+    this.imageLoadFailed = false;
+  }
+
   get statusLabel(): string | null {
     if (this.dog?.status === 'reserved') {
       return 'Reserved';
@@ -50,11 +57,13 @@ export class DogsComponent {
   }
 
   get imageUrl(): string {
-    if (this.imageVariant === 'detail') {
-      return this.dog?.profileDetailImageUrl || this.dog?.profileCardImageUrl || this.dog?.profileImageUrl || '';
+    const preferredImage = getPreferredDogImage(this.dog, this.imageVariant);
+
+    if (this.imageLoadFailed || !isUsableDogImageUrl(preferredImage)) {
+      return DEFAULT_DOG_IMAGE_URL;
     }
 
-    return this.dog?.profileCardImageUrl || this.dog?.profileDetailImageUrl || this.dog?.profileImageUrl || '';
+    return preferredImage;
   }
 
   get imageLoading(): 'eager' | 'lazy' {
@@ -67,5 +76,11 @@ export class DogsComponent {
 
   get imageFetchPriority(): 'high' | null {
     return this.prioritizeImage ? 'high' : null;
+  }
+
+  handleImageError(): void {
+    if (!this.imageLoadFailed) {
+      this.imageLoadFailed = true;
+    }
   }
 }

@@ -5,97 +5,167 @@
         <app-dogs [dog]="dog"> </app-dogs>
       </div>
 
-      <div class="form-panel">
-        <div class="panel-header">
-          <h1>Edit Dog</h1>
-          <div class="panel-actions">
-            <button type="button" class="secondary-button" (click)="goBack()">Back To Dog List</button>
-            <button type="button" class="primary-button" (click)="save()">Save</button>
+      <div class="edit-sidebar">
+        <div class="form-panel">
+          <div class="panel-header">
+            <div class="panel-heading">
+              <h1>Edit Dog</h1>
+              @if (statusMessage) {
+                <p class="status-banner" [class.status-banner--success]="statusTone === 'success'" [class.status-banner--warning]="statusTone === 'warning'" [class.status-banner--error]="statusTone === 'error'">
+                  {{ statusMessage }}
+                </p>
+              }
+            </div>
+            <div class="panel-actions">
+              <button type="button" class="secondary-button" (click)="goBack()">Back To Dog List</button>
+              <button type="button" class="primary-button" (click)="save()">Save</button>
+            </div>
           </div>
+
+          <form class="dog-form">
+            <label class="field" for="rname">
+              <span>Registered Name</span>
+              <input
+                type="text"
+                [(ngModel)]="dog.rname"
+                (ngModelChange)="markUnsavedChanges()"
+                name="rname"
+                id="rname"
+                placeholder="Registered Name"
+              />
+            </label>
+
+            <label class="field" for="cname">
+              <span>Call Name</span>
+              <input
+                type="text"
+                [(ngModel)]="dog.cname"
+                (ngModelChange)="markUnsavedChanges()"
+                name="cname"
+                id="cname"
+                placeholder="Call Name"
+              />
+            </label>
+
+            <fieldset class="field">
+              <legend>Gender</legend>
+              <label class="choice">
+                <input
+                  type="radio"
+                  [(ngModel)]="dog.gender"
+                  (ngModelChange)="markUnsavedChanges()"
+                  [value]="true"
+                  name="gender"
+                />
+                Male
+              </label>
+              <label class="choice">
+                <input
+                  type="radio"
+                  [(ngModel)]="dog.gender"
+                  (ngModelChange)="markUnsavedChanges()"
+                  [value]="false"
+                  name="gender"
+                />
+                Female
+              </label>
+            </fieldset>
+
+            <label class="field" for="status">
+              <span>Status</span>
+              <select
+                id="status"
+                name="status"
+                [ngModel]="dog.status ?? ''"
+                (ngModelChange)="updateStatus($event)"
+              >
+                <option value="">None</option>
+                <option value="reserved">Reserved</option>
+                <option value="sold">Sold</option>
+              </select>
+            </label>
+
+            <label class="field" for="dob">
+              <span>Date of Birth</span>
+              <input
+                type="date"
+                id="dob"
+                name="dob"
+                [ngModel]="dogDob"
+                (ngModelChange)="updateDob($event)"
+              />
+              <small>{{ dog.dob | date: "longDate" }}</small>
+            </label>
+
+            <label class="field" for="sire">
+              <span>Sire</span>
+              <input
+                type="text"
+                [(ngModel)]="dog.sireName"
+                name="sire"
+                id="sire"
+                placeholder="Sire name"
+                (ngModelChange)="markUnsavedChanges()"
+              />
+            </label>
+
+            <label class="field" for="dam">
+              <span>Dam</span>
+              <input
+                type="text"
+                [(ngModel)]="dog.damName"
+                name="dam"
+                id="dam"
+                placeholder="Dam name"
+                (ngModelChange)="markUnsavedChanges()"
+              />
+            </label>
+
+            <label class="field field-full" for="comments">
+              <span>Description</span>
+              <textarea
+                [(ngModel)]="dog.comments"
+                name="comments"
+                id="comments"
+                rows="5"
+                placeholder="Description"
+                (ngModelChange)="markUnsavedChanges()"
+              ></textarea>
+            </label>
+          </form>
         </div>
 
-        <form class="dog-form">
-          <label class="field" for="rname">
-            <span>Registered Name</span>
-            <input
-              type="text"
-              [(ngModel)]="dog.rname"
-              name="rname"
-              id="rname"
-              placeholder="Registered Name"
-            />
-          </label>
+        <section class="form-panel image-panel">
+          <div class="image-panel-header">
+            <h2>Image Upload</h2>
+            <p>Select a photo, crop it, then upload it when you're ready.</p>
+          </div>
 
-          <label class="field" for="cname">
-            <span>Call Name</span>
-            <input
-              type="text"
-              [(ngModel)]="dog.cname"
-              name="cname"
-              id="cname"
-              placeholder="Call Name"
-            />
-          </label>
-
-          <fieldset class="field">
-            <legend>Gender</legend>
-            <label class="choice">
-              <input
-                type="radio"
-                [(ngModel)]="dog.gender"
-                [value]="true"
-                name="gender"
-              />
-              Male
-            </label>
-            <label class="choice">
-              <input
-                type="radio"
-                [(ngModel)]="dog.gender"
-                [value]="false"
-                name="gender"
-              />
-              Female
-            </label>
-          </fieldset>
-
-          <label class="field" for="status">
-            <span>Status</span>
-            <select
-              id="status"
-              name="status"
-              [ngModel]="dog.status ?? ''"
-              (ngModelChange)="updateStatus($event)"
-            >
-              <option value="">None</option>
-              <option value="reserved">Reserved</option>
-              <option value="sold">Sold</option>
-            </select>
-          </label>
-
-          <label class="field" for="dob">
-            <span>Date of Birth</span>
-            <input
-              type="date"
-              id="dob"
-              name="dob"
-              [ngModel]="dogDob"
-              (ngModelChange)="updateDob($event)"
-            />
-            <small>{{ dog.dob | date: "longDate" }}</small>
-          </label>
-
-          <div class="field field-full upload-panel">
+          <div class="upload-panel">
             <span>Choose Image</span>
-            <small>We will save a card image for listings and a larger detail image for the dog page.</small>
-            <input
-              type="file"
-              (change)="fileChangeEvent($event)"
-              accept="image/png, image/jpeg"
-            />
             <div class="upload-actions">
-              <button type="button" class="secondary-button" (click)="onUpload()">Upload Card + Detail Images</button>
+              <label class="secondary-button file-button" for="dog-image-upload">Choose Image File</label>
+              <input
+                id="dog-image-upload"
+                class="visually-hidden"
+                type="file"
+                (change)="fileChangeEvent($event)"
+                accept="image/png, image/jpeg"
+              />
+              <button type="button" class="secondary-button" (click)="onUpload()">Upload Image</button>
             </div>
+
+            @if (croppedImage) {
+              <div class="crop-preview-panel">
+                <h3 class="crop-preview-heading">Preview</h3>
+                <p class="crop-preview-note">Image is not saved until you click Upload Image.</p>
+                <img class="cropped-preview" [src]="croppedImage" alt="Cropped preview image" />
+              </div>
+            }
+
+            <h3 class="crop-preview-heading">Crop</h3>
+            <p class="crop-hint">Crop the photo so the dog's face and coat sit comfortably inside the square frame.</p>
+
             <image-cropper
               [imageChangedEvent]="imageChangedEvent"
               [maintainAspectRatio]="true"
@@ -108,44 +178,8 @@
               (cropperReady)="cropperReady()"
               (loadImageFailed)="loadImageFailed()"
             ></image-cropper>
-            @if (croppedImage) {
-              <img class="cropped-preview" [src]="croppedImage" alt="Cropped preview image" />
-            }
           </div>
-
-          <label class="field" for="sire">
-            <span>Sire</span>
-            <input
-              type="text"
-              [(ngModel)]="dog.sireName"
-              name="sire"
-              id="sire"
-              placeholder="Sire name"
-            />
-          </label>
-
-          <label class="field" for="dam">
-            <span>Dam</span>
-            <input
-              type="text"
-              [(ngModel)]="dog.damName"
-              name="dam"
-              id="dam"
-              placeholder="Dam name"
-            />
-          </label>
-
-          <label class="field field-full" for="comments">
-            <span>Description</span>
-            <textarea
-              [(ngModel)]="dog.comments"
-              name="comments"
-              id="comments"
-              rows="5"
-              placeholder="Description"
-            ></textarea>
-          </label>
-        </form>
+        </section>
       </div>
     </div>
   }

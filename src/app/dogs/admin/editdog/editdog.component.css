@@ -11,6 +11,11 @@
     grid-template-columns: minmax(320px, 0.9fr) minmax(0, 1.1fr);
 }
 
+.edit-sidebar {
+    display: grid;
+    gap: 1.25rem;
+}
+
 .preview-panel,
 .form-panel {
     background: rgba(255, 255, 255, 0.8);
@@ -27,10 +32,54 @@
     margin-bottom: 1.25rem;
 }
 
+.panel-heading {
+    display: grid;
+    gap: 0.75rem;
+}
+
 .panel-header h1 {
     font-family: 'Noto Serif', serif;
     font-size: 2rem;
     margin: 0;
+}
+
+.image-panel-header {
+    margin-bottom: 1rem;
+}
+
+.image-panel-header h2 {
+    font-family: 'Noto Serif', serif;
+    font-size: 1.6rem;
+    margin: 0 0 0.5rem;
+}
+
+.image-panel-header p {
+    margin: 0;
+}
+
+.status-banner {
+    background: rgba(214, 226, 212, 0.75);
+    border: 1px solid rgba(58, 94, 73, 0.18);
+    border-radius: 14px;
+    color: var(--color-evergreen-deep);
+    margin: 0;
+    padding: 0.8rem 1rem;
+}
+
+.status-banner--success {
+    background: rgba(214, 226, 212, 0.82);
+}
+
+.status-banner--warning {
+    background: rgba(249, 238, 205, 0.9);
+    border-color: rgba(165, 123, 36, 0.24);
+    color: #6c4f0f;
+}
+
+.status-banner--error {
+    background: rgba(139, 30, 30, 0.08);
+    border-color: rgba(139, 30, 30, 0.18);
+    color: #8b1e1e;
 }
 
 .panel-actions,
@@ -125,7 +174,53 @@ fieldset.field {
 .upload-panel {
     background: rgba(214, 226, 212, 0.14);
     border-radius: 18px;
+    display: grid;
+    gap: 1rem;
     padding: 1rem;
+}
+
+.file-button {
+    cursor: pointer;
+}
+
+.visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+.crop-hint {
+    color: var(--color-muted);
+    margin: 0;
+}
+
+.crop-preview-panel {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.crop-preview-heading {
+    color: var(--color-evergreen);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.crop-preview-note {
+    background: rgba(249, 238, 205, 0.9);
+    border: 1px solid rgba(165, 123, 36, 0.24);
+    border-radius: 14px;
+    color: #6c4f0f;
+    margin: 0;
+    padding: 0.8rem 1rem;
 }
 
 .cropped-preview {
@@ -163,9 +258,7 @@ fieldset.field {
 
     .panel-actions,
     .upload-actions {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        padding-bottom: 0.1rem;
+        flex-wrap: wrap;
     }
 
     .panel-actions::-webkit-scrollbar,

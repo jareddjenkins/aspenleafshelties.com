@@ -15,6 +15,7 @@
         <img
           [src]="imageUrl"
           alt="Picture of {{ dog.cname }}"
+          (error)="handleImageError()"
           [attr.width]="imageVariant === 'detail' ? 1400 : 640"
           [attr.height]="imageVariant === 'detail' ? 1400 : 640"
           [attr.loading]="imageLoading"

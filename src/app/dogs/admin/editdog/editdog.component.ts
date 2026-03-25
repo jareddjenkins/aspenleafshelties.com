@@ -19,6 +19,8 @@ export class EditdogComponent implements OnInit {
   private static readonly CARD_IMAGE_SIZE = 640;
   private static readonly DETAIL_IMAGE_SIZE = 1400;
   private static readonly WEBP_QUALITY = 0.84;
+  private bannerTimeoutId: ReturnType<typeof setTimeout> | null = null;
+  private savedSnapshot = '';
 
   dog: Dog;
   //imagecropper
@@ -29,6 +31,11 @@ export class EditdogComponent implements OnInit {
   showInput = false;
   dogDob = '';
   cropFormat: 'jpeg' = 'jpeg';
+  hasUnsavedChanges = false;
+  isSaving = false;
+  isUploading = false;
+  statusMessage = '';
+  statusTone: 'info' | 'success' | 'warning' | 'error' = 'info';
 
   constructor(
     private route: ActivatedRoute,
@@ -51,6 +58,7 @@ export class EditdogComponent implements OnInit {
     this.dogService.getDog(id).subscribe((dog) => {
       this.dog = dog;
       this.dogDob = this.toDateInputValue(dog?.dob);
+      this.captureSavedSnapshot();
     });
   }
 
@@ -71,7 +79,21 @@ export class EditdogComponent implements OnInit {
     this.syncDobFromInput();
     this.dog.sireId = null;
     this.dog.damId = null;
-    this.firestoreAdminDataService.updateDog(this.dog).subscribe(); // => this.goBack());
+    this.isSaving = true;
+    this.restoreStatusBanner();
+    this.firestoreAdminDataService.updateDog(this.dog).subscribe({
+      next: () => {
+        this.isSaving = false;
+        this.captureSavedSnapshot();
+        this.showTemporaryStatus('Changes saved.', 'success');
+      },
+      error: (error) => {
+        console.error(error);
+        this.isSaving = false;
+        this.statusMessage = 'Unable to save changes right now. Please try again.';
+        this.statusTone = 'error';
+      },
+    });
   }
 
   onUpload() {
@@ -79,6 +101,8 @@ export class EditdogComponent implements OnInit {
       return;
     }
 
+    this.isUploading = true;
+    this.restoreStatusBanner();
     Promise.all([
       this.resizeImageBlob(this.croppedImageBlob, EditdogComponent.CARD_IMAGE_SIZE),
       this.resizeImageBlob(this.croppedImageBlob, EditdogComponent.DETAIL_IMAGE_SIZE),
@@ -91,12 +115,22 @@ export class EditdogComponent implements OnInit {
             this.dog.profileCardImagePath = uploadedImages.cardPath;
             this.dog.profileDetailImagePath = uploadedImages.detailPath;
             this.dog.profileImageUrl = uploadedImages.detailUrl;
+            this.isUploading = false;
+            this.showTemporaryStatus('Image uploaded and saved.', 'success');
+          },
+          (error) => {
+            console.error(error);
+            this.isUploading = false;
+            this.statusMessage = 'Unable to upload the image right now. Please try again.';
+            this.statusTone = 'error';
           },
         ),
       )
       .catch((error) => {
         console.error(error);
-        window.alert('Unable to prepare the image for upload.');
+        this.isUploading = false;
+        this.statusMessage = 'Unable to prepare the image for upload.';
+        this.statusTone = 'error';
       });
   }
 
@@ -120,10 +154,24 @@ export class EditdogComponent implements OnInit {
   updateDob(value: string) {
     this.dogDob = value;
     this.syncDobFromInput();
+    this.markUnsavedChanges();
   }
 
   updateStatus(value: string) {
     this.dog.status = value === 'reserved' || value === 'sold' ? (value as DogStatus) : null;
+    this.markUnsavedChanges();
+  }
+
+  markUnsavedChanges() {
+    this.hasUnsavedChanges = this.buildDogSnapshot() !== this.savedSnapshot;
+    if (!this.isSaving && !this.isUploading) {
+      if (this.hasUnsavedChanges) {
+        this.statusMessage = 'You have unsaved changes.';
+        this.statusTone = 'warning';
+      } else {
+        this.statusMessage = '';
+      }
+    }
   }
 
   private syncDobFromInput() {
@@ -189,6 +237,65 @@ export class EditdogComponent implements OnInit {
       };
 
       image.src = objectUrl;
+    });
+  }
+
+  private restoreStatusBanner() {
+    this.clearBannerTimeout();
+
+    if (this.isSaving) {
+      this.statusMessage = 'Saving changes...';
+      this.statusTone = 'info';
+      return;
+    }
+
+    if (this.isUploading) {
+      this.statusMessage = 'Uploading image...';
+      this.statusTone = 'info';
+      return;
+    }
+
+    if (this.hasUnsavedChanges) {
+      this.statusMessage = 'You have unsaved changes.';
+      this.statusTone = 'warning';
+      return;
+    }
+
+    this.statusMessage = '';
+  }
+
+  private showTemporaryStatus(message: string, tone: 'success' | 'info', durationMs = 4000) {
+    this.clearBannerTimeout();
+    this.statusMessage = message;
+    this.statusTone = tone;
+    this.bannerTimeoutId = setTimeout(() => {
+      this.bannerTimeoutId = null;
+      this.restoreStatusBanner();
+    }, durationMs);
+  }
+
+  private clearBannerTimeout() {
+    if (this.bannerTimeoutId !== null) {
+      clearTimeout(this.bannerTimeoutId);
+      this.bannerTimeoutId = null;
+    }
+  }
+
+  private captureSavedSnapshot() {
+    this.savedSnapshot = this.buildDogSnapshot();
+    this.hasUnsavedChanges = false;
+  }
+
+  private buildDogSnapshot(): string {
+    return JSON.stringify({
+      rname: this.dog?.rname ?? '',
+      cname: this.dog?.cname ?? '',
+      gender: this.dog?.gender ?? false,
+      status: this.dog?.status ?? null,
+      dob: this.dogDob ?? '',
+      sireName: this.dog?.sireName ?? '',
+      damName: this.dog?.damName ?? '',
+      comments: this.dog?.comments ?? '',
     });
   }
 }
