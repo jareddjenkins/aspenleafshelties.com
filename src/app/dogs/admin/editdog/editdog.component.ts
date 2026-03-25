@@ -165,8 +165,8 @@ export class EditdogComponent implements OnInit {
     this.markUnsavedChanges();
   }
 
-  updatePrice(value: string) {
-    this.dogPrice = value;
+  updatePrice(value: string | number | null) {
+    this.dogPrice = value == null ? '' : String(value);
     this.syncPriceFromInput();
     this.markUnsavedChanges();
   }
@@ -300,7 +300,7 @@ export class EditdogComponent implements OnInit {
       return;
     }
 
-    const normalizedValue = this.dogPrice.trim();
+    const normalizedValue = String(this.dogPrice ?? '').trim();
     if (!normalizedValue) {
       this.dog.price = null;
       return;
