@@ -19,7 +19,7 @@ import { FirebaseAdminClientService } from './firebase-admin-client.service';
 type FirestoreDogPayload = {
   rname: string;
   cname: string;
-  comments: string;
+  comments: string | null;
   dob: Date | null;
   gender: number;
   sireId: string | null;
@@ -239,19 +239,19 @@ export class FirestoreAdminDataService {
 
   private toDogPayload(dog: Dog, includeCreatedAt = false): FirestoreDogPayload {
     const payload: FirestoreDogPayload = {
-      rname: dog.rname ?? '',
-      cname: dog.cname ?? '',
-      comments: dog.comments ?? '',
-      dob: dog.dob ? new Date(dog.dob) : null,
+      rname: this.normalizeRequiredText(dog.rname),
+      cname: this.normalizeRequiredText(dog.cname),
+      comments: this.normalizeOptionalText(dog.comments),
+      dob: this.normalizeDate(dog.dob),
       gender: Number(dog.gender ?? 0),
       sireId: dog.sireId ?? null,
-      sireName: dog.sireName ?? null,
+      sireName: this.normalizeOptionalText(dog.sireName),
       damId: dog.damId ?? null,
-      damName: dog.damName ?? null,
+      damName: this.normalizeOptionalText(dog.damName),
       price: dog.price ?? null,
-      profileImageUrl: dog.profileImageUrl ?? null,
-      profileCardImageUrl: dog.profileCardImageUrl ?? null,
-      profileDetailImageUrl: dog.profileDetailImageUrl ?? null,
+      profileImageUrl: this.normalizeOptionalText(dog.profileImageUrl),
+      profileCardImageUrl: this.normalizeOptionalText(dog.profileCardImageUrl),
+      profileDetailImageUrl: this.normalizeOptionalText(dog.profileDetailImageUrl),
       profileCardImagePath: dog.profileCardImagePath ?? null,
       profileDetailImagePath: dog.profileDetailImagePath ?? null,
       status: dog.status ?? null,
@@ -263,6 +263,24 @@ export class FirestoreAdminDataService {
     }
 
     return payload;
+  }
+
+  private normalizeRequiredText(value: string | null | undefined): string {
+    return typeof value === 'string' ? value.trim() : '';
+  }
+
+  private normalizeOptionalText(value: string | null | undefined): string | null {
+    const normalizedValue = this.normalizeRequiredText(value);
+    return normalizedValue || null;
+  }
+
+  private normalizeDate(value: Date | string | null | undefined): Date | null {
+    if (!value) {
+      return null;
+    }
+
+    const date = value instanceof Date ? new Date(value) : new Date(value);
+    return Number.isNaN(date.getTime()) ? null : date;
   }
 
   private requireFirestore() {

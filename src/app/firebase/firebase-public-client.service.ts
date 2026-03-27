@@ -3,6 +3,7 @@ import { Firestore, connectFirestoreEmulator, getFirestore } from 'firebase/fire
 
 import { environment } from '../../environments/environment';
 import { FirebaseAppService } from './firebase-app.service';
+import { resolveFirebaseEmulatorHost } from './firebase-web-config';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +30,7 @@ export class FirebasePublicClientService {
     const firestore = getFirestore(app);
     const emulatorConfig = environment.firebaseEmulators?.firestore;
     if (emulatorConfig) {
-      connectFirestoreEmulator(firestore, emulatorConfig.host, emulatorConfig.port);
+      connectFirestoreEmulator(firestore, resolveFirebaseEmulatorHost(emulatorConfig.host), emulatorConfig.port);
     }
 
     return firestore;

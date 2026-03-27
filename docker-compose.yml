@@ -23,7 +23,7 @@ services:
   frontend-dev:
     image: node:22
     working_dir: /workspace
-    command: sh -lc "npm install && npm start -- --host 0.0.0.0"
+    command: sh -lc "npm install && npm start -- --host 0.0.0.0 --disable-host-check"
     depends_on:
       - firebase-emulators
     ports:

@@ -4,6 +4,7 @@ import { FirebaseStorage, connectStorageEmulator, getStorage } from 'firebase/st
 
 import { environment } from '../../environments/environment';
 import { FirebaseAppService } from './firebase-app.service';
+import { resolveFirebaseEmulatorHost } from './firebase-web-config';
 
 @Injectable()
 export class FirebaseAdminClientService {
@@ -29,7 +30,7 @@ export class FirebaseAdminClientService {
     const firestore = getFirestore(app);
     const emulatorConfig = environment.firebaseEmulators?.firestore;
     if (emulatorConfig) {
-      connectFirestoreEmulator(firestore, emulatorConfig.host, emulatorConfig.port);
+      connectFirestoreEmulator(firestore, resolveFirebaseEmulatorHost(emulatorConfig.host), emulatorConfig.port);
     }
 
     return firestore;
@@ -44,7 +45,7 @@ export class FirebaseAdminClientService {
     const storage = getStorage(app);
     const emulatorConfig = environment.firebaseEmulators?.storage;
     if (emulatorConfig) {
-      connectStorageEmulator(storage, emulatorConfig.host, emulatorConfig.port);
+      connectStorageEmulator(storage, resolveFirebaseEmulatorHost(emulatorConfig.host), emulatorConfig.port);
     }
 
     return storage;

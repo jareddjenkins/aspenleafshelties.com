@@ -80,9 +80,46 @@ export class DogsComponent implements OnChanges {
     return this.showPrice && typeof this.dog?.price === 'number' && Number.isFinite(this.dog.price);
   }
 
+  get displayName(): string {
+    return this.normalizedText(this.dog?.rname) || this.normalizedText(this.dog?.cname);
+  }
+
+  get imageAltText(): string {
+    return this.displayName ? `Picture of ${this.displayName}` : 'Picture of dog';
+  }
+
+  get callName(): string {
+    return this.normalizedText(this.dog?.cname);
+  }
+
+  get sireName(): string {
+    return this.normalizedText(this.dog?.sireName);
+  }
+
+  get damName(): string {
+    return this.normalizedText(this.dog?.damName);
+  }
+
+  get comments(): string {
+    return this.normalizedText(this.dog?.comments);
+  }
+
+  get hasDob(): boolean {
+    if (!this.dog?.dob) {
+      return false;
+    }
+
+    const date = this.dog.dob instanceof Date ? this.dog.dob : new Date(this.dog.dob);
+    return !Number.isNaN(date.getTime());
+  }
+
   handleImageError(): void {
     if (!this.imageLoadFailed) {
       this.imageLoadFailed = true;
     }
+  }
+
+  private normalizedText(value: string | null | undefined): string {
+    return typeof value === 'string' ? value.trim() : '';
   }
 }

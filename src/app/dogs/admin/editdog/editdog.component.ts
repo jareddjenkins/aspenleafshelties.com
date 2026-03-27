@@ -184,11 +184,17 @@ export class EditdogComponent implements OnInit {
   }
 
   private syncDobFromInput() {
-    if (!this.dog || !this.dogDob) {
+    if (!this.dog) {
       return;
     }
 
-    this.dog.dob = new Date(`${this.dogDob}T00:00:00`);
+    if (!this.dogDob) {
+      this.dog.dob = null;
+      return;
+    }
+
+    const parsedDate = new Date(`${this.dogDob}T00:00:00`);
+    this.dog.dob = Number.isNaN(parsedDate.getTime()) ? null : parsedDate;
   }
 
   private toDateInputValue(value: Date | string | undefined): string {

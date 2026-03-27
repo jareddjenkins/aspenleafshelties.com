@@ -142,28 +142,31 @@ export class FirestorePublicDataService {
 
   private toDog(id: string, data: FirestoreDogDocument): Dog {
     const dobValue = data.dob;
-    const dob =
-      dobValue && typeof dobValue === 'object' && typeof dobValue.toDate === 'function'
-        ? dobValue.toDate()
-        : typeof dobValue === 'string'
-          ? new Date(dobValue)
-          : null;
+    let normalizedDobValue: Date | string | null;
+    if (dobValue && typeof dobValue === 'object') {
+      normalizedDobValue = typeof dobValue.toDate === 'function' ? dobValue.toDate() : null;
+    } else if (typeof dobValue === 'string') {
+      normalizedDobValue = dobValue;
+    } else {
+      normalizedDobValue = null;
+    }
+    const dob = this.normalizeDate(normalizedDobValue);
 
     return {
       id,
-      rname: data.rname ?? '',
-      cname: data.cname ?? '',
-      comments: data.comments ?? '',
+      rname: this.normalizeText(data.rname),
+      cname: this.normalizeText(data.cname),
+      comments: this.normalizeText(data.comments),
       dob,
       damId: data.damId ?? null,
-      damName: data.damName ?? '',
+      damName: this.normalizeText(data.damName),
       sireId: data.sireId ?? null,
-      sireName: data.sireName ?? '',
+      sireName: this.normalizeText(data.sireName),
       gender: Number(data.gender ?? 0) === 1,
       price: typeof data.price === 'number' && Number.isFinite(data.price) ? data.price : null,
-      profileImageUrl: data.profileImageUrl ?? '',
-      profileCardImageUrl: data.profileCardImageUrl ?? data.profileImageUrl ?? '',
-      profileDetailImageUrl: data.profileDetailImageUrl ?? data.profileImageUrl ?? '',
+      profileImageUrl: this.normalizeText(data.profileImageUrl),
+      profileCardImageUrl: this.normalizeText(data.profileCardImageUrl) || this.normalizeText(data.profileImageUrl),
+      profileDetailImageUrl: this.normalizeText(data.profileDetailImageUrl) || this.normalizeText(data.profileImageUrl),
       profileCardImagePath: data.profileCardImagePath ?? null,
       profileDetailImagePath: data.profileDetailImagePath ?? null,
       status: data.status === 'reserved' || data.status === 'sold' ? data.status : null,
@@ -204,5 +207,18 @@ export class FirestorePublicDataService {
 
   private toDisplayName(value: string): string {
     return value.charAt(0).toUpperCase() + value.slice(1);
+  }
+
+  private normalizeText(value: string | null | undefined): string {
+    return typeof value === 'string' ? value.trim() : '';
+  }
+
+  private normalizeDate(value: Date | string | null | undefined): Date | null {
+    if (!value) {
+      return null;
+    }
+
+    const date = value instanceof Date ? value : new Date(value);
+    return Number.isNaN(date.getTime()) ? null : date;
   }
 }

@@ -8,6 +8,7 @@ import {
   User,
   connectAuthEmulator,
   getAuth,
+  signInWithRedirect,
   onAuthStateChanged,
   signInWithPopup,
   signOut,
@@ -15,6 +16,7 @@ import {
 
 import { environment } from '../../environments/environment';
 import { FirebaseAppService } from '../firebase/firebase-app.service';
+import { resolveFirebaseEmulatorHost } from '../firebase/firebase-web-config';
 
 export interface AdminSessionState {
   isReady: boolean;
@@ -27,6 +29,7 @@ export interface AdminSessionState {
   providedIn: 'root',
 })
 export class AdminAuthService {
+  private static readonly REDIRECT_URL_STORAGE_KEY = 'admin_redirect_url';
   private readonly sessionStateSubject = new BehaviorSubject<AdminSessionState>({
     isReady: false,
     user: null,
@@ -54,12 +57,16 @@ export class AdminAuthService {
       throw new Error('Firebase Auth is not configured.');
     }
 
+    this.storePendingRedirectUrl(redirectUrl);
+
+    if (this.shouldUseRedirectSignIn()) {
+      await signInWithRedirect(this.auth, this.provider);
+      return;
+    }
+
     await signInWithPopup(this.auth, this.provider);
     await this.waitUntilReady();
-
-    if (this.sessionStateSubject.value.isEditor && redirectUrl) {
-      await this.router.navigateByUrl(redirectUrl);
-    }
+    await this.navigateToPendingRedirectUrl();
   }
 
   async signOut(): Promise<void> {
@@ -90,7 +97,7 @@ export class AdminAuthService {
     const auth = getAuth(app);
     const emulatorConfig = environment.firebaseEmulators?.auth;
     if (emulatorConfig) {
-      connectAuthEmulator(auth, `http://${emulatorConfig.host}:${emulatorConfig.port}`, {
+      connectAuthEmulator(auth, `http://${resolveFirebaseEmulatorHost(emulatorConfig.host)}:${emulatorConfig.port}`, {
         disableWarnings: true,
       });
     }
@@ -115,6 +122,7 @@ export class AdminAuthService {
       onAuthStateChanged(this.auth!, (user) => {
         this.sessionStateSubject.next(this.buildSessionState(user));
         if (!resolved) {
+          void this.navigateToPendingRedirectUrl();
           resolved = true;
           resolve();
         }
@@ -133,5 +141,42 @@ export class AdminAuthService {
       isSignedIn: !!user,
       isEditor,
     };
+  }
+
+  private shouldUseRedirectSignIn(): boolean {
+    if (typeof window === 'undefined') {
+      return false;
+    }
+
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    return /android|iphone|ipad|ipod|mobile/.test(userAgent);
+  }
+
+  private storePendingRedirectUrl(redirectUrl?: string | null): void {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const normalizedRedirectUrl = redirectUrl?.trim();
+    if (!normalizedRedirectUrl) {
+      sessionStorage.removeItem(AdminAuthService.REDIRECT_URL_STORAGE_KEY);
+      return;
+    }
+
+    sessionStorage.setItem(AdminAuthService.REDIRECT_URL_STORAGE_KEY, normalizedRedirectUrl);
+  }
+
+  private async navigateToPendingRedirectUrl(): Promise<void> {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const redirectUrl = sessionStorage.getItem(AdminAuthService.REDIRECT_URL_STORAGE_KEY);
+    if (!redirectUrl || !this.sessionStateSubject.value.isEditor) {
+      return;
+    }
+
+    sessionStorage.removeItem(AdminAuthService.REDIRECT_URL_STORAGE_KEY);
+    await this.router.navigateByUrl(redirectUrl);
   }
 }
