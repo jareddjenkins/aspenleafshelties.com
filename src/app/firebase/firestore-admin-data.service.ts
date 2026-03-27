@@ -16,6 +16,7 @@ import { from, Observable, throwError } from 'rxjs';
 import { Dog } from '../dogs/model/dog';
 import { DogPageDocument, PageAssignment } from '../pages';
 import { FirebaseAdminClientService } from './firebase-admin-client.service';
+import { normalizeFirebaseEmulatorUrl } from './firebase-web-config';
 
 type FirestoreDogPayloadValue = string | number | Date | 'reserved' | 'sold' | null | ReturnType<typeof serverTimestamp> | ReturnType<typeof deleteField>;
 
@@ -111,18 +112,20 @@ export class FirestoreAdminDataService {
     ]);
 
     const [cardUrl, detailUrl] = await Promise.all([getDownloadURL(cardRef), getDownloadURL(detailRef)]);
+    const normalizedCardUrl = normalizeFirebaseEmulatorUrl(cardUrl);
+    const normalizedDetailUrl = normalizeFirebaseEmulatorUrl(detailUrl);
     await updateDoc(doc(firestore, 'dogs', id), {
-      profileImageUrl: detailUrl,
-      profileCardImageUrl: cardUrl,
-      profileDetailImageUrl: detailUrl,
+      profileImageUrl: normalizedDetailUrl,
+      profileCardImageUrl: normalizedCardUrl,
+      profileDetailImageUrl: normalizedDetailUrl,
       profileCardImagePath: cardPath,
       profileDetailImagePath: detailPath,
       updatedAt: serverTimestamp(),
     });
 
     return {
-      cardUrl,
-      detailUrl,
+      cardUrl: normalizedCardUrl,
+      detailUrl: normalizedDetailUrl,
       cardPath,
       detailPath,
     };

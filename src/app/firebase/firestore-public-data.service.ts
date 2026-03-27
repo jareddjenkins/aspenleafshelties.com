@@ -5,6 +5,7 @@ import { from, Observable, of } from 'rxjs';
 import { Dog } from '../dogs/model/dog';
 import { DogPageDocument, PageAssignment } from '../pages';
 import { FirebasePublicClientService } from './firebase-public-client.service';
+import { normalizeFirebaseEmulatorUrl } from './firebase-web-config';
 
 type FirestoreDogDocument = {
   rname?: string | null;
@@ -164,9 +165,9 @@ export class FirestorePublicDataService {
       sireName: this.normalizeText(data.sireName),
       gender: Number(data.gender ?? 0) === 1,
       price: typeof data.price === 'number' && Number.isFinite(data.price) ? data.price : null,
-      profileImageUrl: this.normalizeText(data.profileImageUrl),
-      profileCardImageUrl: this.normalizeText(data.profileCardImageUrl) || this.normalizeText(data.profileImageUrl),
-      profileDetailImageUrl: this.normalizeText(data.profileDetailImageUrl) || this.normalizeText(data.profileImageUrl),
+      profileImageUrl: this.normalizeImageUrl(data.profileImageUrl),
+      profileCardImageUrl: this.normalizeImageUrl(data.profileCardImageUrl) || this.normalizeImageUrl(data.profileImageUrl),
+      profileDetailImageUrl: this.normalizeImageUrl(data.profileDetailImageUrl) || this.normalizeImageUrl(data.profileImageUrl),
       profileCardImagePath: data.profileCardImagePath ?? null,
       profileDetailImagePath: data.profileDetailImagePath ?? null,
       status: data.status === 'reserved' || data.status === 'sold' ? data.status : null,
@@ -211,6 +212,11 @@ export class FirestorePublicDataService {
 
   private normalizeText(value: string | null | undefined): string {
     return typeof value === 'string' ? value.trim() : '';
+  }
+
+  private normalizeImageUrl(value: string | null | undefined): string {
+    const normalizedValue = this.normalizeText(value);
+    return normalizedValue ? normalizeFirebaseEmulatorUrl(normalizedValue) : '';
   }
 
   private normalizeDate(value: Date | string | null | undefined): Date | null {

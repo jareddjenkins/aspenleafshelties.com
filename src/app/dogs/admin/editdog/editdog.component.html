@@ -154,11 +154,6 @@
           <div class="image-panel-header">
             <h2>Image Upload</h2>
             <p>Select a photo, crop it, then upload it when you're ready.</p>
-            @if (imageStatusMessage) {
-              <p class="status-banner" [class.status-banner--success]="imageStatusTone === 'success'" [class.status-banner--warning]="imageStatusTone === 'warning'" [class.status-banner--error]="imageStatusTone === 'error'">
-                {{ imageStatusMessage }}
-              </p>
-            }
           </div>
 
           <div class="upload-panel">
@@ -175,10 +170,15 @@
               <button type="button" class="secondary-button" (click)="onUpload()">Upload Image</button>
             </div>
 
+            @if (imageStatusMessage) {
+              <p class="status-banner upload-status-banner" [class.status-banner--success]="imageStatusTone === 'success'" [class.status-banner--warning]="imageStatusTone === 'warning'" [class.status-banner--error]="imageStatusTone === 'error'">
+                {{ imageStatusMessage }}
+              </p>
+            }
+
             @if (croppedImage) {
               <div class="crop-preview-panel">
                 <h3 class="crop-preview-heading">Preview</h3>
-                <p class="crop-preview-note">Image is not saved until you click Upload Image.</p>
                 <img class="cropped-preview" [src]="croppedImage" alt="Cropped preview image" />
               </div>
             }

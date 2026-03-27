@@ -82,6 +82,10 @@
     color: #8b1e1e;
 }
 
+.upload-status-banner {
+    margin-top: -0.15rem;
+}
+
 .panel-actions,
 .upload-actions {
     display: flex;
@@ -212,15 +216,6 @@ fieldset.field {
     letter-spacing: 0.08em;
     margin: 0;
     text-transform: uppercase;
-}
-
-.crop-preview-note {
-    background: rgba(249, 238, 205, 0.9);
-    border: 1px solid rgba(165, 123, 36, 0.24);
-    border-radius: 14px;
-    color: #6c4f0f;
-    margin: 0;
-    padding: 0.8rem 1rem;
 }
 
 .cropped-preview {

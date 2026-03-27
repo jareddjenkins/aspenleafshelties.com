@@ -13,6 +13,8 @@ services:
     volumes:
       - .:/workspace
       - firebase_cache:/root/.cache/firebase
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   frontend-local:
     build:
@@ -31,6 +33,8 @@ services:
     volumes:
       - .:/workspace
       - frontend_node_modules:/workspace/node_modules
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   angular-service:
     image: jareddjenkins/aspenleaf:latest

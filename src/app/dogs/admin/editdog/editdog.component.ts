@@ -20,7 +20,6 @@ export class EditdogComponent implements OnInit {
   private static readonly DETAIL_IMAGE_SIZE = 1400;
   private static readonly WEBP_QUALITY = 0.84;
   private formBannerTimeoutId: ReturnType<typeof setTimeout> | null = null;
-  private imageBannerTimeoutId: ReturnType<typeof setTimeout> | null = null;
   private savedSnapshot = '';
 
   dog: Dog;
@@ -108,7 +107,7 @@ export class EditdogComponent implements OnInit {
     }
 
     this.isUploading = true;
-    this.restoreImageStatusBanner();
+    this.syncImageStatusBanner();
     Promise.all([
       this.resizeImageBlob(this.croppedImageBlob, EditdogComponent.CARD_IMAGE_SIZE),
       this.resizeImageBlob(this.croppedImageBlob, EditdogComponent.DETAIL_IMAGE_SIZE),
@@ -122,7 +121,8 @@ export class EditdogComponent implements OnInit {
             this.dog.profileDetailImagePath = uploadedImages.detailPath;
             this.dog.profileImageUrl = uploadedImages.detailUrl;
             this.isUploading = false;
-            this.showTemporaryImageStatus('Image uploaded and saved.', 'success');
+            this.imageStatusMessage = 'Image uploaded and saved.';
+            this.imageStatusTone = 'success';
           },
           (error) => {
             console.error(error);
@@ -146,6 +146,7 @@ export class EditdogComponent implements OnInit {
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.objectUrl;
     this.croppedImageBlob = event.blob ?? null;
+    this.syncImageStatusBanner();
   }
   imageLoaded() {
     // show cropper
@@ -275,12 +276,16 @@ export class EditdogComponent implements OnInit {
     this.formStatusMessage = '';
   }
 
-  private restoreImageStatusBanner() {
-    this.clearImageBannerTimeout();
-
+  private syncImageStatusBanner() {
     if (this.isUploading) {
       this.imageStatusMessage = 'Uploading image...';
       this.imageStatusTone = 'info';
+      return;
+    }
+
+    if (this.croppedImageBlob) {
+      this.imageStatusMessage = 'Image is not saved until you click Upload Image.';
+      this.imageStatusTone = 'warning';
       return;
     }
 
@@ -297,27 +302,10 @@ export class EditdogComponent implements OnInit {
     }, durationMs);
   }
 
-  private showTemporaryImageStatus(message: string, tone: 'success' | 'info', durationMs = 4000) {
-    this.clearImageBannerTimeout();
-    this.imageStatusMessage = message;
-    this.imageStatusTone = tone;
-    this.imageBannerTimeoutId = setTimeout(() => {
-      this.imageBannerTimeoutId = null;
-      this.restoreImageStatusBanner();
-    }, durationMs);
-  }
-
   private clearFormBannerTimeout() {
     if (this.formBannerTimeoutId !== null) {
       clearTimeout(this.formBannerTimeoutId);
       this.formBannerTimeoutId = null;
-    }
-  }
-
-  private clearImageBannerTimeout() {
-    if (this.imageBannerTimeoutId !== null) {
-      clearTimeout(this.imageBannerTimeoutId);
-      this.imageBannerTimeoutId = null;
     }
   }
 
