@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   collection,
+  deleteField,
   deleteDoc,
   doc,
   getDoc,
@@ -16,26 +17,9 @@ import { Dog } from '../dogs/model/dog';
 import { DogPageDocument, PageAssignment } from '../pages';
 import { FirebaseAdminClientService } from './firebase-admin-client.service';
 
-type FirestoreDogPayload = {
-  rname: string;
-  cname: string;
-  comments: string | null;
-  dob: Date | null;
-  gender: number;
-  sireId: string | null;
-  sireName: string | null;
-  damId: string | null;
-  damName: string | null;
-  price: number | null;
-  profileImageUrl: string | null;
-  profileCardImageUrl: string | null;
-  profileDetailImageUrl: string | null;
-  profileCardImagePath: string | null;
-  profileDetailImagePath: string | null;
-  status: 'reserved' | 'sold' | null;
-  updatedAt: unknown;
-  createdAt?: unknown;
-};
+type FirestoreDogPayloadValue = string | number | Date | 'reserved' | 'sold' | null | ReturnType<typeof serverTimestamp> | ReturnType<typeof deleteField>;
+
+type FirestoreDogPayload = Record<string, FirestoreDogPayloadValue>;
 
 type UploadedDogImages = {
   cardUrl: string;
@@ -95,13 +79,13 @@ export class FirestoreAdminDataService {
       status: null,
     };
 
-    await setDoc(dogRef, this.toDogPayload(dog, true));
+    await setDoc(dogRef, this.toDogPayload(dog, { includeCreatedAt: true, removeMissingFields: false }));
     return dog;
   }
 
   private async saveDog(dog: Dog): Promise<Dog> {
     const firestore = this.requireFirestore();
-    await setDoc(doc(firestore, 'dogs', dog.id), this.toDogPayload(dog), {
+    await setDoc(doc(firestore, 'dogs', dog.id), this.toDogPayload(dog, { removeMissingFields: true }), {
       merge: true,
     });
     return dog;
@@ -237,29 +221,34 @@ export class FirestoreAdminDataService {
     await deleteDoc(doc(firestore, 'dogs', id));
   }
 
-  private toDogPayload(dog: Dog, includeCreatedAt = false): FirestoreDogPayload {
+  private toDogPayload(
+    dog: Dog,
+    options: { includeCreatedAt?: boolean; removeMissingFields?: boolean } = {},
+  ): FirestoreDogPayload {
+    const { includeCreatedAt = false, removeMissingFields = false } = options;
     const payload: FirestoreDogPayload = {
       rname: this.normalizeRequiredText(dog.rname),
       cname: this.normalizeRequiredText(dog.cname),
-      comments: this.normalizeOptionalText(dog.comments),
-      dob: this.normalizeDate(dog.dob),
       gender: Number(dog.gender ?? 0),
-      sireId: dog.sireId ?? null,
-      sireName: this.normalizeOptionalText(dog.sireName),
-      damId: dog.damId ?? null,
-      damName: this.normalizeOptionalText(dog.damName),
-      price: dog.price ?? null,
-      profileImageUrl: this.normalizeOptionalText(dog.profileImageUrl),
-      profileCardImageUrl: this.normalizeOptionalText(dog.profileCardImageUrl),
-      profileDetailImageUrl: this.normalizeOptionalText(dog.profileDetailImageUrl),
-      profileCardImagePath: dog.profileCardImagePath ?? null,
-      profileDetailImagePath: dog.profileDetailImagePath ?? null,
-      status: dog.status ?? null,
       updatedAt: serverTimestamp(),
     };
 
+    this.setOptionalTextField(payload, 'comments', dog.comments, removeMissingFields);
+    this.setOptionalDateField(payload, 'dob', dog.dob, removeMissingFields);
+    this.setOptionalStringField(payload, 'sireId', dog.sireId, removeMissingFields);
+    this.setOptionalTextField(payload, 'sireName', dog.sireName, removeMissingFields);
+    this.setOptionalStringField(payload, 'damId', dog.damId, removeMissingFields);
+    this.setOptionalTextField(payload, 'damName', dog.damName, removeMissingFields);
+    this.setOptionalNumberField(payload, 'price', dog.price, removeMissingFields);
+    this.setOptionalTextField(payload, 'profileImageUrl', dog.profileImageUrl, removeMissingFields);
+    this.setOptionalTextField(payload, 'profileCardImageUrl', dog.profileCardImageUrl, removeMissingFields);
+    this.setOptionalTextField(payload, 'profileDetailImageUrl', dog.profileDetailImageUrl, removeMissingFields);
+    this.setOptionalStringField(payload, 'profileCardImagePath', dog.profileCardImagePath, removeMissingFields);
+    this.setOptionalStringField(payload, 'profileDetailImagePath', dog.profileDetailImagePath, removeMissingFields);
+    this.setOptionalStatusField(payload, 'status', dog.status, removeMissingFields);
+
     if (includeCreatedAt) {
-      payload.createdAt = serverTimestamp();
+      payload['createdAt'] = serverTimestamp();
     }
 
     return payload;
@@ -281,6 +270,72 @@ export class FirestoreAdminDataService {
 
     const date = value instanceof Date ? new Date(value) : new Date(value);
     return Number.isNaN(date.getTime()) ? null : date;
+  }
+
+  private setOptionalTextField(
+    payload: FirestoreDogPayload,
+    field: string,
+    value: string | null | undefined,
+    removeMissingFields: boolean,
+  ) {
+    const normalizedValue = this.normalizeOptionalText(value);
+    this.setOptionalField(payload, field, normalizedValue, removeMissingFields);
+  }
+
+  private setOptionalStringField(
+    payload: FirestoreDogPayload,
+    field: string,
+    value: string | null | undefined,
+    removeMissingFields: boolean,
+  ) {
+    const normalizedValue = value ?? null;
+    this.setOptionalField(payload, field, normalizedValue, removeMissingFields);
+  }
+
+  private setOptionalDateField(
+    payload: FirestoreDogPayload,
+    field: string,
+    value: Date | string | null | undefined,
+    removeMissingFields: boolean,
+  ) {
+    const normalizedValue = this.normalizeDate(value);
+    this.setOptionalField(payload, field, normalizedValue, removeMissingFields);
+  }
+
+  private setOptionalNumberField(
+    payload: FirestoreDogPayload,
+    field: string,
+    value: number | null | undefined,
+    removeMissingFields: boolean,
+  ) {
+    const normalizedValue = typeof value === 'number' && Number.isFinite(value) ? value : null;
+    this.setOptionalField(payload, field, normalizedValue, removeMissingFields);
+  }
+
+  private setOptionalStatusField(
+    payload: FirestoreDogPayload,
+    field: string,
+    value: 'reserved' | 'sold' | null | undefined,
+    removeMissingFields: boolean,
+  ) {
+    const normalizedValue = value === 'reserved' || value === 'sold' ? value : null;
+    this.setOptionalField(payload, field, normalizedValue, removeMissingFields);
+  }
+
+  private setOptionalField(
+    payload: FirestoreDogPayload,
+    field: string,
+    value: string | number | Date | 'reserved' | 'sold' | null,
+    removeMissingFields: boolean,
+  ) {
+    if (value === null) {
+      if (removeMissingFields) {
+        payload[field] = deleteField();
+      }
+      return;
+    }
+
+    payload[field] = value;
   }
 
   private requireFirestore() {

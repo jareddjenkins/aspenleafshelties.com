@@ -10,9 +10,9 @@
           <div class="panel-header">
             <div class="panel-heading">
               <h1>Edit Dog</h1>
-              @if (statusMessage) {
-                <p class="status-banner" [class.status-banner--success]="statusTone === 'success'" [class.status-banner--warning]="statusTone === 'warning'" [class.status-banner--error]="statusTone === 'error'">
-                  {{ statusMessage }}
+              @if (formStatusMessage) {
+                <p class="status-banner" [class.status-banner--success]="formStatusTone === 'success'" [class.status-banner--warning]="formStatusTone === 'warning'" [class.status-banner--error]="formStatusTone === 'error'">
+                  {{ formStatusMessage }}
                 </p>
               }
             </div>
@@ -154,6 +154,11 @@
           <div class="image-panel-header">
             <h2>Image Upload</h2>
             <p>Select a photo, crop it, then upload it when you're ready.</p>
+            @if (imageStatusMessage) {
+              <p class="status-banner" [class.status-banner--success]="imageStatusTone === 'success'" [class.status-banner--warning]="imageStatusTone === 'warning'" [class.status-banner--error]="imageStatusTone === 'error'">
+                {{ imageStatusMessage }}
+              </p>
+            }
           </div>
 
           <div class="upload-panel">

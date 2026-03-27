@@ -19,7 +19,8 @@ export class EditdogComponent implements OnInit {
   private static readonly CARD_IMAGE_SIZE = 640;
   private static readonly DETAIL_IMAGE_SIZE = 1400;
   private static readonly WEBP_QUALITY = 0.84;
-  private bannerTimeoutId: ReturnType<typeof setTimeout> | null = null;
+  private formBannerTimeoutId: ReturnType<typeof setTimeout> | null = null;
+  private imageBannerTimeoutId: ReturnType<typeof setTimeout> | null = null;
   private savedSnapshot = '';
 
   dog: Dog;
@@ -35,8 +36,10 @@ export class EditdogComponent implements OnInit {
   hasUnsavedChanges = false;
   isSaving = false;
   isUploading = false;
-  statusMessage = '';
-  statusTone: 'info' | 'success' | 'warning' | 'error' = 'info';
+  formStatusMessage = '';
+  formStatusTone: 'info' | 'success' | 'warning' | 'error' = 'info';
+  imageStatusMessage = '';
+  imageStatusTone: 'info' | 'success' | 'warning' | 'error' = 'info';
 
   constructor(
     private route: ActivatedRoute,
@@ -83,18 +86,18 @@ export class EditdogComponent implements OnInit {
     this.dog.sireId = null;
     this.dog.damId = null;
     this.isSaving = true;
-    this.restoreStatusBanner();
+    this.restoreFormStatusBanner();
     this.firestoreAdminDataService.updateDog(this.dog).subscribe({
       next: () => {
         this.isSaving = false;
         this.captureSavedSnapshot();
-        this.showTemporaryStatus('Changes saved.', 'success');
+        this.showTemporaryFormStatus('Changes saved.', 'success');
       },
       error: (error) => {
         console.error(error);
         this.isSaving = false;
-        this.statusMessage = 'Unable to save changes right now. Please try again.';
-        this.statusTone = 'error';
+        this.formStatusMessage = 'Unable to save changes right now. Please try again.';
+        this.formStatusTone = 'error';
       },
     });
   }
@@ -105,7 +108,7 @@ export class EditdogComponent implements OnInit {
     }
 
     this.isUploading = true;
-    this.restoreStatusBanner();
+    this.restoreImageStatusBanner();
     Promise.all([
       this.resizeImageBlob(this.croppedImageBlob, EditdogComponent.CARD_IMAGE_SIZE),
       this.resizeImageBlob(this.croppedImageBlob, EditdogComponent.DETAIL_IMAGE_SIZE),
@@ -119,21 +122,21 @@ export class EditdogComponent implements OnInit {
             this.dog.profileDetailImagePath = uploadedImages.detailPath;
             this.dog.profileImageUrl = uploadedImages.detailUrl;
             this.isUploading = false;
-            this.showTemporaryStatus('Image uploaded and saved.', 'success');
+            this.showTemporaryImageStatus('Image uploaded and saved.', 'success');
           },
           (error) => {
             console.error(error);
             this.isUploading = false;
-            this.statusMessage = 'Unable to upload the image right now. Please try again.';
-            this.statusTone = 'error';
+            this.imageStatusMessage = 'Unable to upload the image right now. Please try again.';
+            this.imageStatusTone = 'error';
           },
         ),
       )
       .catch((error) => {
         console.error(error);
         this.isUploading = false;
-        this.statusMessage = 'Unable to prepare the image for upload.';
-        this.statusTone = 'error';
+        this.imageStatusMessage = 'Unable to prepare the image for upload.';
+        this.imageStatusTone = 'error';
       });
   }
 
@@ -173,12 +176,12 @@ export class EditdogComponent implements OnInit {
 
   markUnsavedChanges() {
     this.hasUnsavedChanges = this.buildDogSnapshot() !== this.savedSnapshot;
-    if (!this.isSaving && !this.isUploading) {
+    if (!this.isSaving) {
       if (this.hasUnsavedChanges) {
-        this.statusMessage = 'You have unsaved changes.';
-        this.statusTone = 'warning';
+        this.formStatusMessage = 'You have unsaved changes.';
+        this.formStatusTone = 'warning';
       } else {
-        this.statusMessage = '';
+        this.formStatusMessage = '';
       }
     }
   }
@@ -255,44 +258,66 @@ export class EditdogComponent implements OnInit {
     });
   }
 
-  private restoreStatusBanner() {
-    this.clearBannerTimeout();
-
+  private restoreFormStatusBanner() {
+    this.clearFormBannerTimeout();
     if (this.isSaving) {
-      this.statusMessage = 'Saving changes...';
-      this.statusTone = 'info';
-      return;
-    }
-
-    if (this.isUploading) {
-      this.statusMessage = 'Uploading image...';
-      this.statusTone = 'info';
+      this.formStatusMessage = 'Saving changes...';
+      this.formStatusTone = 'info';
       return;
     }
 
     if (this.hasUnsavedChanges) {
-      this.statusMessage = 'You have unsaved changes.';
-      this.statusTone = 'warning';
+      this.formStatusMessage = 'You have unsaved changes.';
+      this.formStatusTone = 'warning';
       return;
     }
 
-    this.statusMessage = '';
+    this.formStatusMessage = '';
   }
 
-  private showTemporaryStatus(message: string, tone: 'success' | 'info', durationMs = 4000) {
-    this.clearBannerTimeout();
-    this.statusMessage = message;
-    this.statusTone = tone;
-    this.bannerTimeoutId = setTimeout(() => {
-      this.bannerTimeoutId = null;
-      this.restoreStatusBanner();
+  private restoreImageStatusBanner() {
+    this.clearImageBannerTimeout();
+
+    if (this.isUploading) {
+      this.imageStatusMessage = 'Uploading image...';
+      this.imageStatusTone = 'info';
+      return;
+    }
+
+    this.imageStatusMessage = '';
+  }
+
+  private showTemporaryFormStatus(message: string, tone: 'success' | 'info', durationMs = 4000) {
+    this.clearFormBannerTimeout();
+    this.formStatusMessage = message;
+    this.formStatusTone = tone;
+    this.formBannerTimeoutId = setTimeout(() => {
+      this.formBannerTimeoutId = null;
+      this.restoreFormStatusBanner();
     }, durationMs);
   }
 
-  private clearBannerTimeout() {
-    if (this.bannerTimeoutId !== null) {
-      clearTimeout(this.bannerTimeoutId);
-      this.bannerTimeoutId = null;
+  private showTemporaryImageStatus(message: string, tone: 'success' | 'info', durationMs = 4000) {
+    this.clearImageBannerTimeout();
+    this.imageStatusMessage = message;
+    this.imageStatusTone = tone;
+    this.imageBannerTimeoutId = setTimeout(() => {
+      this.imageBannerTimeoutId = null;
+      this.restoreImageStatusBanner();
+    }, durationMs);
+  }
+
+  private clearFormBannerTimeout() {
+    if (this.formBannerTimeoutId !== null) {
+      clearTimeout(this.formBannerTimeoutId);
+      this.formBannerTimeoutId = null;
+    }
+  }
+
+  private clearImageBannerTimeout() {
+    if (this.imageBannerTimeoutId !== null) {
+      clearTimeout(this.imageBannerTimeoutId);
+      this.imageBannerTimeoutId = null;
     }
   }
 
