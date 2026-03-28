@@ -1,58 +1,50 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
-import { Dog } from '../../model/dog';
-import { DogService } from '../../../dog.service';
-import { FirestoreAdminDataService } from '../../../firebase/firestore-admin-data.service';
-import { DogpagesService } from '../../../dogpages.service';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { DogService } from '../../../dog.service';
+import { DogpagesService } from '../../../dogpages.service';
+import { FirestoreAdminDataService } from '../../../firebase/firestore-admin-data.service';
 import { PageAssignment } from '../../../pages';
+import { Dog } from '../../model/dog';
+import {
+  ListdogsFiltersDialogComponent,
+  ListdogsFiltersDialogResult,
+} from './listdogs-filters-dialog.component';
 
 type DogSortField = 'rname' | 'cname' | 'status' | 'gender' | 'sireName' | 'damName' | 'dob' | 'activePages';
 type SortDirection = 'asc' | 'desc';
-type DogColumnKey = 'price' | 'status' | 'cname' | 'gender' | 'sireName' | 'damName' | 'activePages' | 'dob';
-
-type DogColumnOption = {
-  key: DogColumnKey;
-  label: string;
-};
+type DogGenderFilter = 'male' | 'female';
+type DogStatusFilter = 'none' | 'reserved' | 'sold';
 
 @Component({
-    selector: 'app-listdogs',
-    templateUrl: './listdogs.component.html',
-    styleUrls: ['./listdogs.component.css'],
-    standalone: false
+  selector: 'app-listdogs',
+  templateUrl: './listdogs.component.html',
+  styleUrls: ['./listdogs.component.css'],
+  standalone: false,
 })
 export class ListdogsComponent implements OnInit {
-  private static readonly DESKTOP_COLUMNS_COOKIE = 'aspenleaf_admin_columns_desktop';
-  private static readonly MOBILE_COLUMNS_COOKIE = 'aspenleaf_admin_columns_mobile';
   readonly pageFilterOptions = ['None', 'Boys', 'Girls', 'Available', 'Adult Available'] as const;
-  readonly columnOptions: DogColumnOption[] = [
-    { key: 'price', label: 'Price' },
-    { key: 'status', label: 'Status' },
-    { key: 'cname', label: 'Call Name' },
-    { key: 'gender', label: 'Gender' },
-    { key: 'sireName', label: 'Sire' },
-    { key: 'damName', label: 'Dam' },
-    { key: 'activePages', label: 'Active Pages' },
-    { key: 'dob', label: 'Date of Birth' },
-  ];
+
   dogs: Observable<Dog[]>;
   filteredDogs: Observable<Dog[]>;
   query = '';
   sortField: DogSortField = 'rname';
   sortDirection: SortDirection = 'asc';
   dogPages = new Map<string, string[]>();
+  selectedGenderFilters: DogGenderFilter[] = [];
+  selectedStatusFilters: DogStatusFilter[] = [];
   selectedPageFilters: string[] = [];
-  selectedColumns: DogColumnKey[] = [];
   isMobileView = false;
-  showPageFilterPicker = false;
-  showColumnPicker = false;
+
   private query$ = new BehaviorSubject<string>('');
   private sortField$ = new BehaviorSubject<DogSortField>('rname');
   private sortDirection$ = new BehaviorSubject<SortDirection>('asc');
+  private genderFilters$ = new BehaviorSubject<DogGenderFilter[]>([]);
+  private statusFilters$ = new BehaviorSubject<DogStatusFilter[]>([]);
   private pageFilters$ = new BehaviorSubject<string[]>([]);
   private dogPagesVersion$ = new BehaviorSubject<number>(0);
 
@@ -60,77 +52,92 @@ export class ListdogsComponent implements OnInit {
     private dogService: DogService,
     private dogpagesService: DogpagesService,
     private firestoreAdminDataService: FirestoreAdminDataService,
-    private location: Location,
     private router: Router,
+    private dialog: MatDialog,
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.syncViewportDefaults();
     this.getDogs();
     this.getDogPages();
   }
 
   @HostListener('window:resize')
-  onWindowResize() {
+  onWindowResize(): void {
     this.syncViewportDefaults();
   }
 
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    const target = event.target as HTMLElement | null;
-    if (target?.closest('.toolbar-picker')) {
-      return;
-    }
-
-    this.showPageFilterPicker = false;
-    this.showColumnPicker = false;
-  }
-  createnewdog() {
-    this.firestoreAdminDataService.addDog().subscribe((dog) => {
-      this.getDogs();
-      this.router.navigate([`/admin/editdog/${dog.id}`]);
-    });
+  createnewdog(): void {
+    this.router.navigate(['/admin/editdog/new']);
   }
 
-  getDogs() {
+  getDogs(): void {
     this.dogs = this.dogService.getDogs();
     this.filteredDogs = combineLatest([
       this.dogs,
       this.query$,
       this.sortField$,
       this.sortDirection$,
+      this.genderFilters$,
+      this.statusFilters$,
       this.pageFilters$,
       this.dogPagesVersion$,
     ]).pipe(
-      map(([dogs, query, sortField, sortDirection, selectedPageFilters]) =>
-        this.filterAndSortDogs(dogs, query, sortField, sortDirection, selectedPageFilters),
+      map(([dogs, query, sortField, sortDirection, selectedGenderFilters, selectedStatusFilters, selectedPageFilters]) =>
+        this.filterAndSortDogs(
+          dogs,
+          query,
+          sortField,
+          sortDirection,
+          selectedGenderFilters,
+          selectedStatusFilters,
+          selectedPageFilters,
+        ),
       ),
     );
   }
 
-  getDogPages() {
+  getDogPages(): void {
     this.dogpagesService.getDogPages().subscribe((pages) => {
       this.dogPages = this.buildDogPagesMap(pages);
       this.dogPagesVersion$.next(this.dogPagesVersion$.value + 1);
     });
   }
 
-  onQueryChange(value: string) {
+  onQueryChange(value: string): void {
     this.query = value;
     this.query$.next(value);
   }
 
-  onSortFieldChange(value: DogSortField) {
+  onSortFieldChange(value: DogSortField): void {
     this.sortField = value;
     this.sortField$.next(value);
   }
 
-  onSortDirectionChange(value: SortDirection) {
+  onSortDirectionChange(value: SortDirection): void {
     this.sortDirection = value;
     this.sortDirection$.next(value);
   }
 
-  onPageFilterChange(pageName: string, checked: boolean) {
+  onGenderFilterChange(value: DogGenderFilter, checked: boolean): void {
+    const nextFilters = checked
+      ? [...this.selectedGenderFilters, value]
+      : this.selectedGenderFilters.filter((filterValue) => filterValue !== value);
+
+    this.selectedGenderFilters = nextFilters;
+    this.genderFilters$.next(nextFilters);
+  }
+
+  onStatusFilterChange(value: DogStatusFilter, checked: boolean): void {
+    const nextFilters = checked
+      ? [...this.selectedStatusFilters, value]
+      : this.selectedStatusFilters.filter((filterValue) => filterValue !== value);
+
+    this.selectedStatusFilters = nextFilters;
+    this.statusFilters$.next(nextFilters);
+  }
+
+  onPageFilterChange(pageName: string, checked: boolean): void {
     const nextFilters = checked
       ? [...this.selectedPageFilters, pageName]
       : this.selectedPageFilters.filter((filterName) => filterName !== pageName);
@@ -139,42 +146,42 @@ export class ListdogsComponent implements OnInit {
     this.pageFilters$.next(nextFilters);
   }
 
-  togglePageFilterPicker(event?: Event) {
-    event?.stopPropagation();
-    this.showPageFilterPicker = !this.showPageFilterPicker;
-    if (this.showPageFilterPicker) {
-      this.showColumnPicker = false;
-    }
-  }
+  openFiltersDialog(): void {
+    const dialogRef = this.dialog.open(ListdogsFiltersDialogComponent, {
+      autoFocus: false,
+      data: {
+        sortField: this.sortField,
+        sortDirection: this.sortDirection,
+        selectedGenderFilters: this.selectedGenderFilters,
+        selectedStatusFilters: this.selectedStatusFilters,
+        selectedPageFilters: this.selectedPageFilters,
+        pageFilterOptions: this.pageFilterOptions,
+      },
+      maxWidth: '100vw',
+      width: this.isMobileView ? '100vw' : '28rem',
+    });
 
-  onColumnFilterChange(columnKey: DogColumnKey, checked: boolean) {
-    const nextColumns = checked
-      ? [...this.selectedColumns, columnKey]
-      : this.selectedColumns.filter((selectedColumn) => selectedColumn !== columnKey);
+    dialogRef.afterClosed().subscribe((result?: ListdogsFiltersDialogResult) => {
+      if (!result) {
+        return;
+      }
 
-    this.selectedColumns = this.columnOptions
-      .map((column) => column.key)
-      .filter((column) => nextColumns.includes(column));
-    this.storeSelectedColumns();
-  }
-
-  toggleColumnPicker(event?: Event) {
-    event?.stopPropagation();
-    this.showColumnPicker = !this.showColumnPicker;
-    if (this.showColumnPicker) {
-      this.showPageFilterPicker = false;
-    }
+      this.onSortFieldChange(result.sortField);
+      this.onSortDirectionChange(result.sortDirection);
+      this.selectedGenderFilters = result.selectedGenderFilters as DogGenderFilter[];
+      this.genderFilters$.next(this.selectedGenderFilters);
+      this.selectedStatusFilters = result.selectedStatusFilters as DogStatusFilter[];
+      this.statusFilters$.next(this.selectedStatusFilters);
+      this.selectedPageFilters = result.selectedPageFilters;
+      this.pageFilters$.next(result.selectedPageFilters);
+    });
   }
 
   goToPages(): void {
     this.router.navigate(['/admin/pages']);
   }
 
-  goBack(): void {
-    this.location.back();
-  }
-
-  deleteDog(dog: Dog) {
+  deleteDog(dog: Dog): void {
     const pageNames = this.getDogPagesLabel(dog.id);
     if (pageNames.length > 0) {
       window.alert(
@@ -216,20 +223,119 @@ export class ListdogsComponent implements OnInit {
     return this.getDogPagesLabel(dogId);
   }
 
-  hasPrice(dog: Dog): boolean {
-    return typeof dog.price === 'number' && Number.isFinite(dog.price);
+  clearQuery(): void {
+    this.onQueryChange('');
   }
 
-  formatPrice(dog: Dog): string {
-    if (!this.hasPrice(dog)) {
-      return '';
+  clearGenderFilters(): void {
+    this.selectedGenderFilters = [];
+    this.genderFilters$.next([]);
+  }
+
+  clearStatusFilters(): void {
+    this.selectedStatusFilters = [];
+    this.statusFilters$.next([]);
+  }
+
+  clearPageFilters(): void {
+    this.selectedPageFilters = [];
+    this.pageFilters$.next([]);
+  }
+
+  removeGenderFilter(value: DogGenderFilter): void {
+    this.onGenderFilterChange(value, false);
+  }
+
+  removeStatusFilter(value: DogStatusFilter): void {
+    this.onStatusFilterChange(value, false);
+  }
+
+  removePageFilter(pageName: string): void {
+    this.onPageFilterChange(pageName, false);
+  }
+
+  resetSorting(): void {
+    this.onSortFieldChange('rname');
+    this.onSortDirectionChange('asc');
+  }
+
+  clearAllFilters(): void {
+    this.clearQuery();
+    this.resetSorting();
+    this.clearGenderFilters();
+    this.clearStatusFilters();
+    this.clearPageFilters();
+  }
+
+  hasActiveFilters(): boolean {
+    return (
+      Boolean(this.query.trim()) ||
+      this.selectedGenderFilters.length > 0 ||
+      this.selectedStatusFilters.length > 0 ||
+      this.selectedPageFilters.length > 0 ||
+      this.hasCustomSorting()
+    );
+  }
+
+  hasCustomSorting(): boolean {
+    return this.sortField !== 'rname' || this.sortDirection !== 'asc';
+  }
+
+  getActiveFilterCount(): number {
+    let count = 0;
+
+    if (this.query.trim()) {
+      count += 1;
     }
 
-    return `$${Math.round(dog.price!).toLocaleString('en-US')}`;
+    count += this.selectedGenderFilters.length;
+    count += this.selectedStatusFilters.length;
+    count += this.selectedPageFilters.length;
+
+    if (this.hasCustomSorting()) {
+      count += 1;
+    }
+
+    return count;
   }
 
-  isColumnVisible(columnKey: DogColumnKey): boolean {
-    return this.selectedColumns.includes(columnKey);
+  shouldShowResults(): boolean {
+    return (
+      Boolean(this.query.trim()) ||
+      this.selectedGenderFilters.length > 0 ||
+      this.selectedStatusFilters.length > 0 ||
+      this.selectedPageFilters.length > 0
+    );
+  }
+
+  getSortSummary(): string {
+    const sortLabels: Record<DogSortField, string> = {
+      activePages: 'Active Pages',
+      cname: 'Call Name',
+      damName: 'Dam',
+      dob: 'Date of Birth',
+      gender: 'Gender',
+      rname: 'Registered Name',
+      sireName: 'Sire',
+      status: 'Status',
+    };
+
+    return `${sortLabels[this.sortField]}, ${this.sortDirection === 'asc' ? 'Ascending' : 'Descending'}`;
+  }
+
+  getGenderFilterLabel(value: DogGenderFilter): string {
+    return value === 'male' ? 'Male' : 'Female';
+  }
+
+  getStatusFilterLabel(value: DogStatusFilter): string {
+    switch (value) {
+      case 'none':
+        return 'None';
+      case 'reserved':
+        return 'Reserved';
+      case 'sold':
+        return 'Sold';
+    }
   }
 
   private filterAndSortDogs(
@@ -237,6 +343,8 @@ export class ListdogsComponent implements OnInit {
     query: string,
     sortField: DogSortField,
     sortDirection: SortDirection,
+    selectedGenderFilters: DogGenderFilter[],
+    selectedStatusFilters: DogStatusFilter[],
     selectedPageFilters: string[],
   ): Dog[] {
     const trimmedQuery = query.trim().toLowerCase();
@@ -245,20 +353,28 @@ export class ListdogsComponent implements OnInit {
           [
             dog.rname,
             dog.cname,
-            dog.gender ? 'male' : 'female',
+            dog.gender === null ? null : dog.gender ? 'male' : 'female',
             dog.status,
             dog.sireName,
             dog.damName,
             dog.comments,
           ]
-            .filter(Boolean)
+            .filter((value): value is string => Boolean(value))
             .some((value) => value.toLowerCase().includes(trimmedQuery)),
         )
       : dogs;
 
-    const pageFilteredDogs = selectedPageFilters.length
-      ? textFilteredDogs.filter((dog) => this.matchesPageFilters(dog.id, selectedPageFilters))
+    const genderFilteredDogs = selectedGenderFilters.length
+      ? textFilteredDogs.filter((dog) => this.matchesGenderFilters(dog, selectedGenderFilters))
       : textFilteredDogs;
+
+    const statusFilteredDogs = selectedStatusFilters.length
+      ? genderFilteredDogs.filter((dog) => this.matchesStatusFilters(dog, selectedStatusFilters))
+      : genderFilteredDogs;
+
+    const pageFilteredDogs = selectedPageFilters.length
+      ? statusFilteredDogs.filter((dog) => this.matchesPageFilters(dog.id, selectedPageFilters))
+      : statusFilteredDogs;
 
     return pageFilteredDogs
       .slice()
@@ -271,7 +387,7 @@ export class ListdogsComponent implements OnInit {
 
     switch (sortField) {
       case 'gender':
-        comparison = this.compareStrings(a.gender ? 'male' : 'female', b.gender ? 'male' : 'female');
+        comparison = this.compareStrings(this.toGenderLabel(a.gender), this.toGenderLabel(b.gender));
         break;
       case 'status':
         comparison = this.compareStatus(a.status, b.status);
@@ -346,6 +462,16 @@ export class ListdogsComponent implements OnInit {
     return this.dogPages.get(dogId) ?? [];
   }
 
+  private matchesGenderFilters(dog: Dog, selectedGenderFilters: DogGenderFilter[]): boolean {
+    const gender = this.toGenderLabel(dog.gender);
+    return selectedGenderFilters.includes(gender as DogGenderFilter);
+  }
+
+  private matchesStatusFilters(dog: Dog, selectedStatusFilters: DogStatusFilter[]): boolean {
+    const status = (dog.status ?? 'none') as DogStatusFilter;
+    return selectedStatusFilters.includes(status);
+  }
+
   private matchesPageFilters(dogId: string, selectedPageFilters: string[]): boolean {
     const activePages = this.getDogPagesLabel(dogId);
 
@@ -371,65 +497,19 @@ export class ListdogsComponent implements OnInit {
     }
   }
 
-  private syncViewportDefaults() {
-    const nextIsMobileView = typeof window !== 'undefined' && window.innerWidth <= 700;
-
-    if (this.selectedColumns.length === 0) {
-      this.isMobileView = nextIsMobileView;
-      this.selectedColumns = this.getStoredColumns(nextIsMobileView) ?? this.getDefaultColumns(nextIsMobileView);
-      return;
+  private toGenderLabel(value: boolean | null | undefined): string {
+    if (value === true) {
+      return 'male';
     }
 
-    if (this.isMobileView !== nextIsMobileView) {
-      this.isMobileView = nextIsMobileView;
-      this.selectedColumns = this.getStoredColumns(nextIsMobileView) ?? this.getDefaultColumns(nextIsMobileView);
+    if (value === false) {
+      return 'female';
     }
+
+    return '';
   }
 
-  private getDefaultColumns(isMobileView: boolean): DogColumnKey[] {
-    if (isMobileView) {
-      return ['price', 'status', 'cname'];
-    }
-
-    return this.columnOptions.map((column) => column.key);
-  }
-
-  private storeSelectedColumns() {
-    if (typeof document === 'undefined') {
-      return;
-    }
-
-    const cookieName = this.isMobileView
-      ? ListdogsComponent.MOBILE_COLUMNS_COOKIE
-      : ListdogsComponent.DESKTOP_COLUMNS_COOKIE;
-    const encodedValue = encodeURIComponent(this.selectedColumns.join(','));
-    document.cookie = `${cookieName}=${encodedValue}; path=/; max-age=${60 * 60 * 24 * 365}`;
-  }
-
-  private getStoredColumns(isMobileView: boolean): DogColumnKey[] | null {
-    if (typeof document === 'undefined') {
-      return null;
-    }
-
-    const cookieName = isMobileView
-      ? ListdogsComponent.MOBILE_COLUMNS_COOKIE
-      : ListdogsComponent.DESKTOP_COLUMNS_COOKIE;
-    const cookieValue = document.cookie
-      .split('; ')
-      .find((entry) => entry.startsWith(`${cookieName}=`))
-      ?.split('=')
-      .slice(1)
-      .join('=');
-
-    if (!cookieValue) {
-      return null;
-    }
-
-    const validColumnKeys = new Set(this.columnOptions.map((column) => column.key));
-    const storedColumns = decodeURIComponent(cookieValue)
-      .split(',')
-      .filter((column): column is DogColumnKey => validColumnKeys.has(column as DogColumnKey));
-
-    return storedColumns.length ? storedColumns : null;
+  private syncViewportDefaults(): void {
+    this.isMobileView = typeof window !== 'undefined' && window.innerWidth <= 700;
   }
 }

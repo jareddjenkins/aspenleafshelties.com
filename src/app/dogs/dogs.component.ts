@@ -22,6 +22,8 @@ export class DogsComponent implements OnChanges {
 
   @Input() showPrice = false;
 
+  @Input() clickTarget: 'detail' | 'edit' | 'none' = 'detail';
+
   private imageLoadFailed = false;
 
   lgImgUrl: string;
@@ -31,7 +33,16 @@ export class DogsComponent implements OnChanges {
     private location: Location,
   ) {}
 
-  goDogDetails(): void {
+  handleCardClick(): void {
+    if (!this.dog?.id || this.clickTarget === 'none') {
+      return;
+    }
+
+    if (this.clickTarget === 'edit') {
+      this.router.navigate([`/admin/editdog/${this.dog.id}`]);
+      return;
+    }
+
     this.router.navigate([`/detail/${this.dog.id}`]);
   }
   goBack(): void {
@@ -86,6 +97,10 @@ export class DogsComponent implements OnChanges {
 
   get imageAltText(): string {
     return this.displayName ? `Picture of ${this.displayName}` : 'Picture of dog';
+  }
+
+  get isCardInteractive(): boolean {
+    return this.clickTarget !== 'none' && Boolean(this.dog?.id);
   }
 
   get callName(): string {

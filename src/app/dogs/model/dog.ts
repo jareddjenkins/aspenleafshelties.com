@@ -9,7 +9,7 @@ export interface Dog {
   damName: string;
   sireName: string;
   sireId: string | null;
-  gender: boolean;
+  gender: boolean | null;
   price: number | null;
   profileImageUrl: string;
   profileCardImageUrl: string;

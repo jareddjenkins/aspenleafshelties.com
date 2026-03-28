@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { AdminAuthService, AdminSessionState } from '../../auth/admin-auth.service';
+import { AdminHeaderService, AdminHeaderState } from './admin-header.service';
 
 @Component({
     selector: 'app-admin',
@@ -12,14 +13,17 @@ import { AdminAuthService, AdminSessionState } from '../../auth/admin-auth.servi
 })
 export class AdminComponent {
   readonly sessionState$: Observable<AdminSessionState>;
+  readonly headerState$: Observable<AdminHeaderState | null>;
   errorMessage = '';
 
   constructor(
     private adminAuthService: AdminAuthService,
+    private adminHeaderService: AdminHeaderService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
   ) {
     this.sessionState$ = this.adminAuthService.sessionState$;
+    this.headerState$ = this.adminHeaderService.state$;
   }
 
   async signIn(): Promise<void> {

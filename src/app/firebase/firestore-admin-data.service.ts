@@ -33,8 +33,8 @@ type UploadedDogImages = {
 export class FirestoreAdminDataService {
   constructor(private firebaseAdminClientService: FirebaseAdminClientService) {}
 
-  addDog(): Observable<Dog> {
-    return from(this.createDog());
+  addDog(dog: Dog): Observable<Dog> {
+    return from(this.createDog(dog));
   }
 
   updateDog(dog: Dog): Observable<Dog> {
@@ -57,35 +57,22 @@ export class FirestoreAdminDataService {
     return from(this.removeDog(id));
   }
 
-  private async createDog(): Promise<Dog> {
+  private async createDog(dog: Dog): Promise<Dog> {
     const firestore = this.requireFirestore();
     const dogRef = doc(collection(firestore, 'dogs'));
-    const dog: Dog = {
+    const nextDog: Dog = {
+      ...dog,
       id: dogRef.id,
-      rname: '',
-      cname: '',
-      comments: '',
-      dob: null,
-      damId: null,
-      damName: '',
-      sireId: null,
-      sireName: '',
-      gender: 0 as unknown as boolean,
-      price: null,
-      profileImageUrl: '',
-      profileCardImageUrl: '',
-      profileDetailImageUrl: '',
-      profileCardImagePath: null,
-      profileDetailImagePath: null,
-      status: null,
     };
 
-    await setDoc(dogRef, this.toDogPayload(dog, { includeCreatedAt: true, removeMissingFields: false }));
-    return dog;
+    this.validateDogForSave(nextDog);
+    await setDoc(dogRef, this.toDogPayload(nextDog, { includeCreatedAt: true, removeMissingFields: false }));
+    return nextDog;
   }
 
   private async saveDog(dog: Dog): Promise<Dog> {
     const firestore = this.requireFirestore();
+    this.validateDogForSave(dog);
     await setDoc(doc(firestore, 'dogs', dog.id), this.toDogPayload(dog, { removeMissingFields: true }), {
       merge: true,
     });
@@ -232,7 +219,7 @@ export class FirestoreAdminDataService {
     const payload: FirestoreDogPayload = {
       rname: this.normalizeRequiredText(dog.rname),
       cname: this.normalizeRequiredText(dog.cname),
-      gender: Number(dog.gender ?? 0),
+      gender: dog.gender ? 1 : 0,
       updatedAt: serverTimestamp(),
     };
 
@@ -259,6 +246,20 @@ export class FirestoreAdminDataService {
 
   private normalizeRequiredText(value: string | null | undefined): string {
     return typeof value === 'string' ? value.trim() : '';
+  }
+
+  private validateDogForSave(dog: Dog): void {
+    if (!this.normalizeRequiredText(dog.rname)) {
+      throw new Error('Registered name is required.');
+    }
+
+    if (!this.normalizeRequiredText(dog.cname)) {
+      throw new Error('Call name is required.');
+    }
+
+    if (dog.gender !== true && dog.gender !== false) {
+      throw new Error('Gender is required.');
+    }
   }
 
   private normalizeOptionalText(value: string | null | undefined): string | null {

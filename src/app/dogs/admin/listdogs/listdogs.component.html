@@ -1,221 +1,174 @@
-<section class="admin-shell">
-  <div class="admin-toolbar">
-    <div class="toolbar-filters">
-      <label class="search-field">
-        <span>Search</span>
-        <input
-          type="text"
-          [ngModel]="query"
-          (ngModelChange)="onQueryChange($event)"
-          placeholder="Search dogs"
-          aria-label="Search dogs"
-        />
-      </label>
+<section class="dogs-page">
+  <header class="dogs-page__header">
+    <h1>Manage dogs</h1>
+    <p class="dogs-page__summary">Search, sort, filter, and edit the dogs that appear throughout the site.</p>
+  </header>
 
-      <label class="sort-field" for="sortField">
-        <span>Sort By</span>
-        <select
-          id="sortField"
-          [ngModel]="sortField"
-          (ngModelChange)="onSortFieldChange($event)"
-        >
-          <option value="rname">Registered Name</option>
-          <option value="cname">Call Name</option>
-          <option value="status">Status</option>
-          <option value="gender">Gender</option>
-          <option value="sireName">Sire</option>
-          <option value="damName">Dam</option>
-          <option value="activePages">Active Pages</option>
-          <option value="dob">Date of Birth</option>
-        </select>
-      </label>
-
-      <label class="sort-field sort-field--direction" for="sortDirection">
-        <span>Direction</span>
-        <select
-          id="sortDirection"
-          [ngModel]="sortDirection"
-          (ngModelChange)="onSortDirectionChange($event)"
-        >
-          <option value="asc">Ascending</option>
-          <option value="desc">Descending</option>
-        </select>
-      </label>
-
-    </div>
-
-    <div class="toolbar-actions">
-      <div class="toolbar-picker">
-        <button type="button" class="secondary-button toolbar-picker__trigger" (click)="togglePageFilterPicker($event)">
-          <mat-icon>filter_list</mat-icon>
-          Page Filters
-        </button>
-
-        @if (showPageFilterPicker) {
-          <div class="toolbar-picker__menu">
-            <p class="toolbar-picker__title">Filter Pages</p>
-            <div class="toolbar-picker__options">
-              @for (pageName of pageFilterOptions; track pageName) {
-                <label class="page-filter-option">
-                  <input
-                    type="checkbox"
-                    [checked]="selectedPageFilters.includes(pageName)"
-                    (change)="onPageFilterChange(pageName, $any($event.target).checked)"
-                  />
-                  <span>{{ pageName }}</span>
-                </label>
-              }
-            </div>
-          </div>
-        }
-      </div>
-
-      <div class="toolbar-picker">
-        <button type="button" class="secondary-button toolbar-picker__trigger" (click)="toggleColumnPicker($event)">
-          <mat-icon>view_column</mat-icon>
-          Columns
-        </button>
-
-        @if (showColumnPicker) {
-          <div class="toolbar-picker__menu">
-            <p class="toolbar-picker__title">Show Columns</p>
-            <div class="toolbar-picker__options">
-              @for (column of columnOptions; track column.key) {
-                <label class="page-filter-option">
-                  <input
-                    type="checkbox"
-                    [checked]="isColumnVisible(column.key)"
-                    (change)="onColumnFilterChange(column.key, $any($event.target).checked)"
-                  />
-                  <span>{{ column.label }}</span>
-                </label>
-              }
-            </div>
-            <p class="filter-help">
-              @if (isMobileView) {
-                Mobile resets to a lighter default set when the screen size changes.
-              } @else {
-                Desktop resets to the full default set when the screen size changes.
-              }
-            </p>
-          </div>
-        }
-      </div>
-
-      <button type="button" class="secondary-button" (click)="goToPages()">
-        Edit Pages
-      </button>
-      <button type="button" class="primary-button" (click)="createnewdog()">
-        Create Dog
-      </button>
-    </div>
+  <div class="dogs-page__primary-actions">
+    <button mat-flat-button color="primary" type="button" (click)="createnewdog()">Create Dog Record</button>
+    <button mat-stroked-button type="button" (click)="goToPages()">Edit Pages</button>
   </div>
 
-  <div class="table-shell">
-    <table>
-      <thead>
-        <tr>
-          <th>Registered Name</th>
-          @if (isColumnVisible('price')) {
-            <th class="hide-mobile">Price</th>
-          }
-          @if (isColumnVisible('status')) {
-            <th class="hide-mobile">Status</th>
-          }
-          @if (isColumnVisible('cname')) {
-            <th class="hide-mobile">Call Name</th>
-          }
-          @if (isColumnVisible('gender')) {
-            <th class="hide-mobile">Gender</th>
-          }
-          @if (isColumnVisible('sireName')) {
-            <th class="hide-mobile">Sire</th>
-          }
-          @if (isColumnVisible('damName')) {
-            <th class="hide-mobile">Dam</th>
-          }
-          @if (isColumnVisible('activePages')) {
-            <th class="hide-mobile">Active Pages</th>
-          }
-          @if (isColumnVisible('dob')) {
-            <th class="hide-mobile">Date of Birth</th>
-          }
-          <th class="action-col">Edit</th>
-          <th class="action-col">Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (dog of filteredDogs | async; track dog) {
-          <tr>
-            <td data-label="Registered Name">{{ dog.rname }}</td>
-            @if (isColumnVisible('price')) {
-              <td class="hide-mobile" data-label="Price">
-                @if (hasPrice(dog)) {
-                  <span class="price-chip">{{ formatPrice(dog) }}</span>
-                } @else {
-                  <span class="price-chip price-chip--empty">None</span>
-                }
-              </td>
-            }
-            @if (isColumnVisible('status')) {
-              <td class="hide-mobile" data-label="Status">
-                @if (dog.status) {
-                  <span class="status-chip" [class.is-sold]="dog.status === 'sold'">
-                    {{ dog.status === "reserved" ? "Reserved" : "Sold" }}
-                  </span>
-                } @else {
-                  <span class="status-chip status-chip--empty">None</span>
-                }
-              </td>
-            }
-            @if (isColumnVisible('cname')) {
-              <td class="hide-mobile" data-label="Call Name">{{ dog.cname }}</td>
-            }
-            @if (isColumnVisible('gender')) {
-              <td class="hide-mobile" data-label="Gender">{{ dog.gender ? "Male" : "Female" }}</td>
-            }
-            @if (isColumnVisible('sireName')) {
-              <td class="hide-mobile" data-label="Sire">{{ dog.sireName }}</td>
-            }
-            @if (isColumnVisible('damName')) {
-              <td class="hide-mobile" data-label="Dam">{{ dog.damName }}</td>
-            }
-            @if (isColumnVisible('activePages')) {
-              <td class="hide-mobile" data-label="Active Pages">
-                @if (getActivePages(dog.id).length) {
-                  <div class="page-chip-list">
-                    @for (pageName of getActivePages(dog.id); track pageName) {
-                      <span class="page-chip">{{ pageName }}</span>
-                    }
-                  </div>
-                } @else {
-                  <span class="page-chip page-chip--empty">None</span>
-                }
-              </td>
-            }
-            @if (isColumnVisible('dob')) {
-              <td class="hide-mobile" data-label="Date of Birth">{{ dog.dob | date: "shortDate" }}</td>
-            }
-            <td class="action-col">
-              <a class="icon-link" [routerLink]="['/admin/editdog', dog.id]" routerLinkActive="active">
-                <mat-icon>edit</mat-icon>
-              </a>
-            </td>
-            <td class="action-col" data-label="Delete">
-              <button
-                type="button"
-                class="icon-button"
-                (click)="deleteDog(dog)"
-                [disabled]="!canDeleteDog(dog.id)"
-                [attr.aria-label]="getDeleteReason(dog.id)"
-                [title]="getDeleteReason(dog.id)"
-              >
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
+  <div class="dogs-page__search-row">
+    <mat-form-field appearance="outline" class="dogs-page__search">
+      <mat-label>Search dogs</mat-label>
+      <input
+        matInput
+        type="text"
+        [ngModel]="query"
+        (ngModelChange)="onQueryChange($event)"
+        placeholder="Registered name, status, parents, notes"
+      />
+      @if (query) {
+        <button mat-icon-button matSuffix type="button" aria-label="Clear search" (click)="clearQuery()">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
   </div>
+
+  <div class="dogs-page__filters-row">
+    <button
+      mat-stroked-button
+      type="button"
+      class="dogs-page__filters-button"
+      (click)="openFiltersDialog()"
+      [matBadge]="getActiveFilterCount()"
+      [matBadgeHidden]="getActiveFilterCount() === 0"
+      matBadgeColor="primary"
+    >
+      <mat-icon>filter_list</mat-icon>
+      Filters
+    </button>
+  </div>
+
+  @if (hasActiveFilters()) {
+    <div class="dogs-page__active-filters">
+      <mat-chip-set>
+        @if (query.trim()) {
+          <mat-chip>
+            Search: {{ query }}
+            <button matChipRemove type="button" aria-label="Clear search" (click)="clearQuery()">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+        }
+
+        @if (hasCustomSorting()) {
+          <mat-chip>
+            Sort: {{ getSortSummary() }}
+            <button matChipRemove type="button" aria-label="Reset sorting" (click)="resetSorting()">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+        }
+
+        @for (gender of selectedGenderFilters; track gender) {
+          <mat-chip>
+            Gender: {{ getGenderFilterLabel(gender) }}
+            <button
+              matChipRemove
+              type="button"
+              [attr.aria-label]="'Remove ' + getGenderFilterLabel(gender) + ' gender filter'"
+              (click)="removeGenderFilter(gender)"
+            >
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+        }
+
+        @for (status of selectedStatusFilters; track status) {
+          <mat-chip>
+            Status: {{ getStatusFilterLabel(status) }}
+            <button
+              matChipRemove
+              type="button"
+              [attr.aria-label]="'Remove ' + getStatusFilterLabel(status) + ' status filter'"
+              (click)="removeStatusFilter(status)"
+            >
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+        }
+
+        @for (pageName of selectedPageFilters; track pageName) {
+          <mat-chip>
+            Page: {{ pageName }}
+            <button
+              matChipRemove
+              type="button"
+              [attr.aria-label]="'Remove ' + pageName + ' page filter'"
+              (click)="removePageFilter(pageName)"
+            >
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+        }
+      </mat-chip-set>
+
+      <button mat-button type="button" (click)="clearAllFilters()">Clear all</button>
+    </div>
+  }
+
+  <mat-card class="dogs-page__results">
+    @if (!shouldShowResults()) {
+      <div class="dogs-page__empty-state">
+        <mat-icon>search</mat-icon>
+        <p class="dogs-page__empty-title">No dogs are shown yet.</p>
+        <p class="dogs-page__empty-copy">Use search or page filters to show dogs here.</p>
+      </div>
+    } @else if (filteredDogs | async; as dogs) {
+      @if (dogs.length === 0) {
+        <div class="dogs-page__empty-state">
+          <mat-icon>filter_alt_off</mat-icon>
+          <p class="dogs-page__empty-title">No dogs match the current search or filters.</p>
+          <p class="dogs-page__empty-copy">Try a different search term or adjust the selected page filters.</p>
+        </div>
+      } @else {
+        <div class="dogs-page__results-header">
+          <div class="dogs-page__results-copy">
+            <p class="dogs-page__results-count">{{ dogs.length }} dog records</p>
+            <p class="dogs-page__results-note">Select a dog card to edit that record.</p>
+          </div>
+        </div>
+
+        <div class="dogs-page__card-list">
+          @for (dog of dogs; track dog.id) {
+            <article class="dogs-page__record">
+              <app-dogs [dog]="dog" [showStatusBanner]="true" [showPrice]="true" clickTarget="edit"></app-dogs>
+
+              <div class="dogs-page__record-footer">
+                <div class="dogs-page__record-context">
+                  <p class="dogs-page__record-hint">Click card to edit record</p>
+
+                  @if (getActivePages(dog.id).length) {
+                    <mat-chip-set aria-label="Dog page assignments">
+                      @for (pageName of getActivePages(dog.id); track pageName) {
+                        <mat-chip>{{ pageName }}</mat-chip>
+                      }
+                    </mat-chip-set>
+                  } @else {
+                    <p class="dogs-page__record-pages dogs-page__record-pages--empty">Not assigned to any site page.</p>
+                  }
+                </div>
+
+                <button
+                  mat-stroked-button
+                  type="button"
+                  class="dogs-page__delete-button"
+                  (click)="deleteDog(dog)"
+                  [disabled]="!canDeleteDog(dog.id)"
+                  [attr.aria-label]="getDeleteReason(dog.id)"
+                  [matTooltip]="getDeleteReason(dog.id)"
+                >
+                  <mat-icon>delete</mat-icon>
+                  Delete
+                </button>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    }
+  </mat-card>
 </section>

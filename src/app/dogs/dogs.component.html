@@ -1,6 +1,11 @@
 @if (dog) {
   <!-- eslint-disable-next-line @angular-eslint/template/interactive-supports-focus -->
-  <article class="dog-card" (click)="goDogDetails()" (keypress)="goDogDetails()">
+  <article
+    class="dog-card"
+    [class.dog-card--static]="!isCardInteractive"
+    (click)="handleCardClick()"
+    (keypress)="handleCardClick()"
+  >
     <header class="dog-card__header">
       @if (displayName) {
         <h2>{{ displayName }}</h2>

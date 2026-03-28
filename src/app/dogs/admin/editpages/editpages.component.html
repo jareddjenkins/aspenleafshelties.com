@@ -3,23 +3,22 @@
     <div>
       <p class="pages-eyebrow">Admin</p>
       <h1>Edit Pages</h1>
+      <p class="pages-subcopy">Choose a dog for each page, then drag the list into the order you want visitors to see.</p>
     </div>
-    <button type="button" class="secondary-button" (click)="goToDogList()">Back To Dog List</button>
+    <button mat-stroked-button type="button" (click)="goToDogList()">Back To Dog List</button>
   </div>
 
   <div class="pages-grid">
-    <div class="page-column">
-      <div cdkDropList class="example-list" (cdkDropListDropped)="drop(boypages, $event)">
-        <div class="column-header">
-          <h2>Boys</h2>
-        </div>
-        <div class="column-add">
-          <div class="column-add-copy">
-            <p class="column-add-kicker">Add To Page</p>
-          </div>
-          <label class="picker-field" for="boys-select">
+    <mat-card class="page-column">
+      <mat-card-header>
+        <mat-card-title>Boys</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="page-column__add">
+          <mat-form-field appearance="outline">
+            <mat-label>Add dog to Boys</mat-label>
             <input
-              id="boys-select"
+              matInput
               type="text"
               [(ngModel)]="dogSearch[boysPageName]"
               name="boys-select"
@@ -31,36 +30,44 @@
                 <option [value]="dog.rname"></option>
               }
             </datalist>
-          </label>
-          <button type="button" class="mini-button" (click)="addnewdog(boysPageName)" [disabled]="!dogSearch[boysPageName]?.trim()">Add</button>
+          </mat-form-field>
+          <button mat-flat-button color="primary" type="button" (click)="addnewdog(boysPageName)" [disabled]="!dogSearch[boysPageName]?.trim()">Add</button>
         </div>
-        @for (item of boypages; track item.dogId; let i = $index) {
-          <div class="example-box" cdkDrag>
-            <span>{{ item.dog.rname }}</span>
-            <span class="item-actions">
-              <button type="button" class="icon-button" (click)="removedog(boysPageName, boypages, i)" aria-label="Remove dog from boys page">
-                <mat-icon>remove_circle</mat-icon>
-              </button>
-              <mat-icon>drag_handle</mat-icon>
-            </span>
-          </div>
-        }
-      </div>
-    </div>
 
-    <div class="page-column">
-      <div cdkDropList class="example-list" (cdkDropListDropped)="drop(girlpages, $event)">
-        <div class="column-header">
-          <h2>Girls</h2>
+        <div cdkDropList class="page-list" (cdkDropListDropped)="drop(boypages, $event)">
+          @for (item of boypages; track item.dogId; let i = $index) {
+            <div class="page-list__item" cdkDrag>
+              <span>{{ item.dog.rname }}</span>
+              <span class="page-list__item-actions">
+                <button
+                  mat-icon-button
+                  type="button"
+                  (click)="goToEditDog(item.dogId)"
+                  aria-label="Edit dog record"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button type="button" (click)="removedog(boysPageName, boypages, i)" aria-label="Remove dog from boys page">
+                  <mat-icon>remove_circle</mat-icon>
+                </button>
+                <mat-icon class="page-list__drag-handle">drag_handle</mat-icon>
+              </span>
+            </div>
+          }
         </div>
-        <div class="column-add">
-          <div class="column-add-copy">
-            <p class="column-add-kicker">Add To Page</p>
-            <p class="column-add-text">Choose a dog to place on this page before reordering the list below.</p>
-          </div>
-          <label class="picker-field" for="girls-select">
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="page-column">
+      <mat-card-header>
+        <mat-card-title>Girls</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="page-column__add">
+          <mat-form-field appearance="outline">
+            <mat-label>Add dog to Girls</mat-label>
             <input
-              id="girls-select"
+              matInput
               type="text"
               [(ngModel)]="dogSearch[girlsPageName]"
               name="girls-select"
@@ -72,36 +79,44 @@
                 <option [value]="dog.rname"></option>
               }
             </datalist>
-          </label>
-          <button type="button" class="mini-button" (click)="addnewdog(girlsPageName)" [disabled]="!dogSearch[girlsPageName]?.trim()">Add</button>
+          </mat-form-field>
+          <button mat-flat-button color="primary" type="button" (click)="addnewdog(girlsPageName)" [disabled]="!dogSearch[girlsPageName]?.trim()">Add</button>
         </div>
-        @for (item of girlpages; track item.dogId; let i = $index) {
-          <div class="example-box" cdkDrag>
-            <span>{{ item.dog.rname }}</span>
-            <span class="item-actions">
-              <button type="button" class="icon-button" (click)="removedog(girlsPageName, girlpages, i)" aria-label="Remove dog from girls page">
-                <mat-icon>remove_circle</mat-icon>
-              </button>
-              <mat-icon>drag_handle</mat-icon>
-            </span>
-          </div>
-        }
-      </div>
-    </div>
 
-    <div class="page-column">
-      <div cdkDropList class="example-list" (cdkDropListDropped)="drop(availablepages, $event)">
-        <div class="column-header">
-          <h2>Available</h2>
+        <div cdkDropList class="page-list" (cdkDropListDropped)="drop(girlpages, $event)">
+          @for (item of girlpages; track item.dogId; let i = $index) {
+            <div class="page-list__item" cdkDrag>
+              <span>{{ item.dog.rname }}</span>
+              <span class="page-list__item-actions">
+                <button
+                  mat-icon-button
+                  type="button"
+                  (click)="goToEditDog(item.dogId)"
+                  aria-label="Edit dog record"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button type="button" (click)="removedog(girlsPageName, girlpages, i)" aria-label="Remove dog from girls page">
+                  <mat-icon>remove_circle</mat-icon>
+                </button>
+                <mat-icon class="page-list__drag-handle">drag_handle</mat-icon>
+              </span>
+            </div>
+          }
         </div>
-        <div class="column-add">
-          <div class="column-add-copy">
-            <p class="column-add-kicker">Add To Page</p>
-            <p class="column-add-text">Choose a dog to place on this page before reordering the list below.</p>
-          </div>
-          <label class="picker-field" for="available-select">
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="page-column">
+      <mat-card-header>
+        <mat-card-title>Available</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="page-column__add">
+          <mat-form-field appearance="outline">
+            <mat-label>Add dog to Available</mat-label>
             <input
-              id="available-select"
+              matInput
               type="text"
               [(ngModel)]="dogSearch[availablePageName]"
               name="available-select"
@@ -113,36 +128,44 @@
                 <option [value]="dog.rname"></option>
               }
             </datalist>
-          </label>
-          <button type="button" class="mini-button" (click)="addnewdog(availablePageName)" [disabled]="!dogSearch[availablePageName]?.trim()">Add</button>
+          </mat-form-field>
+          <button mat-flat-button color="primary" type="button" (click)="addnewdog(availablePageName)" [disabled]="!dogSearch[availablePageName]?.trim()">Add</button>
         </div>
-        @for (item of availablepages; track item.dogId; let i = $index) {
-          <div class="example-box" cdkDrag>
-            <span>{{ item.dog.rname }}</span>
-            <span class="item-actions">
-              <button type="button" class="icon-button" (click)="removedog(availablePageName, availablepages, i)" aria-label="Remove dog from available page">
-                <mat-icon>remove_circle</mat-icon>
-              </button>
-              <mat-icon>drag_handle</mat-icon>
-            </span>
-          </div>
-        }
-      </div>
-    </div>
 
-    <div class="page-column">
-      <div cdkDropList class="example-list" (cdkDropListDropped)="drop(adultavailablepages, $event)">
-        <div class="column-header">
-          <h2>Adult Available</h2>
+        <div cdkDropList class="page-list" (cdkDropListDropped)="drop(availablepages, $event)">
+          @for (item of availablepages; track item.dogId; let i = $index) {
+            <div class="page-list__item" cdkDrag>
+              <span>{{ item.dog.rname }}</span>
+              <span class="page-list__item-actions">
+                <button
+                  mat-icon-button
+                  type="button"
+                  (click)="goToEditDog(item.dogId)"
+                  aria-label="Edit dog record"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button type="button" (click)="removedog(availablePageName, availablepages, i)" aria-label="Remove dog from available page">
+                  <mat-icon>remove_circle</mat-icon>
+                </button>
+                <mat-icon class="page-list__drag-handle">drag_handle</mat-icon>
+              </span>
+            </div>
+          }
         </div>
-        <div class="column-add">
-          <div class="column-add-copy">
-            <p class="column-add-kicker">Add To Page</p>
-            <p class="column-add-text">Choose a dog to place on this page before reordering the list below.</p>
-          </div>
-          <label class="picker-field" for="adultavailable-select">
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="page-column">
+      <mat-card-header>
+        <mat-card-title>Adult Available</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="page-column__add">
+          <mat-form-field appearance="outline">
+            <mat-label>Add dog to Adult Available</mat-label>
             <input
-              id="adultavailable-select"
+              matInput
               type="text"
               [(ngModel)]="dogSearch[adultAvailablePageName]"
               name="adultavailable-select"
@@ -154,21 +177,32 @@
                 <option [value]="dog.rname"></option>
               }
             </datalist>
-          </label>
-          <button type="button" class="mini-button" (click)="addnewdog(adultAvailablePageName)" [disabled]="!dogSearch[adultAvailablePageName]?.trim()">Add</button>
+          </mat-form-field>
+          <button mat-flat-button color="primary" type="button" (click)="addnewdog(adultAvailablePageName)" [disabled]="!dogSearch[adultAvailablePageName]?.trim()">Add</button>
         </div>
-        @for (item of adultavailablepages; track item.dogId; let i = $index) {
-          <div class="example-box" cdkDrag>
-            <span>{{ item.dog.rname }}</span>
-            <span class="item-actions">
-              <button type="button" class="icon-button" (click)="removedog(adultAvailablePageName, adultavailablepages, i)" aria-label="Remove dog from adult available page">
-                <mat-icon>remove_circle</mat-icon>
-              </button>
-              <mat-icon>drag_handle</mat-icon>
-            </span>
-          </div>
-        }
-      </div>
-    </div>
+
+        <div cdkDropList class="page-list" (cdkDropListDropped)="drop(adultavailablepages, $event)">
+          @for (item of adultavailablepages; track item.dogId; let i = $index) {
+            <div class="page-list__item" cdkDrag>
+              <span>{{ item.dog.rname }}</span>
+              <span class="page-list__item-actions">
+                <button
+                  mat-icon-button
+                  type="button"
+                  (click)="goToEditDog(item.dogId)"
+                  aria-label="Edit dog record"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button type="button" (click)="removedog(adultAvailablePageName, adultavailablepages, i)" aria-label="Remove dog from adult available page">
+                  <mat-icon>remove_circle</mat-icon>
+                </button>
+                <mat-icon class="page-list__drag-handle">drag_handle</mat-icon>
+              </span>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>
 </section>

@@ -139,6 +139,10 @@ export class EditpagesComponent implements OnInit {
     this.router.navigate(['/admin']);
   }
 
+  goToEditDog(dogId: string): void {
+    this.router.navigate(['/admin/editdog', dogId]);
+  }
+
   filteredDogs(pageName: string): Dog[] {
     const query = this.dogSearch[pageName]?.trim().toLowerCase() ?? '';
     if (!query) {

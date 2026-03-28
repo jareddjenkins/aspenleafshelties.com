@@ -1,70 +1,136 @@
 @if (sessionState$ | async; as session) {
-  <section class="admin-auth-shell">
-    @if (!session.isReady) {
-      <div class="admin-auth-card">
-        <p class="eyebrow">Admin</p>
-        <h1>Checking access...</h1>
-        <p>Loading your sign-in state.</p>
-      </div>
-    } @else if (!session.isSignedIn) {
-      <div class="admin-auth-card">
-        <p class="eyebrow">Admin</p>
-        <h1>Sign in to edit Aspenleaf Shelties.</h1>
-        <p>
-          Use the Google account that is approved for site administration. Visitors can continue browsing the public
-          site without signing in.
-        </p>
-        <button type="button" class="primary-button" (click)="signIn()">Sign In With Google</button>
-      </div>
-    } @else if (!session.isEditor) {
-      <div class="admin-auth-card">
-        <p class="eyebrow">Admin</p>
-        <h1>This account is view only.</h1>
-        <p>
-          You are signed in as <strong>{{ session.user?.email }}</strong>, but that account is not on the editor
-          allowlist for this site.
-        </p>
-        <div class="admin-auth-actions">
-          <button type="button" class="secondary-button" (click)="signOut()">Sign Out</button>
-        </div>
-      </div>
-    } @else {
-      <div class="admin-workspace">
-        <div class="admin-header-card">
-          <p class="eyebrow">Admin</p>
+  <section class="admin-page">
+    <div class="admin-page__container">
+      @if (!session.isReady) {
+        <mat-card class="admin-state">
+          <mat-card-header>
+            <mat-card-subtitle>Admin</mat-card-subtitle>
+            <mat-card-title>Checking access...</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="admin-state__loading">
+            <mat-progress-spinner diameter="36" mode="indeterminate"></mat-progress-spinner>
+            <p>Loading your sign-in state.</p>
+          </mat-card-content>
+        </mat-card>
+      } @else if (!session.isSignedIn) {
+        <mat-card class="admin-state">
+          <mat-card-header>
+            <mat-card-subtitle>Admin</mat-card-subtitle>
+            <mat-card-title>Sign in to edit Aspenleaf Shelties.</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              Use the Google account that is approved for site administration. Visitors can continue browsing the
+              public site without signing in.
+            </p>
+          </mat-card-content>
+          <mat-card-actions class="admin-state__actions">
+            <button mat-flat-button color="primary" type="button" (click)="signIn()">Sign In With Google</button>
+          </mat-card-actions>
+        </mat-card>
+      } @else if (!session.isEditor) {
+        <mat-card class="admin-state">
+          <mat-card-header>
+            <mat-card-subtitle>Admin</mat-card-subtitle>
+            <mat-card-title>This account is view only.</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              You are signed in as <strong>{{ session.user?.email }}</strong>, but that account is not on the editor
+              allowlist for this site.
+            </p>
+          </mat-card-content>
+          <mat-card-actions class="admin-state__actions">
+            <button mat-stroked-button type="button" (click)="signOut()">Sign Out</button>
+          </mat-card-actions>
+        </mat-card>
+      } @else {
+        <div
+          class="admin-page__workspace"
+          [class.admin-page__workspace--child-route]="hasActiveChildRoute"
+          [class.admin-page__workspace--with-banners]="hasActiveChildRoute && ((headerState$ | async)?.banners?.length ?? 0) > 0"
+        >
+          <div
+            class="admin-page__sticky-header"
+            [class.admin-page__sticky-header--floating]="hasActiveChildRoute"
+          >
+            <mat-toolbar class="admin-utility" role="region" aria-label="Admin utility header">
+              <div class="admin-utility__context">
+                <span class="admin-utility__label">Admin</span>
+                <span class="admin-utility__session">Signed in as {{ session.user?.email }}</span>
+              </div>
+              <div class="admin-utility__actions">
+                <a mat-stroked-button routerLink="/home">View Site</a>
+                @if (hasActiveChildRoute) {
+                  <button mat-stroked-button type="button" (click)="goToDogList()">Back To Dog List</button>
+                }
+                <button mat-button type="button" (click)="signOut()">Sign Out</button>
+              </div>
+            </mat-toolbar>
 
-          <div class="admin-auth-header">
-            <div>
-              <h1>Admin tools</h1>
-              <p>Signed in as {{ session.user?.email }}</p>
-            </div>
-            <div class="admin-auth-actions">
-              <a class="secondary-button" routerLink="/home">View Site</a>
-              @if (hasActiveChildRoute) {
-                <button type="button" class="secondary-button" (click)="goToDogList()">Back To Dog List</button>
-              }
-              <button type="button" class="secondary-button" (click)="signOut()">Sign Out</button>
-            </div>
+            @if (hasActiveChildRoute && (headerState$ | async); as headerState) {
+              <mat-card class="admin-route-header">
+                <div class="admin-route-header__content">
+                  @if (headerState.primaryAction) {
+                    <div class="admin-route-header__actions">
+                      <button
+                        mat-flat-button
+                        color="primary"
+                        type="button"
+                        (click)="headerState.primaryAction()"
+                        [disabled]="headerState.primaryActionDisabled"
+                      >
+                        {{
+                          headerState.primaryActionBusy && headerState.primaryActionPendingLabel
+                            ? headerState.primaryActionPendingLabel
+                            : headerState.primaryActionLabel
+                        }}
+                      </button>
+                    </div>
+                  }
+                </div>
+
+                @if (headerState.banners.length > 0) {
+                  <div class="admin-route-header__banners">
+                    @for (banner of headerState.banners; track banner.label + banner.message) {
+                      <p
+                        class="admin-route-header__banner"
+                        [class.admin-route-header__banner--success]="banner.tone === 'success'"
+                        [class.admin-route-header__banner--warning]="banner.tone === 'warning'"
+                        [class.admin-route-header__banner--error]="banner.tone === 'error'"
+                      >
+                        <strong>{{ banner.label }}:</strong> {{ banner.message }}
+                      </p>
+                    }
+                  </div>
+                }
+              </mat-card>
+            }
+          </div>
+
+          <div class="admin-page__content">
+            @if (showDogList) {
+              <app-listdogs></app-listdogs>
+            }
+
+            @if (showChildOutlet) {
+              <router-outlet></router-outlet>
+            }
           </div>
         </div>
+      }
 
-        <div class="admin-content">
-          @if (showDogList) {
-            <app-listdogs></app-listdogs>
-          }
-
-          @if (showChildOutlet) {
-            <router-outlet></router-outlet>
-          }
-        </div>
-      </div>
-    }
-
-    @if (errorMessage) {
-      <div class="admin-auth-card admin-error-card">
-        <p class="eyebrow">Admin</p>
-        <p class="auth-error">{{ errorMessage }}</p>
-      </div>
-    }
+      @if (errorMessage) {
+        <mat-card class="admin-state admin-state--error">
+          <mat-card-header>
+            <mat-card-subtitle>Admin</mat-card-subtitle>
+            <mat-card-title>Something went wrong</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ errorMessage }}</p>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
   </section>
 }

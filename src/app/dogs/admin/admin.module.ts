@@ -16,6 +16,7 @@ import { ImageCropperComponent } from 'ngx-image-cropper';
 import { DatePipe } from '@angular/common';
 import { DogsModule } from '../dogs.module';
 import { ListdogsComponent } from './listdogs/listdogs.component';
+import { ListdogsFiltersDialogComponent } from './listdogs/listdogs-filters-dialog.component';
 import { MaterialComponentsModule } from 'src/app/shared/material-components/material-components.module';
 import { FirestoreAdminDataService } from '../../firebase/firestore-admin-data.service';
 import { FirebaseAdminClientService } from '../../firebase/firebase-admin-client.service';
@@ -25,7 +26,8 @@ import { FirebaseAdminClientService } from '../../firebase/firebase-admin-client
     AdminComponent,
     EditpagesComponent,
     EditdogComponent,
-    ListdogsComponent
+    ListdogsComponent,
+    ListdogsFiltersDialogComponent,
   ],
 
   imports: [

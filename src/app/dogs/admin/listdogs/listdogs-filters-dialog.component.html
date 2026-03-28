@@ -1,0 +1,76 @@
+<h2 mat-dialog-title>Filters</h2>
+
+<mat-dialog-content class="dogs-filters-dialog">
+  <section class="dogs-filters-dialog__section">
+    <h3>Sort</h3>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Sort by</mat-label>
+      <mat-select [(ngModel)]="sortField">
+        <mat-option value="rname">Registered Name</mat-option>
+        <mat-option value="cname">Call Name</mat-option>
+        <mat-option value="status">Status</mat-option>
+        <mat-option value="gender">Gender</mat-option>
+        <mat-option value="sireName">Sire</mat-option>
+        <mat-option value="damName">Dam</mat-option>
+        <mat-option value="activePages">Active Pages</mat-option>
+        <mat-option value="dob">Date of Birth</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Direction</mat-label>
+      <mat-select [(ngModel)]="sortDirection">
+        <mat-option value="asc">Ascending</mat-option>
+        <mat-option value="desc">Descending</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </section>
+
+  <section class="dogs-filters-dialog__section">
+    <h3>Page filters</h3>
+    <div class="dogs-filters-dialog__checkboxes">
+      @for (pageName of data.pageFilterOptions; track pageName) {
+        <mat-checkbox
+          [checked]="isPageFilterSelected(pageName)"
+          (change)="onPageFilterChange(pageName, $event.checked)"
+        >
+          {{ pageName }}
+        </mat-checkbox>
+      }
+    </div>
+  </section>
+
+  <section class="dogs-filters-dialog__section">
+    <h3>Gender</h3>
+    <div class="dogs-filters-dialog__checkboxes">
+      <mat-checkbox [checked]="isGenderFilterSelected('male')" (change)="onGenderFilterChange('male', $event.checked)">
+        Male
+      </mat-checkbox>
+      <mat-checkbox [checked]="isGenderFilterSelected('female')" (change)="onGenderFilterChange('female', $event.checked)">
+        Female
+      </mat-checkbox>
+    </div>
+  </section>
+
+  <section class="dogs-filters-dialog__section">
+    <h3>Status</h3>
+    <div class="dogs-filters-dialog__checkboxes">
+      <mat-checkbox [checked]="isStatusFilterSelected('none')" (change)="onStatusFilterChange('none', $event.checked)">
+        None
+      </mat-checkbox>
+      <mat-checkbox [checked]="isStatusFilterSelected('reserved')" (change)="onStatusFilterChange('reserved', $event.checked)">
+        Reserved
+      </mat-checkbox>
+      <mat-checkbox [checked]="isStatusFilterSelected('sold')" (change)="onStatusFilterChange('sold', $event.checked)">
+        Sold
+      </mat-checkbox>
+    </div>
+  </section>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="resetAll()">Reset all</button>
+  <button mat-button mat-dialog-close type="button">Cancel</button>
+  <button mat-flat-button color="primary" type="button" (click)="apply()">Apply</button>
+</mat-dialog-actions>
