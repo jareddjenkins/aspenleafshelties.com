@@ -45,79 +45,168 @@
           </mat-card-actions>
         </mat-card>
       } @else {
-        <div
-          class="admin-page__workspace"
-          [class.admin-page__workspace--child-route]="hasActiveChildRoute"
-          [class.admin-page__workspace--with-banners]="hasActiveChildRoute && ((headerState$ | async)?.banners?.length ?? 0) > 0"
-        >
+        @if ((headerState$ | async) ?? { actions: [], banners: [] }; as headerState) {
           <div
-            class="admin-page__sticky-header"
-            [class.admin-page__sticky-header--floating]="hasActiveChildRoute"
+            class="admin-page__workspace"
+            [class.admin-page__workspace--child-route]="hasActiveChildRoute && (headerState.actions.length > 0 || headerState.banners.length > 0)"
+            [class.admin-page__workspace--with-banners]="hasActiveChildRoute && headerState.banners.length > 0"
           >
-            <mat-toolbar class="admin-utility" role="region" aria-label="Admin utility header">
-              <div class="admin-utility__context">
-                <span class="admin-utility__label">Admin</span>
-                <span class="admin-utility__session">Signed in as {{ session.user?.email }}</span>
-              </div>
-              <div class="admin-utility__actions">
-                <a mat-stroked-button routerLink="/home">Site</a>
-                @if (hasActiveChildRoute) {
-                  <button mat-stroked-button type="button" (click)="goToDogList()">Dog List</button>
-                }
-                <button mat-button type="button" (click)="signOut()">Sign Out</button>
-              </div>
-            </mat-toolbar>
+            <div
+              class="admin-page__sticky-header"
+              [class.admin-page__sticky-header--floating]="hasActiveChildRoute && (headerState.actions.length > 0 || headerState.banners.length > 0)"
+            >
+              <mat-toolbar class="admin-utility" role="region" aria-label="Admin navigation">
+                <div class="admin-utility__main">
+                  <div class="admin-utility__context">
+                    <span class="admin-utility__label">Admin</span>
+                    <span class="admin-utility__section">{{ currentSectionLabel }}</span>
+                  </div>
 
-            @if (hasActiveChildRoute && (headerState$ | async); as headerState) {
-              <mat-card class="admin-route-header">
-                <div class="admin-route-header__content">
-                  @if (headerState.primaryAction) {
-                    <div class="admin-route-header__actions">
-                      <button
-                        mat-flat-button
-                        color="primary"
-                        type="button"
-                        (click)="headerState.primaryAction()"
-                        [disabled]="headerState.primaryActionDisabled"
-                      >
-                        {{
-                          headerState.primaryActionBusy && headerState.primaryActionPendingLabel
-                            ? headerState.primaryActionPendingLabel
-                            : headerState.primaryActionLabel
-                        }}
-                      </button>
-                    </div>
-                  }
+                  <nav class="admin-utility__nav" aria-label="Admin sections">
+                    <a
+                      mat-button
+                      routerLink="/admin"
+                      class="admin-utility__nav-link"
+                      [class.admin-utility__nav-link--active]="isNavItemActive('dogs')"
+                    >
+                      Dog List
+                    </a>
+                    <a
+                      mat-button
+                      routerLink="/admin/pages"
+                      class="admin-utility__nav-link"
+                      [class.admin-utility__nav-link--active]="isNavItemActive('pages')"
+                    >
+                      Edit Pages
+                    </a>
+                    <a
+                      mat-button
+                      routerLink="/admin/editdog/new"
+                      class="admin-utility__nav-link"
+                      [class.admin-utility__nav-link--active]="isNavItemActive('create')"
+                    >
+                      Create Dog Record
+                    </a>
+                  </nav>
                 </div>
 
-                @if (headerState.banners.length > 0) {
-                  <div class="admin-route-header__banners">
-                    @for (banner of headerState.banners; track banner.label + banner.message) {
-                      <p
-                        class="admin-route-header__banner"
-                        [class.admin-route-header__banner--success]="banner.tone === 'success'"
-                        [class.admin-route-header__banner--warning]="banner.tone === 'warning'"
-                        [class.admin-route-header__banner--error]="banner.tone === 'error'"
-                      >
-                        <strong>{{ banner.label }}:</strong> {{ banner.message }}
-                      </p>
-                    }
+                <div class="admin-utility__desktop-actions">
+                  <a mat-stroked-button routerLink="/home">View Full Site</a>
+                  <div class="admin-utility__account">
+                    <button mat-button type="button" (click)="signOut()">Sign Out</button>
+                    <span class="admin-utility__session">{{ session.user?.email }}</span>
                   </div>
-                }
-              </mat-card>
-            }
-          </div>
+                </div>
 
-          <div class="admin-page__content">
-            @if (showDogList) {
-              <app-listdogs></app-listdogs>
-            }
+                <div class="admin-utility__mobile-actions">
+                  <button
+                    mat-icon-button
+                    type="button"
+                    (click)="toggleMobileNavPanel()"
+                    [attr.aria-expanded]="showMobileNavPanel"
+                    aria-label="Toggle admin navigation"
+                  >
+                    <mat-icon>{{ showMobileNavPanel ? "close" : "menu" }}</mat-icon>
+                  </button>
+                </div>
+              </mat-toolbar>
 
-            @if (showChildOutlet) {
-              <router-outlet></router-outlet>
-            }
+              @if (showMobileNavPanel) {
+                <mat-card class="admin-mobile-nav">
+                  <div class="admin-mobile-nav__section">
+                    <p class="admin-mobile-nav__label">Quick actions</p>
+                    <div class="admin-mobile-nav__actions">
+                      <a
+                        mat-flat-button
+                        color="primary"
+                        routerLink="/admin/editdog/new"
+                        (click)="closeMobileNavPanel()"
+                      >
+                        Create Dog Record
+                      </a>
+                      <a
+                        mat-stroked-button
+                        routerLink="/admin"
+                        [class.admin-mobile-nav__button--active]="isNavItemActive('dogs')"
+                      >
+                        Dog List
+                      </a>
+                      <a
+                        mat-stroked-button
+                        routerLink="/admin/pages"
+                        (click)="closeMobileNavPanel()"
+                        [class.admin-mobile-nav__button--active]="isNavItemActive('pages')"
+                      >
+                        Edit Pages
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="admin-mobile-nav__meta">
+                    <div class="admin-mobile-nav__secondary-actions">
+                      <a mat-button routerLink="/home">View Full Site</a>
+                      <div class="admin-mobile-nav__account">
+                        <button mat-button type="button" (click)="signOut()">Sign Out</button>
+                        <p class="admin-mobile-nav__session">{{ session.user?.email }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </mat-card>
+              }
+
+              @if (hasActiveChildRoute && (headerState.actions.length > 0 || headerState.banners.length > 0)) {
+                <mat-card class="admin-route-header">
+                  @if (headerState.actions.length > 0) {
+                    <div class="admin-route-header__content">
+                      <div class="admin-route-header__actions">
+                        @for (action of headerState.actions; track action.label) {
+                          <button
+                            mat-flat-button
+                            color="primary"
+                            type="button"
+                            (click)="action.handler()"
+                            [disabled]="action.disabled"
+                          >
+                            {{
+                              action.busy && action.pendingLabel
+                                ? action.pendingLabel
+                                : action.label
+                            }}
+                          </button>
+                        }
+                      </div>
+                    </div>
+                  }
+
+                  @if (headerState.banners.length > 0) {
+                    <div class="admin-route-header__banners">
+                      @for (banner of headerState.banners; track banner.label + banner.message) {
+                        <p
+                          class="admin-route-header__banner"
+                          [class.admin-route-header__banner--success]="banner.tone === 'success'"
+                          [class.admin-route-header__banner--warning]="banner.tone === 'warning'"
+                          [class.admin-route-header__banner--error]="banner.tone === 'error'"
+                        >
+                          <strong>{{ banner.label }}:</strong> {{ banner.message }}
+                        </p>
+                      }
+                    </div>
+                  }
+                </mat-card>
+              }
+            </div>
+
+            <div class="admin-page__content">
+              @if (showDogList) {
+                <app-listdogs></app-listdogs>
+              }
+
+              @if (showChildOutlet) {
+                <router-outlet></router-outlet>
+              }
+            </div>
           </div>
-        </div>
+        }
       }
 
       @if (errorMessage) {

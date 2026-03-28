@@ -21,14 +21,12 @@
   margin: 0;
 }
 
-.dogs-page__primary-actions,
 .dogs-page__search-row,
 .dogs-page__filters-row {
   display: grid;
   gap: 0.75rem;
 }
 
-.dogs-page__primary-actions button,
 .dogs-page__filters-button {
   width: 100%;
 }
@@ -122,14 +120,6 @@ mat-form-field {
 @media (min-width: 900px) {
   .dogs-page {
     gap: 1rem;
-  }
-
-  .dogs-page__primary-actions {
-    grid-template-columns: repeat(2, minmax(0, max-content));
-  }
-
-  .dogs-page__primary-actions button {
-    width: auto;
   }
 
   .dogs-page__search-row,

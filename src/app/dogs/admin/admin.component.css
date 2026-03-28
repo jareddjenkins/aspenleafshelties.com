@@ -57,13 +57,18 @@
   display: flex;
   gap: 1rem;
   justify-content: space-between;
-  min-height: auto;
-  padding: 0.75rem 1rem;
+  padding: 0.625rem 0.875rem;
+}
+
+.admin-utility__main {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  gap: 1rem;
 }
 
 .admin-utility__context {
   display: grid;
-  gap: 0.25rem;
 }
 
 .admin-utility__label {
@@ -73,19 +78,53 @@
   text-transform: uppercase;
 }
 
-.admin-utility__session {
+.admin-utility__section {
   color: var(--color-muted);
+  font-size: 0.95rem;
 }
 
-.admin-utility__actions,
+.admin-utility__nav {
+  align-items: center;
+  background: rgba(58, 94, 73, 0.06);
+  border-radius: 999px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0.25rem;
+}
+
+.admin-utility__nav-link { border-radius: 999px; }
+
+.admin-utility__nav-link--active {
+  background: rgba(58, 94, 73, 0.12);
+}
+
+.admin-utility__desktop-actions,
 .admin-state__actions {
+  align-items: center;
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
 }
 
-.admin-utility__actions {
-  justify-content: flex-end;
+.admin-utility__account,
+.admin-mobile-nav__account {
+  display: grid;
+  gap: 0.1rem;
+  justify-items: end;
+}
+
+.admin-utility__session,
+.admin-mobile-nav__session {
+  color: rgba(26, 38, 32, 0.42);
+  font-size: 0.78rem;
+}
+
+.admin-utility__session {
+  max-width: 15rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .admin-state__loading {
@@ -94,52 +133,76 @@
   gap: 1rem;
 }
 
+.admin-utility__mobile-actions {
+  display: none;
+}
+
+.admin-mobile-nav__section,
+.admin-mobile-nav__meta {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.admin-mobile-nav__label,
+.admin-mobile-nav__session {
+  margin: 0;
+}
+
+.admin-mobile-nav__label {
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.admin-mobile-nav__actions,
+.admin-mobile-nav__secondary-actions {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.admin-mobile-nav__actions a,
+.admin-mobile-nav__secondary-actions a,
+.admin-mobile-nav__secondary-actions button {
+  width: 100%;
+}
+
 .admin-route-header {
   background: rgba(255, 255, 255, 0.96);
 }
 
 .admin-route-header__content,
-.admin-route-header__copy,
-.admin-route-header__actions,
 .admin-route-header__banners {
   display: grid;
   gap: 0.75rem;
 }
 
 .admin-route-header__content {
-  align-items: start;
-  padding: 1rem;
+  padding: 0.75rem 1rem 0;
 }
 
-.admin-route-header__eyebrow {
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  margin: 0;
-  text-transform: uppercase;
-}
-
-.admin-route-header__copy h1,
-.admin-route-header__summary,
-.admin-route-header__banner {
-  margin: 0;
-}
-
-.admin-route-header__summary {
-  color: var(--color-muted);
+.admin-route-header__actions {
+  display: grid;
+  gap: 0.75rem;
 }
 
 .admin-route-header__actions button {
   width: 100%;
 }
 
+.admin-route-header__actions button,
+.admin-route-header__banner {
+  margin: 0;
+}
+
 .admin-route-header__banners {
-  padding: 0 1rem 1rem;
+  padding: 0 1rem 0.9rem;
 }
 
 .admin-route-header__banner {
   border-radius: 12px;
-  padding: 0.85rem 1rem;
+  padding: 0.75rem 0.9rem;
 }
 
 .admin-route-header__banner strong {
@@ -170,6 +233,23 @@
   color: #8b1e1e;
 }
 
+@media (max-width: 960px) {
+  .admin-utility__nav,
+  .admin-utility__desktop-actions {
+    display: none;
+  }
+
+  .admin-utility__mobile-actions {
+    display: flex;
+    margin-left: auto;
+  }
+
+  .admin-mobile-nav {
+    display: grid;
+    padding: 1rem;
+  }
+}
+
 @media (max-width: 720px) {
   .admin-page {
     padding: 0.75rem 0.75rem 2rem;
@@ -194,29 +274,18 @@
   }
 
   .admin-utility {
-    align-items: center;
     gap: 0.75rem;
   }
 
-  .admin-utility__session {
-    display: none;
-  }
-
-  .admin-utility__actions,
-  .admin-state__actions {
-    align-items: center;
-    flex-wrap: nowrap;
-    overflow-x: auto;
+  .admin-utility__section {
+    font-size: 0.85rem;
   }
 }
 
 @media (min-width: 900px) {
-  .admin-route-header__content {
-    grid-template-columns: minmax(0, 1fr) auto;
-  }
-
   .admin-route-header__actions {
-    align-content: start;
+    grid-auto-flow: column;
+    justify-content: end;
   }
 
   .admin-route-header__actions button {

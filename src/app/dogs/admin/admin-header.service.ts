@@ -7,14 +7,16 @@ export type AdminHeaderBanner = {
   tone: 'info' | 'success' | 'warning' | 'error';
 };
 
+export type AdminHeaderAction = {
+  label: string;
+  pendingLabel?: string;
+  disabled?: boolean;
+  busy?: boolean;
+  handler: () => void;
+};
+
 export type AdminHeaderState = {
-  title: string;
-  subtitle: string;
-  primaryActionLabel?: string;
-  primaryActionPendingLabel?: string;
-  primaryActionDisabled?: boolean;
-  primaryActionBusy?: boolean;
-  primaryAction?: () => void;
+  actions: AdminHeaderAction[];
   banners: AdminHeaderBanner[];
 };
 

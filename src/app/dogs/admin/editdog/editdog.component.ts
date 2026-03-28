@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { firstValueFrom } from 'rxjs';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -8,7 +9,9 @@ import { DogStatus } from '../../model/dog';
 import { DogService } from '../../../dog.service';
 import { DogpagesService } from '../../../dogpages.service';
 import { FirestoreAdminDataService } from '../../../firebase/firestore-admin-data.service';
-import { AdminHeaderBanner, AdminHeaderService } from '../admin-header.service';
+import { AdminHeaderAction, AdminHeaderBanner, AdminHeaderService } from '../admin-header.service';
+
+type EditDogSection = 'details' | 'image' | 'preview' | 'delete';
 
 @Component({
   selector: 'app-editdog',
@@ -20,7 +23,16 @@ export class EditdogComponent implements OnInit, OnDestroy {
   private static readonly CARD_IMAGE_SIZE = 640;
   private static readonly DETAIL_IMAGE_SIZE = 1400;
   private static readonly WEBP_QUALITY = 0.84;
+  readonly pageOptions = [
+    { value: 'boys', label: 'Boys' },
+    { value: 'girls', label: 'Girls' },
+    { value: 'available', label: 'Available' },
+    { value: 'adultavailable', label: 'Adult Available' },
+  ] as const;
+  private readonly mobileMediaQueryString = '(max-width: 700px)';
   private formBannerTimeoutId: ReturnType<typeof setTimeout> | null = null;
+  private mobileMediaQuery: MediaQueryList | null = null;
+  private readonly mobileMediaQueryListener = (event: MediaQueryListEvent) => this.applyMobileSectionState(event.matches);
   private savedSnapshot = '';
 
   dog: Dog;
@@ -35,14 +47,22 @@ export class EditdogComponent implements OnInit, OnDestroy {
   dogPrice = '';
   cropFormat: 'jpeg' = 'jpeg';
   activePageNames: string[] = [];
+  selectedPageNames: string[] = [];
   hasUnsavedChanges = false;
   isSaving = false;
   isDeleting = false;
   isUploading = false;
+  isMobileViewport = false;
   formStatusMessage = '';
   formStatusTone: 'info' | 'success' | 'warning' | 'error' = 'info';
   imageStatusMessage = '';
   imageStatusTone: 'info' | 'success' | 'warning' | 'error' = 'info';
+  sectionExpanded: Record<EditDogSection, boolean> = {
+    details: true,
+    image: true,
+    preview: true,
+    delete: true,
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -54,11 +74,13 @@ export class EditdogComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.initializeMobileSectionState();
     this.getDog();
   }
 
   ngOnDestroy(): void {
     this.clearFormBannerTimeout();
+    this.destroyMobileSectionState();
     this.adminHeaderService.clear();
   }
 
@@ -71,8 +93,10 @@ export class EditdogComponent implements OnInit, OnDestroy {
     if (id === 'new') {
       this.isDraft = true;
       this.dog = this.createDraftDog();
+      this.resetMobileSectionExpansion();
       this.dogDob = '';
       this.dogPrice = '';
+      this.selectedPageNames = [];
       this.captureSavedSnapshot();
       this.markUnsavedChanges();
       this.imageStatusMessage = 'Save the dog record before uploading images.';
@@ -102,6 +126,7 @@ export class EditdogComponent implements OnInit, OnDestroy {
     this.syncPriceFromInput();
     this.dog.sireId = null;
     this.dog.damId = null;
+    this.selectedPageNames = this.getAllowedSelectedPageNames();
 
     const validationMessage = this.getValidationMessage();
     if (validationMessage) {
@@ -119,18 +144,28 @@ export class EditdogComponent implements OnInit, OnDestroy {
       : this.firestoreAdminDataService.updateDog(this.dog);
 
     saveRequest.subscribe({
-      next: (savedDog) => {
+      next: async (savedDog) => {
         const wasDraft = this.isDraft;
-        this.dog = savedDog;
-        if (wasDraft) {
-          this.isDraft = false;
-          this.router.navigate(['/admin/editdog', savedDog.id], { replaceUrl: true });
-          this.syncImageStatusBanner();
+        try {
+          await this.persistPageAssignments(savedDog.id);
+          this.dog = savedDog;
+          this.activePageNames = this.getSelectedPageDisplayNames();
+          if (wasDraft) {
+            this.isDraft = false;
+            this.router.navigate(['/admin/editdog', savedDog.id], { replaceUrl: true });
+            this.syncImageStatusBanner();
+          }
+          this.isSaving = false;
+          this.captureSavedSnapshot();
+          this.showTemporaryFormStatus(wasDraft ? 'Dog record created.' : 'Changes saved.', 'success');
+          this.syncAdminHeader();
+        } catch (error) {
+          console.error(error);
+          this.isSaving = false;
+          this.formStatusMessage = error instanceof Error ? error.message : 'Dog saved, but page assignments could not be updated.';
+          this.formStatusTone = 'error';
+          this.syncAdminHeader();
         }
-        this.isSaving = false;
-        this.captureSavedSnapshot();
-        this.showTemporaryFormStatus(wasDraft ? 'Dog record created.' : 'Changes saved.', 'success');
-        this.syncAdminHeader();
       },
       error: (error) => {
         console.error(error);
@@ -257,9 +292,52 @@ export class EditdogComponent implements OnInit, OnDestroy {
     this.markUnsavedChanges();
   }
 
+  updateGender(value: boolean | null) {
+    this.dog.gender = value === true || value === false ? value : null;
+    this.selectedPageNames = this.getAllowedSelectedPageNames(true);
+    this.markUnsavedChanges();
+  }
+
   updatePrice(value: string | number | null) {
     this.dogPrice = value == null ? '' : String(value);
     this.syncPriceFromInput();
+    this.markUnsavedChanges();
+  }
+
+  isPageSelected(pageName: string): boolean {
+    return this.selectedPageNames.includes(pageName);
+  }
+
+  isPageSelectionDisabled(pageName: string): boolean {
+    return this.isPageSelectionBlocked(pageName) && !this.isPageSelected(pageName);
+  }
+
+  isSectionCollapsed(section: EditDogSection): boolean {
+    return this.isMobileViewport && !this.sectionExpanded[section];
+  }
+
+  toggleSection(section: EditDogSection): void {
+    if (!this.isMobileViewport) {
+      return;
+    }
+
+    this.sectionExpanded = {
+      ...this.sectionExpanded,
+      [section]: !this.sectionExpanded[section],
+    };
+  }
+
+  onPageSelectionChange(pageName: string, checked: boolean): void {
+    if (checked && this.isPageSelectionBlocked(pageName)) {
+      return;
+    }
+
+    this.selectedPageNames = checked
+      ? [...this.selectedPageNames, pageName]
+      : this.selectedPageNames.filter((selectedPageName) => selectedPageName !== pageName);
+    this.selectedPageNames = this.pageOptions
+      .map((page) => page.value)
+      .filter((page) => this.selectedPageNames.includes(page));
     this.markUnsavedChanges();
   }
 
@@ -370,8 +448,7 @@ export class EditdogComponent implements OnInit, OnDestroy {
 
   private syncImageStatusBanner() {
     if (this.isDraft || !this.dog?.id) {
-      this.imageStatusMessage = 'Save the dog record before uploading images.';
-      this.imageStatusTone = 'warning';
+      this.imageStatusMessage = '';
       this.syncAdminHeader();
       return;
     }
@@ -417,9 +494,32 @@ export class EditdogComponent implements OnInit, OnDestroy {
   }
 
   private syncAdminHeader(): void {
+    const actions: AdminHeaderAction[] = [];
     const banners: AdminHeaderBanner[] = [];
+    const hasPendingSave = this.isSaving || this.hasUnsavedChanges;
+    const hasPendingUpload = this.isUploading || (!!this.croppedImageBlob && !this.isDraft);
 
-    if (this.formStatusMessage) {
+    if (hasPendingSave) {
+      actions.push({
+        label: 'Save',
+        pendingLabel: 'Saving...',
+        disabled: this.isSaving || this.isDeleting,
+        busy: this.isSaving,
+        handler: () => this.save(),
+      });
+    }
+
+    if (hasPendingUpload) {
+      actions.push({
+        label: 'Upload Image',
+        pendingLabel: 'Uploading...',
+        disabled: this.isUploading || this.isDeleting,
+        busy: this.isUploading,
+        handler: () => this.onUpload(),
+      });
+    }
+
+    if (this.formStatusMessage && (hasPendingSave || this.formStatusTone === 'error' || this.formStatusTone === 'info')) {
       banners.push({
         label: 'Record',
         message: this.formStatusMessage,
@@ -427,7 +527,7 @@ export class EditdogComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (this.imageStatusMessage) {
+    if (this.imageStatusMessage && (hasPendingUpload || this.imageStatusTone === 'error' || this.imageStatusTone === 'info')) {
       banners.push({
         label: 'Images',
         message: this.imageStatusMessage,
@@ -435,16 +535,12 @@ export class EditdogComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.adminHeaderService.setState({
-      title: this.isDraft ? 'Create Dog Record' : 'Edit Dog',
-      subtitle: this.isDraft ? '' : 'Update the public details for this dog.',
-      primaryAction: () => this.save(),
-      primaryActionBusy: this.isSaving,
-      primaryActionDisabled: this.isSaving,
-      primaryActionLabel: 'Save',
-      primaryActionPendingLabel: 'Saving...',
-      banners,
-    });
+    if (actions.length === 0 && banners.length === 0) {
+      this.adminHeaderService.clear();
+      return;
+    }
+
+    this.adminHeaderService.setState({ actions, banners });
   }
 
   private syncPriceFromInput() {
@@ -477,6 +573,7 @@ export class EditdogComponent implements OnInit, OnDestroy {
       sireName: this.dog?.sireName ?? '',
       damName: this.dog?.damName ?? '',
       comments: this.dog?.comments ?? '',
+      pageNames: this.selectedPageNames,
     });
   }
 
@@ -543,6 +640,8 @@ export class EditdogComponent implements OnInit, OnDestroy {
   private loadActivePages(dogId: string | undefined): void {
     if (!dogId) {
       this.activePageNames = [];
+      this.selectedPageNames = [];
+      this.captureSavedSnapshot();
       return;
     }
 
@@ -552,7 +651,53 @@ export class EditdogComponent implements OnInit, OnDestroy {
         .map((page) => this.toDisplayPageName(page.pageName))
         .filter((pageName, index, allPageNames) => allPageNames.indexOf(pageName) === index)
         .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+      this.selectedPageNames = this.pageOptions
+        .map((page) => page.value)
+        .filter((pageName) =>
+          pages.some(
+            (page) => page.dogId === dogId && this.normalizePageName(page.pageName) === pageName,
+          ),
+        );
+      this.captureSavedSnapshot();
+      this.syncAdminHeader();
     });
+  }
+
+  private async persistPageAssignments(dogId: string): Promise<void> {
+    const allPages = await firstValueFrom(this.dogpagesService.getDogPages());
+    const pageUpdates = this.pageOptions.map((pageOption) => {
+      const existingAssignments = allPages.filter(
+        (page) => this.normalizePageName(page.pageName) === pageOption.value,
+      );
+      const wantsPage = this.selectedPageNames.includes(pageOption.value);
+      const alreadyOnPage = existingAssignments.some((page) => page.dogId === dogId);
+
+      if (wantsPage === alreadyOnPage) {
+        return null;
+      }
+
+      const updatedAssignments = wantsPage
+        ? [...existingAssignments, { dogId, pageName: pageOption.value, sortId: existingAssignments.length }]
+        : existingAssignments.filter((page) => page.dogId !== dogId);
+
+      return firstValueFrom(
+        this.firestoreAdminDataService.putPagesByPage(
+          pageOption.value,
+          updatedAssignments.map((page, index) => ({
+            ...page,
+            sortId: index,
+          })),
+        ),
+      );
+    });
+
+    await Promise.all(pageUpdates.filter((update): update is Promise<void> => Boolean(update)));
+  }
+
+  private getSelectedPageDisplayNames(): string[] {
+    return this.pageOptions
+      .filter((page) => this.selectedPageNames.includes(page.value))
+      .map((page) => page.label);
   }
 
   private toDisplayPageName(value: string): string {
@@ -570,5 +715,80 @@ export class EditdogComponent implements OnInit, OnDestroy {
       default:
         return value;
     }
+  }
+
+  private normalizePageName(value: string): string {
+    return (value ?? '').replace(/\s+/g, '').toLowerCase();
+  }
+
+  private initializeMobileSectionState(): void {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    this.mobileMediaQuery = window.matchMedia(this.mobileMediaQueryString);
+    this.applyMobileSectionState(this.mobileMediaQuery.matches);
+
+    if (typeof this.mobileMediaQuery.addEventListener === 'function') {
+      this.mobileMediaQuery.addEventListener('change', this.mobileMediaQueryListener);
+      return;
+    }
+
+    this.mobileMediaQuery.addListener(this.mobileMediaQueryListener);
+  }
+
+  private destroyMobileSectionState(): void {
+    if (!this.mobileMediaQuery) {
+      return;
+    }
+
+    if (typeof this.mobileMediaQuery.removeEventListener === 'function') {
+      this.mobileMediaQuery.removeEventListener('change', this.mobileMediaQueryListener);
+      return;
+    }
+
+    this.mobileMediaQuery.removeListener(this.mobileMediaQueryListener);
+  }
+
+  private applyMobileSectionState(isMobileViewport: boolean): void {
+    const wasMobileViewport = this.isMobileViewport;
+    this.isMobileViewport = isMobileViewport;
+
+    if (!isMobileViewport || wasMobileViewport) {
+      return;
+    }
+
+    this.resetMobileSectionExpansion();
+  }
+
+  private resetMobileSectionExpansion(): void {
+    if (!this.isMobileViewport) {
+      return;
+    }
+
+    this.sectionExpanded = {
+      details: this.isDraft,
+      image: false,
+      preview: true,
+      delete: true,
+    };
+  }
+
+  private getAllowedSelectedPageNames(allowUnknownGender = false): string[] {
+    return this.selectedPageNames.filter((pageName) => !this.isPageSelectionBlocked(pageName, allowUnknownGender));
+  }
+
+  private isPageSelectionBlocked(pageName: string, allowUnknownGender = false): boolean {
+    const normalizedPageName = this.normalizePageName(pageName);
+
+    if (normalizedPageName !== 'boys' && normalizedPageName !== 'girls') {
+      return false;
+    }
+
+    if (this.dog?.gender !== true && this.dog?.gender !== false) {
+      return !allowUnknownGender;
+    }
+
+    return normalizedPageName === 'boys' ? this.dog.gender === false : this.dog.gender === true;
   }
 }

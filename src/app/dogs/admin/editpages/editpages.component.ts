@@ -78,6 +78,11 @@ export class EditpagesComponent implements OnInit {
       return;
     }
 
+    if (!this.canAssignDogToPage(dog, pageName)) {
+      window.alert(this.getPageAssignmentBlockedMessage(dog, pageName));
+      return;
+    }
+
     const newpageItem: PageListItem = {
       dog,
       sortId: 0,
@@ -135,21 +140,23 @@ export class EditpagesComponent implements OnInit {
     this.firestoreAdminDataService.putPagesByPage(pageName, page).subscribe();
   }
 
-  goToDogList(): void {
-    this.router.navigate(['/admin']);
-  }
-
   goToEditDog(dogId: string): void {
     this.router.navigate(['/admin/editdog', dogId]);
   }
 
   filteredDogs(pageName: string): Dog[] {
     const query = this.dogSearch[pageName]?.trim().toLowerCase() ?? '';
-    if (!query) {
-      return this.doglist;
-    }
+    return this.doglist.filter((dog) => {
+      if (!this.canAssignDogToPage(dog, pageName)) {
+        return false;
+      }
 
-    return this.doglist.filter((dog) => (dog.rname ?? '').toLowerCase().includes(query));
+      if (!query) {
+        return true;
+      }
+
+      return (dog.rname ?? '').toLowerCase().includes(query);
+    });
   }
 
   private getPage(pageName: string): PageListItem[] | null {
@@ -185,5 +192,35 @@ export class EditpagesComponent implements OnInit {
 
   private normalizePageName(value: string): string {
     return (value ?? '').replace(/\s+/g, '').toLowerCase();
+  }
+
+  private canAssignDogToPage(dog: Dog | undefined, pageName: string): boolean {
+    if (!dog) {
+      return false;
+    }
+
+    const normalizedPageName = this.normalizePageName(pageName);
+    if (normalizedPageName !== this.boysPageName && normalizedPageName !== this.girlsPageName) {
+      return true;
+    }
+
+    if (dog.gender !== true && dog.gender !== false) {
+      return false;
+    }
+
+    return normalizedPageName === this.boysPageName ? dog.gender === true : dog.gender === false;
+  }
+
+  private getPageAssignmentBlockedMessage(dog: Dog, pageName: string): string {
+    const normalizedPageName = this.normalizePageName(pageName);
+
+    if (dog.gender !== true && dog.gender !== false) {
+      return 'Set the dog gender before adding it to Boys or Girls.';
+    }
+
+    const dogName = dog.rname || dog.cname || 'This dog';
+    return normalizedPageName === this.boysPageName
+      ? `${dogName} cannot be added to Boys because the dog is marked Female.`
+      : `${dogName} cannot be added to Girls because the dog is marked Male.`;
   }
 }

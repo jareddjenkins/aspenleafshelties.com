@@ -1,6 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -50,7 +49,6 @@ export class ListdogsComponent implements OnInit {
   constructor(
     private dogService: DogService,
     private dogpagesService: DogpagesService,
-    private router: Router,
     private dialog: MatDialog,
   ) {}
 
@@ -63,10 +61,6 @@ export class ListdogsComponent implements OnInit {
   @HostListener('window:resize')
   onWindowResize(): void {
     this.syncViewportDefaults();
-  }
-
-  createnewdog(): void {
-    this.router.navigate(['/admin/editdog/new']);
   }
 
   getDogs(): void {
@@ -173,10 +167,6 @@ export class ListdogsComponent implements OnInit {
       this.selectedPageFilters = result.selectedPageFilters;
       this.pageFilters$.next(result.selectedPageFilters);
     });
-  }
-
-  goToPages(): void {
-    this.router.navigate(['/admin/pages']);
   }
 
   getActivePages(dogId: string): string[] {

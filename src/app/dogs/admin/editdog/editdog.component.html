@@ -1,209 +1,275 @@
 <section class="edit-shell">
   @if (dog) {
     <div class="edit-grid">
-      <div class="edit-sidebar">
-        <mat-card class="edit-card">
-          <mat-card-header>
+      <mat-card class="edit-card">
+        <mat-card-header class="edit-card__header">
+          <div class="edit-card__heading">
             <mat-card-title>Dog details</mat-card-title>
-          </mat-card-header>
-
-          <mat-card-content class="edit-card__content">
-
-            <p class="edit-preview-note">Preview updates below while you edit this record.</p>
-
-            <form class="dog-form">
-              <mat-form-field appearance="outline">
-                <mat-label>Registered name</mat-label>
-                <input
-                  matInput
-                  type="text"
-                  [(ngModel)]="dog.rname"
-                  (ngModelChange)="markUnsavedChanges()"
-                  name="rname"
-                  placeholder="Registered Name"
-                />
-                @if (showRnameError) {
-                  <mat-error>Registered name is required.</mat-error>
-                }
-              </mat-form-field>
-
-              <mat-form-field appearance="outline">
-                <mat-label>Call name</mat-label>
-                <input
-                  matInput
-                  type="text"
-                  [(ngModel)]="dog.cname"
-                  (ngModelChange)="markUnsavedChanges()"
-                  name="cname"
-                  placeholder="Call Name"
-                />
-                @if (showCnameError) {
-                  <mat-error>Call name is required.</mat-error>
-                }
-              </mat-form-field>
-
-              <div class="edit-form-section" [class.edit-form-section--error]="showGenderError">
-                <label class="edit-form-section__label">Gender</label>
-                <mat-radio-group
-                  aria-label="Gender"
-                  class="edit-form-section__radio-group"
-                  [(ngModel)]="dog.gender"
-                  (ngModelChange)="markUnsavedChanges()"
-                  name="gender"
-                >
-                  <mat-radio-button [value]="true">Male</mat-radio-button>
-                  <mat-radio-button [value]="false">Female</mat-radio-button>
-                </mat-radio-group>
-                @if (showGenderError) {
-                  <p class="edit-form-section__error">Gender is required.</p>
-                }
-              </div>
-
-              <mat-form-field appearance="outline">
-                <mat-label>Status</mat-label>
-                <mat-select name="status" [ngModel]="dog.status ?? ''" (ngModelChange)="updateStatus($event)">
-                  <mat-option value="">None</mat-option>
-                  <mat-option value="reserved">Reserved</mat-option>
-                  <mat-option value="sold">Sold</mat-option>
-                </mat-select>
-              </mat-form-field>
-
-              <mat-form-field appearance="outline">
-                <mat-label>Price</mat-label>
-                <input
-                  matInput
-                  type="number"
-                  name="price"
-                  min="0"
-                  step="1"
-                  [ngModel]="dogPrice"
-                  (ngModelChange)="updatePrice($event)"
-                  placeholder="Price in dollars"
-                />
-                <mat-hint>Shown only on the Available puppies page.</mat-hint>
-              </mat-form-field>
-
-              <mat-form-field appearance="outline">
-                <mat-label>Date of birth</mat-label>
-                <input
-                  matInput
-                  type="date"
-                  name="dob"
-                  [ngModel]="dogDob"
-                  (ngModelChange)="updateDob($event)"
-                />
-                <mat-hint>{{ dog.dob | date: "longDate" }}</mat-hint>
-              </mat-form-field>
-
-              <mat-form-field appearance="outline">
-                <mat-label>Sire</mat-label>
-                <input
-                  matInput
-                  type="text"
-                  [(ngModel)]="dog.sireName"
-                  name="sire"
-                  placeholder="Sire name"
-                  (ngModelChange)="markUnsavedChanges()"
-                />
-              </mat-form-field>
-
-              <mat-form-field appearance="outline">
-                <mat-label>Dam</mat-label>
-                <input
-                  matInput
-                  type="text"
-                  [(ngModel)]="dog.damName"
-                  name="dam"
-                  placeholder="Dam name"
-                  (ngModelChange)="markUnsavedChanges()"
-                />
-              </mat-form-field>
-
-              <mat-form-field appearance="outline" class="dog-form__field-full">
-                <mat-label>Description</mat-label>
-                <textarea
-                  matInput
-                  [(ngModel)]="dog.comments"
-                  name="comments"
-                  rows="5"
-                  placeholder="Description"
-                  (ngModelChange)="markUnsavedChanges()"
-                ></textarea>
-              </mat-form-field>
-            </form>
-          </mat-card-content>
-        </mat-card>
-
-        <mat-card class="edit-card">
-          <mat-card-header>
-            <mat-card-title>Image upload</mat-card-title>
-            <mat-card-subtitle>
-              {{ isDraft ? "Save the dog record first, then return here to upload images." : "Select a photo, crop it, then upload it when you're ready." }}
-            </mat-card-subtitle>
-          </mat-card-header>
-
-          <mat-card-content class="edit-card__content">
-            <div class="upload-actions">
-              <button mat-stroked-button type="button" (click)="imageInput.click()" [disabled]="isDraft">
-                Choose Image File
-              </button>
-              <input
-                #imageInput
-                class="visually-hidden"
-                type="file"
-                (change)="fileChangeEvent($event)"
-                accept="image/png, image/jpeg"
-              />
-              <button mat-flat-button color="primary" type="button" (click)="onUpload()" [disabled]="isDraft || !croppedImageBlob || isUploading">
-                {{ isUploading ? "Uploading..." : "Upload Image" }}
-              </button>
-            </div>
-
-            @if (!isDraft && croppedImage) {
-              <div class="crop-preview-panel">
-                <h3>Preview</h3>
-                <img class="cropped-preview" [src]="croppedImage" alt="Cropped preview image" />
-              </div>
-            }
-
-            <div class="crop-panel" [class.crop-panel--disabled]="isDraft">
-              <h3>Crop</h3>
-              <p class="crop-hint">Crop the photo so the dog's face and coat sit comfortably inside the square frame.</p>
-
-              @if (!isDraft) {
-                <image-cropper
-                  [imageChangedEvent]="imageChangedEvent"
-                  [maintainAspectRatio]="true"
-                  [aspectRatio]="160 / 160"
-                  [resizeToWidth]="1400"
-                  [format]="cropFormat"
-                  outputType="blob"
-                  (imageCropped)="imageCropped($event)"
-                  (imageLoaded)="imageLoaded()"
-                  (cropperReady)="cropperReady()"
-                  (loadImageFailed)="loadImageFailed()"
-                ></image-cropper>
-              }
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-
-      <mat-card class="edit-preview-card">
-        <mat-card-header>
-          <mat-card-title>Preview</mat-card-title>
-          <mat-card-subtitle>Live view of the dog card while you edit details.</mat-card-subtitle>
+          </div>
+          <button
+            mat-icon-button
+            type="button"
+            class="edit-card__toggle"
+            (click)="toggleSection('details')"
+            [attr.aria-expanded]="!isSectionCollapsed('details')"
+            aria-label="Toggle dog details"
+          >
+            <mat-icon>{{ isSectionCollapsed('details') ? "expand_more" : "expand_less" }}</mat-icon>
+          </button>
         </mat-card-header>
-        <mat-card-content>
-          <app-dogs [dog]="dog" clickTarget="none"></app-dogs>
+
+        <mat-card-content class="edit-card__content" [class.edit-card__content--collapsed]="isSectionCollapsed('details')">
+          <p class="edit-preview-note">Preview updates below while you edit this record.</p>
+
+          <form class="dog-form">
+            <mat-form-field appearance="outline">
+              <mat-label>Registered name</mat-label>
+              <input
+                matInput
+                type="text"
+                [(ngModel)]="dog.rname"
+                (ngModelChange)="markUnsavedChanges()"
+                name="rname"
+                placeholder="Registered Name"
+              />
+              @if (showRnameError) {
+                <mat-error>Registered name is required.</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Call name</mat-label>
+              <input
+                matInput
+                type="text"
+                [(ngModel)]="dog.cname"
+                (ngModelChange)="markUnsavedChanges()"
+                name="cname"
+                placeholder="Call Name"
+              />
+              @if (showCnameError) {
+                <mat-error>Call name is required.</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Gender</mat-label>
+              <mat-select [ngModel]="dog.gender" (ngModelChange)="updateGender($event)" name="gender">
+                <mat-option [value]="true">Male</mat-option>
+                <mat-option [value]="false">Female</mat-option>
+              </mat-select>
+              @if (showGenderError) {
+                <mat-error>Gender is required.</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Date of birth</mat-label>
+              <input
+                matInput
+                type="date"
+                name="dob"
+                [ngModel]="dogDob"
+                (ngModelChange)="updateDob($event)"
+              />
+              <mat-hint>{{ dog.dob | date: "longDate" }}</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Sire</mat-label>
+              <input
+                matInput
+                type="text"
+                [(ngModel)]="dog.sireName"
+                name="sire"
+                placeholder="Sire name"
+                (ngModelChange)="markUnsavedChanges()"
+              />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Dam</mat-label>
+              <input
+                matInput
+                type="text"
+                [(ngModel)]="dog.damName"
+                name="dam"
+                placeholder="Dam name"
+                (ngModelChange)="markUnsavedChanges()"
+              />
+            </mat-form-field>
+
+            <div class="edit-form-section dog-form__field-full">
+              <label class="edit-form-section__label">Site pages</label>
+              <div class="edit-form-section__checkbox-group">
+                @for (page of pageOptions; track page.value) {
+                  <mat-checkbox
+                    [checked]="isPageSelected(page.value)"
+                    [disabled]="isPageSelectionDisabled(page.value)"
+                    (change)="onPageSelectionChange(page.value, $event.checked)"
+                  >
+                    {{ page.label }}
+                  </mat-checkbox>
+                }
+              </div>
+              <p class="edit-form-section__hint">Choose a gender first to enable the matching Boys or Girls page.</p>
+            </div>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Status</mat-label>
+              <mat-select name="status" [ngModel]="dog.status ?? ''" (ngModelChange)="updateStatus($event)">
+                <mat-option value="">None</mat-option>
+                <mat-option value="reserved">Reserved</mat-option>
+                <mat-option value="sold">Sold</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Price</mat-label>
+              <input
+                matInput
+                type="number"
+                name="price"
+                min="0"
+                step="1"
+                [ngModel]="dogPrice"
+                (ngModelChange)="updatePrice($event)"
+                placeholder="Price in dollars"
+              />
+              <mat-hint>Shown only on the Available puppies page.</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="dog-form__field-full">
+              <mat-label>Description</mat-label>
+              <textarea
+                matInput
+                [(ngModel)]="dog.comments"
+                name="comments"
+                rows="5"
+                placeholder="Description"
+                (ngModelChange)="markUnsavedChanges()"
+              ></textarea>
+            </mat-form-field>
+          </form>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="edit-card">
+        <mat-card-header class="edit-card__header">
+          <div class="edit-card__heading">
+            <mat-card-title>Image</mat-card-title>
+            @if (!isSectionCollapsed('image')) {
+              <mat-card-subtitle>
+                {{
+                  isDraft
+                    ? "Save the dog record first, then return here to work on images."
+                    : "Choose a photo and crop it here. Upload Image appears in the action bar when a crop is ready."
+                }}
+              </mat-card-subtitle>
+            }
+          </div>
+          <button
+            mat-icon-button
+            type="button"
+            class="edit-card__toggle"
+            (click)="toggleSection('image')"
+            [attr.aria-expanded]="!isSectionCollapsed('image')"
+            aria-label="Toggle image section"
+          >
+            <mat-icon>{{ isSectionCollapsed('image') ? "expand_more" : "expand_less" }}</mat-icon>
+          </button>
+        </mat-card-header>
+
+        <mat-card-content class="edit-card__content" [class.edit-card__content--collapsed]="isSectionCollapsed('image')">
+          <div class="upload-actions">
+            <button mat-stroked-button type="button" (click)="imageInput.click()" [disabled]="isDraft">
+              Choose Image File
+            </button>
+            <input
+              #imageInput
+              class="visually-hidden"
+              type="file"
+              (change)="fileChangeEvent($event)"
+              accept="image/png, image/jpeg"
+            />
+          </div>
+
+          @if (!isDraft && croppedImage) {
+            <div class="crop-preview-panel">
+              <h3>Preview</h3>
+              <img class="cropped-preview" [src]="croppedImage" alt="Cropped preview image" />
+            </div>
+          }
+
+          <div class="crop-panel" [class.crop-panel--disabled]="isDraft">
+            <h3>Crop</h3>
+            <p class="crop-hint">Crop the photo so the dog's face and coat sit comfortably inside the square frame.</p>
+
+            @if (!isDraft) {
+              <image-cropper
+                [imageChangedEvent]="imageChangedEvent"
+                [maintainAspectRatio]="true"
+                [aspectRatio]="160 / 160"
+                [resizeToWidth]="1400"
+                [format]="cropFormat"
+                outputType="blob"
+                (imageCropped)="imageCropped($event)"
+                (imageLoaded)="imageLoaded()"
+                (cropperReady)="cropperReady()"
+                (loadImageFailed)="loadImageFailed()"
+              ></image-cropper>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="edit-card edit-card--preview">
+        <mat-card-header class="edit-card__header">
+          <div class="edit-card__heading">
+            <mat-card-title>Preview</mat-card-title>
+          </div>
+          <button
+            mat-icon-button
+            type="button"
+            class="edit-card__toggle"
+            (click)="toggleSection('preview')"
+            [attr.aria-expanded]="!isSectionCollapsed('preview')"
+            aria-label="Toggle preview section"
+          >
+            <mat-icon>{{ isSectionCollapsed('preview') ? "expand_more" : "expand_less" }}</mat-icon>
+          </button>
+        </mat-card-header>
+
+        <mat-card-content
+          class="edit-card__content edit-card__content--preview"
+          [class.edit-card__content--collapsed]="isSectionCollapsed('preview')"
+        >
+          <div class="edit-preview-shell" aria-label="Dog preview">
+            <app-dogs [dog]="dog" clickTarget="none"></app-dogs>
+          </div>
         </mat-card-content>
       </mat-card>
 
       @if (!isDraft) {
-        <mat-card class="edit-danger-card">
-          <mat-card-content>
+        <mat-card class="edit-card edit-danger-card">
+          <mat-card-header class="edit-card__header">
+            <div class="edit-card__heading">
+              <mat-card-title>Delete dog</mat-card-title>
+            </div>
+            <button
+              mat-icon-button
+              type="button"
+              class="edit-card__toggle"
+              (click)="toggleSection('delete')"
+              [attr.aria-expanded]="!isSectionCollapsed('delete')"
+              aria-label="Toggle delete section"
+            >
+              <mat-icon>{{ isSectionCollapsed('delete') ? "expand_more" : "expand_less" }}</mat-icon>
+            </button>
+          </mat-card-header>
+
+          <mat-card-content class="edit-card__content" [class.edit-card__content--collapsed]="isSectionCollapsed('delete')">
             <section class="edit-danger-zone">
-              <p class="edit-danger-zone__title">Delete dog record</p>
               @if (!canDeleteDog) {
                 <p class="edit-danger-zone__copy">{{ deleteDisabledReason }}</p>
               } @else {

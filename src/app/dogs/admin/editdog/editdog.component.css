@@ -7,14 +7,30 @@
   gap: 1.25rem;
 }
 
-.edit-sidebar {
-  display: grid;
-  gap: 1.25rem;
+.edit-card {
+  overflow: hidden;
+}
+
+.edit-card__header {
+  align-items: start;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.edit-card__heading {
+  flex: 1;
+  min-width: 0;
 }
 
 .edit-card__content {
   display: grid;
   gap: 1rem;
+}
+
+.edit-card__toggle {
+  display: none;
+  flex-shrink: 0;
 }
 
 .edit-preview-note {
@@ -40,10 +56,6 @@
   padding: 1rem;
 }
 
-.edit-form-section--error {
-  border-color: rgba(139, 30, 30, 0.35);
-}
-
 .edit-form-section__label {
   color: var(--color-evergreen);
   font-size: 0.82rem;
@@ -52,13 +64,14 @@
   text-transform: uppercase;
 }
 
-.edit-form-section__radio-group {
-  display: flex;
-  gap: 1rem;
+.edit-form-section__checkbox-group {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.edit-form-section__error {
-  color: #8b1e1e;
+.edit-form-section__hint {
+  color: var(--color-muted);
   margin: 0;
 }
 
@@ -69,14 +82,8 @@
   padding-top: 1rem;
 }
 
-.edit-danger-zone__title,
 .edit-danger-zone__copy {
   margin: 0;
-}
-
-.edit-danger-zone__title {
-  color: #8b1e1e;
-  font-weight: 700;
 }
 
 .edit-danger-zone__copy {
@@ -85,6 +92,10 @@
 
 .edit-danger-zone__button {
   justify-self: start;
+}
+
+.edit-preview-shell {
+  width: 100%;
 }
 
 .upload-actions {
@@ -135,25 +146,32 @@ mat-form-field {
   width: 100%;
 }
 
-.edit-preview-card {
-  overflow: hidden;
-}
-
-.edit-danger-card {
-  overflow: hidden;
-}
-
-mat-card-content app-dogs {
+.edit-preview-shell app-dogs {
   display: block;
 }
 
+@media (min-width: 900px) {
+  .edit-preview-shell {
+    justify-self: center;
+    max-width: 980px;
+    width: 100%;
+  }
+}
+
 @media (max-width: 700px) {
+  .edit-card__toggle {
+    display: inline-flex;
+  }
+
+  .edit-card__content--collapsed {
+    display: none;
+  }
+
   .dog-form {
     grid-template-columns: 1fr;
   }
 
-  .edit-form-section__radio-group {
-    flex-direction: column;
-    gap: 0.75rem;
+  .edit-form-section__checkbox-group {
+    grid-template-columns: 1fr;
   }
 }
