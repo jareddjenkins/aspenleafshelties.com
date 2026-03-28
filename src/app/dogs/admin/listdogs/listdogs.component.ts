@@ -7,7 +7,6 @@ import { map } from 'rxjs/operators';
 
 import { DogService } from '../../../dog.service';
 import { DogpagesService } from '../../../dogpages.service';
-import { FirestoreAdminDataService } from '../../../firebase/firestore-admin-data.service';
 import { PageAssignment } from '../../../pages';
 import { Dog } from '../../model/dog';
 import {
@@ -51,7 +50,6 @@ export class ListdogsComponent implements OnInit {
   constructor(
     private dogService: DogService,
     private dogpagesService: DogpagesService,
-    private firestoreAdminDataService: FirestoreAdminDataService,
     private router: Router,
     private dialog: MatDialog,
   ) {}
@@ -179,44 +177,6 @@ export class ListdogsComponent implements OnInit {
 
   goToPages(): void {
     this.router.navigate(['/admin/pages']);
-  }
-
-  deleteDog(dog: Dog): void {
-    const pageNames = this.getDogPagesLabel(dog.id);
-    if (pageNames.length > 0) {
-      window.alert(
-        `This dog cannot be deleted because it is still on these pages: ${pageNames.join(', ')}.`,
-      );
-      return;
-    }
-
-    const dogName = dog.rname || dog.cname || `Dog ${dog.id}`;
-    const confirmed = window.confirm(`Delete ${dogName}? This permanently removes the dog record.`);
-    if (!confirmed) {
-      return;
-    }
-
-    this.firestoreAdminDataService.deleteDog(dog.id).subscribe({
-      next: () => {
-        this.getDogs();
-        this.getDogPages();
-      },
-      error: (error: Error) => {
-        window.alert(error.message || 'Unable to delete this dog.');
-        this.getDogPages();
-      },
-    });
-  }
-
-  canDeleteDog(dogId: string): boolean {
-    return this.getDogPagesLabel(dogId).length === 0;
-  }
-
-  getDeleteReason(dogId: string): string {
-    const pageNames = this.getDogPagesLabel(dogId);
-    return pageNames.length > 0
-      ? `Cannot delete because this dog is on: ${pageNames.join(', ')}.`
-      : 'Delete dog';
   }
 
   getActivePages(dogId: string): string[] {

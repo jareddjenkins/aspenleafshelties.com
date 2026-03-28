@@ -198,6 +198,31 @@
           <app-dogs [dog]="dog" clickTarget="none"></app-dogs>
         </mat-card-content>
       </mat-card>
+
+      @if (!isDraft) {
+        <mat-card class="edit-danger-card">
+          <mat-card-content>
+            <section class="edit-danger-zone">
+              <p class="edit-danger-zone__title">Delete dog record</p>
+              @if (!canDeleteDog) {
+                <p class="edit-danger-zone__copy">{{ deleteDisabledReason }}</p>
+              } @else {
+                <p class="edit-danger-zone__copy">This permanently removes the dog record.</p>
+              }
+              <button
+                mat-flat-button
+                color="warn"
+                type="button"
+                class="edit-danger-zone__button"
+                (click)="deleteDogRecord()"
+                [disabled]="!canDeleteDog || isDeleting"
+              >
+                {{ isDeleting ? "Deleting..." : "Delete Dog" }}
+              </button>
+            </section>
+          </mat-card-content>
+        </mat-card>
+      }
     </div>
   }
 </section>

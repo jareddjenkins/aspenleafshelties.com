@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Dog } from '../../model/dog';
 import { DogStatus } from '../../model/dog';
 import { DogService } from '../../../dog.service';
+import { DogpagesService } from '../../../dogpages.service';
 import { FirestoreAdminDataService } from '../../../firebase/firestore-admin-data.service';
 import { AdminHeaderBanner, AdminHeaderService } from '../admin-header.service';
 
@@ -33,8 +34,10 @@ export class EditdogComponent implements OnInit, OnDestroy {
   dogDob = '';
   dogPrice = '';
   cropFormat: 'jpeg' = 'jpeg';
+  activePageNames: string[] = [];
   hasUnsavedChanges = false;
   isSaving = false;
+  isDeleting = false;
   isUploading = false;
   formStatusMessage = '';
   formStatusTone: 'info' | 'success' | 'warning' | 'error' = 'info';
@@ -45,6 +48,7 @@ export class EditdogComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private dogService: DogService,
+    private dogpagesService: DogpagesService,
     private firestoreAdminDataService: FirestoreAdminDataService,
     private adminHeaderService: AdminHeaderService,
   ) {}
@@ -73,6 +77,7 @@ export class EditdogComponent implements OnInit, OnDestroy {
       this.markUnsavedChanges();
       this.imageStatusMessage = 'Save the dog record before uploading images.';
       this.imageStatusTone = 'warning';
+      this.activePageNames = [];
       this.syncAdminHeader();
       return;
     }
@@ -83,6 +88,7 @@ export class EditdogComponent implements OnInit, OnDestroy {
       this.dogDob = this.toDateInputValue(dog?.dob);
       this.dogPrice = this.toPriceInputValue(dog?.price);
       this.captureSavedSnapshot();
+      this.loadActivePages(dog?.id);
       this.syncAdminHeader();
     });
   }
@@ -130,6 +136,41 @@ export class EditdogComponent implements OnInit, OnDestroy {
         console.error(error);
         this.isSaving = false;
         this.formStatusMessage = error instanceof Error ? error.message : 'Unable to save changes right now. Please try again.';
+        this.formStatusTone = 'error';
+        this.syncAdminHeader();
+      },
+    });
+  }
+
+  deleteDogRecord(): void {
+    if (this.isDraft || !this.dog?.id || this.isDeleting) {
+      return;
+    }
+
+    if (!this.canDeleteDog) {
+      window.alert(this.deleteDisabledReason);
+      return;
+    }
+
+    const dogName = this.dog.rname || this.dog.cname || `Dog ${this.dog.id}`;
+    const confirmed = window.confirm(`Delete ${dogName}? This permanently removes the dog record.`);
+    if (!confirmed) {
+      return;
+    }
+
+    this.isDeleting = true;
+    this.formStatusMessage = 'Deleting dog record...';
+    this.formStatusTone = 'warning';
+    this.syncAdminHeader();
+
+    this.firestoreAdminDataService.deleteDog(this.dog.id).subscribe({
+      next: () => {
+        this.isDeleting = false;
+        this.router.navigate(['/admin']);
+      },
+      error: (error: Error) => {
+        this.isDeleting = false;
+        this.formStatusMessage = error.message || 'Unable to delete this dog right now.';
         this.formStatusTone = 'error';
         this.syncAdminHeader();
       },
@@ -451,6 +492,16 @@ export class EditdogComponent implements OnInit, OnDestroy {
     return this.formStatusTone === 'error' && this.dog?.gender !== true && this.dog?.gender !== false;
   }
 
+  get canDeleteDog(): boolean {
+    return this.activePageNames.length === 0;
+  }
+
+  get deleteDisabledReason(): string {
+    return this.activePageNames.length > 0
+      ? `This dog cannot be deleted because it is still on these pages: ${this.activePageNames.join(', ')}.`
+      : 'Delete dog record';
+  }
+
   private getValidationMessage(): string {
     if (!this.dog?.rname?.trim()) {
       return 'Registered name is required.';
@@ -487,5 +538,37 @@ export class EditdogComponent implements OnInit, OnDestroy {
       profileDetailImagePath: null,
       status: null,
     };
+  }
+
+  private loadActivePages(dogId: string | undefined): void {
+    if (!dogId) {
+      this.activePageNames = [];
+      return;
+    }
+
+    this.dogpagesService.getDogPages().subscribe((pages) => {
+      this.activePageNames = pages
+        .filter((page) => page.dogId === dogId)
+        .map((page) => this.toDisplayPageName(page.pageName))
+        .filter((pageName, index, allPageNames) => allPageNames.indexOf(pageName) === index)
+        .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+    });
+  }
+
+  private toDisplayPageName(value: string): string {
+    const normalized = (value ?? '').trim().toLowerCase();
+
+    switch (normalized) {
+      case 'adultavailable':
+        return 'Adult Available';
+      case 'available':
+        return 'Available';
+      case 'boys':
+        return 'Boys';
+      case 'girls':
+        return 'Girls';
+      default:
+        return value;
+    }
   }
 }

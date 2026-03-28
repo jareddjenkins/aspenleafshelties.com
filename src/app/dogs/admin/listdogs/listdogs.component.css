@@ -115,10 +115,6 @@
   gap: 0.5rem;
 }
 
-.dogs-page__delete-button {
-  justify-self: start;
-}
-
 mat-form-field {
   width: 100%;
 }
@@ -144,10 +140,5 @@ mat-form-field {
   .dogs-page__results {
     gap: 1.25rem;
     padding: 1.25rem;
-  }
-
-  .dogs-page__record-footer {
-    align-items: center;
-    grid-template-columns: minmax(0, 1fr) auto;
   }
 }

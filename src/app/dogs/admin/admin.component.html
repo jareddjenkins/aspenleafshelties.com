@@ -60,9 +60,9 @@
                 <span class="admin-utility__session">Signed in as {{ session.user?.email }}</span>
               </div>
               <div class="admin-utility__actions">
-                <a mat-stroked-button routerLink="/home">View Site</a>
+                <a mat-stroked-button routerLink="/home">Site</a>
                 @if (hasActiveChildRoute) {
-                  <button mat-stroked-button type="button" (click)="goToDogList()">Back To Dog List</button>
+                  <button mat-stroked-button type="button" (click)="goToDogList()">Dog List</button>
                 }
                 <button mat-button type="button" (click)="signOut()">Sign Out</button>
               </div>

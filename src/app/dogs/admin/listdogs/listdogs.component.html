@@ -151,19 +151,6 @@
                     <p class="dogs-page__record-pages dogs-page__record-pages--empty">Not assigned to any site page.</p>
                   }
                 </div>
-
-                <button
-                  mat-stroked-button
-                  type="button"
-                  class="dogs-page__delete-button"
-                  (click)="deleteDog(dog)"
-                  [disabled]="!canDeleteDog(dog.id)"
-                  [attr.aria-label]="getDeleteReason(dog.id)"
-                  [matTooltip]="getDeleteReason(dog.id)"
-                >
-                  <mat-icon>delete</mat-icon>
-                  Delete
-                </button>
               </div>
             </article>
           }

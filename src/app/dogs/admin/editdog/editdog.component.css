@@ -62,6 +62,31 @@
   margin: 0;
 }
 
+.edit-danger-zone {
+  border-top: 1px solid rgba(139, 30, 30, 0.18);
+  display: grid;
+  gap: 0.75rem;
+  padding-top: 1rem;
+}
+
+.edit-danger-zone__title,
+.edit-danger-zone__copy {
+  margin: 0;
+}
+
+.edit-danger-zone__title {
+  color: #8b1e1e;
+  font-weight: 700;
+}
+
+.edit-danger-zone__copy {
+  color: var(--color-muted);
+}
+
+.edit-danger-zone__button {
+  justify-self: start;
+}
+
 .upload-actions {
   display: flex;
   flex-wrap: wrap;
@@ -111,6 +136,10 @@ mat-form-field {
 }
 
 .edit-preview-card {
+  overflow: hidden;
+}
+
+.edit-danger-card {
   overflow: hidden;
 }
 
