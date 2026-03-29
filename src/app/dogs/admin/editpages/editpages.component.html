@@ -35,7 +35,7 @@
 
         <div cdkDropList class="page-list" (cdkDropListDropped)="drop(boypages, $event)">
           @for (item of boypages; track item.dogId; let i = $index) {
-            <div class="page-list__item" cdkDrag>
+            <div class="page-list__item" cdkDrag [cdkDragStartDelay]="180">
               <span>{{ item.dog.rname }}</span>
               <span class="page-list__item-actions">
                 <button
@@ -49,7 +49,9 @@
                 <button mat-icon-button type="button" (click)="removedog(boysPageName, boypages, i)" aria-label="Remove dog from boys page">
                   <mat-icon>remove_circle</mat-icon>
                 </button>
-                <mat-icon class="page-list__drag-handle">drag_handle</mat-icon>
+                <button type="button" cdkDragHandle class="page-list__drag-button" aria-label="Reorder dog on boys page">
+                  <mat-icon class="page-list__drag-handle">drag_handle</mat-icon>
+                </button>
               </span>
             </div>
           }
@@ -84,7 +86,7 @@
 
         <div cdkDropList class="page-list" (cdkDropListDropped)="drop(girlpages, $event)">
           @for (item of girlpages; track item.dogId; let i = $index) {
-            <div class="page-list__item" cdkDrag>
+            <div class="page-list__item" cdkDrag [cdkDragStartDelay]="180">
               <span>{{ item.dog.rname }}</span>
               <span class="page-list__item-actions">
                 <button
@@ -98,7 +100,9 @@
                 <button mat-icon-button type="button" (click)="removedog(girlsPageName, girlpages, i)" aria-label="Remove dog from girls page">
                   <mat-icon>remove_circle</mat-icon>
                 </button>
-                <mat-icon class="page-list__drag-handle">drag_handle</mat-icon>
+                <button type="button" cdkDragHandle class="page-list__drag-button" aria-label="Reorder dog on girls page">
+                  <mat-icon class="page-list__drag-handle">drag_handle</mat-icon>
+                </button>
               </span>
             </div>
           }
@@ -133,7 +137,7 @@
 
         <div cdkDropList class="page-list" (cdkDropListDropped)="drop(availablepages, $event)">
           @for (item of availablepages; track item.dogId; let i = $index) {
-            <div class="page-list__item" cdkDrag>
+            <div class="page-list__item" cdkDrag [cdkDragStartDelay]="180">
               <span>{{ item.dog.rname }}</span>
               <span class="page-list__item-actions">
                 <button
@@ -147,7 +151,9 @@
                 <button mat-icon-button type="button" (click)="removedog(availablePageName, availablepages, i)" aria-label="Remove dog from available page">
                   <mat-icon>remove_circle</mat-icon>
                 </button>
-                <mat-icon class="page-list__drag-handle">drag_handle</mat-icon>
+                <button type="button" cdkDragHandle class="page-list__drag-button" aria-label="Reorder dog on available page">
+                  <mat-icon class="page-list__drag-handle">drag_handle</mat-icon>
+                </button>
               </span>
             </div>
           }
@@ -182,7 +188,7 @@
 
         <div cdkDropList class="page-list" (cdkDropListDropped)="drop(adultavailablepages, $event)">
           @for (item of adultavailablepages; track item.dogId; let i = $index) {
-            <div class="page-list__item" cdkDrag>
+            <div class="page-list__item" cdkDrag [cdkDragStartDelay]="180">
               <span>{{ item.dog.rname }}</span>
               <span class="page-list__item-actions">
                 <button
@@ -196,7 +202,9 @@
                 <button mat-icon-button type="button" (click)="removedog(adultAvailablePageName, adultavailablepages, i)" aria-label="Remove dog from adult available page">
                   <mat-icon>remove_circle</mat-icon>
                 </button>
-                <mat-icon class="page-list__drag-handle">drag_handle</mat-icon>
+                <button type="button" cdkDragHandle class="page-list__drag-button" aria-label="Reorder dog on adult available page">
+                  <mat-icon class="page-list__drag-handle">drag_handle</mat-icon>
+                </button>
               </span>
             </div>
           }
