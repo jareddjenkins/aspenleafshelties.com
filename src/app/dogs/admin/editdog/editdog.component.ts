@@ -31,6 +31,7 @@ export class EditdogComponent implements OnInit, OnDestroy {
   ] as const;
   private readonly mobileMediaQueryString = '(max-width: 700px)';
   private formBannerTimeoutId: ReturnType<typeof setTimeout> | null = null;
+  private imageBannerTimeoutId: ReturnType<typeof setTimeout> | null = null;
   private mobileMediaQuery: MediaQueryList | null = null;
   private readonly mobileMediaQueryListener = (event: MediaQueryListEvent) => this.applyMobileSectionState(event.matches);
   private savedSnapshot = '';
@@ -80,6 +81,7 @@ export class EditdogComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.clearFormBannerTimeout();
+    this.clearImageBannerTimeout();
     this.destroyMobileSectionState();
     this.adminHeaderService.clear();
   }
@@ -240,9 +242,10 @@ export class EditdogComponent implements OnInit, OnDestroy {
             this.dog.profileDetailImagePath = uploadedImages.detailPath;
             this.dog.profileImageUrl = uploadedImages.detailUrl;
             this.isUploading = false;
-            this.imageStatusMessage = 'Image uploaded and saved.';
-            this.imageStatusTone = 'success';
-            this.syncAdminHeader();
+            this.imageChangedEvent = '';
+            this.croppedImage = '';
+            this.croppedImageBlob = null;
+            this.showTemporaryImageStatus('Image uploaded and saved.', 'success');
           },
           (error) => {
             console.error(error);
@@ -447,6 +450,8 @@ export class EditdogComponent implements OnInit, OnDestroy {
   }
 
   private syncImageStatusBanner() {
+    this.clearImageBannerTimeout();
+
     if (this.isDraft || !this.dog?.id) {
       this.imageStatusMessage = '';
       this.syncAdminHeader();
@@ -471,6 +476,17 @@ export class EditdogComponent implements OnInit, OnDestroy {
     this.syncAdminHeader();
   }
 
+  private showTemporaryImageStatus(message: string, tone: 'success' | 'info', durationMs = 4000) {
+    this.clearImageBannerTimeout();
+    this.imageStatusMessage = message;
+    this.imageStatusTone = tone;
+    this.syncAdminHeader();
+    this.imageBannerTimeoutId = setTimeout(() => {
+      this.imageBannerTimeoutId = null;
+      this.syncImageStatusBanner();
+    }, durationMs);
+  }
+
   private showTemporaryFormStatus(message: string, tone: 'success' | 'info', durationMs = 4000) {
     this.clearFormBannerTimeout();
     this.formStatusMessage = message;
@@ -485,6 +501,13 @@ export class EditdogComponent implements OnInit, OnDestroy {
     if (this.formBannerTimeoutId !== null) {
       clearTimeout(this.formBannerTimeoutId);
       this.formBannerTimeoutId = null;
+    }
+  }
+
+  private clearImageBannerTimeout() {
+    if (this.imageBannerTimeoutId !== null) {
+      clearTimeout(this.imageBannerTimeoutId);
+      this.imageBannerTimeoutId = null;
     }
   }
 

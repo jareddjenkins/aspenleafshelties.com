@@ -201,11 +201,11 @@
             </div>
           }
 
-          <div class="crop-panel" [class.crop-panel--disabled]="isDraft">
-            <h3>Crop</h3>
-            <p class="crop-hint">Crop the photo so the dog's face and coat sit comfortably inside the square frame.</p>
+          @if (!isDraft && imageChangedEvent) {
+            <div class="crop-panel">
+              <h3>Crop</h3>
+              <p class="crop-hint">Crop the photo so the dog's face and coat sit comfortably inside the square frame.</p>
 
-            @if (!isDraft) {
               <image-cropper
                 [imageChangedEvent]="imageChangedEvent"
                 [maintainAspectRatio]="true"
@@ -218,8 +218,10 @@
                 (cropperReady)="cropperReady()"
                 (loadImageFailed)="loadImageFailed()"
               ></image-cropper>
-            }
-          </div>
+            </div>
+          } @else if (!isDraft) {
+            <p class="crop-hint">Choose an image file to open the cropper.</p>
+          }
         </mat-card-content>
       </mat-card>
 
