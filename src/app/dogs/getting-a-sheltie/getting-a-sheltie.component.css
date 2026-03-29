@@ -5,18 +5,20 @@
 }
 
 .page-intro,
-.info-grid {
+.info-grid,
+.photo-feature {
     display: grid;
     gap: 1.5rem;
 }
 
 .page-intro {
-    align-items: start;
+    align-items: stretch;
     grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.95fr);
 }
 
 .intro-copy,
-.info-card {
+.info-card,
+.photo-feature-copy {
     background: rgba(255, 255, 255, 0.78);
     border-radius: 24px;
     box-shadow: 0 18px 36px rgba(26, 38, 32, 0.08);
@@ -58,16 +60,30 @@ p + p {
 }
 
 .intro-image {
+    height: 100%;
     margin: 0;
 }
 
-.intro-image img {
+.intro-image img,
+.photo-feature-image img {
     border-radius: 24px;
     box-shadow: 0 18px 36px rgba(26, 38, 32, 0.12);
     display: block;
     height: 100%;
     object-fit: cover;
     width: 100%;
+}
+
+.photo-feature {
+    align-items: stretch;
+    grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.3fr);
+    margin: 1.5rem 0;
+}
+
+.photo-feature-image {
+    height: 100%;
+    margin: 0;
+    order: -1;
 }
 
 .reserve-actions {
@@ -103,11 +119,17 @@ p + p {
 
 @media (max-width: 900px) {
     .page-intro,
-    .info-grid {
+    .info-grid,
+    .photo-feature {
         grid-template-columns: 1fr;
     }
 
-    .intro-image img {
+    .intro-image img,
+    .photo-feature-image img {
         height: auto;
+    }
+
+    .photo-feature-image {
+        order: 0;
     }
 }
