@@ -61,6 +61,33 @@ h1 {
     margin: 1.2rem 0 0;
 }
 
+.hero-actions {
+    margin-top: 1.5rem;
+}
+
+.hero-cta {
+    align-items: center;
+    background: var(--color-evergreen);
+    border: 1px solid rgba(28, 55, 40, 0.12);
+    border-radius: 999px;
+    color: var(--color-cream);
+    display: inline-flex;
+    font-family: 'Archivo', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 0.85rem 1.25rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.hero-cta:hover,
+.hero-cta:focus-visible {
+    background: var(--color-evergreen-deep);
+    outline: none;
+    transform: translateY(-1px);
+}
+
 .hero-peek {
     display: grid;
     gap: 0.9rem;

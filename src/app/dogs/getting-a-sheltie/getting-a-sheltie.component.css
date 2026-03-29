@@ -1,27 +1,22 @@
-.available-hero img {
-    display: block;
-    height: auto;
-    max-height: 420px;
-    object-fit: cover;
-    width: 100%;
-}
-
-.available-shell {
+.getting-shell {
     margin: 0 auto;
     max-width: 1200px;
     padding: 2rem 1.25rem 3rem;
 }
 
-.page-intro {
-    align-items: start;
+.page-intro,
+.info-grid {
     display: grid;
     gap: 1.5rem;
+}
+
+.page-intro {
+    align-items: start;
     grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.95fr);
 }
 
 .intro-copy,
-.next-step-panel,
-.empty-state {
+.info-card {
     background: rgba(255, 255, 255, 0.78);
     border-radius: 24px;
     box-shadow: 0 18px 36px rgba(26, 38, 32, 0.08);
@@ -34,7 +29,7 @@
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.14em;
-    margin-bottom: 0.8rem;
+    margin: 0 0 0.8rem;
     text-transform: uppercase;
 }
 
@@ -55,6 +50,7 @@ h2 {
 
 p {
     line-height: 1.8;
+    margin: 0;
 }
 
 p + p {
@@ -72,40 +68,6 @@ p + p {
     height: 100%;
     object-fit: cover;
     width: 100%;
-}
-
-.intro-image img {
-    aspect-ratio: 4 / 3;
-}
-
-.listing-section {
-    margin-top: 2rem;
-}
-
-.listing-grid {
-    display: grid;
-    gap: 1.25rem;
-}
-
-.empty-state a,
-.intro-copy a,
-.next-step-panel a {
-    color: var(--color-evergreen);
-    font-weight: 600;
-}
-
-.next-step-panel {
-    display: grid;
-    gap: 1rem;
-    margin-top: 2rem;
-}
-
-.next-step-copy h2 {
-    margin-bottom: 0.75rem;
-}
-
-.next-step-copy p {
-    margin: 0;
 }
 
 .reserve-actions {
@@ -129,8 +91,8 @@ p + p {
 .reserve-primary-link {
     background: #fff;
     border: 2px solid var(--color-evergreen);
-    color: var(--color-evergreen-deep);
     box-shadow: 0 14px 28px rgba(26, 38, 32, 0.12);
+    color: var(--color-evergreen-deep);
 }
 
 .reserve-secondary-link {
@@ -140,7 +102,8 @@ p + p {
 }
 
 @media (max-width: 900px) {
-    .page-intro {
+    .page-intro,
+    .info-grid {
         grid-template-columns: 1fr;
     }
 

@@ -4,6 +4,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { BoysComponent } from './boys/boys.component';
 import { GirlsComponent } from './girls/girls.component';
 import { AvailableComponent } from './available/available.component';
+import { GettingASheltieComponent } from './getting-a-sheltie/getting-a-sheltie.component';
 import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 
 import { DogsRoutingModule } from './dogs-routing.module';
@@ -14,6 +15,7 @@ import { RouterLink } from '@angular/router';
 @NgModule({
   declarations: [
     AvailableComponent,
+    GettingASheltieComponent,
     QuestionnaireComponent,
     BoysComponent,
     GirlsComponent,

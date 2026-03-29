@@ -15,6 +15,10 @@ import {
 import { AppRoutingModule } from './app-routing.module';
 import { TopnavComponent } from './topnav/topnav.component';
 import { FooterComponent } from './footer/footer.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -28,6 +32,10 @@ import { FooterComponent } from './footer/footer.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    MatSidenavModule,
     RouterLink,
     RouterLinkActive,
   ],

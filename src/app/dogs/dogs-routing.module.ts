@@ -4,6 +4,7 @@ import { Router, RouterModule, Routes, CanActivateFn, CanMatchFn } from '@angula
 import { BoysComponent } from './boys/boys.component';
 import { GirlsComponent } from './girls/girls.component';
 import { AvailableComponent } from './available/available.component';
+import { GettingASheltieComponent } from './getting-a-sheltie/getting-a-sheltie.component';
 import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 import {
   availableAdultsResolver,
@@ -60,6 +61,15 @@ const routes: Routes = [
       title: 'Available Sheltie Puppies in Georgia Near Atlanta | Aspenleaf Shelties',
       description:
         'See available Sheltie puppies and companion opportunities at Aspenleaf Shelties in Dewy Rose, Georgia for families in Atlanta, Athens, Augusta, and beyond.',
+    },
+  },
+  {
+    path: 'getting-a-sheltie',
+    component: GettingASheltieComponent,
+    data: {
+      title: 'Getting a Sheltie | Aspenleaf Shelties',
+      description:
+        'Learn what to expect when getting a Sheltie from Aspenleaf Shelties, including breed fit, puppy placement, and how to begin the inquiry process in Georgia.',
     },
   },
   {
