@@ -5,6 +5,7 @@ import { BoysComponent } from './boys/boys.component';
 import { GirlsComponent } from './girls/girls.component';
 import { AvailableComponent } from './available/available.component';
 import { GettingASheltieComponent } from './getting-a-sheltie/getting-a-sheltie.component';
+import { FaqComponent } from './faq/faq.component';
 import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 
 import { DogsRoutingModule } from './dogs-routing.module';
@@ -16,6 +17,7 @@ import { RouterLink } from '@angular/router';
   declarations: [
     AvailableComponent,
     GettingASheltieComponent,
+    FaqComponent,
     QuestionnaireComponent,
     BoysComponent,
     GirlsComponent,

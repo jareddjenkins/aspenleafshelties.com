@@ -4,6 +4,7 @@ import { Router, RouterModule, Routes, CanActivateFn, CanMatchFn } from '@angula
 import { BoysComponent } from './boys/boys.component';
 import { GirlsComponent } from './girls/girls.component';
 import { AvailableComponent } from './available/available.component';
+import { FaqComponent } from './faq/faq.component';
 import { GettingASheltieComponent } from './getting-a-sheltie/getting-a-sheltie.component';
 import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 import {
@@ -70,6 +71,15 @@ const routes: Routes = [
       title: 'Getting a Sheltie | Aspenleaf Shelties',
       description:
         'Learn what to expect when getting a Sheltie from Aspenleaf Shelties, including breed fit, puppy placement, and how to begin the inquiry process in Georgia.',
+    },
+  },
+  {
+    path: 'faq',
+    component: FaqComponent,
+    data: {
+      title: 'Sheltie FAQ | Aspenleaf Shelties',
+      description:
+        'Read frequently asked questions about pricing, deposits, pickup timing, health testing, puppy selection, and visits at Aspenleaf Shelties in Dewy Rose, Georgia.',
     },
   },
   {

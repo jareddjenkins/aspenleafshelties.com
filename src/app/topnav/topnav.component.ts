@@ -13,6 +13,7 @@ export class TopnavComponent {
   readonly primaryRoute = { label: 'Available', path: '/dogs/available' };
   readonly secondaryRoutes = [
     { label: 'Getting a Sheltie', path: '/dogs/getting-a-sheltie' },
+    { label: 'FAQ', path: '/dogs/faq' },
     { label: 'About', path: '/about' },
     { label: 'Resources', path: '/resources' },
   ];
