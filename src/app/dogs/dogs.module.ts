@@ -12,6 +12,7 @@ import { DogsRoutingModule } from './dogs-routing.module';
 import { DogsComponent } from './dogs.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { RouterLink } from '@angular/router';
     GirlsComponent,
     DogsComponent,
   ],
-  imports: [CommonModule, DogsRoutingModule, ReactiveFormsModule, RouterLink, DatePipe],
+  imports: [CommonModule, DogsRoutingModule, ReactiveFormsModule, RouterLink, DatePipe, MatTabsModule],
   exports: [DogsComponent],
 })
 export class DogsModule {}

@@ -10,108 +10,49 @@
 </section>
 
 <section class="available-shell">
-  <div class="intro-copy">
-    <p class="section-kicker">Available show puppies, companions, and adults</p>
-    <h1>Available Shelties in Georgia.</h1>
-    <p>
-      When we have dogs ready for new homes, you will find them listed below in the section that best fits each
-      placement.
-    </p>
-    <p>
-      If you are new to Aspenleaf Shelties, our
-      <a routerLink="/dogs/getting-a-sheltie">Getting a Sheltie</a>
-      page explains what to expect.
-    </p>
-  </div>
-
-  <section class="listing-section">
-    <h2>Show Puppies</h2>
-    <p class="listing-intro">
-      Puppies here are being considered for show potential while we continue evaluating structure, confidence, and
-      overall development.
-    </p>
-    @if (showPuppies.length) {
-      <div class="listing-grid">
-        @for (dog of showPuppies; track dog.id; let isFirst = $first) {
-          <app-dogs [dog]="dog" [showStatusBanner]="true" [showPrice]="true" [prioritizeImage]="isFirst"> </app-dogs>
-        }
-      </div>
-    } @else {
-      <div class="empty-state">
-        <p>We do not have show puppies available right now. Please ask about upcoming litters and future evaluations.</p>
-        <p>
-          Learn more on our
-          <a routerLink="/dogs/getting-a-sheltie">Getting a Sheltie</a>
-          page.
-        </p>
-      </div>
+  
+  <mat-tab-group
+    class="available-tabs"
+    [(selectedIndex)]="selectedIndex"
+    animationDuration="0ms"
+    mat-align-tabs="start"
+    mat-stretch-tabs="false"
+  >
+    @for (tab of tabs; track tab.status; let tabIndex = $index) {
+      <mat-tab [label]="tab.label">
+        <ng-template matTabContent>
+          <div class="tab-panel">
+            @if (tab.dogs.length) {
+              <div class="listing-grid">
+                @for (dog of tab.dogs; track dog.id; let isFirst = $first) {
+                  <app-dogs
+                    [dog]="dog"
+                    [showStatusBanner]="true"
+                    [showPrice]="true"
+                    [prioritizeImage]="isFirst && selectedIndex === tabIndex"
+                  >
+                  </app-dogs>
+                }
+              </div>
+            } @else {
+              <div class="empty-state">
+                <p class="empty-state__title">{{ tab.emptyTitle }}</p>
+                <p>{{ tab.emptyMessage }}</p>
+              </div>
+            }
+          </div>
+        </ng-template>
+      </mat-tab>
     }
-  </section>
+  </mat-tab-group>
 
-  <section class="listing-section">
-    <h2>Companion Puppies</h2>
-    <p class="listing-intro">
-      These puppies are intended for companion or performance homes and are placed with the same care and screening as
-      every Aspenleaf puppy.
-    </p>
-    @if (companionPuppies.length) {
-      <div class="listing-grid">
-        @for (dog of companionPuppies; track dog.id; let isFirst = $first) {
-          <app-dogs [dog]="dog" [showStatusBanner]="true" [showPrice]="true" [prioritizeImage]="isFirst"> </app-dogs>
-        }
-      </div>
-    } @else {
-      <div class="empty-state">
-        <p>We do not have companion puppies available right now. Please ask about our waitlist for upcoming litters.</p>
-        <p>
-          Learn more on our
-          <a routerLink="/dogs/getting-a-sheltie">Getting a Sheltie</a>
-          page.
-        </p>
-      </div>
-    }
-  </section>
-
-  <section class="listing-section">
-    <h2>Adults</h2>
-    <p class="listing-intro">
-      Adult opportunities are uncommon, but we occasionally have mature companions or retired dogs looking for the
-      right long-term home.
-    </p>
-    @if (adults.length) {
-      <div class="listing-grid">
-        @for (dog of adults; track dog.id; let isFirst = $first) {
-          <app-dogs [dog]="dog" [showStatusBanner]="true" [showPrice]="true" [prioritizeImage]="isFirst"> </app-dogs>
-        }
-      </div>
-    } @else {
-      <div class="empty-state">
-        <p>We do not have adult Shelties available at this time. Please check back soon or reach out to discuss future companions.</p>
-        <p>Adult placements are evaluated individually so we can prioritize the best long-term fit for the dog and family.</p>
-        <p>
-          Learn more on our
-          <a routerLink="/dogs/getting-a-sheltie">Getting a Sheltie</a>
-          page.
-        </p>
-      </div>
-    }
-  </section>
-
-  <section class="next-step-panel">
-    <div class="next-step-copy">
-      <p class="section-kicker">Next steps</p>
-      <h2>Thinking about getting a Sheltie?</h2>
-      <p>
-        Learn more about the breed, our placement process, and how to start the conversation before joining the
-        waitlist or applying for a current puppy.
-      </p>
+  <section class="available-cta">
+    <div class="available-cta__copy">
+      <p class="section-kicker">Next step</p>
+      <h2>Want to learn more before reaching out?</h2>
+      <p>Our Getting a Sheltie page covers what to expect, how placement works, and how to start the conversation.</p>
     </div>
 
-    <div class="reserve-actions">
-      <a class="reserve-primary-link" routerLink="/dogs/getting-a-sheltie">Getting a Sheltie</a>
-      @if (questionnaireEnabled) {
-        <a class="reserve-secondary-link" routerLink="/dogs/questionnaire">Questionnaire</a>
-      }
-    </div>
+    <a class="reserve-primary-link" routerLink="/dogs/getting-a-sheltie">Getting a Sheltie</a>
   </section>
 </section>
