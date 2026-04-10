@@ -9,9 +9,10 @@ import { GettingASheltieComponent } from './getting-a-sheltie/getting-a-sheltie.
 import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 import {
   availableAdultsResolver,
-  availablePuppiesResolver,
   boysPageResolver,
+  companionPuppiesResolver,
   girlsPageResolver,
+  showPuppiesResolver,
 } from './public-dog.resolvers';
 import { environment } from '../../environments/environment';
 
@@ -55,13 +56,14 @@ const routes: Routes = [
     path: 'available',
     component: AvailableComponent,
     resolve: {
-      puppies: availablePuppiesResolver,
+      showPuppies: showPuppiesResolver,
+      companionPuppies: companionPuppiesResolver,
       adults: availableAdultsResolver,
     },
     data: {
-      title: 'Available Sheltie Puppies in Georgia Near Atlanta | Aspenleaf Shelties',
+      title: 'Available Shelties in Georgia Near Atlanta | Aspenleaf Shelties',
       description:
-        'See available Sheltie puppies and companion opportunities at Aspenleaf Shelties in Dewy Rose, Georgia for families in Atlanta, Athens, Augusta, and beyond.',
+        'See available show puppies, companion puppies, and adult Shelties at Aspenleaf Shelties in Dewy Rose, Georgia for families in Atlanta, Athens, Augusta, and beyond.',
     },
   },
   {

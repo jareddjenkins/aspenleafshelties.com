@@ -11,7 +11,10 @@ export const boysPageResolver: ResolveFn<Dog[]> = () =>
 export const girlsPageResolver: ResolveFn<Dog[]> = () =>
   inject(DogpagesService).getDogsForPage('girls');
 
-export const availablePuppiesResolver: ResolveFn<Dog[]> = () =>
+export const showPuppiesResolver: ResolveFn<Dog[]> = () =>
+  inject(DogpagesService).getDogsForPage('showavailable');
+
+export const companionPuppiesResolver: ResolveFn<Dog[]> = () =>
   inject(DogpagesService).getDogsForPage('available');
 
 export const availableAdultsResolver: ResolveFn<Dog[]> = () =>

@@ -10,7 +10,8 @@ import { environment } from '../../../environments/environment';
   standalone: false,
 })
 export class AvailableComponent implements OnInit {
-  puppies: Dog[] = [];
+  showPuppies: Dog[] = [];
+  companionPuppies: Dog[] = [];
   adults: Dog[] = [];
   readonly questionnaireEnabled = environment.questionnaireEnabled;
 
@@ -19,7 +20,8 @@ export class AvailableComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.puppies = this.route.snapshot.data['puppies'] ?? [];
+    this.showPuppies = this.route.snapshot.data['showPuppies'] ?? [];
+    this.companionPuppies = this.route.snapshot.data['companionPuppies'] ?? [];
     this.adults = this.route.snapshot.data['adults'] ?? [];
   }
 }

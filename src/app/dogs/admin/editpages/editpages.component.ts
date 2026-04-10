@@ -18,10 +18,12 @@ import { Router } from '@angular/router';
 export class EditpagesComponent implements OnInit {
   readonly boysPageName = 'boys';
   readonly girlsPageName = 'girls';
+  readonly showAvailablePageName = 'showavailable';
   readonly availablePageName = 'available';
   readonly adultAvailablePageName = 'adultavailable';
   boypages: PageListItem[] = [];
   girlpages: PageListItem[] = [];
+  showavailablepages: PageListItem[] = [];
   availablepages: PageListItem[] = [];
   adultavailablepages: PageListItem[] = [];
   allpages: PageListItem[] = [];
@@ -29,6 +31,7 @@ export class EditpagesComponent implements OnInit {
   dogSearch: Record<string, string> = {
     boys: '',
     girls: '',
+    showavailable: '',
     available: '',
     adultavailable: '',
   };
@@ -53,6 +56,9 @@ export class EditpagesComponent implements OnInit {
       );
       this.boypages = this.allpages.filter((dli) => this.normalizePageName(dli.pageName) === this.boysPageName);
       this.girlpages = this.allpages.filter((dli) => this.normalizePageName(dli.pageName) === this.girlsPageName);
+      this.showavailablepages = this.allpages.filter(
+        (dli) => this.normalizePageName(dli.pageName) === this.showAvailablePageName,
+      );
       this.availablepages = this.allpages.filter(
         (dli) => this.normalizePageName(dli.pageName) === this.availablePageName,
       );
@@ -165,6 +171,8 @@ export class EditpagesComponent implements OnInit {
         return this.boypages;
       case this.girlsPageName:
         return this.girlpages;
+      case this.showAvailablePageName:
+        return this.showavailablepages;
       case this.availablePageName:
         return this.availablepages;
       case this.adultAvailablePageName:
@@ -181,6 +189,10 @@ export class EditpagesComponent implements OnInit {
 
     if (page === this.girlpages) {
       return this.girlsPageName;
+    }
+
+    if (page === this.showavailablepages) {
+      return this.showAvailablePageName;
     }
 
     if (page === this.availablepages) {

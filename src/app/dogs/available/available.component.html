@@ -11,10 +11,11 @@
 
 <section class="available-shell">
   <div class="intro-copy">
-    <p class="section-kicker">Available puppies and adults</p>
+    <p class="section-kicker">Available show puppies, companions, and adults</p>
     <h1>Available Shelties in Georgia.</h1>
     <p>
-      When we have dogs ready for new homes, you will find them listed below.
+      When we have dogs ready for new homes, you will find them listed below in the section that best fits each
+      placement.
     </p>
     <p>
       If you are new to Aspenleaf Shelties, our
@@ -24,16 +25,20 @@
   </div>
 
   <section class="listing-section">
-    <h2>Puppies For Sale</h2>
-    @if (puppies.length) {
+    <h2>Show Puppies</h2>
+    <p class="listing-intro">
+      Puppies here are being considered for show potential while we continue evaluating structure, confidence, and
+      overall development.
+    </p>
+    @if (showPuppies.length) {
       <div class="listing-grid">
-        @for (dog of puppies; track dog.id; let isFirst = $first) {
+        @for (dog of showPuppies; track dog.id; let isFirst = $first) {
           <app-dogs [dog]="dog" [showStatusBanner]="true" [showPrice]="true" [prioritizeImage]="isFirst"> </app-dogs>
         }
       </div>
     } @else {
       <div class="empty-state">
-        <p>We do not have puppies available right now. Please ask about our waitlist for upcoming litters.</p>
+        <p>We do not have show puppies available right now. Please ask about upcoming litters and future evaluations.</p>
         <p>
           Learn more on our
           <a routerLink="/dogs/getting-a-sheltie">Getting a Sheltie</a>
@@ -44,7 +49,35 @@
   </section>
 
   <section class="listing-section">
-    <h2>Adults For Sale</h2>
+    <h2>Companion Puppies</h2>
+    <p class="listing-intro">
+      These puppies are intended for companion or performance homes and are placed with the same care and screening as
+      every Aspenleaf puppy.
+    </p>
+    @if (companionPuppies.length) {
+      <div class="listing-grid">
+        @for (dog of companionPuppies; track dog.id; let isFirst = $first) {
+          <app-dogs [dog]="dog" [showStatusBanner]="true" [showPrice]="true" [prioritizeImage]="isFirst"> </app-dogs>
+        }
+      </div>
+    } @else {
+      <div class="empty-state">
+        <p>We do not have companion puppies available right now. Please ask about our waitlist for upcoming litters.</p>
+        <p>
+          Learn more on our
+          <a routerLink="/dogs/getting-a-sheltie">Getting a Sheltie</a>
+          page.
+        </p>
+      </div>
+    }
+  </section>
+
+  <section class="listing-section">
+    <h2>Adults</h2>
+    <p class="listing-intro">
+      Adult opportunities are uncommon, but we occasionally have mature companions or retired dogs looking for the
+      right long-term home.
+    </p>
     @if (adults.length) {
       <div class="listing-grid">
         @for (dog of adults; track dog.id; let isFirst = $first) {
@@ -54,7 +87,7 @@
     } @else {
       <div class="empty-state">
         <p>We do not have adult Shelties available at this time. Please check back soon or reach out to discuss future companions.</p>
-        <p>We generally prefer adult placements with experienced Sheltie homes and securely fenced yards.</p>
+        <p>Adult placements are evaluated individually so we can prioritize the best long-term fit for the dog and family.</p>
         <p>
           Learn more on our
           <a routerLink="/dogs/getting-a-sheltie">Getting a Sheltie</a>

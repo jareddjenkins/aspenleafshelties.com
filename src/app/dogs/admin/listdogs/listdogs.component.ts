@@ -25,7 +25,7 @@ type DogStatusFilter = 'none' | 'reserved' | 'sold';
   standalone: false,
 })
 export class ListdogsComponent implements OnInit {
-  readonly pageFilterOptions = ['None', 'Boys', 'Girls', 'Available', 'Adult Available'] as const;
+  readonly pageFilterOptions = ['None', 'Boys', 'Girls', 'Show Puppies', 'Companion Puppies', 'Adults'] as const;
 
   dogs: Observable<Dog[]>;
   filteredDogs: Observable<Dog[]>;
@@ -434,10 +434,12 @@ export class ListdogsComponent implements OnInit {
     const normalized = value.trim().toLowerCase();
 
     switch (normalized) {
+      case 'showavailable':
+        return 'Show Puppies';
       case 'adultavailable':
-        return 'Adult Available';
+        return 'Adults';
       case 'available':
-        return 'Available';
+        return 'Companion Puppies';
       case 'boys':
         return 'Boys';
       case 'girls':

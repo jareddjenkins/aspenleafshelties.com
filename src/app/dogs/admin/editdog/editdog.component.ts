@@ -26,8 +26,9 @@ export class EditdogComponent implements OnInit, OnDestroy {
   readonly pageOptions = [
     { value: 'boys', label: 'Boys' },
     { value: 'girls', label: 'Girls' },
-    { value: 'available', label: 'Available' },
-    { value: 'adultavailable', label: 'Adult Available' },
+    { value: 'showavailable', label: 'Show Puppies' },
+    { value: 'available', label: 'Companion Puppies' },
+    { value: 'adultavailable', label: 'Adults' },
   ] as const;
   private readonly mobileMediaQueryString = '(max-width: 700px)';
   private formBannerTimeoutId: ReturnType<typeof setTimeout> | null = null;
@@ -727,10 +728,12 @@ export class EditdogComponent implements OnInit, OnDestroy {
     const normalized = (value ?? '').trim().toLowerCase();
 
     switch (normalized) {
+      case 'showavailable':
+        return 'Show Puppies';
       case 'adultavailable':
-        return 'Adult Available';
+        return 'Adults';
       case 'available':
-        return 'Available';
+        return 'Companion Puppies';
       case 'boys':
         return 'Boys';
       case 'girls':

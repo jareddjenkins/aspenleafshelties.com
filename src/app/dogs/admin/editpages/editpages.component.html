@@ -112,12 +112,63 @@
 
     <mat-card class="page-column">
       <mat-card-header>
-        <mat-card-title>Available</mat-card-title>
+        <mat-card-title>Show Puppies</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div class="page-column__add">
           <mat-form-field appearance="outline">
-            <mat-label>Add dog to Available</mat-label>
+            <mat-label>Add dog to Show Puppies</mat-label>
+            <input
+              matInput
+              type="text"
+              [(ngModel)]="dogSearch[showAvailablePageName]"
+              name="showavailable-select"
+              list="showavailable-dogs"
+              placeholder="Filter dogs by registered name"
+            />
+            <datalist id="showavailable-dogs">
+              @for (dog of filteredDogs(showAvailablePageName); track dog.id) {
+                <option [value]="dog.rname"></option>
+              }
+            </datalist>
+          </mat-form-field>
+          <button mat-flat-button color="primary" type="button" (click)="addnewdog(showAvailablePageName)" [disabled]="!dogSearch[showAvailablePageName]?.trim()">Add</button>
+        </div>
+
+        <div cdkDropList class="page-list" (cdkDropListDropped)="drop(showavailablepages, $event)">
+          @for (item of showavailablepages; track item.dogId; let i = $index) {
+            <div class="page-list__item" cdkDrag [cdkDragStartDelay]="180">
+              <span>{{ item.dog.rname }}</span>
+              <span class="page-list__item-actions">
+                <button
+                  mat-icon-button
+                  type="button"
+                  (click)="goToEditDog(item.dogId)"
+                  aria-label="Edit dog record"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button type="button" (click)="removedog(showAvailablePageName, showavailablepages, i)" aria-label="Remove dog from show puppies page">
+                  <mat-icon>remove_circle</mat-icon>
+                </button>
+                <button type="button" cdkDragHandle class="page-list__drag-button" aria-label="Reorder dog on show puppies page">
+                  <mat-icon class="page-list__drag-handle">drag_handle</mat-icon>
+                </button>
+              </span>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="page-column">
+      <mat-card-header>
+        <mat-card-title>Companion Puppies</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="page-column__add">
+          <mat-form-field appearance="outline">
+            <mat-label>Add dog to Companion Puppies</mat-label>
             <input
               matInput
               type="text"
@@ -148,10 +199,10 @@
                 >
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button type="button" (click)="removedog(availablePageName, availablepages, i)" aria-label="Remove dog from available page">
+                <button mat-icon-button type="button" (click)="removedog(availablePageName, availablepages, i)" aria-label="Remove dog from companion puppies page">
                   <mat-icon>remove_circle</mat-icon>
                 </button>
-                <button type="button" cdkDragHandle class="page-list__drag-button" aria-label="Reorder dog on available page">
+                <button type="button" cdkDragHandle class="page-list__drag-button" aria-label="Reorder dog on companion puppies page">
                   <mat-icon class="page-list__drag-handle">drag_handle</mat-icon>
                 </button>
               </span>
@@ -163,12 +214,12 @@
 
     <mat-card class="page-column">
       <mat-card-header>
-        <mat-card-title>Adult Available</mat-card-title>
+        <mat-card-title>Adults</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div class="page-column__add">
           <mat-form-field appearance="outline">
-            <mat-label>Add dog to Adult Available</mat-label>
+            <mat-label>Add dog to Adults</mat-label>
             <input
               matInput
               type="text"
@@ -199,10 +250,10 @@
                 >
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button type="button" (click)="removedog(adultAvailablePageName, adultavailablepages, i)" aria-label="Remove dog from adult available page">
+                <button mat-icon-button type="button" (click)="removedog(adultAvailablePageName, adultavailablepages, i)" aria-label="Remove dog from adults page">
                   <mat-icon>remove_circle</mat-icon>
                 </button>
-                <button type="button" cdkDragHandle class="page-list__drag-button" aria-label="Reorder dog on adult available page">
+                <button type="button" cdkDragHandle class="page-list__drag-button" aria-label="Reorder dog on adults page">
                   <mat-icon class="page-list__drag-handle">drag_handle</mat-icon>
                 </button>
               </span>

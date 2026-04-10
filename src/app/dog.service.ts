@@ -47,11 +47,29 @@ export class DogService {
     );
   }
 
-  getAvailablePage(): Observable<Dog[]> {
-    return this.firestorePublicDataService.getDogsForPage('available').pipe(
-      tap(() => this.log('fetched available dogs from Firestore')),
-      catchError(this.handleReadError('getAvailablePage', [])),
+  getShowPuppiesPage(): Observable<Dog[]> {
+    return this.firestorePublicDataService.getDogsForPage('showavailable').pipe(
+      tap(() => this.log('fetched show puppies from Firestore')),
+      catchError(this.handleReadError('getShowPuppiesPage', [])),
     );
+  }
+
+  getCompanionPuppiesPage(): Observable<Dog[]> {
+    return this.firestorePublicDataService.getDogsForPage('available').pipe(
+      tap(() => this.log('fetched companion puppies from Firestore')),
+      catchError(this.handleReadError('getCompanionPuppiesPage', [])),
+    );
+  }
+
+  getAdultsAvailablePage(): Observable<Dog[]> {
+    return this.firestorePublicDataService.getDogsForPage('adultavailable').pipe(
+      tap(() => this.log('fetched available adults from Firestore')),
+      catchError(this.handleReadError('getAdultsAvailablePage', [])),
+    );
+  }
+
+  getAvailablePage(): Observable<Dog[]> {
+    return this.getCompanionPuppiesPage();
   }
 
   getBoysPage(): Observable<Dog[]> {
