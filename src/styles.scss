@@ -1,6 +1,12 @@
 @use '@angular/material' as mat;
 @use './styles/theme-colors' as theme-colors;
 
+app-root,
+app-topnav,
+app-footer {
+  display: block;
+}
+
 html {
   height: 100%;
 
@@ -29,7 +35,6 @@ html {
   box-sizing: border-box;
 }
 
-html,
 body {
   min-height: 100%;
 }

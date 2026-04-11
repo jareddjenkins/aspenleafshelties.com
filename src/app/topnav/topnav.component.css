@@ -3,8 +3,10 @@
 }
 
 .site-nav {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
 }
 
@@ -32,4 +34,14 @@
 .site-toolbar a[mat-button],
 .site-toolbar button[mat-button] {
   color: var(--mat-sys-on-primary);
+}
+
+.site-nav-spacer {
+  height: 64px;
+}
+
+@media (max-width: 599px) {
+  .site-nav-spacer {
+    height: 56px;
+  }
 }
