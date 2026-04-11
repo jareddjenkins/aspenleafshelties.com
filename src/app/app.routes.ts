@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { ContactComponent } from './contact/contact.component';
+import { Routes } from '@angular/router';
+
 import { AboutComponent } from './about/about.component';
-import { ResourcesComponent } from './resources/resources.component';
+import { ContactComponent } from './contact/contact.component';
 import { DogDetailComponent } from './dogs/shared/dog-detail/dog-detail.component';
 import { dogDetailResolver } from './dogs/public-dog.resolvers';
+import { HomeComponent } from './home/home.component';
+import { ResourcesComponent } from './resources/resources.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
     path: 'home',
@@ -21,7 +21,7 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () =>
-      import('./dogs/admin/admin.module').then((m) => m.AdminModule),
+      import('./dogs/admin/admin.routes').then((m) => m.ADMIN_ROUTES),
     data: {
       title: 'Admin | Aspenleaf Shelties',
       description: 'Administrative tools for Aspenleaf Shelties.',
@@ -30,7 +30,7 @@ const routes: Routes = [
   },
   {
     path: 'dogs',
-    loadChildren: () => import('./dogs/dogs.module').then((m) => m.DogsModule),
+    loadChildren: () => import('./dogs/dogs.routes').then((m) => m.DOGS_ROUTES),
   },
   {
     path: 'contact',
@@ -72,13 +72,3 @@ const routes: Routes = [
     },
   },
 ];
-
-@NgModule({
-  imports: [
-    RouterModule.forRoot(routes, {
-      initialNavigation: 'enabledBlocking',
-    }),
-  ],
-  exports: [RouterModule],
-})
-export class AppRoutingModule {}

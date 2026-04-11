@@ -1,5 +1,15 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -12,6 +22,7 @@ import {
   ListdogsFiltersDialogComponent,
   ListdogsFiltersDialogResult,
 } from './listdogs-filters-dialog.component';
+import { DogsComponent } from '../../dogs.component';
 
 type DogSortField = 'rname' | 'cname' | 'status' | 'gender' | 'sireName' | 'damName' | 'dob' | 'activePages';
 type SortDirection = 'asc' | 'desc';
@@ -22,7 +33,20 @@ type DogStatusFilter = 'none' | 'reserved' | 'sold';
   selector: 'app-listdogs',
   templateUrl: './listdogs.component.html',
   styleUrls: ['./listdogs.component.css'],
-  standalone: false,
+  imports: [
+    AsyncPipe,
+    DogsComponent,
+    FormsModule,
+    MatBadgeModule,
+    MatButtonModule,
+    MatCardModule,
+    MatChipsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+  ],
+  standalone: true,
 })
 export class ListdogsComponent implements OnInit {
   readonly pageFilterOptions = ['None', 'Boys', 'Girls', 'Show Puppies', 'Companion Puppies', 'Adults'] as const;

@@ -1,17 +1,36 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { Observable, Subscription, filter } from 'rxjs';
 
 import { AdminAuthService, AdminSessionState } from '../../auth/admin-auth.service';
 import { AdminHeaderService, AdminHeaderState } from './admin-header.service';
+import { ListdogsComponent } from './listdogs/listdogs.component';
 
 type AdminNavItem = 'dogs' | 'pages' | 'create';
 
 @Component({
-    selector: 'app-admin',
-    templateUrl: './admin.component.html',
-    styleUrls: ['./admin.component.css'],
-    standalone: false
+  selector: 'app-admin',
+  templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.css'],
+  imports: [
+    AsyncPipe,
+    ListdogsComponent,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatToolbarModule,
+    RouterLink,
+    RouterOutlet,
+  ],
+  standalone: true,
 })
 export class AdminComponent implements OnInit, OnDestroy {
   private readonly mobileNavMediaQueryString = '(max-width: 960px)';

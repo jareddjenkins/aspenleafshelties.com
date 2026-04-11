@@ -1,5 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { ImageCropperComponent } from 'ngx-image-cropper';
 import { firstValueFrom } from 'rxjs';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +20,7 @@ import { DogService } from '../../../dog.service';
 import { DogpagesService } from '../../../dogpages.service';
 import { FirestoreAdminDataService } from '../../../firebase/firestore-admin-data.service';
 import { AdminHeaderAction, AdminHeaderBanner, AdminHeaderService } from '../admin-header.service';
+import { DogsComponent } from '../../dogs.component';
 
 type EditDogSection = 'details' | 'image' | 'preview' | 'delete';
 
@@ -17,7 +28,20 @@ type EditDogSection = 'details' | 'image' | 'preview' | 'delete';
   selector: 'app-editdog',
   templateUrl: './editdog.component.html',
   styleUrls: ['./editdog.component.css'],
-  standalone: false,
+  imports: [
+    DatePipe,
+    DogsComponent,
+    FormsModule,
+    ImageCropperComponent,
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatSelectModule,
+  ],
+  standalone: true,
 })
 export class EditdogComponent implements OnInit, OnDestroy {
   private static readonly CARD_IMAGE_SIZE = 640;

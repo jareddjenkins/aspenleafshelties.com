@@ -23,6 +23,8 @@
           [src]="imageUrl"
           [alt]="imageAltText"
           (error)="handleImageError()"
+          [attr.width]="imageVariant === 'detail' ? 1400 : 640"
+          [attr.height]="imageVariant === 'detail' ? 1400 : 640"
           [attr.loading]="imageLoading"
           [attr.decoding]="imageDecoding"
           [attr.fetchpriority]="imageFetchPriority"

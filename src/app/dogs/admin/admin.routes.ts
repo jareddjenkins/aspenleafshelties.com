@@ -1,13 +1,16 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
+
 import { adminEditorGuard } from '../../auth/admin-editor.guard';
 import { AdminComponent } from './admin.component';
-import { EditpagesComponent } from './editpages/editpages.component';
 import { EditdogComponent } from './editdog/editdog.component';
+import { EditpagesComponent } from './editpages/editpages.component';
+import { FirestoreAdminDataService } from '../../firebase/firestore-admin-data.service';
+import { FirebaseAdminClientService } from '../../firebase/firebase-admin-client.service';
 
-const routes: Routes = [
+export const ADMIN_ROUTES: Routes = [
   {
     path: '',
+    providers: [FirebaseAdminClientService, FirestoreAdminDataService],
     component: AdminComponent,
     children: [
       { path: 'pages', component: EditpagesComponent, canActivate: [adminEditorGuard] },
@@ -15,9 +18,3 @@ const routes: Routes = [
     ],
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class AdminRoutingModule {}

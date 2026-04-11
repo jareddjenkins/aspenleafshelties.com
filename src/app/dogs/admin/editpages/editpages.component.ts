@@ -1,19 +1,36 @@
 import { Component, OnInit } from '@angular/core';
+import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { DogService } from '../../../dog.service';
 import { forkJoin } from 'rxjs';
 import { PageAssignment } from '../../../pages';
 import { PageListItem } from './pageListItem';
 import { Dog } from '../../model/dog';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DogpagesService } from 'src/app/dogpages.service';
 import { FirestoreAdminDataService } from '../../../firebase/firestore-admin-data.service';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-editpages',
-    templateUrl: './editpages.component.html',
-    styleUrls: ['./editpages.component.css'],
-    standalone: false
+  selector: 'app-editpages',
+  templateUrl: './editpages.component.html',
+  styleUrls: ['./editpages.component.css'],
+  imports: [
+    CdkDrag,
+    CdkDragHandle,
+    CdkDropList,
+    FormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+  ],
+  standalone: true,
 })
 export class EditpagesComponent implements OnInit {
   readonly boysPageName = 'boys';

@@ -1,15 +1,16 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { CurrencyPipe, DatePipe, Location } from '@angular/common';
 
 import { Dog } from './model/dog';
 import { DEFAULT_DOG_IMAGE_URL, getPreferredDogImage, isUsableDogImageUrl } from './shared/dog-image';
 
 @Component({
-    selector: 'app-dogs',
-    templateUrl: './dogs.component.html',
-    styleUrls: ['./dogs.component.css'],
-    standalone: false
+  selector: 'app-dogs',
+  templateUrl: './dogs.component.html',
+  styleUrls: ['./dogs.component.css'],
+  imports: [DatePipe, CurrencyPipe],
+  standalone: true,
 })
 export class DogsComponent implements OnChanges {
   @Input() dog: Dog;

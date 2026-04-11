@@ -1,11 +1,23 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @Component({
-    selector: 'app-topnav',
-    templateUrl: './topnav.component.html',
-    styleUrls: ['./topnav.component.css'],
-    standalone: false
+  selector: 'app-topnav',
+  templateUrl: './topnav.component.html',
+  styleUrls: ['./topnav.component.css'],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    MatSidenavModule,
+  ],
+  standalone: true,
 })
 export class TopnavComponent {
   isMobileMenuOpen = false;
@@ -24,7 +36,7 @@ export class TopnavComponent {
 
   constructor(
     private router: Router,
-    private elementRef: ElementRef<HTMLElement>
+    private elementRef: ElementRef<HTMLElement>,
   ) {}
 
   @HostListener('window:resize')

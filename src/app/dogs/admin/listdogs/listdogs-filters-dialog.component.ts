@@ -1,5 +1,11 @@
 import { Component, Inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 type DogSortField = 'rname' | 'cname' | 'status' | 'gender' | 'sireName' | 'damName' | 'dob' | 'activePages';
 type SortDirection = 'asc' | 'desc';
@@ -25,7 +31,15 @@ export type ListdogsFiltersDialogResult = {
   selector: 'app-listdogs-filters-dialog',
   templateUrl: './listdogs-filters-dialog.component.html',
   styleUrls: ['./listdogs-filters-dialog.component.css'],
-  standalone: false,
+  imports: [
+    FormsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatSelectModule,
+  ],
+  standalone: true,
 })
 export class ListdogsFiltersDialogComponent {
   sortField: DogSortField;

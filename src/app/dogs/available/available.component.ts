@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { MatTabsModule } from '@angular/material/tabs';
+
 import { Dog } from '../model/dog';
+import { DogsComponent } from '../dogs.component';
 
 type AvailableDogStatus = 'showavailable' | 'available' | 'adultavailable';
 
@@ -16,7 +19,8 @@ interface AvailableTab {
   selector: 'app-available',
   templateUrl: './available.component.html',
   styleUrls: ['./available.component.css'],
-  standalone: false,
+  imports: [DogsComponent, MatTabsModule, RouterLink],
+  standalone: true,
 })
 export class AvailableComponent implements OnInit {
   showPuppies: Dog[] = [];

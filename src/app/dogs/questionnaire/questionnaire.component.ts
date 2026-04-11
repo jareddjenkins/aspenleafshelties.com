@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 import { InquirySubmissionInput, InquirySubmissionService } from '../../firebase/inquiry-submission.service';
 
@@ -7,7 +8,8 @@ import { InquirySubmissionInput, InquirySubmissionService } from '../../firebase
   selector: 'app-questionnaire',
   templateUrl: './questionnaire.component.html',
   styleUrls: ['./questionnaire.component.css'],
-  standalone: false,
+  imports: [ReactiveFormsModule, RouterLink],
+  standalone: true,
 })
 export class QuestionnaireComponent {
   submissionState: 'idle' | 'submitting' | 'success' | 'error' = 'idle';

@@ -6,7 +6,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { Inject } from '@angular/core';
 
 import { Dog } from '../../model/dog';
-import { DogsComponent } from '../dog-card/dogs.component';
+import { DogsComponent } from '../../dogs.component';
 import { DEFAULT_DOG_IMAGE_URL, getPreferredDogImage, isUsableDogImageUrl } from '../dog-image';
 
 @Component({
@@ -14,6 +14,7 @@ import { DEFAULT_DOG_IMAGE_URL, getPreferredDogImage, isUsableDogImageUrl } from
   templateUrl: './dog-detail.component.html',
   styleUrls: ['./dog-detail.component.css'],
   imports: [DogsComponent],
+  standalone: true,
 })
 export class DogDetailComponent implements OnInit {
   @Input() dog: Dog | undefined;

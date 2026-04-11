@@ -1,14 +1,18 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 import { filter } from 'rxjs/operators';
 
+import { FooterComponent } from './footer/footer.component';
+import { TopnavComponent } from './topnav/topnav.component';
+
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
-    standalone: false
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+  imports: [RouterOutlet, TopnavComponent, FooterComponent],
+  standalone: true,
 })
 export class AppComponent implements OnInit {
   private readonly siteName = 'Aspenleaf Shelties';

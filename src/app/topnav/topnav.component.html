@@ -42,29 +42,31 @@
         </button>
 
         <div class="nav-submenu" id="dogs-submenu" aria-label="Our Dogs">
-          <a
-            *ngFor="let route of dogRoutes"
-            class="nav-sublink"
-            [routerLink]="route.path"
-            routerLinkActive="active-sublink"
-            [routerLinkActiveOptions]="{ exact: true }"
-            (click)="closeMenus()"
-          >
-            {{ route.label }}
-          </a>
+          @for (route of dogRoutes; track route.path) {
+            <a
+              class="nav-sublink"
+              [routerLink]="route.path"
+              routerLinkActive="active-sublink"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="closeMenus()"
+            >
+              {{ route.label }}
+            </a>
+          }
         </div>
       </div>
 
-      <a
-        *ngFor="let route of secondaryRoutes"
-        class="nav-link"
-        [routerLink]="route.path"
-        routerLinkActive="active-link"
-        [routerLinkActiveOptions]="{ exact: true }"
-        (click)="closeMenus()"
-      >
-        {{ route.label }}
-      </a>
+      @for (route of secondaryRoutes; track route.path) {
+        <a
+          class="nav-link"
+          [routerLink]="route.path"
+          routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeMenus()"
+        >
+          {{ route.label }}
+        </a>
+      }
     </div>
   </div>
 </nav>
@@ -103,8 +105,24 @@
         <section class="mobile-nav-section" aria-labelledby="mobile-nav-dogs-heading">
           <p class="mobile-nav-section-title" id="mobile-nav-dogs-heading">Our Dogs</p>
 
+          @for (route of dogRoutes; track route.path) {
+            <a
+              mat-button
+              class="mobile-nav-link"
+              [routerLink]="route.path"
+              routerLinkActive="mobile-nav-link--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="closeMenus()"
+            >
+              {{ route.label }}
+            </a>
+          }
+        </section>
+
+        <mat-divider></mat-divider>
+
+        @for (route of secondaryRoutes; track route.path) {
           <a
-            *ngFor="let route of dogRoutes"
             mat-button
             class="mobile-nav-link"
             [routerLink]="route.path"
@@ -114,21 +132,7 @@
           >
             {{ route.label }}
           </a>
-        </section>
-
-        <mat-divider></mat-divider>
-
-        <a
-          *ngFor="let route of secondaryRoutes"
-          mat-button
-          class="mobile-nav-link"
-          [routerLink]="route.path"
-          routerLinkActive="mobile-nav-link--active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          (click)="closeMenus()"
-        >
-          {{ route.label }}
-        </a>
+        }
       </div>
     </div>
   </mat-drawer>

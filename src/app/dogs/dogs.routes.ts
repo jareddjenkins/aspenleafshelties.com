@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
+import { CanActivateFn, CanMatchFn, Router, Routes } from '@angular/router';
 import { inject } from '@angular/core';
-import { Router, RouterModule, Routes, CanActivateFn, CanMatchFn } from '@angular/router';
-import { BoysComponent } from './boys/boys.component';
-import { GirlsComponent } from './girls/girls.component';
+
 import { AvailableComponent } from './available/available.component';
+import { BoysComponent } from './boys/boys.component';
+import { environment } from '../../environments/environment';
 import { FaqComponent } from './faq/faq.component';
 import { GettingASheltieComponent } from './getting-a-sheltie/getting-a-sheltie.component';
-import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
+import { GirlsComponent } from './girls/girls.component';
 import {
   availableAdultsResolver,
   boysPageResolver,
@@ -14,7 +14,7 @@ import {
   girlsPageResolver,
   showPuppiesResolver,
 } from './public-dog.resolvers';
-import { environment } from '../../environments/environment';
+import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 
 const questionnaireEnabledRedirect = () =>
   environment.questionnaireEnabled || inject(Router).parseUrl('/contact');
@@ -22,7 +22,7 @@ const questionnaireEnabledRedirect = () =>
 const questionnaireEnabledCanMatch: CanMatchFn = () => questionnaireEnabledRedirect();
 const questionnaireEnabledCanActivate: CanActivateFn = () => questionnaireEnabledRedirect();
 
-const routes: Routes = [
+export const DOGS_ROUTES: Routes = [
   {
     path: '',
     redirectTo: 'boys',
@@ -101,9 +101,3 @@ const routes: Routes = [
     pathMatch: 'full',
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class DogsRoutingModule {}
