@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
 
@@ -19,7 +21,7 @@ interface AvailableTab {
   selector: 'app-available',
   templateUrl: './available.component.html',
   styleUrls: ['./available.component.css'],
-  imports: [DogsComponent, MatTabsModule, RouterLink],
+  imports: [DogsComponent, MatButtonModule, MatCardModule, MatTabsModule, RouterLink],
   standalone: true,
 })
 export class AvailableComponent implements OnInit {

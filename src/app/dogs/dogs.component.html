@@ -1,76 +1,71 @@
 @if (dog) {
   <!-- eslint-disable-next-line @angular-eslint/template/interactive-supports-focus -->
-  <article
+  <mat-card
     class="dog-card"
     [class.dog-card--static]="!isCardInteractive"
     (click)="handleCardClick()"
     (keypress)="handleCardClick()"
   >
-    <header class="dog-card__header">
+    <div class="dog-card__image-wrap">
+      @if (showStatusBanner && statusLabel) {
+        <span class="dog-card__status-banner" [class.is-sold]="dog.status === 'sold'">
+          {{ statusLabel }}
+        </span>
+      }
+      <img
+        [src]="imageUrl"
+        [alt]="imageAltText"
+        (error)="handleImageError()"
+        [attr.width]="imageVariant === 'detail' ? 1400 : 640"
+        [attr.height]="imageVariant === 'detail' ? 1400 : 640"
+        [attr.loading]="imageLoading"
+        [attr.decoding]="imageDecoding"
+        [attr.fetchpriority]="imageFetchPriority"
+        sizes="(max-width: 800px) 100vw, 40vw"
+      />
+    </div>
+
+    <mat-card-content class="dog-card__content">
       @if (displayName) {
         <h2>{{ displayName }}</h2>
       }
-    </header>
 
-    <div class="dog-card__body">
-      <div class="dog-card__image-wrap">
-        @if (showStatusBanner && statusLabel) {
-          <span class="dog-card__status-banner" [class.is-sold]="dog.status === 'sold'">
-            {{ statusLabel }}
-          </span>
+      @if (hasPrice) {
+        <p class="dog-card__price">{{ dog.price | currency: 'USD' : 'symbol' : '1.0-0' }}</p>
+      }
+
+      <div class="dog-card__facts">
+        @if (callName) {
+          <dl>
+            <dt>Call Name</dt>
+            <dd>{{ callName }}</dd>
+          </dl>
         }
-        <img
-          [src]="imageUrl"
-          [alt]="imageAltText"
-          (error)="handleImageError()"
-          [attr.width]="imageVariant === 'detail' ? 1400 : 640"
-          [attr.height]="imageVariant === 'detail' ? 1400 : 640"
-          [attr.loading]="imageLoading"
-          [attr.decoding]="imageDecoding"
-          [attr.fetchpriority]="imageFetchPriority"
-          sizes="(max-width: 800px) 100vw, 40vw"
-        />
-      </div>
-
-      <div class="dog-card__details">
-        @if (hasPrice) {
-          <p class="dog-card__price">{{ dog.price | currency: 'USD' : 'symbol' : '1.0-0' }}</p>
+        @if (hasDob) {
+          <dl>
+            <dt>Date of Birth</dt>
+            <dd>{{ dog.dob | date: "longDate" }}</dd>
+          </dl>
         }
-        <div class="dog-card__facts">
-          @if (callName) {
-            <dl>
-              <dt>Call Name</dt>
-              <dd>{{ callName }}</dd>
-            </dl>
-          }
-          @if (hasDob) {
-            <dl>
-              <dt>Date of Birth</dt>
-              <dd>{{ dog.dob | date: "longDate" }}</dd>
-            </dl>
-          }
-          @if (sireName) {
-            <dl>
-              <dt>Sire</dt>
-              <dd>{{ sireName }}</dd>
-            </dl>
-          }
-          @if (damName) {
-            <dl>
-              <dt>Dam</dt>
-              <dd>{{ damName }}</dd>
-            </dl>
-          }
-        </div>
-
-        @if (comments) {
-          <div class="dog-card__comment">
-            <p>{{ comments }}</p>
-          </div>
+        @if (sireName) {
+          <dl>
+            <dt>Sire</dt>
+            <dd>{{ sireName }}</dd>
+          </dl>
+        }
+        @if (damName) {
+          <dl>
+            <dt>Dam</dt>
+            <dd>{{ damName }}</dd>
+          </dl>
         }
       </div>
-    </div>
-  </article>
+
+      @if (comments) {
+        <p class="dog-card__comment">{{ comments }}</p>
+      }
+    </mat-card-content>
+  </mat-card>
 }
 <!-- <a *ngIf="!showInput" (click)="toggleInput()">Edit</a>
 <input *ngIf="showInput" type="text" value="{{dog.rname}}"> -->

@@ -1,58 +1,60 @@
-<section class="available-hero">
-  <img
-    src="assets/images/mick-tali.webp"
-    width="1600"
-    height="1430"
-    alt="Two Aspenleaf Shelties standing together outdoors"
-    fetchpriority="high"
-    decoding="sync"
-  >
-</section>
+<section class="section section--tight">
+  <div class="container stack">
+    <img
+      class="available-hero-image"
+      src="assets/images/mick-tali.webp"
+      width="1600"
+      height="1430"
+      alt="Two Aspenleaf Shelties standing together outdoors"
+      fetchpriority="high"
+      decoding="sync"
+    >
 
-<section class="available-shell">
-  
-  <mat-tab-group
-    class="available-tabs"
-    [(selectedIndex)]="selectedIndex"
-    animationDuration="0ms"
-    mat-align-tabs="start"
-    mat-stretch-tabs="false"
-  >
-    @for (tab of tabs; track tab.status; let tabIndex = $index) {
-      <mat-tab [label]="tab.label">
-        <ng-template matTabContent>
-          <div class="tab-panel">
-            @if (tab.dogs.length) {
-              <div class="listing-grid">
-                @for (dog of tab.dogs; track dog.id; let isFirst = $first) {
-                  <app-dogs
-                    [dog]="dog"
-                    [showStatusBanner]="true"
-                    [showPrice]="true"
-                    [prioritizeImage]="isFirst && selectedIndex === tabIndex"
-                  >
-                  </app-dogs>
-                }
-              </div>
-            } @else {
-              <div class="empty-state">
-                <p class="empty-state__title">{{ tab.emptyTitle }}</p>
-                <p>{{ tab.emptyMessage }}</p>
-              </div>
-            }
-          </div>
-        </ng-template>
-      </mat-tab>
-    }
-  </mat-tab-group>
+    <mat-tab-group
+      [(selectedIndex)]="selectedIndex"
+      animationDuration="0ms"
+      mat-align-tabs="start"
+      mat-stretch-tabs="false"
+    >
+      @for (tab of tabs; track tab.status; let tabIndex = $index) {
+        <mat-tab [label]="tab.label">
+          <ng-template matTabContent>
+            <div class="tab-panel">
+              @if (tab.dogs.length) {
+                <div class="listing-grid">
+                  @for (dog of tab.dogs; track dog.id; let isFirst = $first) {
+                    <app-dogs
+                      [dog]="dog"
+                      [showStatusBanner]="true"
+                      [showPrice]="true"
+                      [prioritizeImage]="isFirst && selectedIndex === tabIndex"
+                    >
+                    </app-dogs>
+                  }
+                </div>
+              } @else {
+                <mat-card>
+                  <mat-card-content class="stack prose">
+                    <h2>{{ tab.emptyTitle }}</h2>
+                    <p>{{ tab.emptyMessage }}</p>
+                  </mat-card-content>
+                </mat-card>
+              }
+            </div>
+          </ng-template>
+        </mat-tab>
+      }
+    </mat-tab-group>
 
-  <section class="available-cta">
-    <div class="available-cta__copy">
-      <p class="section-kicker">Next step</p>
-      <h2>Want to learn more before reaching out?</h2>
-      <p>Our Getting a Sheltie page covers what to expect, how placement works, and how to start the conversation.</p>
-    </div>
-
-    <a class="reserve-primary-link" routerLink="/getting-a-sheltie">Getting a Sheltie</a>
-  </section>
+    <mat-card>
+      <mat-card-content class="stack prose">
+        <p class="eyebrow">Puppy Process</p>
+        <h2>Wondering how placement works?</h2>
+        <p>Our Puppy Process page explains timing, fit, and how to start the conversation.</p>
+      </mat-card-content>
+      <mat-card-actions class="cluster">
+        <a matButton="filled" routerLink="/getting-a-sheltie">View Puppy Process</a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </section>

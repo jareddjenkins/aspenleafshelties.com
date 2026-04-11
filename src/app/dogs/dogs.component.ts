@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { CurrencyPipe, DatePipe, Location } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
 
 import { Dog } from './model/dog';
 import { DEFAULT_DOG_IMAGE_URL, getPreferredDogImage, isUsableDogImageUrl } from './shared/dog-image';
@@ -9,7 +10,7 @@ import { DEFAULT_DOG_IMAGE_URL, getPreferredDogImage, isUsableDogImageUrl } from
   selector: 'app-dogs',
   templateUrl: './dogs.component.html',
   styleUrls: ['./dogs.component.css'],
-  imports: [DatePipe, CurrencyPipe],
+  imports: [DatePipe, CurrencyPipe, MatCardModule],
   standalone: true,
 })
 export class DogsComponent implements OnChanges {

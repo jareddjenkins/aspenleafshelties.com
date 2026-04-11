@@ -1,99 +1,97 @@
-<section class="getting-shell">
-  <div class="page-intro">
-    <div class="intro-copy">
-      <p class="section-kicker">Getting a Sheltie</p>
-      <h1>What to expect when bringing home an Aspenleaf Sheltie.</h1>
-      <p>
-        At Aspenleaf Shelties, each litter is planned with health, temperament, and breed quality in mind. Puppies are
-        raised in the home, socialized thoughtfully, vet-checked, and kept up to date on age-appropriate care before
-        they leave for their new homes in Georgia and beyond.
-      </p>
-      <p>
-        Companion puppies are usually ready to go home around eight to ten weeks of age. Show prospects may stay
-        longer while we evaluate growth and development.
-      </p>
-      <p>
-        We screen prospective homes carefully because each puppy is a long-term commitment. Our goal is not simply to
-        place puppies quickly, but to place them well.
-      </p>
-      <p>
-        We are located in Dewy Rose, Georgia, and often work with families from Atlanta, Athens, Augusta, and
-        surrounding areas who are looking for a Shetland Sheepdog breeder in Georgia.
-      </p>
+<section class="section">
+  <div class="container stack">
+    <div class="split getting-layout">
+      <mat-card>
+        <mat-card-content class="stack prose">
+          <p class="eyebrow">Puppy Process</p>
+          <h1>How our puppy process works.</h1>
+          <p>
+            At Aspenleaf Shelties, each litter is planned with health, temperament, and breed quality in mind. Puppies are
+            raised in the home, socialized thoughtfully, vet-checked, and kept up to date on age-appropriate care before
+            they leave for their new homes in Georgia and beyond.
+          </p>
+          <p>
+            Companion puppies are usually ready to go home around eight to ten weeks of age. Show prospects may stay
+            longer while we evaluate growth and development.
+          </p>
+          <p>
+            We screen prospective homes carefully because each puppy is a long-term commitment. Our goal is not simply to
+            place puppies quickly, but to place them well.
+          </p>
+          <p>
+            We are located in Dewy Rose, Georgia, and often work with families from Atlanta, Athens, Augusta, and
+            surrounding areas who are looking for a Shetland Sheepdog breeder in Georgia.
+          </p>
+        </mat-card-content>
+      </mat-card>
+
+      <figure class="getting-image">
+        <img
+          src="assets/images/still-pup-running-crop.webp"
+          width="900"
+          height="900"
+          alt="Young Aspenleaf Sheltie puppy trotting through the grass"
+          loading="lazy"
+          decoding="async"
+        >
+      </figure>
     </div>
 
-    <figure class="intro-image">
-      <img
-        src="assets/images/still-pup-running-crop.webp"
-        width="900"
-        height="900"
-        alt="Young Aspenleaf Sheltie puppy trotting through the grass"
-        loading="lazy"
-        decoding="async"
-      >
-    </figure>
-  </div>
+    <div class="split info-grid">
+      <mat-card>
+        <mat-card-content class="stack prose">
+          <p class="eyebrow">Start Here</p>
+          <h2>Ready to talk about a puppy?</h2>
+          @if (questionnaireEnabled) {
+            <p>
+              The questionnaire is the best first step. It helps us understand your home, timing, and what kind of match
+              may be best for your family.
+            </p>
+          } @else {
+            <p>
+              We’re happy to talk through upcoming litters, companion placements, and whether one of our dogs may be the
+              right fit for your home.
+            </p>
+          }
+          <p>
+            If you have any trouble with the form, please give us a call at 970-623-0343 and leave a message. We will get
+            back to you as soon as we can. Visits are by appointment only.
+          </p>
+        </mat-card-content>
 
-  <section class="photo-feature">
-    <div class="photo-feature-copy">
-      <p class="section-kicker">Raised At Home</p>
-      <h2>Early weeks matter.</h2>
-      <p>
-        Aspenleaf puppies are raised in the home with daily handling, close observation, and thoughtful socialization.
-        We pay attention to confidence, curiosity, and the little details that help a puppy transition smoothly into a
-        new family.
-      </p>
+        <mat-card-actions class="cluster">
+          @if (questionnaireEnabled) {
+            <a matButton="filled" routerLink="/questionnaire">Complete The Questionnaire</a>
+          }
+          <a matButton="outlined" href="tel:9706230343">Call Aspenleaf</a>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-content class="stack prose">
+          <p class="eyebrow">Raised At Home</p>
+          <h2>Early weeks matter.</h2>
+          <p>
+            Aspenleaf puppies are raised in the home with daily handling, close observation, and thoughtful socialization.
+            We pay attention to confidence, curiosity, and the little details that help a puppy transition smoothly into a
+            new family.
+          </p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-content class="stack prose">
+          <h2>Is a Sheltie the right breed for you?</h2>
+          <p>
+            Shelties are affectionate, intelligent, and deeply devoted to their families. They can be reserved with
+            strangers, energetic in play, and vocal if left untrained.
+          </p>
+          <p>
+            They do best with structure, companionship, exercise, and regular grooming. Families who enjoy a bright,
+            responsive dog and are prepared for coat care usually find Shelties deeply rewarding.
+          </p>
+        </mat-card-content>
+      </mat-card>
     </div>
-
-    <figure class="photo-feature-image">
-      <img
-        src="assets/images/snuggling-puppies.webp"
-        width="1600"
-        height="1200"
-        alt="Two Aspenleaf Sheltie puppies sleeping side by side"
-        loading="lazy"
-        decoding="async"
-      >
-    </figure>
-  </section>
-
-  <div class="info-grid">
-    <article class="info-card">
-      <h2>Is a Sheltie the right breed for you?</h2>
-      <p>
-        Shelties are affectionate, intelligent, and deeply devoted to their families. They can be reserved with
-        strangers, energetic in play, and vocal if left untrained.
-      </p>
-      <p>
-        They do best with structure, companionship, exercise, and regular grooming. Families who enjoy a bright,
-        responsive dog and are prepared for coat care usually find Shelties deeply rewarding.
-      </p>
-    </article>
-
-    <article class="info-card">
-      <h2>Reserving a Sheltie</h2>
-      @if (questionnaireEnabled) {
-        <p>
-          The questionnaire is our preferred first step and helps us begin learning what kind of match may be best for
-          your family.
-        </p>
-      } @else {
-        <p>
-          We’re happy to talk through upcoming litters, companion placements, and whether one of our dogs may be the
-          right fit for your home.
-        </p>
-      }
-      <p>
-        If you have any trouble with the form, please give us a call at 970-623-0343 and leave a message. We will get
-        back to you as soon as we can. Visits are by appointment only.
-      </p>
-
-      <div class="reserve-actions">
-        @if (questionnaireEnabled) {
-          <a class="reserve-primary-link" routerLink="/questionnaire">Complete The Questionnaire</a>
-        }
-        <a class="reserve-secondary-link" href="tel:9706230343">Call Aspenleaf</a>
-      </div>
-    </article>
   </div>
 </section>

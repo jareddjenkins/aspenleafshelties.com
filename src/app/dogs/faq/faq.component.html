@@ -1,35 +1,39 @@
-<section class="faq-shell">
-  <div class="faq-intro">
-    <div class="faq-intro__copy">
-      <p class="section-kicker">Frequently Asked Questions</p>
-      <h1>Answers to the questions we hear most often.</h1>
-      <p>
-        We know bringing home a Sheltie is a big decision. Below you will find answers to our most commonly asked
-        questions. If you need additional information, please feel free to reach out.
-      </p>
+<section class="section">
+  <div class="container stack faq-shell">
+    <mat-card>
+      <mat-card-content class="stack prose">
+        <p class="eyebrow">Frequently Asked Questions</p>
+        <h1>Answers to the questions we hear most often.</h1>
+        <p>
+          We know bringing home a Sheltie is a big decision. Below you will find answers to our most commonly asked
+          questions. If you need additional information, please feel free to reach out.
+        </p>
+      </mat-card-content>
 
-      <div class="faq-intro__actions">
+      <mat-card-actions class="cluster">
         @if (questionnaireEnabled) {
-          <a class="faq-primary-link" routerLink="/questionnaire">Complete The Questionnaire</a>
+          <a matButton="filled" routerLink="/questionnaire">Complete The Questionnaire</a>
         }
-        <a class="faq-secondary-link" routerLink="/contact">Contact Aspenleaf</a>
-      </div>
-    </div>
+        <a matButton="outlined" routerLink="/contact">Contact Aspenleaf</a>
+      </mat-card-actions>
+    </mat-card>
 
-    <aside class="faq-intro__note">
-      <p class="section-kicker">At A Glance</p>
-      <ul>
-        <li>Pet and performance puppies are priced at $3,000.</li>
-        <li>A $500 non-refundable deposit is required to reserve a puppy.</li>
-        <li>Puppies usually go home at approximately 9 weeks of age.</li>
-        <li>We are located in Dewy Rose, Georgia.</li>
-      </ul>
-    </aside>
-  </div>
+    <mat-card>
+      <mat-card-content class="stack prose">
+        <p class="eyebrow">At A Glance</p>
+        <ul>
+          <li>Pet and performance puppies are priced at $3,000.</li>
+          <li>A $500 non-refundable deposit is required to reserve a puppy.</li>
+          <li>Puppies usually go home at approximately 9 weeks of age.</li>
+          <li>We are located in Dewy Rose, Georgia.</li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
 
-  <div class="faq-grid">
-    <article class="faq-card">
-      <p class="faq-category">Our Program</p>
+    <div class="stack">
+      <mat-card>
+        <mat-card-content class="stack prose">
+          <p class="eyebrow">Our Program</p>
       <p>
         At Aspenleaf Shelties, we keep our program intentionally small so we can focus on each dog and each litter. We
         are not trying to produce large numbers of puppies. We are focused on producing the right ones.
@@ -52,184 +56,212 @@
         Most importantly, we stay involved after puppies go home. We want our dogs to succeed in their homes long
         term, and we are always available to our families if questions come up.
       </p>
-    </article>
+        </mat-card-content>
+      </mat-card>
 
-    <article class="faq-card">
-      <p class="faq-category">Pricing</p>
-      <h2>What is the cost of a puppy?</h2>
-      <p>Pet and performance puppies are priced at $3,000.</p>
-      <p>All puppies are placed on limited AKC registration with a spay/neuter agreement.</p>
-      <p>
-        A $500 non-refundable deposit is required to reserve a puppy. The remaining balance is due at pickup. Final
-        payment may be made by card or cash; checks are not accepted.
-      </p>
-    </article>
+      <mat-card>
+        <mat-card-content class="stack prose">
+          <p class="eyebrow">Pricing</p>
+          <h2>What is the cost of a puppy?</h2>
+          <p>Pet and performance puppies are priced at $3,000.</p>
+          <p>All puppies are placed on limited AKC registration with a spay/neuter agreement.</p>
+          <p>
+            A $500 non-refundable deposit is required to reserve a puppy. The remaining balance is due at pickup. Final
+            payment may be made by card or cash; checks are not accepted.
+          </p>
+        </mat-card-content>
+      </mat-card>
 
-    <article class="faq-card">
-      <p class="faq-category">Location</p>
-      <h2>Where are you located?</h2>
-      <p>We are located in Dewy Rose, Georgia.</p>
-    </article>
+      <mat-card>
+        <mat-card-content class="stack prose">
+          <p class="eyebrow">Location</p>
+          <h2>Where are you located?</h2>
+          <p>We are located in Dewy Rose, Georgia.</p>
+        </mat-card-content>
+      </mat-card>
 
-    <article class="faq-card">
-      <p class="faq-category">Registration and Breeding Rights</p>
-      <h2>Do you sell puppies with full breeding rights?</h2>
-      <p>
-        No. Our puppies are placed in loving companion homes only and are sold on limited registration with
-        non-breeding agreements.
-      </p>
-    </article>
+      <mat-card>
+        <mat-card-content class="stack prose">
+          <p class="eyebrow">Registration and Breeding Rights</p>
+          <h2>Do you sell puppies with full breeding rights?</h2>
+          <p>
+            No. Our puppies are placed in loving companion homes only and are sold on limited registration with
+            non-breeding agreements.
+          </p>
+        </mat-card-content>
+      </mat-card>
 
-    <article class="faq-card">
-      <p class="faq-category">Going Home</p>
-      <h2>When can puppies go to their new homes?</h2>
-      <p>Puppies typically leave at approximately 9 weeks of age.</p>
-      <p>At 8 weeks, each puppy receives:</p>
-      <ul>
-        <li>A complete veterinary examination</li>
-        <li>Fecal screening</li>
-        <li>Age-appropriate vaccinations</li>
-        <li>Microchip implantation</li>
-      </ul>
-      <p>Each family receives a puppy folder that includes:</p>
-      <ul>
-        <li>Veterinary records</li>
-        <li>Pedigree</li>
-        <li>Pet insurance information</li>
-        <li>Feeding instructions</li>
-        <li>Schedule for upcoming vaccines and preventatives</li>
-      </ul>
-      <p>Your puppy will go home freshly groomed and will include:</p>
-      <ul>
-        <li>A supply of current food</li>
-        <li>A collar</li>
-        <li>A toy or blanket with a familiar scent from the litter</li>
-      </ul>
-    </article>
+      <mat-card>
+        <mat-card-content class="stack prose">
+          <p class="eyebrow">Going Home</p>
+          <h2>When can puppies go to their new homes?</h2>
+          <p>Puppies typically leave at approximately 9 weeks of age.</p>
+          <p>At 8 weeks, each puppy receives:</p>
+          <ul>
+            <li>A complete veterinary examination</li>
+            <li>Fecal screening</li>
+            <li>Age-appropriate vaccinations</li>
+            <li>Microchip implantation</li>
+          </ul>
+          <p>Each family receives a puppy folder that includes:</p>
+          <ul>
+            <li>Veterinary records</li>
+            <li>Pedigree</li>
+            <li>Pet insurance information</li>
+            <li>Feeding instructions</li>
+            <li>Schedule for upcoming vaccines and preventatives</li>
+          </ul>
+          <p>Your puppy will go home freshly groomed and will include:</p>
+          <ul>
+            <li>A supply of current food</li>
+            <li>A collar</li>
+            <li>A toy or blanket with a familiar scent from the litter</li>
+          </ul>
+        </mat-card-content>
+      </mat-card>
 
-    <article class="faq-card">
-      <p class="faq-category">Older Puppies and Retired Adults</p>
-      <h2>Do you ever place older puppies or adult dogs?</h2>
-      <p>
-        Occasionally, a puppy we have grown out for evaluation may not mature as expected for the show ring. In those
-        cases, an older puppy may become available.
-      </p>
-      <p>
-        These puppies are priced the same as younger puppies but often have completed vaccines and basic training
-        started.
-      </p>
-      <p>Retired adults are rarely available and are usually placed with families we already know.</p>
-    </article>
+      <mat-card>
+        <mat-card-content class="stack prose">
+          <p class="eyebrow">Older Puppies and Retired Adults</p>
+          <h2>Do you ever place older puppies or adult dogs?</h2>
+          <p>
+            Occasionally, a puppy we have grown out for evaluation may not mature as expected for the show ring. In those
+            cases, an older puppy may become available.
+          </p>
+          <p>
+            These puppies are priced the same as younger puppies but often have completed vaccines and basic training
+            started.
+          </p>
+          <p>Retired adults are rarely available and are usually placed with families we already know.</p>
+        </mat-card-content>
+      </mat-card>
 
-    <article class="faq-card">
-      <p class="faq-category">Health Testing</p>
-      <h2>Do you health test your breeding dogs?</h2>
-      <p>
-        Yes. Our breeding dogs undergo appropriate genetic screening, and results are registered with the Orthopedic
-        Foundation for Animals (OFA).
-      </p>
-      <p>
-        Health testing is an essential part of responsible breeding and helps reduce the risk of inherited conditions
-        within the breed.
-      </p>
-    </article>
+      <mat-card>
+        <mat-card-content class="stack prose">
+          <p class="eyebrow">Health Testing</p>
+          <h2>Do you health test your breeding dogs?</h2>
+          <p>
+            Yes. Our breeding dogs undergo appropriate genetic screening, and results are registered with the Orthopedic
+            Foundation for Animals (OFA).
+          </p>
+          <p>
+            Health testing is an essential part of responsible breeding and helps reduce the risk of inherited conditions
+            within the breed.
+          </p>
+        </mat-card-content>
+      </mat-card>
 
-    <article class="faq-card">
-      <p class="faq-category">Reserving a Puppy</p>
-      <h2>How do I reserve a puppy?</h2>
-      <p>
-        Complete the questionnaire on our Available page. Deposits are only accepted when we are confident that a
-        suitable puppy will be available in the near future, usually after a litter has arrived.
-      </p>
-      <p>Once approved, you will receive:</p>
-      <ul>
-        <li>An invoice for the $500 deposit</li>
-        <li>An electronic agreement outlining deposit terms</li>
-      </ul>
-    </article>
+      <mat-card>
+        <mat-card-content class="stack prose">
+          <p class="eyebrow">Reserving a Puppy</p>
+          <h2>How do I reserve a puppy?</h2>
+          <p>
+            Complete the questionnaire on our Available page. Deposits are only accepted when we are confident that a
+            suitable puppy will be available in the near future, usually after a litter has arrived.
+          </p>
+          <p>Once approved, you will receive:</p>
+          <ul>
+            <li>An invoice for the $500 deposit</li>
+            <li>An electronic agreement outlining deposit terms</li>
+          </ul>
+        </mat-card-content>
+      </mat-card>
 
-    <article class="faq-card">
-      <p class="faq-category">Waiting List</p>
-      <h2>How do I join the waiting list?</h2>
-      <p>
-        Submit the questionnaire on the Available page. Families on our list are notified when deposits open for
-        upcoming litters.
-      </p>
-    </article>
+      <mat-card>
+        <mat-card-content class="stack prose">
+          <p class="eyebrow">Waiting List</p>
+          <h2>How do I join the waiting list?</h2>
+          <p>
+            Submit the questionnaire on the Available page. Families on our list are notified when deposits open for
+            upcoming litters.
+          </p>
+        </mat-card-content>
+      </mat-card>
 
-    <article class="faq-card">
-      <p class="faq-category">Living Requirements</p>
-      <h2>Is a fenced yard required?</h2>
-      <p>
-        No. Shelties are adaptable and can thrive in homes with large yards or in apartment settings.
-      </p>
-      <p>
-        We do ask how you plan to provide safe daily exercise if you do not have a fenced area.
-      </p>
-    </article>
+      <mat-card>
+        <mat-card-content class="stack prose">
+          <p class="eyebrow">Living Requirements</p>
+          <h2>Is a fenced yard required?</h2>
+          <p>
+            No. Shelties are adaptable and can thrive in homes with large yards or in apartment settings.
+          </p>
+          <p>
+            We do ask how you plan to provide safe daily exercise if you do not have a fenced area.
+          </p>
+        </mat-card-content>
+      </mat-card>
 
-    <article class="faq-card">
-      <p class="faq-category">Puppy Selection Process</p>
-      <h2>How does puppy selection work?</h2>
-      <p>
-        Selection priority is generally based on deposit order. Families who reserve earlier are typically closer to
-        the top of the list.
-      </p>
-      <p>
-        You will choose your puppy, and we will provide guidance regarding size, temperament, and best fit for your
-        lifestyle.
-      </p>
-      <p>
-        Some puppies may not be available for selection if they are being evaluated as show or performance prospects.
-      </p>
-      <p>
-        If you decide not to choose from the available puppies, your deposit may be transferred to a future litter. We
-        reserve the right to decline placements that may not be the best match for a specific puppy's temperament or
-        needs.
-      </p>
-      <p>Families typically begin selecting favorites around 6 weeks of age, either:</p>
-      <ul>
-        <li>In person</li>
-        <li>Through photos and videos</li>
-        <li>Via video call</li>
-      </ul>
-    </article>
+      <mat-card>
+        <mat-card-content class="stack prose">
+          <p class="eyebrow">Puppy Selection Process</p>
+          <h2>How does puppy selection work?</h2>
+          <p>
+            Selection priority is generally based on deposit order. Families who reserve earlier are typically closer to
+            the top of the list.
+          </p>
+          <p>
+            You will choose your puppy, and we will provide guidance regarding size, temperament, and best fit for your
+            lifestyle.
+          </p>
+          <p>
+            Some puppies may not be available for selection if they are being evaluated as show or performance prospects.
+          </p>
+          <p>
+            If you decide not to choose from the available puppies, your deposit may be transferred to a future litter. We
+            reserve the right to decline placements that may not be the best match for a specific puppy's temperament or
+            needs.
+          </p>
+          <p>Families typically begin selecting favorites around 6 weeks of age, either:</p>
+          <ul>
+            <li>In person</li>
+            <li>Through photos and videos</li>
+            <li>Via video call</li>
+          </ul>
+        </mat-card-content>
+      </mat-card>
 
-    <article class="faq-card">
-      <p class="faq-category">Changing Litters</p>
-      <h2>What if I decide to wait for another litter?</h2>
-      <p>
-        That is completely fine. Your deposit can be transferred to the next available litter, which often improves
-        your placement in future selection order.
-      </p>
-    </article>
+      <mat-card>
+        <mat-card-content class="stack prose">
+          <p class="eyebrow">Changing Litters</p>
+          <h2>What if I decide to wait for another litter?</h2>
+          <p>
+            That is completely fine. Your deposit can be transferred to the next available litter, which often improves
+            your placement in future selection order.
+          </p>
+        </mat-card-content>
+      </mat-card>
 
-    <article class="faq-card">
-      <p class="faq-category">Pick of the Litter</p>
-      <h2>Can I guarantee first pick?</h2>
-      <p>
-        No guarantees are made regarding first choice. We evaluate puppies first for potential show prospects.
-      </p>
-      <p>
-        The best way to increase your options is to place a deposit early and transfer it to a future litter if
-        needed.
-      </p>
-    </article>
+      <mat-card>
+        <mat-card-content class="stack prose">
+          <p class="eyebrow">Pick of the Litter</p>
+          <h2>Can I guarantee first pick?</h2>
+          <p>
+            No guarantees are made regarding first choice. We evaluate puppies first for potential show prospects.
+          </p>
+          <p>
+            The best way to increase your options is to place a deposit early and transfer it to a future litter if
+            needed.
+          </p>
+        </mat-card-content>
+      </mat-card>
 
-    <article class="faq-card">
-      <p class="faq-category">Visits</p>
-      <h2>Can we visit?</h2>
-      <p>We truly enjoy meeting future puppy families. However:</p>
-      <ul>
-        <li>Puppies are not handled by visitors until at least 6 weeks of age</li>
-        <li>Visits are generally limited to families with deposits</li>
-        <li>Foot traffic is minimized to protect young puppies from illness</li>
-        <li>Mother dogs are often more comfortable once puppies are older</li>
-      </ul>
-      <p>
-        If you would like reassurance before placing a deposit, we are happy to provide references from previous puppy
-        families and our veterinarian.
-      </p>
-    </article>
+      <mat-card>
+        <mat-card-content class="stack prose">
+          <p class="eyebrow">Visits</p>
+          <h2>Can we visit?</h2>
+          <p>We truly enjoy meeting future puppy families. However:</p>
+          <ul>
+            <li>Puppies are not handled by visitors until at least 6 weeks of age</li>
+            <li>Visits are generally limited to families with deposits</li>
+            <li>Foot traffic is minimized to protect young puppies from illness</li>
+            <li>Mother dogs are often more comfortable once puppies are older</li>
+          </ul>
+          <p>
+            If you would like reassurance before placing a deposit, we are happy to provide references from previous puppy
+            families and our veterinarian.
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 </section>

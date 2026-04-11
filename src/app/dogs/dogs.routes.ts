@@ -53,9 +53,9 @@ export const DOGS_ROUTES: Routes = [
     path: 'getting-a-sheltie',
     component: GettingASheltieComponent,
     data: {
-      title: 'Getting a Sheltie | Aspenleaf Shelties',
+      title: 'Puppy Process | Aspenleaf Shelties',
       description:
-        'Learn what to expect when getting a Sheltie from Aspenleaf Shelties, including breed fit, puppy placement, and how to begin the inquiry process in Georgia.',
+        'Learn how Aspenleaf Shelties handles timing, placement, and the first steps for families interested in bringing home a Sheltie in Georgia.',
     },
   },
   {

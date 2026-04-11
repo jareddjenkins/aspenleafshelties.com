@@ -1,50 +1,29 @@
 .site-footer {
-    padding: 0 1.25rem 2.5rem;
+  padding-top: 0;
 }
 
 .footer-links {
-    border-top: 1px solid rgba(58, 94, 73, 0.16);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem 1.25rem;
-    justify-content: center;
-    margin: 0 auto;
-    max-width: 1200px;
-    padding-top: 1.25rem;
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  justify-content: center;
+  padding-top: 1.25rem;
+  width: 100%;
 }
 
 .footer-links a {
-    color: var(--color-evergreen);
-    text-decoration: none;
+  color: var(--mat-sys-primary);
 }
 
 .footer-links a:hover,
 .footer-links a:focus-visible {
-    color: var(--color-evergreen-deep);
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .social-icon-link {
-    align-items: center;
-    color: #1877f2;
-    display: inline-flex;
-    height: 2rem;
-    justify-content: center;
-    line-height: 0;
-    text-decoration: none;
-    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
-    width: 2rem;
-}
-
-.social-icon-link:hover,
-.social-icon-link:focus-visible {
-    color: #145dbf;
-    text-decoration: none;
-    transform: translateY(-1px);
+  line-height: 0;
 }
 
 .social-icon-link svg {
-    display: block;
-    height: 2rem;
-    width: 2rem;
+  display: block;
+  height: 2rem;
+  width: 2rem;
 }

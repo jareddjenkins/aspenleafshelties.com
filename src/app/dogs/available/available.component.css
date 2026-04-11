@@ -1,179 +1,27 @@
-.available-hero img {
-    display: block;
-    height: auto;
-    max-height: 420px;
-    object-fit: cover;
-    width: 100%;
+:host {
+  display: block;
 }
 
-.available-shell {
-    margin: 0 auto;
-    max-width: 1200px;
-    padding: 2rem 1.25rem 3rem;
-}
-
-.intro-copy,
-.empty-state,
-.available-cta {
-    background: rgba(255, 255, 255, 0.78);
-    border-radius: 24px;
-    box-shadow: 0 18px 36px rgba(26, 38, 32, 0.08);
-    padding: 1.75rem;
-}
-
-.section-kicker {
-    color: var(--color-evergreen);
-    font-family: 'Archivo', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    margin: 0 0 0.8rem;
-    text-transform: uppercase;
-}
-
-h1,
-h2 {
-    font-family: 'Noto Serif', serif;
-    margin: 0 0 1rem;
-}
-
-h1 {
-    font-size: clamp(2rem, 3vw, 3rem);
-    line-height: 1.08;
-}
-
-h2 {
-    font-size: 1.5rem;
-}
-
-p {
-    line-height: 1.8;
-}
-
-p + p {
-    margin-top: 1rem;
+.available-hero-image {
+  border-radius: 1rem;
+  display: block;
+  height: auto;
+  max-height: 26rem;
+  object-fit: cover;
+  width: 100%;
 }
 
 .listing-grid {
-    display: grid;
-    gap: 1.25rem;
-}
-
-.available-tabs {
-    --mat-tab-active-indicator-color: var(--color-evergreen);
-    --mat-tab-active-label-text-color: var(--color-evergreen-deep);
-    --mat-tab-active-hover-indicator-color: var(--color-evergreen);
-    --mat-tab-active-focus-indicator-color: var(--color-evergreen);
-    --mat-tab-active-hover-label-text-color: var(--color-evergreen-deep);
-    --mat-tab-active-focus-label-text-color: var(--color-evergreen-deep);
-    --mat-tab-active-ripple-color: rgba(52, 92, 72, 0.16);
-    --mat-tab-inactive-ripple-color: rgba(34, 48, 41, 0.12);
-    --mat-tab-inactive-label-text-color: var(--color-muted);
-    --mat-tab-inactive-hover-label-text-color: var(--color-evergreen-deep);
-    --mat-tab-inactive-focus-label-text-color: var(--color-evergreen-deep);
-    --mat-tab-divider-color: rgba(58, 94, 73, 0.14);
-    --mat-tab-label-text-font: 'Archivo', sans-serif;
-    --mat-tab-label-text-size: 0.95rem;
-    --mat-tab-label-text-weight: 700;
-    --mat-tab-label-text-line-height: 1.2;
-    --mat-tab-label-text-tracking: 0.02em;
-    --mat-tab-container-height: 56px;
-    background: rgba(255, 255, 255, 0.84);
-    border: 1px solid rgba(58, 94, 73, 0.1);
-    border-radius: 24px;
-    box-shadow: 0 18px 36px rgba(26, 38, 32, 0.08);
-    margin-top: 1.5rem;
-    overflow: hidden;
+  display: grid;
+  gap: 1.25rem;
 }
 
 .tab-panel {
-    padding: 1.5rem;
-}
-
-.empty-state {
-    background: rgba(244, 239, 229, 0.72);
-    border: 1px solid rgba(58, 94, 73, 0.08);
-    box-shadow: none;
-}
-
-.empty-state__title {
-    color: var(--color-evergreen-deep);
-    font-family: 'Noto Serif', serif;
-    font-size: 1.3rem;
-    line-height: 1.25;
-    margin: 0 0 0.75rem;
-}
-
-.available-cta {
-    align-items: center;
-    display: flex;
-    gap: 1rem;
-    justify-content: space-between;
-    margin-top: 1.5rem;
-}
-
-.available-cta__copy {
-    max-width: 700px;
-}
-
-.available-cta__copy h2 {
-    margin-bottom: 0.75rem;
-}
-
-.available-cta__copy p:last-child {
-    margin: 0;
-}
-
-.reserve-primary-link {
-    align-items: center;
-    border-radius: 999px;
-    display: inline-flex;
-    font-weight: 600;
-    min-height: 2.85rem;
-    padding: 0.75rem 1.2rem;
-    text-decoration: none;
-}
-
-.reserve-primary-link {
-    background: #fff;
-    border: 2px solid var(--color-evergreen);
-    color: var(--color-evergreen-deep);
-    box-shadow: 0 14px 28px rgba(26, 38, 32, 0.12);
-}
-
-@media (max-width: 900px) {
-    .available-cta {
-        align-items: flex-start;
-        flex-direction: column;
-    }
+  padding: 1.5rem 0 0;
 }
 
 @media (max-width: 700px) {
-    .available-hero img {
-        max-height: 300px;
-    }
-
-    .available-shell {
-        padding: 1.5rem 1rem 2.5rem;
-    }
-
-    .intro-copy,
-    .empty-state,
-    .available-cta {
-        padding: 1.25rem;
-    }
-
-    .available-tabs {
-        border-radius: 20px;
-        margin-top: 1.25rem;
-    }
-
-    .tab-panel {
-        padding: 1.25rem;
-    }
-
-    .reserve-primary-link {
-        justify-content: center;
-        width: 100%;
-    }
+  .available-hero-image {
+    max-height: 18rem;
+  }
 }

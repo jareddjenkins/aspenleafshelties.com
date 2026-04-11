@@ -29,5 +29,34 @@
         </a>
       }
     </div>
+
+    <button
+      mat-icon-button
+      type="button"
+      class="menu-toggle"
+      (click)="toggleMobileMenu()"
+      [attr.aria-expanded]="isMobileMenuOpen"
+      aria-controls="mobile-nav-panel"
+      aria-label="Toggle navigation menu"
+    >
+      <mat-icon aria-hidden="true">{{ isMobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
+    </button>
   </mat-toolbar>
+
+  <div class="mobile-nav-panel" id="mobile-nav-panel" [class.is-open]="isMobileMenuOpen">
+    <mat-nav-list>
+      @for (route of navRoutes; track route.path) {
+        <a
+          mat-list-item
+          class="mobile-nav-link"
+          [routerLink]="route.path"
+          routerLinkActive="mobile-nav-link--active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeMobileMenu()"
+        >
+          {{ route.label }}
+        </a>
+      }
+    </mat-nav-list>
+  </div>
 </nav>

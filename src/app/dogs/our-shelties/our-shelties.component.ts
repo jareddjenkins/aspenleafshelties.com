@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
 
@@ -16,7 +17,7 @@ interface SheltiesTab {
   selector: 'app-our-shelties',
   templateUrl: './our-shelties.component.html',
   styleUrls: ['./our-shelties.component.css'],
-  imports: [DogsComponent, MatTabsModule],
+  imports: [DogsComponent, MatCardModule, MatTabsModule],
   standalone: true,
 })
 export class OurSheltiesComponent implements OnInit {
