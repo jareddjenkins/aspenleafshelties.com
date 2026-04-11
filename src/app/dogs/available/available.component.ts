@@ -31,7 +31,7 @@ export class AvailableComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.showPuppies = this.route.snapshot.data['showPuppies'] ?? [];
@@ -40,18 +40,18 @@ export class AvailableComponent implements OnInit {
 
     this.tabs = [
       {
-        label: 'Show Puppies',
-        status: 'showavailable',
-        dogs: this.showPuppies,
-        emptyTitle: 'No show puppies right now.',
-        emptyMessage: 'Please check back for future evaluations and upcoming litters.',
-      },
-      {
         label: 'Companion Puppies',
         status: 'available',
         dogs: this.companionPuppies,
         emptyTitle: 'No companion puppies right now.',
         emptyMessage: 'We would be happy to talk through timing and upcoming companion placements.',
+      },
+      {
+        label: 'Show Puppies',
+        status: 'showavailable',
+        dogs: this.showPuppies,
+        emptyTitle: 'No show puppies right now.',
+        emptyMessage: 'Please check back for future evaluations and upcoming litters.',
       },
       {
         label: 'Adults',
