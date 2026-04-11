@@ -1,18 +1,31 @@
 <nav class="site-nav" aria-label="Primary">
   <mat-toolbar class="site-toolbar" color="primary">
-    <a class="brand" routerLink="/home">Aspenleaf Shelties</a>
+    <a class="brand" routerLink="/home" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+      Aspenleaf Shelties
+    </a>
 
     <span class="toolbar-spacer"></span>
 
     <div class="site-links">
-      <a mat-button routerLink="/available">Available</a>
-      <a mat-button routerLink="/dogs">Our Dogs</a>
-      <a mat-button routerLink="/getting-a-sheltie">Getting a Sheltie</a>
-      <a mat-button routerLink="/faq">FAQ</a>
-      <a mat-button routerLink="/about">About</a>
-      <a mat-button routerLink="/resources">Resources</a>
+      <a
+        class="site-link"
+        [routerLink]="primaryRoute.path"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        {{ primaryRoute.label }}
+      </a>
+      <a class="site-link" routerLink="/dogs" routerLinkActive="active-link">Our Dogs</a>
+      @for (route of secondaryRoutes; track route.path) {
+        <a
+          class="site-link"
+          [routerLink]="route.path"
+          routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          {{ route.label }}
+        </a>
+      }
     </div>
   </mat-toolbar>
 </nav>
-
-<div class="site-nav-spacer" aria-hidden="true"></div>

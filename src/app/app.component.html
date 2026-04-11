@@ -1,11 +1,11 @@
-<div class="app-shell" [class.admin-route]="isAdminRoute">
-  @if (!isAdminRoute) {
-    <app-topnav></app-topnav>
-  }
+@if (!isAdminRoute) {
+  <app-topnav></app-topnav>
+}
 
+<main class="app-main" [class.admin-route]="isAdminRoute">
   <router-outlet></router-outlet>
+</main>
 
-  @if (!isAdminRoute) {
-    <app-footer></app-footer>
-  }
-</div>
+@if (!isAdminRoute) {
+  <app-footer></app-footer>
+}

@@ -1,4 +1,4 @@
-.app-shell {
+.app-main {
+  display: block;
   min-height: 100%;
-  overflow-x: hidden;
 }
