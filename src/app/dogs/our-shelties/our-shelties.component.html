@@ -1,0 +1,34 @@
+<section class="our-shelties-shell">
+  <header class="page-header">
+    <h1>Our Shelties</h1>
+    <p>Meet the boys and girls we keep and showcase as part of the Aspenleaf program.</p>
+  </header>
+
+  <mat-tab-group
+    class="shelties-tabs"
+    animationDuration="0ms"
+    mat-align-tabs="start"
+    mat-stretch-tabs="false"
+  >
+    @for (tab of tabs; track tab.label; let tabIndex = $index) {
+      <mat-tab [label]="tab.label">
+        <ng-template matTabContent>
+          <div class="tab-panel">
+            @if (tab.dogs.length) {
+              <div class="listing-grid">
+                @for (dog of tab.dogs; track dog.id; let isFirst = $first) {
+                  <app-dogs [dog]="dog" [prioritizeImage]="isFirst && tabIndex === 0"></app-dogs>
+                }
+              </div>
+            } @else {
+              <div class="empty-state">
+                <p class="empty-state__title">{{ tab.emptyTitle }}</p>
+                <p>{{ tab.emptyMessage }}</p>
+              </div>
+            }
+          </div>
+        </ng-template>
+      </mat-tab>
+    }
+  </mat-tab-group>
+</section>

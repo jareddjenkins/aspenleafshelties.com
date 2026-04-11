@@ -15,7 +15,9 @@
       >
         {{ primaryRoute.label }}
       </a>
-      <a class="site-link" routerLink="/dogs" routerLinkActive="active-link">Our Dogs</a>
+      <a class="site-link" routerLink="/our-shelties" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+        Our Shelties
+      </a>
       @for (route of secondaryRoutes; track route.path) {
         <a
           class="site-link"

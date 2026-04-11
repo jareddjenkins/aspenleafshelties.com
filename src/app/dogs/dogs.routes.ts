@@ -2,11 +2,10 @@ import { CanActivateFn, CanMatchFn, Router, Routes } from '@angular/router';
 import { inject } from '@angular/core';
 
 import { AvailableComponent } from './available/available.component';
-import { BoysComponent } from './boys/boys.component';
 import { environment } from '../../environments/environment';
 import { FaqComponent } from './faq/faq.component';
 import { GettingASheltieComponent } from './getting-a-sheltie/getting-a-sheltie.component';
-import { GirlsComponent } from './girls/girls.component';
+import { OurSheltiesComponent } from './our-shelties/our-shelties.component';
 import {
   availableAdultsResolver,
   boysPageResolver,
@@ -24,32 +23,16 @@ const questionnaireEnabledCanActivate: CanActivateFn = () => questionnaireEnable
 
 export const DOGS_ROUTES: Routes = [
   {
-    path: '',
-    redirectTo: 'boys',
-    pathMatch: 'full',
-  },
-  {
-    path: 'boys',
-    component: BoysComponent,
+    path: 'our-shelties',
+    component: OurSheltiesComponent,
     resolve: {
-      dogs: boysPageResolver,
+      boys: boysPageResolver,
+      girls: girlsPageResolver,
     },
     data: {
-      title: 'Boys | Aspenleaf Shelties Georgia Sheltie Breeder',
+      title: 'Our Shelties | Aspenleaf Shelties Georgia Sheltie Breeder',
       description:
-        'Meet the boys of Aspenleaf Shelties, a Dewy Rose, Georgia Shetland Sheepdog breeder focused on AKC quality, temperament, sound structure, and families across Georgia.',
-    },
-  },
-  {
-    path: 'girls',
-    component: GirlsComponent,
-    resolve: {
-      dogs: girlsPageResolver,
-    },
-    data: {
-      title: 'Girls | Aspenleaf Shelties Georgia Sheltie Breeder',
-      description:
-        'Meet the girls of Aspenleaf Shelties, thoughtfully bred Shetland Sheepdogs in Dewy Rose, Georgia with attention to pedigree, health, and family temperament.',
+        'Meet the boys and girls of Aspenleaf Shelties, a Dewy Rose, Georgia Shetland Sheepdog breeder focused on quality, temperament, sound structure, and family-raised Shelties.',
     },
   },
   {

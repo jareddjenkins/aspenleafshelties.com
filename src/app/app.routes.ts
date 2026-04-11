@@ -29,7 +29,7 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'dogs',
+    path: '',
     loadChildren: () => import('./dogs/dogs.routes').then((m) => m.DOGS_ROUTES),
   },
   {
