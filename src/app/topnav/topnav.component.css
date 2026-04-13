@@ -19,9 +19,24 @@
 }
 
 .brand {
-  font: var(--mat-sys-headline-small);
+  align-items: center;
   color: inherit;
+  display: inline-flex;
+  flex: 0 0 auto;
+  line-height: 0;
   text-decoration: none;
+}
+
+.brand:focus-visible {
+  border-radius: 0.75rem;
+  outline: 2px solid color-mix(in srgb, var(--mat-sys-on-primary) 36%, transparent);
+  outline-offset: 4px;
+}
+
+.brand-logo {
+  display: block;
+  height: 2.75rem;
+  inline-size: auto;
 }
 
 .toolbar-spacer {
@@ -107,8 +122,8 @@
     display: inline-flex;
   }
 
-  .brand {
-    font: var(--mat-sys-title-large);
+  .brand-logo {
+    height: 2.35rem;
   }
 }
 
@@ -122,5 +137,9 @@
   .site-toolbar {
     min-height: 60px;
     padding-inline: 0.75rem;
+  }
+
+  .brand-logo {
+    height: 2.1rem;
   }
 }
