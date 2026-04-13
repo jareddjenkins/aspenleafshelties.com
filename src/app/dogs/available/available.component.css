@@ -20,6 +20,10 @@
   padding: 1.5rem 0 0;
 }
 
+.available-cta {
+  padding-top: 0;
+}
+
 @media (max-width: 700px) {
   .available-hero-image {
     max-height: 18rem;
