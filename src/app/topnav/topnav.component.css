@@ -93,6 +93,7 @@
   pointer-events: none;
   position: absolute;
   top: calc(100% + 0.25rem);
+  visibility: hidden;
   transform: translateY(-0.5rem);
   transition: opacity 150ms ease, transform 150ms ease;
 }
@@ -100,6 +101,7 @@
 .mobile-nav-panel.is-open {
   opacity: 1;
   pointer-events: auto;
+  visibility: visible;
   transform: translateY(0);
 }
 
