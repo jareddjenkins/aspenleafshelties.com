@@ -145,24 +145,29 @@
               <input id="website" type="text" formControlName="website" tabindex="-1" autocomplete="off" />
             </label>
           </div>
-
+          <div class="cluster">
+            <button matButton="filled" type="submit" [disabled]="submissionState === 'submitting'">
+              {{ submissionState === "submitting" ? "Sending..." : "Send Questionnaire" }}
+            </button>
+          </div>
           @if (submissionError) {
           <p class="questionnaire-feedback">{{ submissionError }}</p>
           }
 
-          <p>
-            If you have any issues with this form or would rather reach out directly, please see
-            <a routerLink="/contact">Contact</a>.
-          </p>
+
         </mat-card-content>
 
         <mat-card-actions class="cluster">
 
-            <button matButton="filled" type="submit" [disabled]="submissionState === 'submitting'">
-              {{ submissionState === "submitting" ? "Sending..." : "Send Questionnaire" }}
-            </button>
+
         </mat-card-actions>
       </mat-card>
+      <mat-card-content>
+        <p>
+          If you have any issues with this form or would rather reach out directly, please see
+          <a routerLink="/contact">Contact</a>.
+        </p>
+      </mat-card-content>
     </form>
     }
   </div>
