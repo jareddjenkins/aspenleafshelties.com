@@ -111,27 +111,13 @@ export class QuestionnaireComponent {
   }
 
   private composeSummary(formValue: ReturnType<typeof this.questionnaireForm.getRawValue>): string {
-    const summaryLines = [];
-
-    if (formValue.interest !== 'puppy') {
-      summaryLines.push(`Interest: ${formValue.interest}`);
-    }
-
-    if (formValue.sexPreference !== 'no-preference') {
-      summaryLines.push(`Sex preference: ${formValue.sexPreference}`);
-    }
-
-    if (formValue.colorPreference !== 'no-preference') {
-      summaryLines.push(`Color preference: ${formValue.colorPreference}`);
-    }
-
-    if (formValue.previousSheltieOwnership === 'yes') {
-      summaryLines.push('Owned a Sheltie before: yes');
-    }
-
-    if (formValue.homeSummary) {
-      summaryLines.push(`Home summary: ${formValue.homeSummary}`);
-    }
+    const summaryLines = [
+      `Interest: ${formValue.interest}`,
+      `Sex preference: ${formValue.sexPreference}`,
+      `Color preference: ${formValue.colorPreference}`,
+      `Owned a Sheltie before: ${formValue.previousSheltieOwnership}`,
+      `Home summary: ${formValue.homeSummary.trim() || 'Not provided'}`,
+    ];
 
     return summaryLines.join('\n\n');
   }
