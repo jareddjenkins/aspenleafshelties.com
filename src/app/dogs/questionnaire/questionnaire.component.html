@@ -1,165 +1,169 @@
-<section class="questionnaire-shell">
-  <div class="questionnaire-hero">
-    <p class="questionnaire-kicker">Aspenleaf Questionnaire</p>
-    <h1>Interested in an Aspenleaf Sheltie?</h1>
-    <p>
-      This form is meant to help Aspenleaf make thoughtful matches. It should only take a few minutes.
-    </p>
-    <p>
-      We review each inquiry personally and generally get back to you within 24-72 hours.
-    </p>
-  </div>
+<section class="section">
+  <div class="container stack questionnaire-container">
+    <mat-card>
+      <mat-card-content class="stack prose">
+        <p class="eyebrow">Aspenleaf Questionnaire</p>
 
-  @if (submissionState === 'success') {
-    <section class="questionnaire-card questionnaire-card--success">
-      <p class="questionnaire-kicker">Received</p>
-      <h2>Thank you for reaching out.</h2>
-      <p>
-        Aspenleaf has received your questionnaire and will review it carefully before following up about fit, timing,
-        and next steps.
-      </p>
-    </section>
-  } @else {
-    <form class="questionnaire-form" [formGroup]="questionnaireForm" (ngSubmit)="submitQuestionnaire()">
-      <section class="questionnaire-card">
-        <h2>Contact</h2>
-        <div class="questionnaire-grid">
-          <label class="questionnaire-field">
-            <span>Name</span>
-            <input type="text" formControlName="primaryName" [class.questionnaire-input--invalid]="showError('primaryName')" />
-            @if (showError('primaryName')) {
-              <small class="questionnaire-field-error">Please enter your name.</small>
-            }
-          </label>
-
-          <label class="questionnaire-field">
-            <span>Email</span>
-            <input type="email" formControlName="email" [class.questionnaire-input--invalid]="showError('email')" />
-            @if (showError('email')) {
-              <small class="questionnaire-field-error">Please enter a valid email address.</small>
-            }
-          </label>
-
-          <label class="questionnaire-field">
-            <span>Phone</span>
-            <input type="tel" formControlName="phone" [class.questionnaire-input--invalid]="showError('phone')" />
-            @if (showError('phone')) {
-              <small class="questionnaire-field-error">Please enter a phone number.</small>
-            }
-          </label>
-
-          <label class="questionnaire-field">
-            <span>City and State</span>
-            <input type="text" formControlName="location" [class.questionnaire-input--invalid]="showError('location')" />
-            @if (showError('location')) {
-              <small class="questionnaire-field-error">Please enter your city and state.</small>
-            }
-          </label>
-        </div>
-      </section>
-
-      <section class="questionnaire-card">
-        <h2>Basics</h2>
-        <div class="questionnaire-grid">
-          <label class="questionnaire-field">
-            <span>Interested In</span>
-            <select formControlName="interest">
-              <option value="puppy">Puppy</option>
-              <option value="adult">Adult</option>
-              <option value="either">Open to either</option>
-            </select>
-          </label>
-
-          <label class="questionnaire-field">
-            <span>Sex Preference</span>
-            <select formControlName="sexPreference">
-              <option value="no-preference">No preference</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </label>
-
-          <label class="questionnaire-field">
-            <span>Color Preference</span>
-            <select formControlName="colorPreference">
-              <option value="no-preference">No preference</option>
-              <option value="sable">Sable</option>
-              <option value="blue-merle">Blue merle</option>
-              <option value="tri-color-black">Tri-color / black</option>
-            </select>
-          </label>
-
-          <label class="questionnaire-field">
-            <span>Have You Owned a Sheltie Before?</span>
-            <select formControlName="previousSheltieOwnership">
-              <option value="no">No</option>
-              <option value="yes">Yes</option>
-            </select>
-          </label>
-
-          <label class="questionnaire-field questionnaire-field--full">
-            <span>Tell us a little about your home, household, and what you are hoping for.</span>
-            <small>
-              You might share a little about who lives in your home, your home setup, how much time a dog may
-              typically be alone, the kind of temperament or activity level you are hoping for, and anything else
-              you'd like us to know.
-            </small>
-            <textarea
-              rows="4"
-              formControlName="homeSummary"
-              [class.questionnaire-input--invalid]="showError('homeSummary')"
-              placeholder="Share a little about your home and what you are hoping for"
-            ></textarea>
-            @if (showError('homeSummary')) {
-              <small class="questionnaire-field-error">Please keep this response under 600 characters.</small>
-            }
-          </label>
-
-        </div>
-      </section>
-
-      <section class="questionnaire-card">
-        <h2>Before submitting, please acknowledge the following:</h2>
-        <div class="questionnaire-grid">
-
-          <label class="acknowledgement">
-            <input type="checkbox" formControlName="returnToBreederAgreement" />
-            <span>I understand that if I am ever unable to keep the dog, Aspenleaf asks that the dog be returned rather than rehomed elsewhere.</span>
-          </label>
-          @if (showError('returnToBreederAgreement')) {
-            <small class="questionnaire-field-error">Please acknowledge the return policy.</small>
-          }
-
-          <label class="acknowledgement">
-            <input type="checkbox" formControlName="breedingContractAcknowledgement" />
-            <span>I understand that breeding is only considered under an agreed written contract.</span>
-          </label>
-          @if (showError('breedingContractAcknowledgement')) {
-            <small class="questionnaire-field-error">Please acknowledge the breeding policy.</small>
-          }
-
-
-
-          <label class="spam-trap" for="website">
-            <span>Leave this field empty</span>
-            <input id="website" type="text" formControlName="website" tabindex="-1" autocomplete="off" />
-          </label>
-        </div>
-      </section>
-
-      @if (submissionError) {
-        <p class="questionnaire-feedback questionnaire-feedback--error">{{ submissionError }}</p>
-      }
-
-      <div class="questionnaire-actions">
-        <p class="questionnaire-note">
-          If you have any issues with this form or would rather reach out directly, please see
-          <a routerLink="/contact">Contact</a>.
+        <p>
+          We review each inquiry personally and generally get back to you within 24-72 hours.
         </p>
-        <button type="submit" class="questionnaire-submit" [disabled]="submissionState === 'submitting'">
-          {{ submissionState === "submitting" ? "Sending..." : "Send Questionnaire" }}
-        </button>
-      </div>
+      </mat-card-content>
+    </mat-card>
+
+    @if (submissionState === 'success') {
+    <mat-card>
+      <mat-card-content class="stack prose">
+        <p class="eyebrow">Received</p>
+        <h2>Thank you for reaching out.</h2>
+        <p>
+          Aspenleaf has received your questionnaire and will review it carefully before following up about fit, timing,
+          and next steps.
+        </p>
+      </mat-card-content>
+    </mat-card>
+    } @else {
+    <form class="stack" [formGroup]="questionnaireForm" (ngSubmit)="submitQuestionnaire()">
+      <mat-card>
+        <mat-card-content class="stack">
+          <h2>Contact</h2>
+
+          <div class="questionnaire-grid">
+            <mat-form-field>
+              <mat-label>Name</mat-label>
+              <input matInput type="text" formControlName="primaryName" />
+              @if (showError('primaryName')) {
+              <mat-error>Please enter your name.</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Email</mat-label>
+              <input matInput type="email" formControlName="email" />
+              @if (showError('email')) {
+              <mat-error>Please enter a valid email address.</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Phone</mat-label>
+              <input matInput type="tel" formControlName="phone" />
+              @if (showError('phone')) {
+              <mat-error>Please enter a phone number.</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>City and State</mat-label>
+              <input matInput type="text" formControlName="location" />
+              @if (showError('location')) {
+              <mat-error>Please enter your city and state.</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-content class="stack">
+          <h2>Basics</h2>
+
+          <div class="questionnaire-grid">
+            <mat-form-field>
+              <mat-label>Interested In</mat-label>
+              <mat-select formControlName="interest">
+                <mat-option value="puppy">Puppy</mat-option>
+                <mat-option value="adult">Adult</mat-option>
+                <mat-option value="either">Open to either</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Sex Preference</mat-label>
+              <mat-select formControlName="sexPreference">
+                <mat-option value="no-preference">No preference</mat-option>
+                <mat-option value="male">Male</mat-option>
+                <mat-option value="female">Female</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Color Preference</mat-label>
+              <mat-select formControlName="colorPreference">
+                <mat-option value="no-preference">No preference</mat-option>
+                <mat-option value="sable">Sable</mat-option>
+                <mat-option value="blue-merle">Blue merle</mat-option>
+                <mat-option value="tri-color-black">Tri-color / black</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Have You Owned a Sheltie Before?</mat-label>
+              <mat-select formControlName="previousSheltieOwnership">
+                <mat-option value="no">No</mat-option>
+                <mat-option value="yes">Yes</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="questionnaire-field--full">
+              <mat-label>Tell us a little about your home, household, and what you are hoping for.</mat-label>
+              <textarea matInput rows="4" formControlName="homeSummary"
+                placeholder="Share a little about your home and what you are hoping for"></textarea>
+              <mat-hint>
+                You might share who lives in your home, your setup, how much time a dog may be alone, temperament or
+                activity hopes, and anything else you'd like us to know.
+              </mat-hint>
+              @if (showError('homeSummary')) {
+              <mat-error>Please keep this response under 600 characters.</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-content class="stack">
+          <h3>Before submitting, please acknowledge the following:</h3>
+
+          <div class="stack">
+            <mat-checkbox formControlName="returnToBreederAgreement">
+              I understand that if I am ever unable to keep the dog, Aspenleaf asks that the dog be returned rather
+              than rehomed elsewhere.
+            </mat-checkbox>
+            @if (showError('returnToBreederAgreement')) {
+            <mat-error>Please acknowledge the return policy.</mat-error>
+            }
+
+            <mat-checkbox formControlName="breedingContractAcknowledgement">
+              I understand that breeding is only considered under an agreed written contract.
+            </mat-checkbox>
+            @if (showError('breedingContractAcknowledgement')) {
+            <mat-error>Please acknowledge the breeding policy.</mat-error>
+            }
+
+            <label class="spam-trap" for="website">
+              <span>Leave this field empty</span>
+              <input id="website" type="text" formControlName="website" tabindex="-1" autocomplete="off" />
+            </label>
+          </div>
+
+          @if (submissionError) {
+          <p class="questionnaire-feedback">{{ submissionError }}</p>
+          }
+
+          <p>
+            If you have any issues with this form or would rather reach out directly, please see
+            <a routerLink="/contact">Contact</a>.
+          </p>
+        </mat-card-content>
+
+        <mat-card-actions class="cluster">
+
+            <button matButton="filled" type="submit" [disabled]="submissionState === 'submitting'">
+              {{ submissionState === "submitting" ? "Sending..." : "Send Questionnaire" }}
+            </button>
+        </mat-card-actions>
+      </mat-card>
     </form>
-  }
+    }
+  </div>
 </section>

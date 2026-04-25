@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { RouterLink } from '@angular/router';
 
 import { InquirySubmissionInput, InquirySubmissionService } from '../../firebase/inquiry-submission.service';
@@ -8,7 +14,16 @@ import { InquirySubmissionInput, InquirySubmissionService } from '../../firebase
   selector: 'app-questionnaire',
   templateUrl: './questionnaire.component.html',
   styleUrls: ['./questionnaire.component.css'],
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    RouterLink,
+  ],
   standalone: true,
 })
 export class QuestionnaireComponent {
