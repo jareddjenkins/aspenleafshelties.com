@@ -8,7 +8,6 @@ import {
   User,
   connectAuthEmulator,
   getAuth,
-  signInWithRedirect,
   onAuthStateChanged,
   signInWithPopup,
   signOut,
@@ -58,11 +57,6 @@ export class AdminAuthService {
     }
 
     this.storePendingRedirectUrl(redirectUrl);
-
-    if (this.shouldUseRedirectSignIn()) {
-      await signInWithRedirect(this.auth, this.provider);
-      return;
-    }
 
     await signInWithPopup(this.auth, this.provider);
     await this.waitUntilReady();
@@ -141,15 +135,6 @@ export class AdminAuthService {
       isSignedIn: !!user,
       isEditor,
     };
-  }
-
-  private shouldUseRedirectSignIn(): boolean {
-    if (typeof window === 'undefined') {
-      return false;
-    }
-
-    const userAgent = window.navigator.userAgent.toLowerCase();
-    return /android|iphone|ipad|ipod|mobile/.test(userAgent);
   }
 
   private storePendingRedirectUrl(redirectUrl?: string | null): void {
